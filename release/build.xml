@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="XpressEngine Build" default="xe">
+
+    <!-- ============================================  -->
+    <!-- (DEFAULT)  Target: xe                         --> 
+    <!-- ============================================  -->
+    <target name="xe">
+		<phing phingfile="./build/xe_core.xml" inheritRefs="true" >
+
+			<!-- package name : xe | textyle_package | board_package -->
+			<property name="release.package" value="xe" />
+
+			<!-- location : ko | en | cn -->
+			<property name="release.location" value="ko" />
+
+			<!-- release version -->
+			<property name="release.version" value="1.5.0" /> 
+
+			<!-- xe core repo -->
+			<property name="release.repo" value="http://xe-core.googlecode.com/svn/branches/1.5.0" />
+
+			<!-- if you don`t wanna make diff file, just delete the node -->
+			<property name="release.last_repo" value="http://xe-core.googlecode.com/svn/tags/1.4.5.10" />
+
+			<!-- for checking syntax -->
+			<property name="config.php4" value="/usr/local/php4/bin/php" />
+			<property name="config.php5.2" value="/usr/local/php/bin/php" />
+			<property name="config.php.5.3" value="/usr/local/php533/bin/php" />
+
+			<property name="config.svn" value="/usr/bin/svn" />
+		</phing>
+    </target>
+
+
+    <!-- ============================================  -->
+    <!-- (DEFAULT)  Target: board_package              --> 
+    <!-- ============================================  -->
+    <target name="board_package">
+		<phing phingfile="./build/xe_core.xml" inheritRefs="true" >
+
+			<!-- package name : xe | textyle_package | board_package -->
+			<property name="release.package" value="board_package" />
+
+			<!-- location : ko | en | cn -->
+			<property name="release.location" value="ko" />
+
+			<!-- release version -->
+			<property name="release.version" value="1.5.0" /> 
+
+			<!-- xe core repo -->
+			<property name="release.repo" value="http://xe-core.googlecode.com/svn/branches/1.5.0" />
+
+			<!-- for checking syntax -->
+			<property name="config.php4" value="/usr/local/php4/bin/php" />
+			<property name="config.php5.2" value="/usr/local/php/bin/php" />
+			<property name="config.php.5.3" value="/usr/local/php533/bin/php" />
+
+			<property name="config.svn" value="/usr/bin/svn" />
+		</phing>
+    </target>
+
+</project>

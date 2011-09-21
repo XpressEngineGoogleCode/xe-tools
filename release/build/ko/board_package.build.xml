@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="board.ko" default="dist">
+
+    <!-- ============================================  -->
+    <!-- Target: build                                 -->
+    <!-- ============================================  -->
+    <target name="build">
+		<phing phingfile="./build/ko/xe.build.xml" target="build" inheritRefs="true" />
+
+		<echo msg="export board" />
+		<property name="release.board_repo" value="http://xe-board.googlecode.com/svn/branches/1.4" />
+		<exec command="${config.svn} svn export ${release.board_repo} ${config.build_dir}/xe/modules/board" />
+    </target>
+
+
+    <!-- ============================================  -->
+    <!-- Target: build_diff                            -->
+    <!-- ============================================  -->
+    <target name="build_diff">
+		<phing phingfile="./build/ko/xe.build.xml" target="build_diff" inheritRefs="true" />
+    </target>
+
+
+    <target name="dist">
+    </target>
+</project>
