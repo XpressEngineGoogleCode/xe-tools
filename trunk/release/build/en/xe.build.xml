@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="xe.en" default="dist">
+    <!-- ============================================  -->
+    <!-- Target: build                                 -->
+    <!-- ============================================  -->
+    <target name="build">
+        <delete dir="${config.build_dir}/xe/config/package.inc.php" />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: build_diff                            -->
+    <!-- ============================================  -->
+    <target name="build_diff">
+    </target>
+
+    <target name="dist">
+    </target>
+</project>

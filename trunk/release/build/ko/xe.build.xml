@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="xe.ko" default="dist">
+
+    <!-- ============================================  -->
+    <!-- Target: build                                 -->
+    <!-- ============================================  -->
+    <target name="build">
+		<echo msg="export krzip" />
+		<property name="release.krzip_repo" value="http://xe-krzip.googlecode.com/svn/trunk/ " />
+        <exec command="${config.svn} export ${release.krzip_repo} ${config.build_dir}/xe/modules/krzip" />
+    </target>
+
+
+    <!-- ============================================  -->
+    <!-- Target: build_diff                            -->
+    <!-- ============================================  -->
+    <target name="build_diff">
+    </target>
+
+    <target name="dist">
+    </target>
+</project>

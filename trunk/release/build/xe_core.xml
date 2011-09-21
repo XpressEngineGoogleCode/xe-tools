@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="xe" default="dist">
+
+	<property name="config.build_dir" value="./tmp" />
+	<property name="config.dist_dir" value="./dist/${release.package}.${release.version}.${release.location}" />
+	<property name="config.diff_dir" value="${config.build_dir}/diff" />
+
+    <!-- ============================================  -->
+    <!-- Target: prepare                               -->
+    <!-- ============================================  -->
+    <target name="prepare">
+        <exec command="rm -rf ${config.build_dir}" />
+        <mkdir dir="${config.build_dir}" />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: build                                 -->
+    <!-- ============================================  -->
+    <target name="build" depends="prepare">
+        <echo msg="${config.svn} export ${release.repo} ${config.build_dir}/xe" />
+        <exec command="${config.svn} export ${release.repo} ${config.build_dir}/xe" />
+        <delete dir="${config.build_dir}/xe/tests" />
+        <delete dir="${config.build_dir}/xe/test-phpUnit" />
+        <delete dir="${config.build_dir}/xe/common/css.backup" />
+        <delete dir="${config.build_dir}/xe/common/js/unittest" />
+
+		<!-- extra export -->
+		<phing phingfile="./build/${release.location}/${release.package}.build.xml" target="build" inheritRefs="true" />
+    </target>
+
+
+    <!-- ============================================  -->
+    <!-- (DEFAULT)  Target: dist                       --> 
+    <!-- ============================================  -->
+    <target name="dist" depends="build">
+
+        <exec command="rm -rf ${config.dist_dir}" />
+        <mkdir dir="${config.dist_dir}" />
+
+		<phingcall target="check_syntax" />
+
+		<property name="file.tar" value="${config.dist_dir}/${release.package}.${release.version}.${release.location}.tar.gz" />
+		<property name="file.zip" value="${config.dist_dir}/${release.package}.${release.version}.${release.location}.zip" />
+
+		<tar destfile="${file.tar}" compression="gzip" basedir="${config.build_dir}" />
+		<zip destfile="${file.zip}" basedir="${config.build_dir}" />
+
+		<if>
+			<isset property="release.last_repo" />
+			<then>
+				<phingcall target="build_diff" />
+			</then>
+		</if>
+
+        <exec command="rm -rf ${config.build_dir}" />
+    </target>
+
+
+    <!-- ============================================  -->
+    <!-- Target: Check PHP Syntax                      --> 
+    <!-- ============================================  -->
+    <target name="check_syntax">
+		<if>
+			<isset property="config.php4" />
+			<then>
+				<phplint interpreter="${config.php4}" tofile="${config.dist_dir}/error.php4">
+					<fileset dir="${config.build_dir}/xe">
+						<include name="**/*.php"/>
+					</fileset>
+				</phplint>
+			</then>
+		</if>
+
+		<if>
+			<isset property="config.php5.2" />
+			<then>
+				<phplint interpreter="${config.php5.2}" tofile="${config.dist_dir}/error.php5.2">
+					<fileset dir="${config.build_dir}/xe">
+						<include name="**/*.php"/>
+					</fileset>
+				</phplint>
+			</then>
+		</if>
+
+		<if>
+			<isset property="config.php5.3" />
+			<then>
+				<phplint interpreter="${config.php5.3}" tofile="${config.dist_dir}/error.php5.3">
+					<fileset dir="${config.build_dir}/xe">
+						<include name="**/*.php"/>
+					</fileset>
+				</phplint>
+			</then>
+		</if>
+    </target>
+
+
+    <!-- ============================================  -->
+    <!-- Target: Make Diff file                        --> 
+    <!-- ============================================  -->
+    <target name="build_diff">
+		<property name="file.diff.tar" value="${config.dist_dir}/${release.package}.${release.version}.${release.location}.diff.tar.gz" />
+		<property name="tmp.release.last_repo" value="${release.last_repo}" />
+		<php function="str_replace" returnProperty="tmp.release.last_repo">
+			<param value="/"/>
+			<param value="\/"/>
+			<param value="${tmp.release.last_repo}"/>
+		</php>
+
+        <mkdir dir="${config.diff_dir}" />
+ 		<echo msg="${config.svn} diff --summarize ${release.last_repo} ${release.repo} | sed 's/${tmp.release.last_repo}/.\/xe/g' | grep -E '^(MM|M| M|A)' |  awk '{print $NF}' | xargs -i cp {} ./diff --parents" />
+ 		<exec command="${config.svn} diff --summarize ${release.last_repo} ${release.repo} | sed 's/${tmp.release.last_repo}/.\/xe/g' | grep -E '^(MM|M| M|A)' |  awk '{print $NF}' | xargs -i cp {} ./diff --parents"  dir="${config.build_dir}" />
+
+		<tar destfile="${file.diff.tar}" compression="gzip" basedir="${config.diff_dir}" />
+
+		<!-- extra diff export -->
+		<phing phingfile="./build/${release.location}/${release.package}.build.xml" target="build_diff" inheritRefs="true" />
+    </target>
+</project>
