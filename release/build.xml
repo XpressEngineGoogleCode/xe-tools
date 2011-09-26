@@ -34,7 +34,7 @@
 
 
     <!-- ============================================  -->
-    <!-- Target: board_package                         --> 
+    <!-- (DEFAULT)  Target: board_package              --> 
     <!-- ============================================  -->
     <target name="board_package">
 		<phing phingfile="./build/xe_core.xml" inheritRefs="true" >

@@ -9,9 +9,9 @@
     </target>
 
     <!-- ============================================  -->
-    <!-- Target: build_diff                            -->
+    <!-- Target: build_changed                         -->
     <!-- ============================================  -->
-    <target name="build_diff">
+    <target name="build_changed">
     </target>
 
     <target name="dist">
