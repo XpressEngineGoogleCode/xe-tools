@@ -15,10 +15,10 @@
 
 
     <!-- ============================================  -->
-    <!-- Target: build_diff                            -->
+    <!-- Target: build_changed                         -->
     <!-- ============================================  -->
-    <target name="build_diff">
-		<phing phingfile="./build/ko/xe.build.xml" target="build_diff" inheritRefs="true" />
+    <target name="build_changed">
+		<phing phingfile="./build/ko/xe.build.xml" target="build_changed" inheritRefs="true" />
     </target>
 
 

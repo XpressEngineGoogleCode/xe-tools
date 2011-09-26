@@ -7,15 +7,25 @@
     <!-- ============================================  -->
     <target name="build">
 		<echo msg="export krzip" />
-		<property name="release.krzip_repo" value="http://xe-krzip.googlecode.com/svn/trunk/ " />
+		<property name="release.krzip_repo" value="http://xe-krzip.googlecode.com/svn/trunk/" />
         <exec command="${config.svn} export ${release.krzip_repo} ${config.build_dir}/xe/modules/krzip" />
+
+		<echo msg="export syndication" />
+		<property name="release.syndication_repo" value="http://xe-syndication.googlecode.com/svn/trunk/" />
+        <exec command="${config.svn} export ${release.syndication_repo} ${config.build_dir}/xe/modules/syndication" />
     </target>
 
+    <!-- ============================================  -->
+    <!-- Target: build_changed                         -->
+    <!-- ============================================  -->
+    <target name="build_changed">
+		<echo msg="export krzip" />
+		<property name="release.krzip_repo" value="http://xe-krzip.googlecode.com/svn/trunk/" />
+        <exec command="${config.svn} export ${release.krzip_repo} ${config.changed_dir}/xe/modules/krzip" />
 
-    <!-- ============================================  -->
-    <!-- Target: build_diff                            -->
-    <!-- ============================================  -->
-    <target name="build_diff">
+		<echo msg="export syndication" />
+		<property name="release.syndication_repo" value="http://xe-syndication.googlecode.com/svn/trunk/" />
+        <exec command="${config.svn} export ${release.syndication_repo} ${config.changed_dir}/xe/modules/syndication" />
     </target>
 
     <target name="dist">

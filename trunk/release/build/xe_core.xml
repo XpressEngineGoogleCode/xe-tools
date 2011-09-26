@@ -4,7 +4,7 @@
 
 	<property name="config.build_dir" value="./tmp" />
 	<property name="config.dist_dir" value="./dist/${release.package}.${release.version}.${release.location}" />
-	<property name="config.diff_dir" value="${config.build_dir}/diff" />
+	<property name="config.changed_dir" value="${config.build_dir}/changed" />
 
     <!-- ============================================  -->
     <!-- Target: prepare                               -->
@@ -49,7 +49,7 @@
 		<if>
 			<isset property="release.last_repo" />
 			<then>
-				<phingcall target="build_diff" />
+				<phingcall target="build_changed" />
 			</then>
 		</if>
 
@@ -97,10 +97,10 @@
 
 
     <!-- ============================================  -->
-    <!-- Target: Make Diff file                        --> 
+    <!-- Target: Make Changed file                        --> 
     <!-- ============================================  -->
-    <target name="build_diff">
-		<property name="file.diff.tar" value="${config.dist_dir}/${release.package}.${release.version}.${release.location}.diff.tar.gz" />
+    <target name="build_changed">
+		<property name="file.changed.tar" value="${config.dist_dir}/${release.package}.${release.version}.${release.location}.changed.tar.gz" />
 		<property name="tmp.release.last_repo" value="${release.last_repo}" />
 		<php function="str_replace" returnProperty="tmp.release.last_repo">
 			<param value="/"/>
@@ -108,13 +108,14 @@
 			<param value="${tmp.release.last_repo}"/>
 		</php>
 
-        <mkdir dir="${config.diff_dir}" />
- 		<echo msg="${config.svn} diff --summarize ${release.last_repo} ${release.repo} | sed 's/${tmp.release.last_repo}/.\/xe/g' | grep -E '^(MM|M| M|A)' |  awk '{print $NF}' | xargs -i cp {} ./diff --parents" />
- 		<exec command="${config.svn} diff --summarize ${release.last_repo} ${release.repo} | sed 's/${tmp.release.last_repo}/.\/xe/g' | grep -E '^(MM|M| M|A)' |  awk '{print $NF}' | xargs -i cp {} ./diff --parents"  dir="${config.build_dir}" />
+        <mkdir dir="${config.changed_dir}" />
+ 		<echo msg="${config.svn} diff --summarize ${release.last_repo} ${release.repo} | sed 's/${tmp.release.last_repo}/.\/xe/g' | grep -E '^(MM|M| M|A)' |  awk '{print $NF}' | xargs -i cp {} ./changed --parents" />
+ 		<exec command="${config.svn} diff --summarize ${release.last_repo} ${release.repo} | sed 's/${tmp.release.last_repo}/.\/xe/g' | grep -E '^(MM|M| M|A)' |  awk '{print $NF}' | xargs -i cp {} ./changed --parents"  dir="${config.build_dir}" />
 
-		<tar destfile="${file.diff.tar}" compression="gzip" basedir="${config.diff_dir}" />
 
-		<!-- extra diff export -->
-		<phing phingfile="./build/${release.location}/${release.package}.build.xml" target="build_diff" inheritRefs="true" />
+		<!-- extra changed export -->
+		<phing phingfile="./build/${release.location}/${release.package}.build.xml" target="build_changed" inheritRefs="true" />
+
+		<tar destfile="${file.changed.tar}" compression="gzip" basedir="${config.changed_dir}" />
     </target>
 </project>
