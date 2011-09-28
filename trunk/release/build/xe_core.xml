@@ -30,6 +30,7 @@
         <echo msg="${config.svn} export ${release.repo} ${config.build_dir}/xe" />
         <exec command="${config.svn} export ${release.repo} ${config.build_dir}/xe" />
         <delete dir="${config.build_dir}/xe/tests" />
+        <delete dir="${config.build_dir}/xe/tools" />
         <delete dir="${config.build_dir}/xe/test-phpUnit" />
         <delete dir="${config.build_dir}/xe/common/css.backup" />
         <delete dir="${config.build_dir}/xe/common/js/unittest" />
