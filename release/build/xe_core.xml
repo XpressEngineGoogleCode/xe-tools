@@ -12,12 +12,21 @@
     <target name="prepare">
         <exec command="rm -rf ${config.build_dir}" />
         <mkdir dir="${config.build_dir}" />
+
+        <exec command="rm -rf ${config.dist_dir}" />
+        <mkdir dir="${config.dist_dir}" />
     </target>
 
     <!-- ============================================  -->
     <!-- Target: build                                 -->
     <!-- ============================================  -->
     <target name="build" depends="prepare">
+
+		<property name="tmp.xe_revision" value="" />
+        <exec command="${config.svn} log --limit 1 --xml ${release.repo}  | grep 'revision' | sed 's/[^0-9]\+//g'" outputProperty="tmp.xe_revision" />
+        <echo msg="XE Core Rivision : ${tmp.xe_revision}" />
+        <exec command="touch ${config.dist_dir}/${tmp.xe_revision}" />
+
         <echo msg="${config.svn} export ${release.repo} ${config.build_dir}/xe" />
         <exec command="${config.svn} export ${release.repo} ${config.build_dir}/xe" />
         <delete dir="${config.build_dir}/xe/tests" />
@@ -25,19 +34,35 @@
         <delete dir="${config.build_dir}/xe/common/css.backup" />
         <delete dir="${config.build_dir}/xe/common/js/unittest" />
 
+		<!-- replace cdn version -->
+		<exec command="sed 's/%__XE_CDN_VERSION__%/${release.cdn_version}/' ${config.build_dir}/xe/config/config.inc.php > ${config.build_dir}/xe/config/config.inc.php.new &amp;&amp; mv -f ${config.build_dir}/xe/config/config.inc.php.new ${config.build_dir}/xe/config/config.inc.php" />
+
+		<phingcall target="build_default_skins" />
+
 		<!-- extra export -->
 		<phing phingfile="./build/${release.location}/${release.package}.build.xml" target="build" inheritRefs="true" />
     </target>
 
+    <!-- ============================================  -->
+    <!-- Target: default skins                         -->
+    <!-- ============================================  -->
+    <target name="build_default_skins">
+		<echo msg="export default skins" />
+
+		<property name="release.skins.xe_greystone" value="http://xe-theme-greystone.googlecode.com/svn/trunk/themes/xe_greystone" />
+		<exec command="${config.svn} export ${release.skins.xe_greystone} ${config.build_dir}/xe/themes/xe_greystone" />
+
+		<property name="release.skins.xe_sapphire" value="http://xe-theme-sapphire.googlecode.com/svn/trunk/themes/xe_sapphire" />
+		<exec command="${config.svn} export ${release.skins.xe_sapphire} ${config.build_dir}/xe/themes/xe_sapphire" />
+
+		<property name="release.skins.xe_solid_enterprise" value="http://xe-theme-enterprise.googlecode.com/svn/trunk/themes/xe_solid_enterprise" />
+		<exec command="${config.svn} export ${release.skins.xe_solid_enterprise} ${config.build_dir}/xe/themes/xe_solid_enterprise" />
+    </target>
 
     <!-- ============================================  -->
     <!-- (DEFAULT)  Target: dist                       --> 
     <!-- ============================================  -->
     <target name="dist" depends="build">
-
-        <exec command="rm -rf ${config.dist_dir}" />
-        <mkdir dir="${config.dist_dir}" />
-
 		<phingcall target="check_syntax" />
 
 		<property name="file.tar" value="${config.dist_dir}/${release.package}.${release.version}.${release.location}.tar.gz" />
@@ -73,9 +98,9 @@
 		</if>
 
 		<if>
-			<isset property="config.php5.2" />
+			<isset property="config.php52" />
 			<then>
-				<phplint interpreter="${config.php5.2}" tofile="${config.dist_dir}/error.php5.2">
+				<phplint interpreter="${config.php52}" tofile="${config.dist_dir}/error.php5.2">
 					<fileset dir="${config.build_dir}/xe">
 						<include name="**/*.php"/>
 					</fileset>
@@ -84,9 +109,9 @@
 		</if>
 
 		<if>
-			<isset property="config.php5.3" />
+			<isset property="config.php53" />
 			<then>
-				<phplint interpreter="${config.php5.3}" tofile="${config.dist_dir}/error.php5.3">
+				<phplint interpreter="${config.php53}" tofile="${config.dist_dir}/error.php5.3">
 					<fileset dir="${config.build_dir}/xe">
 						<include name="**/*.php"/>
 					</fileset>
@@ -111,7 +136,6 @@
         <mkdir dir="${config.changed_dir}" />
  		<echo msg="${config.svn} diff --summarize ${release.last_repo} ${release.repo} | sed 's/${tmp.release.last_repo}/.\/xe/g' | grep -E '^(MM|M| M|A)' |  awk '{print $NF}' | xargs -i cp {} ./changed --parents" />
  		<exec command="${config.svn} diff --summarize ${release.last_repo} ${release.repo} | sed 's/${tmp.release.last_repo}/.\/xe/g' | grep -E '^(MM|M| M|A)' |  awk '{print $NF}' | xargs -i cp {} ./changed --parents"  dir="${config.build_dir}" />
-
 
 		<!-- extra changed export -->
 		<phing phingfile="./build/${release.location}/${release.package}.build.xml" target="build_changed" inheritRefs="true" />

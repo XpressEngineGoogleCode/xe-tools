@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="forum.en" default="dist">
+
+    <!-- ============================================  -->
+    <!-- Target: build                                 -->
+    <!-- ============================================  -->
+    <target name="build">
+		<phing phingfile="./build/en/xe.build.xml" target="build" inheritRefs="true" />
+
+		<echo msg="export forum" />
+		<property name="release.forum_repo" value="http://xe-forum.googlecode.com/svn/trunk/" />
+		<exec command="${config.svn} svn export ${release.forum_repo} ${config.build_dir}/xe/modules/forum" />
+    </target>
+
+
+    <!-- ============================================  -->
+    <!-- Target: build_changed                         -->
+    <!-- ============================================  -->
+    <target name="build_changed">
+		<phing phingfile="./build/en/xe.build.xml" target="build_changed" inheritRefs="true" />
+    </target>
+
+
+    <target name="dist">
+    </target>
+</project>
