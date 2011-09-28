@@ -49,14 +49,18 @@
     <target name="build_default_skins">
 		<echo msg="export default skins" />
 
+		<!-- XE 1.5.0 -->
 		<property name="release.skins.xe_greystone" value="http://xe-theme-greystone.googlecode.com/svn/trunk/themes/xe_greystone" />
 		<exec command="${config.svn} export ${release.skins.xe_greystone} ${config.build_dir}/xe/themes/xe_greystone" />
+		<exec command="${config.svn} export --force http://xe-theme-greystone.googlecode.com/svn/trunk/widgets/login_info/skins/xe_global ${config.build_dir}/xe/widgets/login_info/skins/xe_global" />
 
 		<property name="release.skins.xe_sapphire" value="http://xe-theme-sapphire.googlecode.com/svn/trunk/themes/xe_sapphire" />
 		<exec command="${config.svn} export ${release.skins.xe_sapphire} ${config.build_dir}/xe/themes/xe_sapphire" />
+		<exec command="${config.svn} export --force http://xe-theme-sapphire.googlecode.com/svn/trunk/widgets/login_info/skins/xe_sapphire ${config.build_dir}/xe/widgets/login_info/skins/xe_sapphire" />
 
 		<property name="release.skins.xe_solid_enterprise" value="http://xe-theme-enterprise.googlecode.com/svn/trunk/themes/xe_solid_enterprise" />
 		<exec command="${config.svn} export ${release.skins.xe_solid_enterprise} ${config.build_dir}/xe/themes/xe_solid_enterprise" />
+		<exec command="${config.svn} export --force http://xe-theme-enterprise.googlecode.com/svn/trunk/widgets/login_info/skins/xe_solid_enterprise_login ${config.build_dir}/xe/widgets/login_info/skins/xe_solid_enterprise_login" />
     </target>
 
     <!-- ============================================  -->
@@ -136,6 +140,8 @@
         <mkdir dir="${config.changed_dir}" />
  		<echo msg="${config.svn} diff --summarize ${release.last_repo} ${release.repo} | sed 's/${tmp.release.last_repo}/.\/xe/g' | grep -E '^(MM|M| M|A)' |  awk '{print $NF}' | xargs -i cp {} ./changed --parents" />
  		<exec command="${config.svn} diff --summarize ${release.last_repo} ${release.repo} | sed 's/${tmp.release.last_repo}/.\/xe/g' | grep -E '^(MM|M| M|A)' |  awk '{print $NF}' | xargs -i cp {} ./changed --parents"  dir="${config.build_dir}" />
+
+		<phingcall target="build_default_skins" />
 
 		<!-- extra changed export -->
 		<phing phingfile="./build/${release.location}/${release.package}.build.xml" target="build_changed" inheritRefs="true" />
