@@ -15,16 +15,16 @@
 			<property name="release.location" value="ko" />
 
 			<!-- release version -->
-			<property name="release.version" value="1.5.0" /> 
+			<property name="release.version" value="1.5.0.2_beta" /> 
 
 			<!-- release cdn version : hiding XE version in html -->
-			<property name="release.cdn_version" value="ardent2" /> 
+			<property name="release.cdn_version" value="ardent4" /> 
 
 			<!-- xe core repo -->
 			<property name="release.repo" value="http://xe-core.googlecode.com/svn/branches/1.5.0" />
 
 			<!-- if you don`t wanna make diff file, just delete the node -->
-			<property name="release.last_repo" value="http://xe-core.googlecode.com/svn/tags/1.4.5.10" />
+			<property name="release.last_repo" value="http://xe-core.googlecode.com/svn/tags/1.5.0_beta" />
 
 			<!-- for checking syntax -->
 			<property name="config.php4" value="/usr/local/php4/bin/php" />
@@ -77,10 +77,10 @@
 			<property name="release.location" value="en" />
 
 			<!-- release version -->
-			<property name="release.version" value="1.5.0" /> 
+			<property name="release.version" value="1.5.0.1" /> 
 
 			<!-- release cdn version : hiding XE version in html -->
-			<property name="release.cdn_version" value="ardent2" /> 
+			<property name="release.cdn_version" value="ardent3" /> 
 
 			<!-- xe core repo -->
 			<property name="release.repo" value="http://xe-core.googlecode.com/svn/branches/1.5.0" />
