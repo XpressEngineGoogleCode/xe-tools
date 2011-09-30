@@ -50,14 +50,14 @@
     <target name="build_default_skins">
 		<echo msg="export default skins" />
 
-		<!-- XE 1.5.0 -->
+		<!-- XE 1.5 -->
 		<property name="release.skins.xe_greystone" value="http://xe-theme-greystone.googlecode.com/svn/trunk/themes/xe_greystone" />
 		<exec command="${config.svn} export ${release.skins.xe_greystone} ${config.build_dir}/xe/themes/xe_greystone" />
 		<exec command="${config.svn} export --force http://xe-theme-greystone.googlecode.com/svn/trunk/widgets/login_info/skins/xe_global ${config.build_dir}/xe/widgets/login_info/skins/xe_global" />
 
 		<property name="release.skins.xe_sapphire" value="http://xe-theme-sapphire.googlecode.com/svn/trunk/themes/xe_sapphire" />
 		<exec command="${config.svn} export ${release.skins.xe_sapphire} ${config.build_dir}/xe/themes/xe_sapphire" />
-		<exec command="${config.svn} export --force http://xe-theme-sapphire.googlecode.com/svn/trunk/widgets/login_info/skins/xe_sapphire ${config.build_dir}/xe/widgets/login_info/skins/xe_sapphire" />
+		<exec command="${config.svn} export --force https://xe-theme-sapphire.googlecode.com/svn/trunk/widgets/login_info/skins/xe_globalTwo ${config.build_dir}/xe/widgets/login_info/skins/xe_globalTwo" />
 
 		<property name="release.skins.xe_solid_enterprise" value="http://xe-theme-enterprise.googlecode.com/svn/trunk/themes/xe_solid_enterprise" />
 		<exec command="${config.svn} export ${release.skins.xe_solid_enterprise} ${config.build_dir}/xe/themes/xe_solid_enterprise" />
@@ -131,6 +131,7 @@
     <!-- ============================================  -->
     <target name="build_changed">
 		<property name="file.changed.tar" value="${config.dist_dir}/${release.package}.${release.version}.${release.location}.changed.tar.gz" />
+		<property name="file.changed.zip" value="${config.dist_dir}/${release.package}.${release.version}.${release.location}.changed.zip" />
 		<property name="tmp.release.last_repo" value="${release.last_repo}" />
 		<php function="str_replace" returnProperty="tmp.release.last_repo">
 			<param value="/"/>
@@ -148,5 +149,6 @@
 		<phing phingfile="./build/${release.location}/${release.package}.build.xml" target="build_changed" inheritRefs="true" />
 
 		<tar destfile="${file.changed.tar}" compression="gzip" basedir="${config.changed_dir}" />
+		<zip destfile="${file.changed.zip}" basedir="${config.changed_dir}" />
     </target>
 </project>
