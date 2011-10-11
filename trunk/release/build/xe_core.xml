@@ -35,8 +35,14 @@
         <delete dir="${config.build_dir}/xe/common/css.backup" />
         <delete dir="${config.build_dir}/xe/common/js/unittest" />
 
+
 		<!-- replace cdn version -->
-		<exec command="sed 's/%__XE_CDN_VERSION__%/${release.cdn_version}/' ${config.build_dir}/xe/config/config.inc.php > ${config.build_dir}/xe/config/config.inc.php.new &amp;&amp; mv -f ${config.build_dir}/xe/config/config.inc.php.new ${config.build_dir}/xe/config/config.inc.php" />
+		<if>
+			<isset property="release.cdn_version" />
+			<then>
+				<exec command="sed 's/%__XE_CDN_VERSION__%/${release.cdn_version}/' ${config.build_dir}/xe/config/config.inc.php > ${config.build_dir}/xe/config/config.inc.php.new &amp;&amp; mv -f ${config.build_dir}/xe/config/config.inc.php.new ${config.build_dir}/xe/config/config.inc.php" />
+			</then>
+		</if>
 
 		<phingcall target="build_default_skins" />
 
