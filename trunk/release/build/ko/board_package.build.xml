@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="board.ko" default="dist">
+<project name="Board Ko" default="dist">
 
     <!-- ============================================  -->
     <!-- Target: build                                 -->
     <!-- ============================================  -->
     <target name="build">
-		<phing phingfile="./build/ko/xe.build.xml" target="build" inheritRefs="true" />
+		<phing phingfile="./build/${release.location}/xe.build.xml" target="build" inheritRefs="true" />
 
 		<echo msg="export board" />
 		<property name="release.board_repo" value="http://xe-board.googlecode.com/svn/branches/1.4" />
-		<exec command="${config.svn} svn export ${release.board_repo} ${config.build_dir}/xe/modules/board" />
+		<exec command="${config.svn} export ${release.board_repo} ${config.build_dir}/xe/modules/board" />
     </target>
 
 
@@ -18,7 +18,7 @@
     <!-- Target: build_changed                         -->
     <!-- ============================================  -->
     <target name="build_changed">
-		<phing phingfile="./build/ko/xe.build.xml" target="build_changed" inheritRefs="true" />
+		<phing phingfile="./build/${release.location}/xe.build.xml" target="build_changed" inheritRefs="true" />
     </target>
 
 

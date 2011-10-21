@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="xe.ko" default="dist">
+<project name="XE Ko" default="dist">
 
     <!-- ============================================  -->
     <!-- Target: build                                 -->
@@ -19,7 +19,7 @@
     <!-- Target: build_changed                         -->
     <!-- ============================================  -->
     <target name="build_changed">
-	<!--
+
 		<echo msg="export krzip" />
 		<property name="release.krzip_repo" value="http://xe-krzip.googlecode.com/svn/trunk/" />
         <exec command="${config.svn} export ${release.krzip_repo} ${config.changed_dir}/xe/modules/krzip" />
@@ -27,7 +27,7 @@
 		<echo msg="export syndication" />
 		<property name="release.syndication_repo" value="http://xe-syndication.googlecode.com/svn/trunk/" />
         <exec command="${config.svn} export ${release.syndication_repo} ${config.changed_dir}/xe/modules/syndication" />
-	-->
+
     </target>
 
     <target name="dist">
