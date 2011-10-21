@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="XpressEngine Build" default="forum_package_en">
+
+    <!-- ============================================  -->
+    <!-- Target: forum_package                         --> 
+    <!-- ============================================  -->
+    <target name="forum_package_en">
+		<phing phingfile="./build/xe_core.xml" inheritRefs="true" >
+
+			<!-- package name : xe | textyle_package | board_package -->
+			<property name="release.package" value="forum_package" />
+
+			<!-- location : ko | en | cn -->
+			<property name="release.location" value="en" />
+
+			<!-- release version -->
+			<property name="release.version" value="1.5.0" /> 
+
+			<!-- release cdn version : hiding XE version in html -->
+			<property name="release.cdn_version" value="ardent2" /> 
+
+			<!-- xe core repo -->
+			<property name="release.repo" value="http://xe-core.googlecode.com/svn/branches/1.5.0" />
+
+			<!-- if you don`t wanna make diff file, just delete the node -->
+			<!--
+			<property name="release.last_repo" value="http://xe-core.googlecode.com/svn/tags/1.4.5.10" />
+			-->
+
+			<!-- for checking syntax -->
+			<property name="config.php4" value="/usr/local/php4/bin/php" />
+			<property name="config.php52" value="/usr/local/php/bin/php" />
+			<property name="config.php53" value="/usr/local/php538/bin/php" />
+
+			<property name="config.svn" value="/usr/bin/svn" />
+		</phing>
+    </target>
+</project>
