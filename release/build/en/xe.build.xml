@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="xe.en" default="dist">
+<project name="XE En" default="dist">
     <!-- ============================================  -->
     <!-- Target: build                                 -->
     <!-- ============================================  -->

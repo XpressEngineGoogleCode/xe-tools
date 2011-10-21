@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="Forum En" default="dist">
+<project name="Textyle En" default="dist">
 
     <!-- ============================================  -->
     <!-- Target: build                                 -->
@@ -8,9 +8,13 @@
     <target name="build">
 		<phing phingfile="./build/${release.location}/xe.build.xml" target="build" inheritRefs="true" />
 
-		<echo msg="export forum" />
-		<property name="release.forum_repo" value="http://xe-forum.googlecode.com/svn/trunk/" />
-		<exec command="${config.svn} svn export ${release.forum_repo} ${config.build_dir}/xe/modules/forum" />
+		<echo msg="export textyle" />
+		<property name="release.textyle_repo" value="http://xe-textyle.googlecode.com/svn/branches/1.3.3" />
+		<exec command="${config.svn} export ${release.textyle_repo} ${config.build_dir}/xe/modules/textyle" />
+
+		<echo msg="export material" />
+		<property name="release.material_repo" value="http://xe-material.googlecode.com/svn/branches/1.1" />
+		<exec command="${config.svn} export ${release.material_repo} ${config.build_dir}/xe/modules/material" />
     </target>
 
 

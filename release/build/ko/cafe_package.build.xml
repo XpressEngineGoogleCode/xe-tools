@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Cafe Ko" default="dist">
+
+    <!-- ============================================  -->
+    <!-- Target: build                                 -->
+    <!-- ============================================  -->
+    <target name="build">
+		<phing phingfile="./build/${release.location}/xe.build.xml" target="build" inheritRefs="true" />
+
+		<echo msg="export cafe" />
+		<property name="release.cafe_repo" value="http://xe-cafe.googlecode.com/svn/branches/modules/0.2.3/" />
+		<exec command="${config.svn} export ${release.cafe_repo} ${config.build_dir}/xe/modules/homepage" />
+
+		<exec command="${config.svn} export http://xe-cafe.googlecode.com/svn/branches/layouts/xe_cafe_site/0.1/ ${config.build_dir}/xe/layouts/xe_cafe_site" />
+		<exec command="${config.svn} export  http://xe-cafe.googlecode.com/svn/trunk/widgets/site_info/  ${config.build_dir}/xe/widgets/site_info" />
+		<exec command="${config.svn} export http://xe-cafe.googlecode.com/svn/trunk/widget_skin/language_select/skins/cafe_site/  ${config.build_dir}/xe/widgets/language_select/skins/cafe_site" />
+		<exec command="${config.svn} export http://xe-cafe.googlecode.com/svn/trunk/widget_skin/login_info/skins/cafe_site/ ${config.build_dir}/xe/widgets/login_info/skins/cafe_site" />
+    </target>
+
+
+    <!-- ============================================  -->
+    <!-- Target: build_changed                         -->
+    <!-- ============================================  -->
+    <target name="build_changed">
+		<phing phingfile="./build/${release.location}/xe.build.xml" target="build_changed" inheritRefs="true" />
+    </target>
+
+
+    <target name="dist">
+    </target>
+</project>
