@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="XpressEngine Build" default="textyle_package_ko">
+
+    <!-- ============================================  -->
+    <!-- Target: textyle_package_en                    --> 
+    <!-- ============================================  -->
+    <target name="textyle_package_ko">
+		<phing phingfile="./build/xe_core.xml" inheritRefs="true" >
+
+			<!-- package name : xe | textyle_package | board_package -->
+			<property name="release.package" value="textyle_package" />
+
+			<!-- location : ko | en | cn -->
+			<property name="release.location" value="ko" />
+
+			<!-- release cdn version : hiding XE version in html -->
+			<property name="release.cdn_version" value="ardent2" /> 
+
+			<!-- xe core repo -->
+			<property name="release.repo" value="http://xe-core.googlecode.com/svn/branches/1.5.0" />
+
+			<!-- for checking syntax -->
+			<property name="config.php4" value="/usr/local/php4/bin/php" />
+			<property name="config.php52" value="/usr/local/php/bin/php" />
+			<property name="config.php53" value="/usr/local/php538/bin/php" />
+
+			<property name="config.svn" value="/usr/bin/svn" />
+		</phing>
+    </target>
+</project>
