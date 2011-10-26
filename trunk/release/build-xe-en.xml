@@ -18,10 +18,10 @@
 			<property name="release.version" value="1.5.0.7" /> 
 
 			<!-- release cdn version : hiding XE version in html -->
-			<property name="release.cdn_version" value="ardent3" /> 
+			<property name="release.cdn_version" value="sun" /> 
 
 			<!-- xe core repo -->
-			<property name="release.repo" value="http://xe-core.googlecode.com/svn/branches/1.5.0" />
+			<property name="release.repo" value="http://xe-core.googlecode.com/svn/tags/1.5.0.7" />
 
 			<!-- if you don`t wanna make diff file, just delete the node -->
 			<!--
