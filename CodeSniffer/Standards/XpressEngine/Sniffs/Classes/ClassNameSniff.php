@@ -34,11 +34,11 @@ class XpressEngine_Sniffs_Classes_ClassNameSniff implements PHP_CodeSniffer_Snif
 
 		if($tokens[$stackPtr+2]['code'] !== T_STRING) return;
 		
-		$first = substr($tokens[$stackPtr+2]['content'],0,1);
-		if(!preg_match('/^[A-Z]/',$first))
+		$first = substr($tokens[$stackPtr+2]['content'], 0, 1);
+		if(!preg_match('/^[A-Z]/', $first))
 		{
 			$error = "Must start uppercase on class name";
-			$phpcsFile->addError($error, $stackPtr+2, 'Class Name');
+			$phpcsFile->addError($error, $stackPtr + 2, 'Class Name');
 		}
 
     }//end process()

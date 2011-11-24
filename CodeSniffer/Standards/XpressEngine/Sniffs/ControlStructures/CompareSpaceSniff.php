@@ -29,17 +29,17 @@ class XpressEngine_Sniffs_ControlStructures_CompareSpaceSniff implements PHP_Cod
         $token = $tokens[$stackPtr];
 
 		// check $a ==$a
-        if($tokens[$stackPtr-1]['code'] !== T_WHITESPACE)
+        if($tokens[$stackPtr - 1]['code'] !== T_WHITESPACE)
 		{
-			$error = "Must Use Spaces Before Compare Statment";
-			$phpcsFile->addError($error, $stackPtr-1, 'Using Space');
+			$error = "Must Use Space Before Compare Statment : %s";
+			$phpcsFile->addError($error, $stackPtr - 1, 'Space', $tokens[$stackPtr - 1]['content'] . $token['content'] . $tokens[$stackPtr + 1]['content'] );
 		}
 
 		// check $a== $a
-        if($tokens[$stackPtr+1]['code'] !== T_WHITESPACE)
+        if($tokens[$stackPtr + 1]['code'] !== T_WHITESPACE)
 		{
-			$error = "Must Use Spaces After Compare Statment";
-			$phpcsFile->addError($error, $stackPtr+1, 'Using Space');
+			$error = "Must Use Space After Compare Statment : %s";
+			$phpcsFile->addError($error, $stackPtr + 1, 'Space', $tokens[$stackPtr - 1]['content'] . $token['content'] . $tokens[$stackPtr + 1]['content'] );
 		}
 
     }//end process()

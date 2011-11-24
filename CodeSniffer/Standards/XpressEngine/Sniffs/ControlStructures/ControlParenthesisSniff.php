@@ -29,29 +29,29 @@ class XpressEngine_Sniffs_ControlStructures_ControlParenthesisSniff implements P
         $tokens = $phpcsFile->getTokens();
 //print_r($tokens); exit;
         $token = $tokens[$stackPtr];
-        $openParenthesis = $tokens[$stackPtr+1];
+        $openParenthesis = $tokens[$stackPtr + 1];
 
-		// check if(
+		// check if (
 		if($openParenthesis['code'] !== T_OPEN_PARENTHESIS)
 		{
 			$error = "Not permit spaces in Condition";
-			$phpcsFile->addError($error, $stackPtr+1, 'Using Space');
+			$phpcsFile->addError($error, $stackPtr + 1, 'Space');
 			return;
 		}
 
 		// check if( $a
-        if($tokens[$token['parenthesis_opener']+1]['code'] === T_WHITESPACE)
+        if($tokens[$token['parenthesis_opener'] + 1]['code'] === T_WHITESPACE && strpos($tokens[$token['parenthesis_opener'] + 1]['content'], "\n") === FALSE)
 		{
 			$error = "Not permit spaces in Condition";
-			$phpcsFile->addError($error, $token['parenthesis_opener']+1, 'Using Space');
+			$phpcsFile->addError($error, $token['parenthesis_opener'] + 1, 'Space');
 			return;
 		}
 
 		// check if($a )
-        if($tokens[$token['parenthesis_closer']-1]['code'] === T_WHITESPACE)
+        if($tokens[$token['parenthesis_closer'] - 1]['code'] === T_WHITESPACE && strpos($tokens[$token['parenthesis_closer'] - 1]['content'], "\n") === FALSE)
 		{
 			$error = "Not permit spaces in Condition";
-			$phpcsFile->addError($error, $token['parenthesis_closer']-1, 'Using Space');
+			$phpcsFile->addError($error, $token['parenthesis_closer'] - 1, 'Space');
 			return;
 		}
 

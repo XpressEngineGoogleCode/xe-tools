@@ -11,7 +11,6 @@ class XpressEngine_Sniffs_Classes_ClassConstructorSniff implements PHP_CodeSniff
     public function register()
     {
         return array(T_NEW);
-
     }//end register()
 
 
@@ -29,12 +28,10 @@ class XpressEngine_Sniffs_Classes_ClassConstructorSniff implements PHP_CodeSniff
         $tokens = $phpcsFile->getTokens();
         $token = $tokens[$stackPtr];
 
-		if($tokens[$stackPtr+2]['code'] !== T_STRING) return;
-		
-		if($tokens[$stackPtr+3]['code'] !== T_OPEN_PARENTHESIS)
+		if($tokens[$stackPtr + 3]['code'] !== T_OPEN_PARENTHESIS)
 		{
-			$error = "Must use parenthesis '()' on class constuctor call";
-			$phpcsFile->addError($error, $stackPtr+3, 'Call class constuctor');
+			$error = "Not permit to omit the parenthesis '()' on class constuctor call";
+			$phpcsFile->addError($error, $stackPtr + 3, 'Class');
 		}
 
     }//end process()

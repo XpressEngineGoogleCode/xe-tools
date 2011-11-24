@@ -10,8 +10,7 @@ class XpressEngine_Sniffs_File_CommentOfFileInfoSniff implements PHP_CodeSniffer
      */
     public function register()
     {
-        return array(T_COMMENT);
-
+        return array(T_OPEN_TAG);
     }//end register()
 
 

@@ -11,7 +11,6 @@ class XpressEngine_Sniffs_File_DisallowSpaceIndentSniff implements PHP_CodeSniff
     public function register()
     {
         return array(T_WHITESPACE);
-
     }//end register()
 
 
@@ -33,8 +32,8 @@ class XpressEngine_Sniffs_File_DisallowSpaceIndentSniff implements PHP_CodeSniff
 
 		if(strpos($token['content'], ' ') !== false)
 		{
-			$error = 'Tabs must be used to indent lines; Spaces are not allowed';
-			$phpcsFile->addError($error, $stackPtr, 'SpacesUsed');
+			$error = 'Spaces are not allowed for indent';
+			$phpcsFile->addError($error, $stackPtr, 'Space');
 		}
 
 	}//end process()

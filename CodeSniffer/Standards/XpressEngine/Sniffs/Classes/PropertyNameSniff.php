@@ -30,16 +30,14 @@ class XpressEngine_Sniffs_Classes_PropertyNameSniff implements PHP_CodeSniffer_S
         $token = $tokens[$stackPtr];
 
 		//print_r($tokens); exit;
-
-
-		$next = $phpcsFile->findNext(T_VARIABLE, $stackPtr+1);
+		$next = $phpcsFile->findNext(T_VARIABLE, $stackPtr + 1);
 			
 		// remove $
-		$propertyName = substr($tokens[$next]['content'],1);
+		$propertyName = substr($tokens[$next]['content'], 1);
 
-		if(!preg_match('/^_*[a-z]/',$propertyName))
+		if(!preg_match('/^_*[a-z]/', $propertyName))
 		{
-			$error = "Must start lowercase on property name : %s";
+			$error = "Must start a lowercase on property name : %s";
 			$phpcsFile->addError($error, $next, 'Property Name', $tokens[$next]['content']);
 		}
 

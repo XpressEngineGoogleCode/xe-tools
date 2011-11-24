@@ -26,13 +26,13 @@ class XpressEngine_Sniffs_Commenting_ClassCommentsSniff implements PHP_CodeSniff
 	{
 		$tokens = $phpcsFile->getTokens();
 		$token = $tokens[$stackPtr];
-		$className = $tokens[$stackPtr+2]['content'];
+		$className = $tokens[$stackPtr + 2]['content'];
 
 //		print_r($tokens); return;
 
 		$comments = array();
-		$ptr = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr-1);
-		if($tokens[$ptr]['line']+1 !== $token['line'])
+		$ptr = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr - 1);
+		if($tokens[$ptr]['line'] + 1 !== $token['line'])
 		{
 			$error = 'Class must have a comment : Class %s';
 			$phpcsFile->addError($error, $stackPtr, 'Found', $className);

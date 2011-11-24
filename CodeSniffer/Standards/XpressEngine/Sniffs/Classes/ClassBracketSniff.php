@@ -29,27 +29,29 @@ class XpressEngine_Sniffs_Classes_ClassBracketSniff implements PHP_CodeSniffer_S
         $tokens = $phpcsFile->getTokens();
         $token = $tokens[$stackPtr];
 
-		$next = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET,$stackPtr+1);
-		if(!$next) return;
-
-		if($tokens[$next]['line'] == $token['line'])
+		$checkPtr = $stackPtr;
+		if(array_key_exists('parenthesis_closer', $token))
 		{
-			$error = "Must use start bracket '{' on next line";
-			$phpcsFile->addError($error, $next, 'Using Bracket on Class and Method');
+			$checkPtr = $token['parenthesis_closer'];
+		}
+
+		if($tokens[$checkPtr]['line'] + 1 !== $tokens[$token['scope_opener']]['line'])
+		{
+			$error = "Must use a start bracket '{' on next line";
+			$phpcsFile->addError($error, $token['scope_opener'], 'Bracket');
 		}
 
 
-		if($tokens[$next]['column'] != $token['column'])
+		if($tokens[$token['scope_opener']]['column'] != $token['column'])
 		{
 			$error = "Must use same Indent";
-			$phpcsFile->addError($error, $next, 'Using Bracket on Class and Method');
+			$phpcsFile->addError($error, $token['scope_opener'], 'Bracket');
 		}
 
-		$closer = $tokens[$next]['bracket_closer'];
-		if($tokens[$closer]['column'] != $token['column'])
+		if($tokens[$token['scope_closer']]['column'] != $token['column'])
 		{
 			$error = "Must use same Indent";
-			$phpcsFile->addError($error, $next, 'Using Bracket on Class and Method');
+			$phpcsFile->addError($error, $token['scope_closer'], 'Bracket');
 		}
 
     }//end process()
