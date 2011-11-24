@@ -10,8 +10,7 @@ class XpressEngine_Sniffs_ControlStructures_SpaceParenthesisSniff implements PHP
      */
     public function register()
     {
-        return array(T_OPEN_PARENTHESIS, T_CLOSE_PARENTHESIS, T_EQUAL);
-
+        return array(T_OPEN_PARENTHESIS, T_CLOSE_PARENTHESIS);
     }//end register()
 
 
@@ -32,20 +31,20 @@ class XpressEngine_Sniffs_ControlStructures_SpaceParenthesisSniff implements PHP
 		// check ( $a == $A)
 		if($token['code'] == T_OPEN_PARENTHESIS)
 		{
-			if($tokens[$stackPtr+1]['code'] === T_WHITESPACE)
+			if($tokens[$stackPtr + 1]['code'] === T_WHITESPACE && strpos($tokens[$stackPtr+1]['content'], "\n") === false)
 			{
 				$error = "Not permit spaces in Condition";
-				$phpcsFile->addError($error, $stackPtr+1, 'Using Space');
+				$phpcsFile->addError($error, $stackPtr + 1, 'Using Space');
 			}
 		}
 		
 		// check ($a == $A )
 		if($token['code'] == T_CLOSE_PARENTHESIS)
 		{
-			if($tokens[$stackPtr-1]['code'] === T_WHITESPACE)
+			if($tokens[$stackPtr - 1]['code'] === T_WHITESPACE && strpos($tokens[$stackPtr-1]['content'], "\n") === false)
 			{
 				$error = "Not permit spaces in Condition";
-				$phpcsFile->addError($error, $stackPtr+1, 'Using Space');
+				$phpcsFile->addError($error, $stackPtr + 1, 'Using Space');
 			}
 		}
 

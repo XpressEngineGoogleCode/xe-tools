@@ -43,15 +43,21 @@ class XpressEngine_Sniffs_Classes_MethodNameSniff implements PHP_CodeSniffer_Sni
 			$class = $key;
 		}
 
-		if(!$class || $tokens[$class]['code'] !== T_CLASS) return;
+		if(!$class || $tokens[$class]['code'] !== T_CLASS)
+		{
+			return;
+		}
 
-		$next = $phpcsFile->findNext(T_STRING, $class+1);
+		$next = $phpcsFile->findNext(T_STRING, $class + 1);
 		$className = $tokens[$next]['content'];
 
 		// if constructor on PHP4
-		if($className == $methodName) return;
+		if($className == $methodName)
+		{
+			return;
+		}
 
-		if(!preg_match('/^_*[a-z]/',$methodName))
+		if(!preg_match('/^_*[a-z]/', $methodName))
 		{
 			$error = "Must start lowercase on method name : %s()";
 			$phpcsFile->addError($error, $next, 'Method Name', $className . '::' . $methodName);

@@ -29,42 +29,17 @@ class XpressEngine_Sniffs_ControlStructures_ControlSignatureSniff implements PHP
     {
         $tokens = $phpcsFile->getTokens();
         $token = $tokens[$stackPtr];
-//print_r($tokens); exit;
-		$closeBracket = $token['parenthesis_closer'];
-		$next = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, $closeBracket+1);
-		if(!$next) return;
 
-		$closeBracketLine = $tokens[$closeBracket]['line'];
-		if($closeBracketLine != $tokens[$next]['line'] && $closeBracketLine != $tokens[$next]['line']-1)
+		if(!$token['scope_opener'])
 		{
+			$error = "Not permit to omit bracket '{}'";
+			$phpcsFile->addError($error, $stackPtr, 'Bracket');
 			return;
 		}
 
-		$count = 0;
-		$newlineCount = 0;
-		for($i = $closeBracket+1; $i < $next; $i++)
+		if($tokens[$token['parenthesis_closer']]['line'] + 1 != $tokens[$token['scope_opener']]['line'])
 		{
-			if($tokens[$i]['code'] === T_WHITESPACE)
-			{
-				if($tokens[$i]['content'] == "\n")
-				{
-					$newlineCount++;
-				}
-			}
-			else
-			{
-				$count++;
-			}
-		}
-
-		if($count > 0)
-		{
-			return;
-		}
-
-		if($newlineCount == 0)
-		{
-			$error = "New Line(\\n) must be used bewteen CLOSE PARENTHESIS ')' and OPEN BRACKET '{'";
+			$error = "Not permit to use OPEN BRACKET '{' on same line of CLOSE PARENTHESIS ')'";
 			$phpcsFile->addError($error, $closeBracket+1, 'NewLine');
 			return;
 		}

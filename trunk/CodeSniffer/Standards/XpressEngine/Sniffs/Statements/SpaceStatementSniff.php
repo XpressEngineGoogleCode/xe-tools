@@ -10,7 +10,12 @@ class XpressEngine_Sniffs_Statements_SpaceStatementSniff implements PHP_CodeSnif
      */
     public function register()
     {
-        return array(T_EQUAL, T_SEMICOLON, T_COMMA);
+        return array(
+						T_EQUAL, T_DIVIDE, T_BITWISE_AND, T_MULTIPLY, T_MODULUS, T_PLUS, T_MINUS,
+						T_BOOLEAN_AND, T_BOOLEAN_OR,
+						T_SEMICOLON, T_COMMA,
+						T_STRING_CONCAT
+					);
 
     }//end register()
 
@@ -29,29 +34,21 @@ class XpressEngine_Sniffs_Statements_SpaceStatementSniff implements PHP_CodeSnif
         $tokens = $phpcsFile->getTokens();
         $token = $tokens[$stackPtr];
 
-		// check if(
-		if($token['code'] === T_EQUAL)
+//print_r($tokens); exit;
+		if($token['code'] === T_SEMICOLON || $token['code'] === T_COMMA)
 		{
-			if($tokens[$stackPtr-1]['code'] !== T_WHITESPACE || $tokens[$stackPtr+1]['code'] !== T_WHITESPACE)
+			if($tokens[$stackPtr + 1]['code'] !== T_WHITESPACE)
 			{
-				$error = "Must use spaces before and after EQUAL";
-				$phpcsFile->addError($error, $stackPtr, 'Using Space');
+				$error = "Must use space after " . substr($tokens[$stackPtr]['type'], 2) . " : %s";
+				$phpcsFile->addError($error, $stackPtr, 'Space', $tokens[$stackPtr - 1]['content'] . $tokens[$stackPtr]['content']);
 			}
 		}
-		else if($token['code'] === T_SEMICOLON)
+		else
 		{
-			if($tokens[$stackPtr+1]['code'] !== T_WHITESPACE)
+			if($tokens[$stackPtr - 1]['code'] !== T_WHITESPACE || $tokens[$stackPtr + 1]['code'] !== T_WHITESPACE)
 			{
-				$error = "Must use spaces after SEMICOLON";
-				$phpcsFile->addError($error, $stackPtr, 'Using Space');
-			}
-		}
-		else if($token['code'] === T_COMMA)
-		{
-			if($tokens[$stackPtr+1]['code'] !== T_WHITESPACE)
-			{
-				$error = "Must use spaces after COMMA";
-				$phpcsFile->addError($error, $stackPtr, 'Using Space');
+				$error = "Must use space before and after " . substr($tokens[$stackPtr]['type'], 2) . " : %s";
+				$phpcsFile->addError($error, $stackPtr, 'Space', $tokens[$stackPtr - 1]['content'] . $tokens[$stackPtr]['content'] . $tokens[$stackPtr + 1]['content']);
 			}
 		}
 
