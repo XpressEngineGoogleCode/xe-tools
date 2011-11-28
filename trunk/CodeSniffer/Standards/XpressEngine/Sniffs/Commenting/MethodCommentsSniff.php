@@ -50,12 +50,6 @@ class XpressEngine_Sniffs_Commenting_MethodCommentsSniff implements PHP_CodeSnif
 		}
 
 
-		// count params
-		$countParams = 0;
-		for($i = $token['parenthesis_opener']+1; $i < $token['parenthesis_closer']; $i++)
-		{
-			if($tokens[$i]['code'] === T_VARIABLE) $countParams++;
-		}
 
 		// check comment
 		$comments = array();
@@ -96,9 +90,15 @@ class XpressEngine_Sniffs_Commenting_MethodCommentsSniff implements PHP_CodeSnif
 		{
 			$commentParams[] = '@access';
 		}
-		if($countParams>0)
+
+
+		$params = $phpcsFile->getMethodParameters($stackPtr);
+		if($params)
 		{
-			$commentParams[] = '@param';
+			foreach($params as $k => $v)
+			{
+				$commentParams[] = '@param ' . $v['name'];
+			}
 		}
 
 		foreach($commentParams as $val)
