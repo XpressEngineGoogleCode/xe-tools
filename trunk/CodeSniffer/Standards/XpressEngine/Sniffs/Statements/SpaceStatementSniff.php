@@ -11,7 +11,10 @@ class XpressEngine_Sniffs_Statements_SpaceStatementSniff implements PHP_CodeSnif
     public function register()
     {
         return array(
-						T_EQUAL, T_DIVIDE, T_BITWISE_AND, T_MULTIPLY, T_MODULUS, T_PLUS, T_MINUS,
+						T_EQUAL, T_IS_NOT_IDENTICAL, T_IS_NOT_EQUAL, T_CONCAT_EQUAL,
+						T_MUL_EQUAL, T_MINUS_EQUAL, T_PLUS_EQUAL, T_XOR_EQUAL, T_AND_EQUAL,
+						T_DIVIDE, T_BITWISE_AND, T_MULTIPLY,
+						T_MODULUS, T_PLUS, T_MINUS,
 						T_BOOLEAN_AND, T_BOOLEAN_OR,
 						T_SEMICOLON, T_COMMA,
 						T_STRING_CONCAT,
@@ -35,21 +38,37 @@ class XpressEngine_Sniffs_Statements_SpaceStatementSniff implements PHP_CodeSnif
         $tokens = $phpcsFile->getTokens();
         $token = $tokens[$stackPtr];
 
-		if($token['code'] === T_SEMICOLON || $token['code'] === T_COMMA)
+		$before = null;
+		$after = null;
+
+		switch($token['code'])
 		{
-			if($tokens[$stackPtr + 1]['code'] !== T_WHITESPACE)
-			{
-				$error = "Must use space after " . substr($tokens[$stackPtr]['type'], 2) . " : %s";
-				$phpcsFile->addError($error, $stackPtr, 'Space', $tokens[$stackPtr - 1]['content'] . $tokens[$stackPtr]['content']);
-			}
+			case T_SEMICOLON:
+			case T_COMMA:
+				$after = $tokens[$stackPtr + 1];
+				break;
+
+			case T_PLUS:
+			case T_MINUS:
+			case T_BITWISE_AND:
+				$before = $tokens[$stackPtr - 1];
+				break;
+
+			default:
+				$before = $tokens[$stackPtr - 1];
+				$after = $tokens[$stackPtr + 1];
 		}
-		else
+
+		if($before && $before['code'] !== T_WHITESPACE)
 		{
-			if($tokens[$stackPtr - 1]['code'] !== T_WHITESPACE || $tokens[$stackPtr + 1]['code'] !== T_WHITESPACE)
-			{
-				$error = "Must use space before and after " . substr($tokens[$stackPtr]['type'], 2) . " : %s";
-				$phpcsFile->addError($error, $stackPtr, 'Space', $tokens[$stackPtr - 1]['content'] . $tokens[$stackPtr]['content'] . $tokens[$stackPtr + 1]['content']);
-			}
+			$error = "Must use space before " . substr($tokens[$stackPtr]['type'], 2) . " : %s";
+			$phpcsFile->addError($error, $stackPtr, 'Space', $tokens[$stackPtr - 1]['content'] . $tokens[$stackPtr]['content']);
+		}
+
+		if($after && $after['code'] !== T_WHITESPACE)
+		{
+			$error = "Must use space after " . substr($tokens[$stackPtr]['type'], 2) . " : %s";
+			$phpcsFile->addError($error, $stackPtr, 'Space', $tokens[$stackPtr + 1]['content'] . $tokens[$stackPtr]['content']);
 		}
 
     }//end process()
