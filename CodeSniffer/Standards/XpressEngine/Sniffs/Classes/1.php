@@ -1,2 +1,9 @@
 <?php
-$a = new Aa;
+class aa
+{
+	function a($a, $b)
+	{
+
+	}
+
+}
