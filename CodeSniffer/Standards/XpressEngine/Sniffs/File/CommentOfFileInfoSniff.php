@@ -25,7 +25,11 @@ class XpressEngine_Sniffs_File_CommentOfFileInfoSniff implements PHP_CodeSniffer
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-		if(self::$isStart) return;
+		if(self::$isStart)
+		{
+			return;
+		}
+
 		self::$isStart = TRUE;
 
         $tokens = $phpcsFile->getTokens();

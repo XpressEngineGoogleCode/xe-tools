@@ -32,8 +32,11 @@ class XpressEngine_Sniffs_File_DisallowPHPClosingTagSniff implements PHP_CodeSni
         $type = $tokens[$stackPtr]['type'];
 		if($code === T_OPEN_TAG) 
 		{
-            $error = 'Using PHP Short Open Tag : %s';
-			if($content != '<?php') $phpcsFile->addError($error, $stackPtr, 'Found', $content);
+			if($content != '<?php')
+			{
+				$error = 'Using PHP Short Open Tag : %s';
+				$phpcsFile->addError($error, $stackPtr, 'Found', $content);
+			}
 		}
 		else if($code === T_CLOSE_TAG)
 		{

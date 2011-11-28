@@ -14,7 +14,8 @@ class XpressEngine_Sniffs_Statements_SpaceStatementSniff implements PHP_CodeSnif
 						T_EQUAL, T_DIVIDE, T_BITWISE_AND, T_MULTIPLY, T_MODULUS, T_PLUS, T_MINUS,
 						T_BOOLEAN_AND, T_BOOLEAN_OR,
 						T_SEMICOLON, T_COMMA,
-						T_STRING_CONCAT
+						T_STRING_CONCAT,
+						T_DOUBLE_ARROW
 					);
 
     }//end register()
@@ -34,7 +35,6 @@ class XpressEngine_Sniffs_Statements_SpaceStatementSniff implements PHP_CodeSnif
         $tokens = $phpcsFile->getTokens();
         $token = $tokens[$stackPtr];
 
-//print_r($tokens); exit;
 		if($token['code'] === T_SEMICOLON || $token['code'] === T_COMMA)
 		{
 			if($tokens[$stackPtr + 1]['code'] !== T_WHITESPACE)
