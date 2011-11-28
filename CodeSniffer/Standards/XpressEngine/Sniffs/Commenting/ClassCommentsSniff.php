@@ -31,6 +31,7 @@ class XpressEngine_Sniffs_Commenting_ClassCommentsSniff implements PHP_CodeSniff
 //		print_r($tokens); return;
 
 		$comments = array();
+
 		$ptr = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr - 1);
 		if($tokens[$ptr]['line'] + 1 !== $token['line'])
 		{
