@@ -31,7 +31,7 @@ class XpressEngine_Sniffs_ControlStructures_SpaceParenthesisSniff implements PHP
 		// check ( $a == $A)
 		if($token['code'] == T_OPEN_PARENTHESIS)
 		{
-			if($tokens[$stackPtr + 1]['code'] === T_WHITESPACE && strpos($tokens[$stackPtr+1]['content'], "\n") === false)
+			if($tokens[$stackPtr + 1]['code'] === T_WHITESPACE && strpos($tokens[$stackPtr+1]['content'], "\n") === FALSE)
 			{
 				$error = "Not permit spaces in Condition";
 				$phpcsFile->addError($error, $stackPtr + 1, 'Using Space');
@@ -41,7 +41,7 @@ class XpressEngine_Sniffs_ControlStructures_SpaceParenthesisSniff implements PHP
 		// check ($a == $A )
 		if($token['code'] == T_CLOSE_PARENTHESIS)
 		{
-			if($tokens[$stackPtr - 1]['code'] === T_WHITESPACE && strpos($tokens[$stackPtr-1]['content'], "\n") === false)
+			if($tokens[$stackPtr - 1]['code'] === T_WHITESPACE && strpos($tokens[$stackPtr-1]['content'], "\n") === FALSE)
 			{
 				$error = "Not permit spaces in Condition";
 				$phpcsFile->addError($error, $stackPtr + 1, 'Using Space');

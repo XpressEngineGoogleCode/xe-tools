@@ -53,9 +53,9 @@ class XpressEngine_Sniffs_Commenting_ClassCommentsSniff implements PHP_CodeSniff
 
 		$comments = array_reverse($comments);
 
-		if($comments[0] != "/**")
+		if($comments[0] != '/**')
 		{
-			$error = 'Class Comment must start "/**"" : Class %s';
+			$error = 'Class Comment must start "/**" : Class %s';
 			$phpcsFile->addError($error, $stackPtr, 'Found', $className);
 		}
 

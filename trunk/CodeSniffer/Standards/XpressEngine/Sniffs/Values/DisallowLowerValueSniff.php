@@ -27,11 +27,11 @@ class XpressEngine_Sniffs_Values_DisallowLowerValueSniff implements PHP_CodeSnif
     {
         $tokens = $phpcsFile->getTokens();
         $code = $tokens[$stackPtr]['code'];
-        $content = rtrim($tokens[$stackPtr]['content']);
+        $content = $tokens[$stackPtr]['content'];
 
 		if(strtoupper($content) != $content)
 		{
-			$error = 'Using lower value : %s';
+			$error = 'Must use uppercase : %s';
 			$phpcsFile->addError($error, $stackPtr, 'Found', $content);
 		}
 

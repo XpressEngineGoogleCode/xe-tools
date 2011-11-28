@@ -26,7 +26,7 @@ class XpressEngine_Sniffs_Commenting_MethodCommentsSniff implements PHP_CodeSnif
 	{
 		$tokens = $phpcsFile->getTokens();
 		$token = $tokens[$stackPtr];
-		$functionName = $tokens[$stackPtr+2]['content'] . '()';
+		$functionName = $tokens[$stackPtr + 2]['content'] . '()';
 
 //		print_r($tokens); return;
 		
@@ -41,7 +41,7 @@ class XpressEngine_Sniffs_Commenting_MethodCommentsSniff implements PHP_CodeSnif
 		if($classPtr && $tokens[$classPtr]['code'] === T_CLASS) 
 		{
 			$type = 'METHOD';
-			$className = $tokens[$classPtr+2]['content'];
+			$className = $tokens[$classPtr + 2]['content'];
 			$functionName = $className . '::' . $functionName;
 		}
 		else
@@ -59,8 +59,8 @@ class XpressEngine_Sniffs_Commenting_MethodCommentsSniff implements PHP_CodeSnif
 
 		// check comment
 		$comments = array();
-		$ptr = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr-1);
-		if($tokens[$ptr]['line']+1 !== $token['line'])
+		$ptr = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr - 1);
+		if($tokens[$ptr]['line'] + 1 !== $token['line'])
 		{
 			$error = $type . ' must have a comment : %s';
 			$phpcsFile->addError($error, $stackPtr, 'Found', $functionName);
@@ -92,8 +92,14 @@ class XpressEngine_Sniffs_Commenting_MethodCommentsSniff implements PHP_CodeSnif
 
 		$comment = join("\n", $comments);
 		$commentParams = array('@return', '@brief', '@developer');
-		if($type == 'METHOD') $commentParams[] = '@access';
-		if($countParams>0) $commentParams[] = '@param';
+		if($type == 'METHOD')
+		{
+			$commentParams[] = '@access';
+		}
+		if($countParams>0)
+		{
+			$commentParams[] = '@param';
+		}
 
 		foreach($commentParams as $val)
 		{

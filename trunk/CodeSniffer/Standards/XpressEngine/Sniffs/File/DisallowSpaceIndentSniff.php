@@ -28,7 +28,10 @@ class XpressEngine_Sniffs_File_DisallowSpaceIndentSniff implements PHP_CodeSniff
 		$tokens = $phpcsFile->getTokens();
 		$token = $tokens[$stackPtr];
 
-		if($token['column'] != 1) return;
+		if($token['column'] != 1)
+		{
+			return;
+		}
 
 		if(strpos($token['content'], ' ') !== false)
 		{
