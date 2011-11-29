@@ -38,8 +38,9 @@ class XpressEngine_Sniffs_Statements_SpaceStatementSniff implements PHP_CodeSnif
         $tokens = $phpcsFile->getTokens();
         $token = $tokens[$stackPtr];
 
-		$before = null;
-		$after = null;
+		$before = NULL;
+		$before_permit = NULL;
+		$after = NULL;
 
 		switch($token['code'])
 		{
@@ -52,6 +53,7 @@ class XpressEngine_Sniffs_Statements_SpaceStatementSniff implements PHP_CodeSnif
 			case T_MINUS:
 			case T_BITWISE_AND:
 				$before = $tokens[$stackPtr - 1];
+				$before_permit = array(T_OPEN_SQUARE_BRACKET, T_OPEN_PARENTHESIS);
 				break;
 
 			default:
@@ -61,8 +63,11 @@ class XpressEngine_Sniffs_Statements_SpaceStatementSniff implements PHP_CodeSnif
 
 		if($before && $before['code'] !== T_WHITESPACE)
 		{
-			$error = "Must use space before " . substr($tokens[$stackPtr]['type'], 2) . " : %s";
-			$phpcsFile->addError($error, $stackPtr, 'Space', $tokens[$stackPtr - 1]['content'] . $tokens[$stackPtr]['content']);
+			if(!$before_permit || !in_array($before['code'], $before_permit))
+			{
+				$error = "Must use space before " . substr($tokens[$stackPtr]['type'], 2) . " : %s";
+				$phpcsFile->addError($error, $stackPtr, 'Space', $tokens[$stackPtr - 1]['content'] . $tokens[$stackPtr]['content']);
+			}
 		}
 
 		if($after && $after['code'] !== T_WHITESPACE)
