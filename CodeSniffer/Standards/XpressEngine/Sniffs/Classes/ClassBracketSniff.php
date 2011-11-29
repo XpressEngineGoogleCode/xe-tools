@@ -35,23 +35,10 @@ class XpressEngine_Sniffs_Classes_ClassBracketSniff implements PHP_CodeSniffer_S
 			$checkPtr = $token['parenthesis_closer'];
 		}
 
-		if($tokens[$checkPtr]['line'] + 1 !== $tokens[$token['scope_opener']]['line'])
+		if(array_key_exists('scope_opener', $token) && ($tokens[$checkPtr]['line'] + 1 !== $tokens[$token['scope_opener']]['line']))
 		{
 			$error = "Must use a start bracket '{' on next line";
 			$phpcsFile->addError($error, $token['scope_opener'], 'Bracket');
-		}
-
-
-		if($tokens[$token['scope_opener']]['column'] != $token['column'])
-		{
-			$error = "Must use same Indent";
-			$phpcsFile->addError($error, $token['scope_opener'], 'Bracket');
-		}
-
-		if($tokens[$token['scope_closer']]['column'] != $token['column'])
-		{
-			$error = "Must use same Indent";
-			$phpcsFile->addError($error, $token['scope_closer'], 'Bracket');
 		}
 
     }//end process()
