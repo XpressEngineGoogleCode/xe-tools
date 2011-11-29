@@ -30,70 +30,94 @@ class XpressEngine_Sniffs_ControlStructures_ControlSignatureSniff implements PHP
         $token = $tokens[$stackPtr];
 
 		//print_r($tokens); exit;
+
+
+		// check } else
 		$checkBeforeCloseBracketLine = FALSE;
+
+		// check ) { or else {
 		$checkOpenBracketLine = FALSE;
+
+		// indent { }
 		$checkBracketIndent = FALSE;
 
 
-		$isElseIf = FALSE;
-
 		// check 'else if' : else if, elseif 
-		if($stackPtr > 3 && $token['code'] == T_IF && $tokens[$stackPtr - 2]['code'] == T_ELSE)
+		$type = NULL;
+		if($stackPtr > 3 && $token['code'] === T_IF && $tokens[$stackPtr - 2]['code'] === T_ELSE)
 		{
-			$isElseIf = T_IF;
-
-			$prev = $phpcsFile->findPrevious(T_CLOSE_CURLY_BRACKET, $stackPtr-1);
-
-			$checkOpenBracketLine = array($tokens[$token['parenthesis_closer']], $tokens[$token['scope_opener']]);
-			$checkBeforeCloseBracketLine = array($token, $tokens[$prev]);
-
+			$type = 'ET_IF';
 		}
-		else if($token['code'] == T_ELSE && $tokens[$stackPtr + 2]['code'] == T_IF)
+		else if($token['code'] === T_ELSE && $tokens[$stackPtr + 2]['code'] === T_IF)
 		{
-			$isElseIf = T_ELSE;
-
-			$prev = $phpcsFile->findPrevious(T_CLOSE_CURLY_BRACKET, $stackPtr-1);
-			$checkBeforeCloseBracketLine = array($token, $tokens[$prev]);
+			$type = 'ET_ELSE';
 		}
-		else if($token['code'] == T_ELSEIF)
+		else if($token['code'] === T_ELSEIF)
 		{
-			$isElseIf = T_ELSEIF;
-
-			$prev = $phpcsFile->findPrevious(T_CLOSE_CURLY_BRACKET, $stackPtr-1);
-
-			$checkOpenBracketLine = array($tokens[$token['parenthesis_closer']], $tokens[$token['scope_opener']]);
-			$checkBeforeCloseBracketLine = array($token, $tokens[$prev]);
+			$type = 'ET_ELSEIF';
+		}
+		else 
+		{
+			$type = $token['type'];
 		}
 
-
-		if(!$isElseIf)
+		// check existing {
+		if($type != 'ET_ELSE')
 		{
-			$checkOpenBracketLine = array($tokens[$token['parenthesis_closer']], $tokens[$token['scope_opener']]);
-		}
-
-		if($isElseIf === T_IF)
-		{
-			$prev = $phpcsFile->findPrevious(T_ELSE, $stackPtr - 1);
-			$checkBracketIndent = array($tokens[$prev]['column'],
-										$token['scope_opener']['column'],
-										$token['scope_closer']['column']);
-		}
-		else if($isElseIf === T_ELSE)
-		{
-			$next = $phpcsFile->findPrevious(T_IF, $stackPtr + 1);
-			$nextToken = $tokens[$next];
-			$checkBracketIndent = array($token, 
-										$tokens[$nextToken['scope_opener']],
-										$tokens[$nextToken['scope_closer']]);
-		}
-		else
-		{
-			$checkBracketIndent = array($token, 
-										$tokens[$token['scope_opener']],
-										$tokens[$token['scope_closer']]);
+			if(!array_key_exists('scope_opener', $token))
+			{
+				$error = "Not permit to omit the BRACKET '{' ";
+				$phpcsFile->addError($error, $stackPtr, 'Bracket');
+				return;
+			}
 		}
 
 
+		switch($type)
+		{
+			case 'ET_ELSE':
+				$prev = $phpcsFile->findPrevious(T_CLOSE_CURLY_BRACKET, $stackPtr - 1);
+				$checkBeforeCloseBracketLine = array($token, $tokens[$prev]);
+
+				$next = $phpcsFile->findPrevious(T_IF, $stackPtr + 1);
+				$nextToken = $tokens[$next];
+				$checkBracketIndent = array($token, 
+											$tokens[$nextToken['scope_opener']],
+											$tokens[$nextToken['scope_closer']]);
+					break;
+			case 'ET_IF':
+				$prev = $phpcsFile->findPrevious(T_CLOSE_CURLY_BRACKET, $stackPtr - 1);
+				$checkOpenBracketLine = array($tokens[$token['parenthesis_closer']], $tokens[$token['scope_opener']]);
+				$checkBeforeCloseBracketLine = array($token, $tokens[$prev]);
+
+				$prev = $phpcsFile->findPrevious(T_ELSE, $stackPtr - 1);
+				$checkBracketIndent = array($tokens[$prev]['column'],
+											$token['scope_opener']['column'],
+											$token['scope_closer']['column']);
+				break;
+			case 'ET_ELSEIF':
+				$prev = $phpcsFile->findPrevious(T_CLOSE_CURLY_BRACKET, $stackPtr - 1);
+				$checkOpenBracketLine = array($tokens[$token['parenthesis_closer']], $tokens[$token['scope_opener']]);
+				$checkBeforeCloseBracketLine = array($token, $tokens[$prev]);
+
+				$checkBracketIndent = array($token, 
+											$tokens[$token['scope_opener']],
+											$tokens[$token['scope_closer']]);
+				break;
+			case 'T_ELSE':
+				$checkOpenBracketLine = array($token, $tokens[$token['scope_opener']]);
+
+				$checkBracketIndent = array($token, 
+											$tokens[$token['scope_opener']],
+											$tokens[$token['scope_closer']]);
+				break;
+			default:
+				$checkOpenBracketLine = array($tokens[$token['parenthesis_closer']], $tokens[$token['scope_opener']]);
+
+				$checkBracketIndent = array($token, 
+											$tokens[$token['scope_opener']],
+											$tokens[$token['scope_closer']]);
+		}
 
 		if($checkBeforeCloseBracketLine)
 		{
@@ -104,7 +128,6 @@ class XpressEngine_Sniffs_ControlStructures_ControlSignatureSniff implements PHP
 
 				return;
 			}
-
 		}
 
 
@@ -132,7 +155,6 @@ class XpressEngine_Sniffs_ControlStructures_ControlSignatureSniff implements PHP
 				$phpcsFile->addError($error, $stackPtr, 'Indent');
 			}
 		}
-
 
     }//end process()
 
