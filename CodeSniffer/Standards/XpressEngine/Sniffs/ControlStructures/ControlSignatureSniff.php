@@ -38,8 +38,6 @@ class XpressEngine_Sniffs_ControlStructures_ControlSignatureSniff implements PHP
 		// check ) { or else {
 		$checkOpenBracketLine = FALSE;
 
-		// indent { }
-		$checkBracketIndent = FALSE;
 
 
 		// check 'else if' : else if, elseif 
@@ -79,8 +77,16 @@ class XpressEngine_Sniffs_ControlStructures_ControlSignatureSniff implements PHP
 				$prev = $phpcsFile->findPrevious(T_CLOSE_CURLY_BRACKET, $stackPtr - 1);
 				$checkBeforeCloseBracketLine = array($token, $tokens[$prev]);
 
-				$next = $phpcsFile->findPrevious(T_IF, $stackPtr + 1);
+				$next = $phpcsFile->findNext(T_IF, $stackPtr + 1);
 				$nextToken = $tokens[$next];
+
+				if(!array_key_exists('scope_opener', $nextToken))
+				{
+					$error = "Not permit to omit the BRACKET '{' ";
+					$phpcsFile->addError($error, $stackPtr, 'Bracket');
+					return;
+				}
+
 				$checkBracketIndent = array($token, 
 											$tokens[$nextToken['scope_opener']],
 											$tokens[$nextToken['scope_closer']]);
@@ -91,9 +97,9 @@ class XpressEngine_Sniffs_ControlStructures_ControlSignatureSniff implements PHP
 				$checkBeforeCloseBracketLine = array($token, $tokens[$prev]);
 
 				$prev = $phpcsFile->findPrevious(T_ELSE, $stackPtr - 1);
-				$checkBracketIndent = array($tokens[$prev]['column'],
-											$token['scope_opener']['column'],
-											$token['scope_closer']['column']);
+				$checkBracketIndent = array($tokens[$prev],
+											$token['scope_opener'],
+											$token['scope_closer']);
 				break;
 			case 'ET_ELSEIF':
 				$prev = $phpcsFile->findPrevious(T_CLOSE_CURLY_BRACKET, $stackPtr - 1);
@@ -119,6 +125,7 @@ class XpressEngine_Sniffs_ControlStructures_ControlSignatureSniff implements PHP
 											$tokens[$token['scope_closer']]);
 		}
 
+
 		if($checkBeforeCloseBracketLine)
 		{
 			if($checkBeforeCloseBracketLine[0]['line'] - 1 != $checkBeforeCloseBracketLine[1]['line'])
@@ -129,7 +136,6 @@ class XpressEngine_Sniffs_ControlStructures_ControlSignatureSniff implements PHP
 				return;
 			}
 		}
-
 
 		if($checkOpenBracketLine)
 		{
