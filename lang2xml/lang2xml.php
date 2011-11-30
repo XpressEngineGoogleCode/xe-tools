@@ -2,7 +2,7 @@
 $argv = $_SERVER['argv'];
 $path = $argv[1];
 if(!$path){
-	echo "lang2xml.php [path of lang directory]";
+	echo "lang2xml.php [path of lang directory]\n";
 	exit;
 }
 
@@ -119,6 +119,6 @@ foreach($paths as $path){
 	$xml = loadLang($path);
 	$xml_file = $path.'/lang.xml';
 	file_put_contents($xml_file, $xml);
-	echo "create file :",$xml_file,"\n";"
+	echo "create file :",$xml_file,"\n";
 }
 
