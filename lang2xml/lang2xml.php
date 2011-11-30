@@ -65,7 +65,7 @@ function makeNode($lang, $lang_code, $k=""){
 				if($lang_type!='en' &&($en == $value || $ko==$value)){
 				}
 				else{
-					$xml .=  sprintf("\n".'%s<value xml:lang="%s"><![CDATA[%s]]></value>',str_repeat("\t",$depth+1), $lang_type, $a);
+					$xml .=  sprintf("\n".'%s<value xml:lang="%s"><![CDATA[%s]]></value>',str_repeat("\t",$depth+1), $lang_type, $value);
 				}
 			}
 			/*else {
