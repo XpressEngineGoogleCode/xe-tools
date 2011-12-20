@@ -65,15 +65,15 @@ class XpressEngine_Sniffs_Statements_SpaceStatementSniff implements PHP_CodeSnif
 		{
 			if(!$before_permit || !in_array($before['code'], $before_permit))
 			{
-				$error = "Must use space before " . substr($tokens[$stackPtr]['type'], 2) . " : %s";
-				$phpcsFile->addError($error, $stackPtr, 'Space', $tokens[$stackPtr - 1]['content'] . $tokens[$stackPtr]['content']);
+				$error = "Must use space before " . substr($tokens[$stackPtr]['type'], 2);
+				$phpcsFile->addError($error, $stackPtr, 'Space'); //,$tokens[$stackPtr - 1]['content'] . $tokens[$stackPtr]['content']);
 			}
 		}
 
 		if($after && $after['code'] !== T_WHITESPACE)
 		{
-			$error = "Must use space after " . substr($tokens[$stackPtr]['type'], 2) . " : %s";
-			$phpcsFile->addError($error, $stackPtr, 'Space', $tokens[$stackPtr + 1]['content'] . $tokens[$stackPtr]['content']);
+			$error = "Must use space after " . substr($tokens[$stackPtr]['type'], 2); // . " : %s";
+			$phpcsFile->addError($error, $stackPtr, 'Space'); //, $tokens[$stackPtr + 1]['content'] . $tokens[$stackPtr]['content']);
 		}
 
     }//end process()
