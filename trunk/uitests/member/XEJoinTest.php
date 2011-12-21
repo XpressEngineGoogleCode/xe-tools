@@ -4,7 +4,7 @@ include_once '../libs/__init__.php';
 class XEJoinTest extends PHPUnit_Framework_TestCase
 {
 	protected static $oXESelenium;
-	protected static $property = './xe.property';
+	protected static $property = './xe.properties';
 	protected static $errorScreenFile = './join.error.png';
 	protected static $userInfo;
 
