@@ -1,5 +1,5 @@
 <?php
-include_once '../libs/__init__.php';
+include_once dirname(__FILE__) . '/../libs/__init__.php';
 
 class XEInstallCubridTest extends PHPUnit_Framework_TestCase
 {
@@ -93,7 +93,7 @@ class XEInstallCubridTest extends PHPUnit_Framework_TestCase
 		$act = self::$oXESelenium->getElementValue('xpath', '/html/body/div/div[2]/div[2]/form/input[5]');
 		$this->assertEquals('procCubridDBSetting', $act);
 
-		self::$oXESelenium->clearElementText('id', 'dbPrefix');
+		self::$oXESelenium->clearElementText('id', 'dbHostName');
 		self::$oXESelenium->clearElementText('id', 'dbPort');
 		self::$oXESelenium->clearElementText('id', 'dbPrefix');
 
