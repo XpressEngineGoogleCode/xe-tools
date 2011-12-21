@@ -1,5 +1,5 @@
 <?php
-include_once '../libs/__init__.php';
+include_once dirname(__FILE__) . '/../libs/__init__.php';
 
 class XEInstallMySQLTest extends PHPUnit_Framework_TestCase
 {
