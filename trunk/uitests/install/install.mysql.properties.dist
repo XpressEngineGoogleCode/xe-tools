@@ -1,0 +1,41 @@
+<config>
+    <selenium>
+        <host>Selenium Host</host>
+        <port>4444</port>
+        <webdriver>chrome</webdriver><!-- {chrome|firefox|internet explore} You have to install this driver before you use it -->
+    </selenium>
+    <site>
+        <url>http://testurl/%%PREFIX%%/</url><!-- test url, %%PREFIX%% will change to random string. -->
+        <admin>
+            <email>admin@admin.com</email>
+            <userid>admin</userid>
+            <nickname>admin</nickname>
+            <password>123456</password>
+        </admin>
+    </site>
+    <install>
+        <path>/path/to/public_html/%%PREFIX%%/</path><!-- real path -->
+
+		<!-- svn repository -->
+        <repositories>
+			<repository>
+				<path>/</path>
+				<url>http://xe-core.googlecode.com/svn/branches/1.5.0/</url>
+			</repository>
+			<repository>
+				<path>/modules/board</path>
+				<url>http://xe-board.googlecode.com/svn/branches/1.4/</url>
+			</repository>
+		</repositories>
+
+		<!-- DB Info, if there is the prefix of database, %%PREFIX%% will change to the prefix -->
+        <database>
+            <type>mysql</type>
+            <host>127.0.0.1</host>
+            <port>3306</port>
+            <user>selenium</user>
+            <password>selenium</password>
+			<database>selenium</database>
+        </database>
+    </install>
+</config>

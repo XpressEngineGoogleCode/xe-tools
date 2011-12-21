@@ -1,0 +1,45 @@
+<config>
+    <selenium>
+        <host>175.158.30.51</host> <!-- selenuim host -->
+        <port>4444</port> <!-- selenuim port -->
+        <webdriver>chrome</webdriver> <!-- selenuim webdriver -->
+    </selenium>
+    <site>
+		<!-- test url, %%PREFIX%% will change to random string. -->
+        <url>http://uitest.xpressengine.com/%%PREFIX%%/</url>
+		<!-- admin info -->
+        <admin>
+            <email>admin@admin.com</email>
+            <userid>admin</userid>
+            <nickname>admin</nickname>
+            <password>123456</password>
+        </admin>
+    </site>
+    <install>
+		<!-- real path -->
+        <path>/home1/irteam/uitest/public_html/%%PREFIX%%/</path>
+
+		<!-- svn repository -->
+        <repositories>
+			<repository>
+				<path>/</path>
+				<url>http://xe-core.googlecode.com/svn/branches/1.5.0/</url>
+			</repository>
+			<repository>
+				<path>/modules/board</path>
+				<url>http://xe-board.googlecode.com/svn/branches/1.4/</url>
+			</repository>
+		</repositories>
+
+		<!-- DB Info, if there is the prefix of database, %%PREFIX%% will change to the prefix -->
+        <database>
+            <type>mysql</type>
+            <host>127.0.0.1</host>
+            <port>3306</port>
+            <user>selenium</user>
+            <password>selenium</password>
+			<database>selenium_test</database>
+			<prefix>xe</prefix>
+        </database>
+    </install>
+</config>
