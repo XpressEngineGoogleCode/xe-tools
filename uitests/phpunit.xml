@@ -1,0 +1,11 @@
+<phpunit>
+	<testsuites>
+		<testsuite name="XE Core Install Selenium Test Suite">
+			<file>./install/XEInstallMySQLTest.php</file>
+			<file>./install/XEInstallCUBRIDTest.php</file>
+		</testsuite>
+	</testsuites>
+	<logging>
+		<log type="junit" target="./logs/junit.install.xml"/>
+	</logging>
+</phpunit>
