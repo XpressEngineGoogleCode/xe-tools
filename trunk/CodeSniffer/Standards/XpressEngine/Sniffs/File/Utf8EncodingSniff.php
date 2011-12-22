@@ -123,7 +123,7 @@ class XpressEngine_Sniffs_File_Utf8EncodingSniff implements PHP_CodeSniffer_Snif
 			}
 		}
 
-		return FALSE;
+		return TRUE;
     }//end _checkUtf8W3c()
 
     /**
