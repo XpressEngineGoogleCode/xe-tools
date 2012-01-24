@@ -40,6 +40,15 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
         if($sTag=='true' or $sTag=='false' or $sTag=='null') {
             $this->oBeaut->aCurrentToken[1]=strtoupper($sTag);
         }
+		// Class names should be uppercase
+		// phpcs error: Must start uppercase on class name
+		if($this->oBeaut->getPreviousTokenConstant() == T_CLASS){		
+			$this->oBeaut->aCurrentToken[1]=ucfirst($sTag);
+		}
+		// If class extends another class, its name should be uppercase too
+		if($this->oBeaut->getPreviousTokenConstant() == T_EXTENDS){		
+			$this->oBeaut->aCurrentToken[1]=ucfirst($sTag);
+		}		
 		// Continue with default behaviour
         return PHP_Beautifier_Filter::BYPASS;        
     }		
