@@ -57,9 +57,10 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
 		//   phpcs error: METHOD Comment must have @return : 
 		//                METHOD Comment must have @developer :
 		// These are added with TODO so that developers can review comment content
+		
 		if($this->oBeaut->getNextTokenConstant() == T_FUNCTION){		
 			// If @author is found, replace with @developer
-			if(strpos($sTag, '@author') === true){
+			if(strpos($sTag, '@author') !== false){
 				$sTag = str_replace('@author', '@developer', $sTag);
 			}		
 			
@@ -89,6 +90,23 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
 			$sTag = implode(PHP_EOL, $lines);			
 			$this->oBeaut->add($sTag);			
 			$this->oBeaut->addNewLineIndent();
+		}
+		else if($this->oBeaut->getNextTokenConstant() == T_CLASS){		
+			// If @author is found, replace with @developer
+			// phpcs error: Class Comment must have @developer
+			if(strpos($sTag, '@author') !== false){
+				$sTag = str_replace('@author', '@developer', $sTag);
+			}	
+			
+			// Print comment line by line
+			$this->oBeaut->removeWhitespace();
+			$this->oBeaut->addNewLineIndent();
+			$lines = preg_split("/\r\n|\r|\n/", $sTag);
+			foreach($lines as $line)
+			{
+				$this->oBeaut->add($line);
+				$this->oBeaut->addNewLineIndent();	
+			}
 		}
 		else // Skip this comment and fallback to default behaviour
 			return PHP_Beautifier_Filter::BYPASS;        
