@@ -17,6 +17,11 @@
  */
 class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
 {
+    protected $aFilterTokenFunctions = array(
+        T_FOR => 't_for',
+		T_FOREACH => 't_for'
+    );
+
 	/**
 	* Handles IF / DO / WHILE / SWITCH statements
 	*/
@@ -29,6 +34,19 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
 		$this->oBeaut->addIndent();
         $this->oBeaut->add($sTag);		
     }
+	
+	/**
+	* Handles for and foreach statements
+	*/
+    public function t_for($sTag)
+    {
+		// Remove spaces between if and braket: << if(..) >> instead of << if (..) >>
+		// phpcs error: Not permit spaces in Condition : if (
+        $this->oBeaut->removeWhitespace();
+		$this->oBeaut->addNewLine();
+		$this->oBeaut->addIndent();
+        $this->oBeaut->add($sTag);		
+    }	
 	
 	/**
 	* Handles plain text items
