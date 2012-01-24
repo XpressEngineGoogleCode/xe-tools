@@ -17,7 +17,6 @@
  */
 class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
 {
-	
 	/**
 	* Handles IF / DO / WHILE / SWITCH statements
 	*/
@@ -94,10 +93,22 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
 				$this->oBeaut->add(' * @return // TODO Add return type for ' . $this->oBeaut->getNextTokenContent(2));						
 			}
 			
+			// Add @ comments for function parameters, if any
+			$indx = 1;
+			while($this->oBeaut->getNextTokenContent($indx) != '(') $indx++;
+			if(($param = $this->oBeaut->getNextTokenContent($indx+1)) != ')'){ // Means we have parameters, so lets add comments for them
+				if(strpos($sTag, $param) === false){
+					$this->oBeaut->addNewLineIndent();
+					$this->oBeaut->add(' * @param ' . $param .' // TODO Add param info for ' . $param);											
+				}
+			}
+			
 			unset($lines[0]);
-			$this->oBeaut->addNewLineIndent();
-			$sTag = implode(PHP_EOL, $lines);			
-			$this->oBeaut->add($sTag);			
+			foreach($lines as $line){
+				$line = str_replace("\t",'',$line);
+				$this->oBeaut->addNewLineIndent();				
+				$this->oBeaut->add($line);							
+			}
 			$this->oBeaut->addNewLineIndent();
 		}
 		else if($this->oBeaut->getNextTokenConstant() == T_CLASS){		
@@ -177,7 +188,6 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
         }
         $this->oBeaut->add($sTag . ' ');
     }		
-	
 	
 }
 ?>
