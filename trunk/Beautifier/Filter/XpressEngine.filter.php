@@ -207,5 +207,31 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
         $this->oBeaut->add($sTag . ' ');
     }		
 	
+	/**
+	* Handles php close tag: ?>
+	*/
+	function t_close_tag($sTag){
+		// Output nothing -> closing tag is removed
+		// phpcs error: Using PHP Close Tag 
+	}
+
+	/**
+	* Handles post processing - do things after all tags have been processed
+	*/
+	function postProcess(){
+		 $current_file = $this->oBeaut->sInputFile;
+		 $parts = explode('/', $current_file);
+		 if($parts[0] == $current_file) $parts = explode('\\', $current_file);
+		 $file_name = $parts[count($parts) - 1];
+		 
+		 $this->oBeaut->removeWhitespace();
+		 $this->oBeaut->addNewLineIndent();
+		 $this->oBeaut->add("/* End of file $file_name */");
+		 $this->oBeaut->addNewLineIndent();
+		 // TODO Allow customization of file path - depending on wheter beautifier is called for a module or for an entire XE
+		 $this->oBeaut->add("/* Location: $current_file */");		 
+		 $this->oBeaut->addNewLineIndent();
+	}
+	
 }
 ?>
