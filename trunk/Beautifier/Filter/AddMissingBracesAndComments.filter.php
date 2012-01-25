@@ -29,6 +29,12 @@ class PHP_Beautifier_Filter_AddMissingBracesAndComments extends PHP_Beautifier_F
 	private $closeBracketsToAdd = array();
 	private $commentsToAdd = array();
 
+	function preProcess(){
+		$this->openBracketsToAdd = array();
+		$this->closeBracketsToAdd = array();
+		$this->commentsToAdd = array();
+	}
+	
 	function t_check_comment($sTag){
 		if($this->oBeaut->getPreviousTokenConstant() != T_DOC_COMMENT)
 			$this->commentsToAdd[] = $this->oBeaut->iCount;
