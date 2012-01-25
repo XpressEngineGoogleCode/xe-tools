@@ -9,15 +9,18 @@
 		<phing phingfile="./build/${release.location}/xe.build.xml" target="build" inheritRefs="true" />
 
 		<echo msg="export cafe" />
-		<property name="release.cafe_repo" value="http://xe-cafe.googlecode.com/svn/branches/modules/0.2.3/" />
+		<property name="release.cafe_repo" value="http://xe-cafe.googlecode.com/svn/branches/modules/1.0/" />
 		<exec command="${config.svn} export ${release.cafe_repo} ${config.build_dir}/xe/modules/homepage" />
 
 		<exec command="${config.svn} export http://xe-cafe.googlecode.com/svn/trunk/layouts/xe_cafe_site ${config.build_dir}/xe/layouts/xe_cafe_site" />
+		<exec command="${config.svn} export http://xe-cafe.googlecode.com/svn/trunk/layouts/xe_cafe_hub ${config.build_dir}/xe/layouts/xe_cafe_hub" />
 		<exec command="${config.svn} export http://xe-cafe.googlecode.com/svn/branches/layouts/xe_cafe/0.2 ${config.build_dir}/xe/layouts/xe_cafe" />
-		<exec command="${config.svn} export http://xe-board.googlecode.com/svn/branches/1.4/ ${config.build_dir}/xe/modules/board" />
+		<exec command="${config.svn} export http://xe-board.googlecode.com/svn/tags/1.4.1/ ${config.build_dir}/xe/modules/board" />
 		<exec command="${config.svn} export http://xe-cafe.googlecode.com/svn/trunk/widget_skin/language_select/skins/cafe_site/ ${config.build_dir}/xe/widgets/language_select/skins/cafe_site" />
+		<exec command="${config.svn} export http://xe-cafe.googlecode.com/svn/trunk/widget_skin/language_select/skins/xe_cafe_language/ ${config.build_dir}/xe/widgets/language_select/skins/xe_cafe_language" />
 		<exec command="${config.svn} export http://xe-widget.googlecode.com/svn/trunk/widgets/logged_members/ ${config.build_dir}/xe/widgets/logged_members" />
 		<exec command="${config.svn} export http://xe-cafe.googlecode.com/svn/trunk/widget_skin/login_info/skins/cafe_site/ ${config.build_dir}/xe/widgets/login_info/skins/cafe_site" />
+		<exec command="${config.svn} export http://xe-cafe.googlecode.com/svn/trunk/widget_skin/login_info/skins/cafe_official/ ${config.build_dir}/xe/widgets/login_info/skins/cafe_official" />
 		<exec command="${config.svn} export http://xe-widget.googlecode.com/svn/trunk/widgets/login_info/skins/default/ ${config.build_dir}/xe/widgets/login_info/skins/default" />
 		<exec command="${config.svn} export http://xe-widget.googlecode.com/svn/trunk/widgets/member_group/ ${config.build_dir}/xe/widgets/member_group" />
 		<exec command="${config.svn} export http://xe-widget.googlecode.com/svn/trunk/widgets/navigator/ ${config.build_dir}/xe/widgets/navigator" />

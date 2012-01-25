@@ -21,7 +21,7 @@
 			<property name="release.cdn_version" value="desirable" /> 
 
 			<!-- xe core repo -->
-			<property name="release.repo" value="http://xe-core.googlecode.com/svn/branches/1.5.0" />
+			<property name="release.repo" value="http://xe-core.googlecode.com/svn/tags/1.5.1" />
 
 
 

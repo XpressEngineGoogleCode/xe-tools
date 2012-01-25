@@ -9,7 +9,7 @@
 		<phing phingfile="./build/${release.location}/xe.build.xml" target="build" inheritRefs="true" />
 
 		<echo msg="export textyle" />
-		<property name="release.textyle_repo" value="http://xe-textyle.googlecode.com/svn/branches/textyle/1.3.3" />
+		<property name="release.textyle_repo" value="http://xe-textyle.googlecode.com/svn/branches/textyle/1.3.4" />
 		<exec command="${config.svn} export ${release.textyle_repo} ${config.build_dir}/xe/modules/textyle" />
 
 		<echo msg="export material" />
