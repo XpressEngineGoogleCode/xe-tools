@@ -21,6 +21,9 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
         T_FOR => 't_for',
 		T_FOREACH => 't_for'
     );
+	
+	private $openBracketsToAdd = array();
+	private $closeBracketsToAdd = array();
 
 	/**
 	* Handles IF / DO / WHILE / SWITCH statements
@@ -98,6 +101,10 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
 			$this->oBeaut->add($lines[0]);
 			
 			// Print missing attributes
+			if(strpos($sTag, '@brief') === false){
+				$this->oBeaut->addNewLineIndent();
+				$this->oBeaut->add(' * @brief // TODO Add brief for ' . $this->oBeaut->getNextTokenContent(2));
+			}							
 			if(strpos($sTag, '@access') === false){
 				$this->oBeaut->addNewLineIndent();
 				$this->oBeaut->add(' * @access // TODO Add access for ' . $this->oBeaut->getNextTokenContent(2));
@@ -114,11 +121,12 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
 			// Add @ comments for function parameters, if any
 			$indx = 1;
 			while($this->oBeaut->getNextTokenContent($indx) != '(') $indx++;
-			if(($param = $this->oBeaut->getNextTokenContent($indx+1)) != ')'){ // Means we have parameters, so lets add comments for them
-				if(strpos($sTag, $param) === false){
+			while(($param = $this->oBeaut->getNextTokenContent($indx+1)) != ')'){ // Means we have parameters, so lets add comments for them
+				if(strpos($sTag, $param) === false && $param != '&'){
 					$this->oBeaut->addNewLineIndent();
 					$this->oBeaut->add(' * @param ' . $param .' // TODO Add param info for ' . $param);											
 				}
+				$indx++;
 			}
 			
 			unset($lines[0]);
@@ -222,10 +230,12 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
 		$this->oBeaut->add($sTag . ' ');		
 	}
 
+	
 	/**
 	* Handles post processing - do things after all tags have been processed
 	*/
-	function postProcess(){
+	function postProcess(){		 
+		 // Add end of file comments
 		 $current_file = $this->oBeaut->sInputFile;
 		 $parts = explode('/', $current_file);
 		 if($parts[0] == $current_file) $parts = explode('\\', $current_file);
