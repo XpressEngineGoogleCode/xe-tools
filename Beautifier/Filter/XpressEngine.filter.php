@@ -214,6 +214,13 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
 		// Output nothing -> closing tag is removed
 		// phpcs error: Using PHP Close Tag 
 	}
+	
+	/**
+	* Handles semicolons
+	*/
+	function t_semi_colon($sTag){
+		$this->oBeaut->add($sTag . ' ');		
+	}
 
 	/**
 	* Handles post processing - do things after all tags have been processed
