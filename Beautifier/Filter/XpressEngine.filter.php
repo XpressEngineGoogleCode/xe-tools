@@ -19,7 +19,8 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
 {
     protected $aFilterTokenFunctions = array(
         T_FOR => 't_for',
-		T_FOREACH => 't_for'
+		T_FOREACH => 't_for',
+		T_CONCAT_EQUAL => 't_concat_equal'
     );
 	
 	private $openBracketsToAdd = array();
@@ -229,7 +230,14 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
 	function t_semi_colon($sTag){
 		$this->oBeaut->add($sTag . ' ');		
 	}
-
+	
+	/**
+	* Handles concat-equal operator: .=
+	*/
+	function t_concat_equal($sTag){
+		$this->oBeaut->removeWhitespace();
+		$this->oBeaut->add(' ' . $sTag . ' ');
+	}
 	
 	/**
 	* Handles post processing - do things after all tags have been processed
@@ -248,6 +256,11 @@ class PHP_Beautifier_Filter_XpressEngine extends PHP_Beautifier_Filter
 		 // TODO Allow customization of file path - depending on wheter beautifier is called for a module or for an entire XE
 		 $this->oBeaut->add("/* Location: $current_file */");		 
 		 $this->oBeaut->addNewLineIndent();
+		 
+		 // Encode in UTF-8
+		 //foreach($this->oBeaut->aOut as &$out){
+		//	$out = utf8_encode($out);
+		 //}
 	}
 	
 }
