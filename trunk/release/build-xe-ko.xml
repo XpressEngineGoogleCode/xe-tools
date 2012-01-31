@@ -15,7 +15,7 @@
 			<property name="release.location" value="ko" />
 
 			<!-- release version -->
-			<property name="release.version" value="1.5.1.3" />
+			<property name="release.version" value="1.5.1.5" />
 
 			<!-- release cdn version : hiding XE version in html -->
 			<property name="release.cdn_version" value="visualize" />
@@ -24,7 +24,7 @@
 			<property name="release.repo" value="http://xe-core.googlecode.com/svn/branches/1.5.0" />
 
 			<!-- if you don`t wanna make diff file, just delete the node -->
-			<property name="release.last_repo" value="http://xe-core.googlecode.com/svn/tags/1.5.1.2" />
+			<property name="release.last_repo" value="http://xe-core.googlecode.com/svn/tags/1.5.1.4" />
 
 
 			<property name="config.build_default_skins" value="true" />

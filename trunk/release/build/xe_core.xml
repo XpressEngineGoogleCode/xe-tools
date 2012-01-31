@@ -34,6 +34,13 @@
         <delete dir="${config.build_dir}/xe/test-phpUnit" />
         <delete dir="${config.build_dir}/xe/common/css.backup" />
         <delete dir="${config.build_dir}/xe/common/js/unittest" />
+    	<!-- ============================================  -->
+		<!--                 for 1.6                       -->
+    	<!-- ============================================  -->
+        <!-- <delete dir="${config.build_dir}/xe/classes/db/DBFirebird.class.php" /> -->
+        <!-- <delete dir="${config.build_dir}/xe/classes/db/DBPostgresql.class.php" /> -->
+        <!-- <delete dir="${config.build_dir}/xe/classes/db/DBSqlite2.class.php" /> -->
+        <!-- <delete dir="${config.build_dir}/xe/classes/db/DBSqlite3_pdo.class.php" /> -->
 
 		<!-- replace cdn version -->
 		<if>
@@ -61,17 +68,17 @@
 		<echo msg="export default skins" />
 
 		<!-- XE 1.5 -->
-		<!-- property name="release.skins.xe_greystone" value="http://xe-theme-greystone.googlecode.com/svn/trunk/themes/xe_greystone" / -->
-		<!-- exec command="${config.svn} export ${release.skins.xe_greystone} ${config.build_dir}/xe/themes/xe_greystone" / -->
-		<!-- exec command="${config.svn} export --force http://xe-theme-greystone.googlecode.com/svn/trunk/widgets/login_info/skins/xe_global ${config.build_dir}/xe/widgets/login_info/skins/xe_global" / -->
+		<!-- <property name="release.skins.xe_greystone" value="http://xe-theme-greystone.googlecode.com/svn/trunk/themes/xe_greystone" /> -->
+		<!-- <exec command="${config.svn} export ${release.skins.xe_greystone} ${config.build_dir}/xe/themes/xe_greystone" /> -->
+		<!-- <exec command="${config.svn} export \-\-force http://xe-theme-greystone.googlecode.com/svn/trunk/widgets/login_info/skins/xe_global ${config.build_dir}/xe/widgets/login_info/skins/xe_global" /> -->
 
-		<!-- property name="release.skins.xe_sapphire" value="http://xe-theme-sapphire.googlecode.com/svn/trunk/themes/xe_sapphire" / -->
-		<!-- exec command="${config.svn} export ${release.skins.xe_sapphire} ${config.build_dir}/xe/themes/xe_sapphire" / -->
-		<!-- exec command="${config.svn} export --force https://xe-theme-sapphire.googlecode.com/svn/trunk/widgets/login_info/skins/xe_globalTwo ${config.build_dir}/xe/widgets/login_info/skins/xe_globalTwo" / -->
+		<!-- <property name="release.skins.xe_sapphire" value="http://xe-theme-sapphire.googlecode.com/svn/trunk/themes/xe_sapphire" /> -->
+		<!-- <exec command="${config.svn} export ${release.skins.xe_sapphire} ${config.build_dir}/xe/themes/xe_sapphire" /> -->
+		<!-- <exec command="${config.svn} export \-\-force https://xe-theme-sapphire.googlecode.com/svn/trunk/widgets/login_info/skins/xe_globalTwo ${config.build_dir}/xe/widgets/login_info/skins/xe_globalTwo" /> -->
 
-		<!-- property name="release.skins.xe_solid_enterprise" value="http://xe-theme-enterprise.googlecode.com/svn/trunk/themes/xe_solid_enterprise" / -->
-		<!-- exec command="${config.svn} export ${release.skins.xe_solid_enterprise} ${config.build_dir}/xe/themes/xe_solid_enterprise" / -->
-		<!-- exec command="${config.svn} export --force http://xe-theme-enterprise.googlecode.com/svn/trunk/widgets/login_info/skins/xe_solid_enterprise_login ${config.build_dir}/xe/widgets/login_info/skins/xe_solid_enterprise_login" / -->
+		<!-- <property name="release.skins.xe_solid_enterprise" value="http://xe-theme-enterprise.googlecode.com/svn/trunk/themes/xe_solid_enterprise" /> -->
+		<!-- <exec command="${config.svn} export ${release.skins.xe_solid_enterprise} ${config.build_dir}/xe/themes/xe_solid_enterprise" /> -->
+		<!-- <exec command="${config.svn} export \-\-force http://xe-theme-enterprise.googlecode.com/svn/trunk/widgets/login_info/skins/xe_solid_enterprise_login ${config.build_dir}/xe/widgets/login_info/skins/xe_solid_enterprise_login" /> -->
     </target>
 
     <!-- ============================================  -->

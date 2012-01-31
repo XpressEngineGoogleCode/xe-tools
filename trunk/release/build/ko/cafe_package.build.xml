@@ -9,7 +9,7 @@
 		<phing phingfile="./build/${release.location}/xe.build.xml" target="build" inheritRefs="true" />
 
 		<echo msg="export cafe" />
-		<property name="release.cafe_repo" value="http://xe-cafe.googlecode.com/svn/branches/modules/1.0/" />
+		<property name="release.cafe_repo" value="http://xe-cafe.googlecode.com/svn/branches/modules/1.1/" />
 		<exec command="${config.svn} export ${release.cafe_repo} ${config.build_dir}/xe/modules/homepage" />
 
 		<exec command="${config.svn} export http://xe-cafe.googlecode.com/svn/trunk/layouts/xe_cafe_site ${config.build_dir}/xe/layouts/xe_cafe_site" />

@@ -16,6 +16,14 @@
 		<property name="release.material_repo" value="http://xe-material.googlecode.com/svn/branches/1.1" />
 		<exec command="${config.svn} export ${release.material_repo} ${config.build_dir}/xe/modules/material" />
 
+		<echo msg="export tag_list" />
+		<property name="release.tag_list_repo" value="https://xe-widget.googlecode.com/svn/trunk/widgets/tag_list" />
+		<exec command="${config.svn} export ${release.tag_list_repo} ${config.build_dir}/xe/widgets/tag_list" />
+
+		<echo msg="export category" />
+		<property name="release.category_repo" value="https://xe-widget.googlecode.com/svn/trunk/widgets/category" />
+		<exec command="${config.svn} export ${release.category_repo} ${config.build_dir}/xe/widgets/category" />
+
     </target>
 
 
