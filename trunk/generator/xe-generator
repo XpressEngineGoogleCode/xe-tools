@@ -1,0 +1,114 @@
+<?php
+$commands		= array('module', 'widget', 'addon');
+$parameters		= array(
+						'module' => array('basic','developer','demo'),
+						'widget' => array(),
+						'addon'  => array()
+						);
+$commands_help 	= array(
+						'module' => 'Helps you generate a module',
+						'widget' => 'Helps you generate a widget',
+						'addon'  => 'Helps you generate an addon'
+						);			   
+$parameters_help = array(
+						'module.basic'		=> 'Create an empty module (only the structure)',
+						'module.developer'	=> 'Create a module with a standard BE',
+						'module.demo'		=> 'Create a demo module(recommended for getting started)'
+						);
+						
+function print_usage($what = '')
+{	global $commands,$parameters,$commands_help,$parameters_help;
+	$argc = $_SERVER['argc'];
+	$argv = $_SERVER['argv'];
+	
+	if (strlen($what) == 0)
+	{
+		echo "\n\n";
+		echo "You need to give some command\n";
+		echo "Usage: php $argv[0] COMMAND [options]\n\n";
+		echo "List of Commands:\n\n";
+		
+		$lengths = array_map('strlen', $commands);
+		$max_length = max($lengths);
+		
+		foreach($commands as $cmd)
+		{
+			echo $cmd;
+			for ($counter =0;$counter < ($max_length - strlen($cmd));$counter++)
+				echo ' ';
+			echo "\t";
+			echo $commands_help[$cmd]."\n";
+		}
+	
+		echo "\n\n";
+		
+		exit(0);
+	}
+	
+	$lengths = array_map('strlen', $parameters[$what]);
+	$max_length = max($lengths);
+	
+	echo "\n\n";	
+	foreach ($parameters[$what] as $param)
+	{
+		echo $param;
+		for ($counter =0;$counter < ($max_length - strlen($param));$counter++)
+			echo ' ';
+		echo "\t";
+		echo $parameters_help[$what.'.'.$param]."\n";
+		
+	}
+	
+	echo "\n\n";
+	
+	exit(0);
+}
+
+function parse_arguments()
+{	global $commands,$parameters;
+	$argc = $_SERVER['argc'];
+	$argv = $_SERVER['argv'];
+	
+	if ($argc == 1)
+	{
+		print_usage();
+		return;
+	}
+	
+	if (!in_array($argv[1],$commands))
+		print_usage();
+		
+	if (!empty($parameters[$argv[1]]) && $argc == 2)
+		print_usage($argv[1]);
+		
+	$func_name = 'generate_'.$argv[1];
+	if (!empty($parameters[$argv[1]]))
+		$func_name = $func_name.'_'.$argv[2];
+	
+	if (!function_exists($func_name))
+	{
+		echo "Function not implemented\nApplication will exit\n\n";
+		exit(0);
+	}
+	
+	call_user_func($func_name);
+}
+
+function generate_module_basic()
+{
+	$argc = $_SERVER['argc'];
+	$argv = $_SERVER['argv'];
+}
+
+function generate_module_developer()
+{
+
+}
+
+function generate_module_demo()
+{
+}
+
+parse_arguments();
+
+?>
