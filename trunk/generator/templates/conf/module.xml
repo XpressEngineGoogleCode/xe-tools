@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <grants>
+	</grants>
+    <permissions>
+<!-- You can see below some examples for the permissions section -->
+<!--
+	<permission action="proc$PARAM_MODULE_NAMEAdminMethodName" target="manager" />
+	<permission action="disp$PARAM_MODULE_NAMEAdminMethodName" target="manager" />
+-->
+	</permissions>
+    <actions>
+<!-- You can see below some examples for the actions section -->
+<!--
+	<action name="disp$PARAM_MODULE_NAMEIndex" type="view" index="true" />
+	<action name="disp$PARAM_MODULE_NAMEAdminMethodName" type="view" admin_index="true" menu_name="menu_name" menu_index="true" />
+	<action name="disp$PARAM_MODULE_NAMEAdminMethodName" type="view" menu_name="menu_name" />
+	<action name="disp$PARAM_MODULE_NAMEAdminMethodName" type="view" menu_name="menu_name" />
+	
+	<action name="proc$PARAM_MODULE_NAMEAdminMethodName" type="controller" standalone="true" />
+	<action name="proc$PARAM_MODULE_NAMEAdminMethodName" type="controller" standalone="true" ruleset="rulesetName" />
+-->
+	</actions>
+	<menus>
+<!-- You can see below some examples for the menus section -->
+<!--
+	<menu name="menu_name" type="all">
+			<title xml:lang="en">Title english translation value</title>
+			<title xml:lang="ko">???</title>
+			<title xml:lang="zh-CN">???</title>
+			<title xml:lang="jp">???</title>
+			<title xml:lang="es">???</title>
+			<title xml:lang="ru">???</title>
+			<title xml:lang="fr">???</title>
+			<title xml:lang="zh-TW">???</title>
+			<title xml:lang="vi">???</title>
+			<title xml:lang="mn">???</title>
+			<title xml:lang="tr">???</title>
+	</menu>
+-->
+	</menus>
+</module>

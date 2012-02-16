@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<lang>
+<!-- You can see below an example in order for to have a fast startup using lang.xml file -->
+<!--
+	<item name="sample_1">
+		<value xml:lang="en"><![CDATA[English translation value for first sample]]></value>
+		<value xml:lang="ko"><![CDATA[???]]></value>
+		<value xml:lang="jp"><![CDATA[???]]></value>
+		<value xml:lang="zh-CN"><![CDATA[???]]></value>
+		<value xml:lang="zh-TW"><![CDATA[???]]></value>
+		<value xml:lang="fr"><![CDATA[???]]></value>
+		<value xml:lang="ru"><![CDATA[???]]></value>
+		<value xml:lang="es"><![CDATA[???]]></value>
+		<value xml:lang="tr"><![CDATA[???]]></value>
+		<value xml:lang="vi"><![CDATA[???]]></value>
+	</item>
+	<item name="sample_2">
+		<value xml:lang="en"><![CDATA[English translation value for second sample]]></value>
+		<value xml:lang="ko"><![CDATA[???]]></value>
+		<value xml:lang="jp"><![CDATA[???]]></value>
+		<value xml:lang="zh-CN"><![CDATA[???]]></value>
+		<value xml:lang="zh-TW"><![CDATA[???]]></value>
+		<value xml:lang="fr"><![CDATA[???]]></value>
+		<value xml:lang="ru"><![CDATA[???]]></value>
+		<value xml:lang="es"><![CDATA[???]]></value>
+		<value xml:lang="tr"><![CDATA[???]]></value>
+		<value xml:lang="vi"><![CDATA[???]]></value>
+	</item>
+-->
+</lang>
