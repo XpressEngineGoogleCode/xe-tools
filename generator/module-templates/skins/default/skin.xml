@@ -2,7 +2,7 @@
 <skin version="0.2">
 <!-- You can see below some examples for the title section -->
 <!--
-    <title xml:lang="en">Default Member Skin</title>
+    <title xml:lang="en">Default $PARAM_MODULE_NAME Skin</title>
 	<title xml:lang="ko">???</title>
 -->
 
