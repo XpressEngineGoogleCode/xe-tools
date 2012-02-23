@@ -13,7 +13,7 @@ $commands_help 	= array(
 $parameters_help = array(
 						'module.basic'		=> 'Create an empty module (only the structure)',
 						'module.developer'	=> 'Create a module with a standard BE',
-						'module.demo'		=> 'Create a demo module(recommended for getting started)'
+						'module.demo'		=> 'Create a demo module (recommended for getting started)'
 						);
 						
 function print_usage($what = '')
@@ -108,50 +108,50 @@ function parse_additional_options($parameters_offset)
 	return $retVal;
 }
 
-$global_module_templates_xml = NULL;
+$global_templates_xml = NULL;
 $global_variable = NULL;
 
-function rd_mod_tpls_start_tag($parser, $name, $attrs)
+function rd_tpls_start_tag($parser, $name, $attrs)
 {
-	global $global_module_templates_xml;
+	global $global_templates_xml;
 	global $global_variable;
 	switch($name)
 	{
 		case 'PARAMETERS':
-			$global_module_templates_xml['parameters'] = array();
+			$global_templates_xml['parameters'] = array();
 			break;
 		case 'PARAMETER':
-			$global_module_templates_xml['parameters'][$attrs['ID']] = array($attrs['DESCRIPTION'],$attrs['OPTION_NAME'],$attrs['VARIABLE_NAME'],$attrs['REQUIRED']);
+			$global_templates_xml['parameters'][$attrs['ID']] = array($attrs['DESCRIPTION'],$attrs['OPTION_NAME'],$attrs['VARIABLE_NAME'],$attrs['REQUIRED']);
 			break;
 		case 'FOLDERS':
-			$global_module_templates_xml['folders'] = array();
+			$global_templates_xml['folders'] = array();
 			break;
 		case 'FOLDER':
-			$global_module_templates_xml['folders'][] = $attrs['RELATIVE_PATH'];
+			$global_templates_xml['folders'][] = $attrs['RELATIVE_PATH'];
 			break;
 		case 'FILES':
-			$global_module_templates_xml['files'] = array();
+			$global_templates_xml['files'] = array();
 			break;
 		case 'FILE':
-			$global_module_templates_xml['files'][$attrs['RELATIVE_PATH']][0] = array();
+			$global_templates_xml['files'][$attrs['RELATIVE_PATH']][0] = array();
 			$global_variable = $attrs['RELATIVE_PATH'];
 			if (isset($attrs['REPLACE_FILE_NAME_WITH_PARAM_ID']))
-				$global_module_templates_xml['files'][$attrs['RELATIVE_PATH']][1] = $attrs['REPLACE_FILE_NAME_WITH_PARAM_ID'];
+				$global_templates_xml['files'][$attrs['RELATIVE_PATH']][1] = $attrs['REPLACE_FILE_NAME_WITH_PARAM_ID'];
 			break;
 		case 'PARAM':
-			$global_module_templates_xml['files'][$global_variable][0][] = $attrs['ID'];
+			$global_templates_xml['files'][$global_variable][0][] = $attrs['ID'];
 			break;
 	}
 	
 }
 
-function read_module_templates_xml_file($file_name)
+function read_templates_xml_file($file_name)
 {
-	global $global_module_templates_xml;
+	global $global_templates_xml;
 	global $global_variable;
 	$xml_parser = xml_parser_create();
 	$global_variable = array();
-	xml_set_element_handler($xml_parser, "rd_mod_tpls_start_tag", FALSE);
+	xml_set_element_handler($xml_parser, "rd_tpls_start_tag", FALSE);
 	
 	if (!($fp = fopen($file_name, "r"))) 
 	{
@@ -171,14 +171,14 @@ function read_module_templates_xml_file($file_name)
 }
 
 
-function get_module_templates_parameters()
+function get_templates_parameters()
 {
-	global $global_module_templates_xml;
+	global $global_templates_xml;
 	$return_value = array();
 
-	foreach(array_keys($global_module_templates_xml['parameters']) as $param)
+	foreach(array_keys($global_templates_xml['parameters']) as $param)
 	{
-		$return_value[$global_module_templates_xml['parameters'][$param][1]] = array( ($global_module_templates_xml['parameters'][$param][3]=='true'), $global_module_templates_xml['parameters'][$param][0]);
+		$return_value[$global_templates_xml['parameters'][$param][1]] = array( ($global_templates_xml['parameters'][$param][3]=='true'), $global_templates_xml['parameters'][$param][0]);
 	}
 	
 	return $return_value;
@@ -207,28 +207,26 @@ function print_usage_options($options)
 	exit(0);
 }
 
-function map_module_parameters_values($options)
+function map_parameters_values($options)
 {
-	global $global_module_templates_xml;
+	global $global_templates_xml;
 	$return_value = array();
 
-	foreach(array_keys($global_module_templates_xml['parameters']) as $param)
+	foreach(array_keys($global_templates_xml['parameters']) as $param)
 	{
-		$option_name = $global_module_templates_xml['parameters'][$param][1];
-		$return_value[$param] = array(($global_module_templates_xml['parameters'][$param][3]=='true'), isset($options[$option_name])?$options[$option_name]:'');
+		$option_name = $global_templates_xml['parameters'][$param][1];
+		$return_value[$param] = array(($global_templates_xml['parameters'][$param][3]=='true'), isset($options[$option_name])?$options[$option_name]:'');
 	}
 	
 	return $return_value;
 }
 
-define("MODULE_TEMPLATES_XML_FILE_NAME","./module-templates-basic.xml");
-
-function generate_module_basic()
+function generate_item_from_templates($templates_xml_file_name,$templates_base_dir,$item_type)
 {
-	global $global_module_templates_xml;
+	global $global_templates_xml;
 	$command_line_options = parse_additional_options(3);
-	read_module_templates_xml_file(MODULE_TEMPLATES_XML_FILE_NAME);
-	$parameters = get_module_templates_parameters();
+	read_templates_xml_file($templates_xml_file_name);
+	$parameters = get_templates_parameters();
 	
 	$required_parameters = array();
 	foreach(array_keys($parameters) as $param)
@@ -239,38 +237,45 @@ function generate_module_basic()
 	if (count($required_parameters) > count($command_line_options) || count(array_diff($required_parameters,array_keys($command_line_options)))>0)
 		print_usage_options($parameters);
 		
-	$parameters_values = map_module_parameters_values($command_line_options);
+	$parameters_values = map_parameters_values($command_line_options);
 	
 	if (@mkdir('./'.$parameters_values['name'][1].'/',0777)==FALSE)
 		die("Error: Could not create new module's folder\n");
 	
-	foreach($global_module_templates_xml['folders'] as $folder)
+	foreach($global_templates_xml['folders'] as $folder)
 	{
 		if (@mkdir('./'.$parameters_values['name'][1].'/'.$folder,0777,TRUE)==FALSE)
 			die("Error: Could not create new module's sub-folders structure\n");
 	}
 	
-	foreach(array_keys($global_module_templates_xml['files']) as $file)
+	foreach(array_keys($global_templates_xml['files']) as $file)
 	{
 		$source_name = $file;
-		if (isset($global_module_templates_xml['files'][$file][1]))
-			$destination_name = str_replace('template',$parameters_values[$global_module_templates_xml['files'][$file][1]][1],$source_name);
+		if (isset($global_templates_xml['files'][$file][1]))
+			$destination_name = str_replace('template',$parameters_values[$global_templates_xml['files'][$file][1]][1],$source_name);
 		else
 			$destination_name = $file;
 		
-		if ( ($data = file_get_contents('./module-templates-basic/'.$source_name)) === FALSE)
+		if ( ($data = file_get_contents($templates_base_dir.$source_name)) === FALSE)
 			die("Error: could not open template file for read\n");
 		
-		foreach($global_module_templates_xml['files'][$file][0] as $param)
+		foreach($global_templates_xml['files'][$file][0] as $param)
 		{
-			$data = str_replace($global_module_templates_xml['parameters'][$param][2],$parameters_values[$param][1],$data);
+			$data = str_replace($global_templates_xml['parameters'][$param][2],$parameters_values[$param][1],$data);
 		}
 		
 		if ( (file_put_contents('./'.$parameters_values['name'][1].'/'.$destination_name,$data)) === FALSE)
 			die("Error: could not open module file for write\n");
 	}
 	
-	echo "\n\nBasic module called {$parameters_values['name'][1]} generated successfully in ".'./'.$parameters_values['name'][1].'/'."\n\n";
+	echo "\n\n{$item_type} called {$parameters_values['name'][1]} generated successfully in ".'./'.$parameters_values['name'][1].'/'."\n\n";
+}
+
+define("MODULE_TEMPLATES_XML_FILE_NAME_BASIC","./module-templates-basic.xml");
+
+function generate_module_basic()
+{
+	generate_item_from_templates(MODULE_TEMPLATES_XML_FILE_NAME_BASIC,'./module-templates-basic/','Basic module');
 }
 
 function generate_module_developer()
