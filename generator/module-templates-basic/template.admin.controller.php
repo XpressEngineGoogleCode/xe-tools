@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 	/**
      * @class  $PARAM_MODULE_NAMEAdminController
      * @author $PARAM_MODULE_AUTHOR_NAME ($PARAM_MODULE_AUTHOR_EMAIL_ADDRESS)
