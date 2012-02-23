@@ -121,7 +121,10 @@ function rd_tpls_start_tag($parser, $name, $attrs)
 			$global_templates_xml['parameters'] = array();
 			break;
 		case 'PARAMETER':
-			$global_templates_xml['parameters'][$attrs['ID']] = array($attrs['DESCRIPTION'],$attrs['OPTION_NAME'],$attrs['VARIABLE_NAME'],$attrs['REQUIRED']);
+			if (isset($attrs['ALIAS']))
+				$global_templates_xml['parameters'][$attrs['ID']] = array(null,null,$attrs['VARIABLE_NAME'],$attrs['REQUIRED'],1,$attrs['ALIAS'],$attrs['TRANSFORM']);
+			else
+				$global_templates_xml['parameters'][$attrs['ID']] = array($attrs['DESCRIPTION'],$attrs['OPTION_NAME'],$attrs['VARIABLE_NAME'],$attrs['REQUIRED'],0);
 			break;
 		case 'FOLDERS':
 			$global_templates_xml['folders'] = array();
@@ -178,7 +181,7 @@ function get_templates_parameters()
 
 	foreach(array_keys($global_templates_xml['parameters']) as $param)
 	{
-		$return_value[$global_templates_xml['parameters'][$param][1]] = array( ($global_templates_xml['parameters'][$param][3]=='true'), $global_templates_xml['parameters'][$param][0]);
+		$return_value[$global_templates_xml['parameters'][$param][1]] = array( ($global_templates_xml['parameters'][$param][3]=='true'), $global_templates_xml['parameters'][$param][0],$global_templates_xml['parameters'][$param][4]);
 	}
 	
 	return $return_value;
@@ -194,6 +197,8 @@ function print_usage_options($options)
 		
 	foreach(array_keys($options) as $opt)
 	{
+		if ($options[$opt][2])// if it's an alias parameter just skip it
+			continue;
 		echo ($options[$opt][0])?' ':'[';
 		echo $opt;
 		echo ($options[$opt][0])?' ':']';
@@ -214,8 +219,24 @@ function map_parameters_values($options)
 
 	foreach(array_keys($global_templates_xml['parameters']) as $param)
 	{
-		$option_name = $global_templates_xml['parameters'][$param][1];
-		$return_value[$param] = array(($global_templates_xml['parameters'][$param][3]=='true'), isset($options[$option_name])?$options[$option_name]:'');
+		if ($global_templates_xml['parameters'][$param][4])// if it's an alias param
+		{
+			$alias_value = $return_value[$global_templates_xml['parameters'][$param][5]][1];
+			switch($global_templates_xml['parameters'][$param][6])// transform
+			{
+				case 'ucword':
+					$alias_value = ucwords($alias_value);
+					break;
+				default:
+					break;
+			}
+			$return_value[$param] = array(($global_templates_xml['parameters'][$param][3]=='true'), $alias_value);
+		}
+		else
+		{
+			$option_name = $global_templates_xml['parameters'][$param][1];
+			$return_value[$param] = array(($global_templates_xml['parameters'][$param][3]=='true'), isset($options[$option_name])?$options[$option_name]:'');
+		}
 	}
 	
 	return $return_value;
@@ -278,16 +299,16 @@ function generate_module_basic()
 	generate_item_from_templates(MODULE_TEMPLATES_XML_FILE_NAME_BASIC,'./module-templates-basic/','Basic module');
 }
 
+define("MODULE_TEMPLATES_XML_FILE_NAME_DEVELOPER","./module-templates-developer.xml");
+
 function generate_module_developer()
 {
-	$argc = $_SERVER['argc'];
-	$argv = $_SERVER['argv'];
+	generate_item_from_templates(MODULE_TEMPLATES_XML_FILE_NAME_DEVELOPER,'./module-templates-developer/','Developer module');
 }
 
 function generate_module_demo()
 {
-	$argc = $_SERVER['argc'];
-	$argv = $_SERVER['argv'];
+
 }
 
 parse_arguments();

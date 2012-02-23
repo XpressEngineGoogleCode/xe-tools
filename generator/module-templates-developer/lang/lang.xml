@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<lang>
+	<item name="$PARAM_MODULE_NAME_management">
+		<value xml:lang="en"><![CDATA[Manage of $PARAM_MODULE_NAME]]></value>
+	</item>
+	<item name="about_$PARAM_MODULE_NAME">
+		<value xml:lang="en"><![CDATA[$PARAM_MODULE_ABOUT]]></value>
+	</item>
+	<item name="cmd_$PARAM_MODULE_NAME_create">
+		<value xml:lang="en"><![CDATA[Create a $PARAM_MODULE_NAME_UC]]></value>
+	</item>
+	<item name="$PARAM_MODULE_NAME_delete_warning">
+		<value xml:lang="en"><![CDATA[$PARAM_MODULE_DELETE_WARNING_MSG]]></value>
+	</item>
+</lang>
