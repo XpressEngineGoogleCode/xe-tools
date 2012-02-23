@@ -221,7 +221,7 @@ function map_module_parameters_values($options)
 	return $return_value;
 }
 
-define("MODULE_TEMPLATES_XML_FILE_NAME","./module-templates.xml");
+define("MODULE_TEMPLATES_XML_FILE_NAME","./module-templates-basic.xml");
 
 function generate_module_basic()
 {
@@ -258,7 +258,7 @@ function generate_module_basic()
 		else
 			$destination_name = $file;
 		
-		if ( ($data = file_get_contents('./module-templates/'.$source_name)) === FALSE)
+		if ( ($data = file_get_contents('./module-templates-basic/'.$source_name)) === FALSE)
 			die("Error: could not open template file for read\n");
 		
 		foreach($global_module_templates_xml['files'][$file][0] as $param)
