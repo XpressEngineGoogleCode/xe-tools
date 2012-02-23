@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file   modules/$PARAM_MODULE_NAME/tpl/js/$PARAM_MODULE_NAME_admin.js
  * @author $PARAM_MODULE_AUTHOR_NAME ($PARAM_MODULE_AUTHOR_EMAIL_ADDRESS)
  * @brief  Admin javascript file for $PARAM_MODULE_NAME module

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $commands		= array('module', 'widget', 'addon');
 $parameters		= array(
 						'module' => array('basic','developer','demo'),
