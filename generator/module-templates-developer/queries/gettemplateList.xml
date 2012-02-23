@@ -1,4 +1,4 @@
-<query id="get$PARAM_MODULE_NAME_UCList" action="select">
+﻿<query id="get$PARAM_MODULE_NAME_UCList" action="select">
     <tables>
         <table name="modules" />
     </tables>
