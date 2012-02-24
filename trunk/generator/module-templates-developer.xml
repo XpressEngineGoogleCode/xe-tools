@@ -19,7 +19,7 @@
 		<folder relative_path="./m.skins"/>
 		<folder relative_path="./queries"/>
 		<folder relative_path="./ruleset"/>
-		<folder relative_path="./schema"/>
+		<folder relative_path="./schemas"/>
 		<folder relative_path="./skins"/>
 		<folder relative_path="./skins/default"/>
 		<folder relative_path="./skins/default/css"/>
