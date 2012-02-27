@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+    <title xml:lang="en">$PARAM_MODULE_NAME</title>
+    <description xml:lang="en">$PARAM_MODULE_DESCRIPTION</description>
+    <version>$PARAM_MODULE_VERSION</version>
+    <date>$PARAM_MODULE_DATE</date>
+    <category>$PARAM_MODULE_CATEGORY</category>
+    <author email_address="$PARAM_MODULE_AUTHOR_EMAIL_ADDRESS" link="$PARAM_MODULE_AUTHOR_URL">
+        <name xml:lang="en">$PARAM_MODULE_AUTHOR_NAME</name>
+    </author>
+</module>

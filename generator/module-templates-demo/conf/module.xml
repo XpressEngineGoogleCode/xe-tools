@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <grants>
+	</grants>
+    
+	<permissions>
+	<permission action="proc$PARAM_MODULE_NAME_UCAdminInsert" target="manager" />
+	</permissions>
+	
+    <actions>
+	<action name="disp$PARAM_MODULE_NAME_UCAdminContent" type="view" standalone="true" admin_index="true" />
+	<action name="disp$PARAM_MODULE_NAME_UCAdminInsert" type="view" menu_name="$PARAM_MODULE_NAME" />
+	<action name="disp$PARAM_MODULE_NAME_UCAdminInfo" type="view" setup_index="true" menu_name="$PARAM_MODULE_NAME" />
+	<action name="disp$PARAM_MODULE_NAME_UCAdminPageAdditionSetup" type="view" menu_name="$PARAM_MODULE_NAME" />
+	<action name="disp$PARAM_MODULE_NAME_UCAdminDelete" type="view" standalone="true" />
+	<action name="disp$PARAM_MODULE_NAME_UCAdminGrantInfo" type="view" menu_name="$PARAM_MODULE_NAME" />
+
+	<action name="proc$PARAM_MODULE_NAME_UCAdminInsert" type="controller" standalone="true" ruleset="insert$PARAM_MODULE_NAME_UC" />
+	<action name="proc$PARAM_MODULE_NAME_UCAdminUpdate" type="controller" standalone="true" ruleset="update$PARAM_MODULE_NAME_UC" />
+	<action name="proc$PARAM_MODULE_NAME_UCAdminDelete" type="controller" standalone="true" ruleset="delete$PARAM_MODULE_NAME_UC" />
+	
+	<action name="disp$PARAM_MODULE_NAME_UCContent" type="view" index="true"/>
+	<action name="disp$PARAM_MODULE_NAME_UCEmailList" type="view"/>
+	
+	<action name="proc$PARAM_MODULE_NAME_UCInsertEmail" type="controller" standalone="true" ruleset="addEmail" />
+	</actions>
+	
+	<menus>
+	<menu name="$PARAM_MODULE_NAME" type="all">
+			<title xml:lang="en">$PARAM_MODULE_NAME_UC</title>
+		</menu>
+	</menus>
+	
+</module>
