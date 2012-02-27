@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget version="0.2">
+    <title xml:lang="en">$PARAM_WIDGET_ALIAS</title>
+    <description xml:lang="en">
+	This widget displays how much the site is accessed with each of the three browsers Mozilla Firefox,
+	Internet Explorer and Google Chrome.
+    To get this, the counter module should be installed and the counter add-on should be turned on.
+	</description>
+    <version>$PARAM_WIDGET_VERSION</version>
+    <date>$PARAM_WIDGET_DATE</date>
+
+    <author email_address="$PARAM_WIDGET_AUTHOR_EMAIL_ADDRESS" link="$PARAM_WIDGET_AUTHOR_URL">
+        <name xml:lang="en">$PARAM_WIDGET_AUTHOR_NAME</name>
+    </author>
+	<extra_vars>
+	<var id="caption" type="text">
+	    <name xml:lang="en">Table caption</name>
+	    <description xml:lang="en">Caption (title) for the browser usage table displayed by the widget</description>
+	</var>
+    </extra_vars>
+</widget>

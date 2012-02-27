@@ -312,14 +312,19 @@ function generate_module_demo()
 {
 
 }
+
 define("WIDGET_TEMPLATES_XML_FILE_NAME_BASIC","./widget-templates-basic.xml");
+
 function generate_widget_basic()
 {
 	generate_item_from_templates(WIDGET_TEMPLATES_XML_FILE_NAME_BASIC,'./widget-templates-basic/','Basic widget');
 }
 
+define("WIDGET_TEMPLATES_XML_FILE_NAME_DEMO","./widget-templates-demo.xml");
+
 function generate_widget_demo()
 {
+	generate_item_from_templates(WIDGET_TEMPLATES_XML_FILE_NAME_DEMO,'./widget-templates-demo/','Demo widget');
 }
 
 parse_arguments();

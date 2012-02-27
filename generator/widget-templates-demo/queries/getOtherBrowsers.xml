@@ -1,0 +1,13 @@
+<query id="getOtherBrowsers" action="select">
+    <tables>
+	<table name="counter_log" />
+    </tables>
+    <columns>
+	<column name="COUNT(*)" />
+    </columns>
+    <conditions>
+	<condition operation="notlike" column="user_agent" default="% Firefox/%" pipe="and" />
+	<condition operation="notlike" column="user_agent" default="% Chrome/_%" pipe="and" />
+	<condition operation="notlike" column="user_agent" default="% MSIE %"    pipe="and" />
+    </conditions>
+</query>

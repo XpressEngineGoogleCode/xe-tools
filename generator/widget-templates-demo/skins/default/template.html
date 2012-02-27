@@ -1,0 +1,38 @@
+<load target="./css/widget.css" />
+<div class="widgetContainer<!--@if($colorset=="black")--> black<!--@end-->">
+    <table class="widgetCounter">
+	<caption cond="$caption">{$caption}</caption>
+	<thead>
+	    <tr>
+		<th>Browser</th>
+		<th class="browser-counter">Unique visits</th>
+	    </tr>
+	</thead>
+
+	<tfoot>
+	    <tr class="counter-totals">
+		<td>Total</td>
+		<th class="browser-counter">{$total_visits}</th>
+	    </tr>
+	</tfoot>
+
+	<tbody>
+	    <tr>
+		<td>Firefox</td>
+		<td class="browser-counter">{$firefox_visits}</td>
+	    </tr>
+	    <tr>
+		<td>Chrome</td>
+		<td class="browser-counter">{$chrome_visits}</td>
+	    </tr>
+	    <tr>
+		<td>IE</td>
+		<td class="browser-counter">{$msie_visits}</td>
+	    </tr>
+	    <tr>
+		<td>Other</td>
+		<td class="browser-counter">{$other_visits}</td>
+	    </tr>
+	</tbody>
+    </table>
+</div>

@@ -1,0 +1,11 @@
+<query id="getFirefoxBrowser" action="select">
+    <tables>
+	<table name="counter_log" />
+    </tables>
+    <columns>
+	<column name="COUNT(*)" />
+    </columns>
+    <conditions>
+	<condition operation="like" column="user_agent" default="% Firefox/%" notnull="notnull" />
+    </conditions>
+</query>
