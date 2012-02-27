@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon version="0.2">
+    <title xml:lang="en">$PARAM_ADDON_ALIAS</title>
+    <description xml:lang="en">$PARAM_ADDON_DESCRIPTION</description>
+    <version>$PARAM_ADDON_VERSION</version>
+    <date>$PARAM_ADDON_DATE</date>
+
+    <author email_address="$PARAM_ADDON_AUTHOR_EMAIL_ADDRESS" link="$PARAM_ADDON_AUTHOR_URL">
+        <name xml:lang="en">$PARAM_ADDON_AUTHOR_NAME</name>
+    </author>
+<!-- You should insert below the extra_vars section (if needed). -->
+<!--
+	<extra_vars>
+		<var name="Variable name (English)">
+			<title xml:lang="en">Variable name (for output)</title>
+			<description xml:lang="en">Variable description</description>
+		</var>
+	</extra_vars>
+-->
+</addon>

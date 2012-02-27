@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+	<parameters>
+		<parameter id="name" description="Addon Name" option_name="name" variable_name="$PARAM_ADDON_NAME" required="true"/>
+		<parameter id="alias" description="Addon Alias" option_name="alias" variable_name="$PARAM_ADDON_ALIAS" required="true"/>
+		<parameter id="description" description="Addon Description" option_name="desc" variable_name="$PARAM_ADDON_DESCRIPTION" required="false"/>
+		<parameter id="version" description="Addon Version" option_name="vers" variable_name="$PARAM_ADDON_VERSION" required="false"/>
+		<parameter id="date" description="Addon Date" option_name="date" variable_name="$PARAM_ADDON_DATE" required="false"/>
+		<parameter id="author_name" description="Author Name" option_name="author-name" variable_name="$PARAM_ADDON_AUTHOR_NAME" required="false"/>
+		<parameter id="author_url" description="Author URL" option_name="author-url" variable_name="$PARAM_ADDON_AUTHOR_URL" required="false"/>
+		<parameter id="author_email" description="Author Email" option_name="author-email" variable_name="$PARAM_ADDON_AUTHOR_EMAIL_ADDRESS" required="false"/>
+	</parameters>
+	<folders>
+		<folder relative_path="./conf"/>
+		<folder relative_path="./queries"/>
+	</folders>
+	<files>
+		<file relative_path="./conf/info.xml">
+			<param id="alias"/>
+			<param id="description"/>
+			<param id="version"/>
+			<param id="date"/>
+			<param id="author_name"/>
+			<param id="author_url"/>
+			<param id="author_email"/>
+		</file>
+		<file relative_path="./template.addon.php" replace_file_name_with_param_id="name">
+			<param id="name"/>
+			<param id="description"/>
+			<param id="version"/>
+			<param id="author_name"/>
+			<param id="author_email"/>
+		</file>
+	</files>
+</templates>
