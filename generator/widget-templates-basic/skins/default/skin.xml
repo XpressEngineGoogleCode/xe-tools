@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin version="0.2">
+    <title xml:lang="en">Default $PARAM_WIDGET_ALIAS Skin </title>
+    <description xml:lang="en">Default skin of $PARAM_WIDGET_NAME</description>
+    <version>$PARAM_WIDGET_VERSION</version>
+    <date>$PARAM_WIDGET_DATE</date>
+    <link>$PARAM_WIDGET_AUTHOR_URL</link>
+    <author email_address="$PARAM_WIDGET_AUTHOR_EMAIL_ADDRESS" link="$PARAM_WIDGET_AUTHOR_URL">
+        <name xml:lang="en">$PARAM_WIDGET_AUTHOR_NAME</name>
+    </author>
+</skin>

@@ -2,7 +2,7 @@
 $commands		= array('module', 'widget', 'addon');
 $parameters		= array(
 						'module' => array('basic','developer','demo'),
-						'widget' => array(),
+						'widget' => array('basic','demo'),
 						'addon'  => array()
 						);
 $commands_help 	= array(
@@ -11,9 +11,11 @@ $commands_help 	= array(
 						'addon'  => 'Helps you generate an addon'
 						);			   
 $parameters_help = array(
-						'module.basic'		=> 'Create an empty module (only the structure)',
-						'module.developer'	=> 'Create a module with a standard BE',
-						'module.demo'		=> 'Create a demo module (recommended for getting started)'
+						'module.basic'		=> 'Creates an empty module (only the structure)',
+						'module.developer'	=> 'Creates a module with a standard BE',
+						'module.demo'		=> 'Creates a demo module (recommended for getting started)',
+						'widget.basic'		=> 'Creates an empty widget (only the structure)',
+						'widget.demo'		=> 'Creates a demo widget (recommended for getting started)'
 						);
 						
 function print_usage($what = '')
@@ -309,6 +311,15 @@ function generate_module_developer()
 function generate_module_demo()
 {
 
+}
+define("WIDGET_TEMPLATES_XML_FILE_NAME_BASIC","./widget-templates-basic.xml");
+function generate_widget_basic()
+{
+	generate_item_from_templates(WIDGET_TEMPLATES_XML_FILE_NAME_BASIC,'./widget-templates-basic/','Basic widget');
+}
+
+function generate_widget_demo()
+{
 }
 
 parse_arguments();
