@@ -1,0 +1,16 @@
+<!--#include("header.html")-->
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<h2>{$module_message}</h2>
+
+<form ruleset="addEmail" action="./" method="post" enctype="multipart/form-data"  id="fo_add_email">
+<input type="hidden" name="module_srl" value="{$module_srl}" />
+<input type="hidden" name="act" value="proc$PARAM_MODULE_NAME_UCInsertEmail" />
+
+		<label>{$lang->$PARAM_MODULE_NAME_add_email_address}</label>
+		<input type="text" name="email_address" id="email_address" />
+		<a href="#" class="forumButton" onclick="jQuery('#fo_add_email').submit();return false;">{$lang->$PARAM_MODULE_NAME_add_email}</a>
+
+</form>

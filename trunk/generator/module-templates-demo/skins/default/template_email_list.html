@@ -1,0 +1,7 @@
+<!--#include("header.html")-->
+<h2>{$lang->$PARAM_MODULE_NAME_email_list}</h2>
+<ul>
+	<!--@foreach($email_list as $email)-->
+		<li>{$email->email_address}</li>
+	<!--@endforeach-->
+</ul>

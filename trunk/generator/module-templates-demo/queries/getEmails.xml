@@ -1,0 +1,11 @@
+<query id="getEmails" action="select">
+    <tables>
+        <table name="$PARAM_MODULE_NAME_emails" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+     <conditions>
+        <condition operation="equal" column="module_srl" var = "module_srl"/>
+    </conditions>
+</query>

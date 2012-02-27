@@ -1,0 +1,5 @@
+<table name="$PARAM_MODULE_NAME_emails">
+	<column name="email_srl" type="number" size="11" notnull="notnull" primary_key="primary_key" />
+    <column name="module_srl" type="number" size="11" notnull="notnull" default="0" index="idx_module_$PARAM_MODULE_NAME_emails" />
+    <column name="email_address" type="varchar" size="250" notnull="notnull" unique="unique_email_address" />
+</table>

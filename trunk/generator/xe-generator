@@ -308,9 +308,11 @@ function generate_module_developer()
 	generate_item_from_templates(MODULE_TEMPLATES_XML_FILE_NAME_DEVELOPER,'./module-templates-developer/','Developer module');
 }
 
+define("MODULE_TEMPLATES_XML_FILE_NAME_DEMO","./module-templates-demo.xml");
+
 function generate_module_demo()
 {
-
+	generate_item_from_templates(MODULE_TEMPLATES_XML_FILE_NAME_DEMO,'./module-templates-demo/','Demo module');
 }
 
 define("WIDGET_TEMPLATES_XML_FILE_NAME_BASIC","./widget-templates-basic.xml");
