@@ -1,0 +1,11 @@
+<query id="getIEBrowser" action="select">
+    <tables>
+	<table name="counter_log" />
+    </tables>
+    <columns>
+	<column name="COUNT(*)" />
+    </columns>
+    <conditions>
+        <condition operation="like" column="user_agent" default="% MSIE %" notnull="notnull" />
+    </conditions>
+</query>
