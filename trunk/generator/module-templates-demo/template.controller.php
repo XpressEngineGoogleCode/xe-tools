@@ -31,7 +31,7 @@
 			else
 			{
 				$this->setError(-1);
-				$msg_code = 'msg_error_occured';
+				$msg_code = $output->message;
 			}
 
             $this->setMessage($msg_code);
