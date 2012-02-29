@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.external-link
+{
+    background-image: url('../img/icon_external_link.png');
+    background-position: 0 75%;
+    background-repeat: no-repeat;
+    padding-left: 14px;
+}
