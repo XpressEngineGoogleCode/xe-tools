@@ -1,11 +1,11 @@
 <?php
-if(!defined('__XE__')) exit();
-
 /**
  * @file	$PARAM_ADDON_NAME.addon.php
  * @author	$PARAM_ADDON_AUTHOR_NAME ($PARAM_ADDON_AUTHOR_EMAIL_ADDRESS)
  * @brief	$PARAM_ADDON_DESCRIPTION
  **/
+ 
+if(!defined('__XE__')) exit();
  
 // switch by entry point
  switch($called_position)

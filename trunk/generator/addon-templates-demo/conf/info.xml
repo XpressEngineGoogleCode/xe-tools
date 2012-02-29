@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon version="0.2">
+    <title xml:lang="en">$PARAM_ADDON_ALIAS</title>
+    <description xml:lang="en">Scans page content for HTML anchor &lt;A&gt; elements for external links and configures them to always open in a new window.</description>
+    <version>$PARAM_ADDON_VERSION</version>
+    <date>$PARAM_ADDON_DATE</date>
+
+    <author email_address="$PARAM_ADDON_AUTHOR_EMAIL_ADDRESS" link="$PARAM_ADDON_AUTHOR_URL">
+        <name xml:lang="en">$PARAM_ADDON_AUTHOR_NAME</name>
+    </author>
+</addon>
