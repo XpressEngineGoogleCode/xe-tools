@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ============================================  -->
+<!-- xe-generator build file                       -->
+<!-- Builds a new xe-generator phar file           -->
+<!-- distribution by running:                      -->
+<!-- phing               						   -->
+<!-- from the generator folder                     -->
+<!-- ============================================  -->
+
+<project name="xe-generator" default="build">
+	<property name="config.current_dir" value="${application.startdir}" override="true" />
+	<property name="config.build_dir" value="./build" override="true" />
+	<property name="config.version" value="1.0" override="true" />
+	<property name="config.author" value="Catalin" override="true" />
+	<property name="config.email" value="catalin.ciobanu@arnia.ro" override="true" />
+	
+	<!-- ============================================  -->
+    <!-- Target: prepare                               -->
+    <!-- ============================================  -->
+    <target name="prepare">
+		<echo msg="Removing directory ${config.build_dir}" />
+		<delete dir="${config.build_dir}" />
+        <echo msg="Making directory ${config.build_dir}" />
+        <mkdir dir="${config.build_dir}" />
+    </target>
+	
+	<!-- ============================================  -->
+    <!-- (DEFAULT)  Target: build                      --> 
+    <!-- ============================================  -->
+    <target name="build" depends="prepare">
+        <echo msg="Creating xe-generator phar..." />
+		<pharpackage destfile="${config.build_dir}/xe-generator.phar" basedir="${config.current_dir}" clistub="./xe-generator.php" webstub="./xe-generator.php">
+			<fileset dir=".">
+			</fileset>
+			<metadata>
+			<element name="version" value="${config.version}" />
+			<element name="authors">
+				<element name="${config.author}">
+					<element name="e-mail" value="${config.email}" />
+				</element>
+			</element>
+			</metadata>
+		</pharpackage>
+	</target>
+</project>
