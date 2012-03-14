@@ -21,9 +21,25 @@
 
  _Note 2_: if you want to build yourself the PHAR file for this tool you will need to have _Phing_ installed. But this is not mandatory because you can use an already built PHAR file or to use the raw files (not embedded everything in a PHP archive).
 
-= Prerequisites =
-
 = Download and Run =
+
+ This tool was created in PHP and should be executed from the PHP CLI (command line). So it works in the same way on all platforms (Unix, Windows, Mac).
+
+ There are 3 possible ways to download the necessary files in order to be able to run the script:
+  * download the PHAR (PHP archive)(like an executable file) from [http://www.google.com/url?q=http%3A%2F%2Fcode.google.com%2Fp%2Fxe-tools%2Fdownloads%2Fdetail%3Fname%3Dxe-generator.phar here] (recommended)
+  * download the ZIP archive from [http://www.google.com/url?q=http%3A%2F%2Fcode.google.com%2Fp%2Fxe-tools%2Fdownloads%2Fdetail%3Fname%3Dxe-generator.zip here]
+  * checkout the latest tool source code using the following command line:
+      _svn checkout https://xe-tools.googlecode.com/svn/trunk/generator generator_
+
+ The PHAR files provides a way to put entire PHP applications into a single file called a "PHAR" (PHP Archive) for easy distribution and installation. So instead of downloading several files you can download a single one that contains everything. That’s why this method is the recommended one.
+
+ In order to run the tool in the form of a PHAR file you should use the following command line:
+  _php xe-generator.phar_
+	
+ If you prefer not using the PHAR method you should use the following command line (from the generator folder):
+  _php xe-generator.php_
+	
+ Note: In case you prefer using the using the ZIP archive you should first unzip it in a folder (let’s say to a “generator” folder).
 
 = Available Commands =
 
