@@ -126,3 +126,32 @@
   _php xe-generator.phar widget demo name browser_usage alias "Browser Usage" desc "This widget displays the statistics of the browser usage" vers "0.4" date "2012-03-15" author-name "Surname Name" author-url "http://www.domain.com" author-email "admin@domain.com"_
 
 = Addon Generation =
+
+ There are 2 types of addons that can be generated:
+  * _basic_
+  This generates a new addon that contains the entire structure (necessary files and folders). So instead of loosing time with the creation of all files and folders (necessary for a addon), one can use this new generated addon and focus the energy on implementing their custom behaviour.<br />
+  It’s recommended for XE advanced developers.
+  * _demo_
+  This generates an enhanced basic addon. In addition to the basic one, this has some functionality implemented. This functionality consist of: transform all the links in a page such that all of them open in a new browser window.<br />
+  It’s recommended for XE beginner developers.
+
+ You can see below the descriptions of the possible options:
+  * _name_ - required (`*`)
+   Description: the name of the addon<br />Applies to: basic, demo
+  * _alias_ - required (`*`)
+   Description: the alias of the addon (how it appears in the addons list)<br />Applies to: basic, demo
+  * _desc_ - `[`optional`]`
+   Description: the description of the addon<br />Applies to: basic, demo
+  * _vers_ - `[`optional`]`
+   Description: the version number of the addon<br />Applies to: basic, demo
+  * _date_ - `[`optional`]`
+   Description: creation date of the addon<br />Applies to: basic, demo
+  * _author-name_ - `[`optional`]`
+   Description: the name of the addon’s author<br />Applies to: basic, demo
+  * _author-url_ - `[`optional`]`
+   Description: the URL of the addon’s author<br />Applies to: basic, demo
+  * _author-email_ - `[`optional`]`
+   Description: the email of the addon’s author<br />Applies to: basic, demo
+
+ You can see below an example of a command line that will create a new demo addon called _new_window_:<br />
+  _php xe-generator.phar addon demo name new_window_links alias "New window links" desc "This addon that transform all the links in a document in order to open in a new window" vers "0.6" date "2012-03-15" author-name "Surname Name" author-url "http://www.domain.com" author-email "admin@domain.com"_
