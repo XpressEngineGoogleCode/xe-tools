@@ -1,0 +1,32 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+ Are you a developer interested in extending the native functionalities provided by XE? Well, this is the right place for you to start. This tool can be used by both types of developers: 
+    * the ones that already have experience with XE
+    * the ones that are just getting started using XE
+
+ As you may know XE makes it very easy for developers to add functionality to the core code.  You can build _modules_ on top of the existing ones or write your own from scratch. Also, you can change the behavior of the existing modules by using _add-ons_ or insert snippets of code directly into pages using _widgets_.
+
+ Basically this tool provides an easy way to start creating new modules, widgets and addons. For the developers that are new to XE it provides some demo versions that will help you to get started.
+
+
+= Prerequisites =
+
+ You need to have PHP 5.2.0 or newer installed. That’s pretty much it!
+
+ There are also some PHP extensions (libxml and PHAR) required but usually these extensions are installed and enabled by default, so in most cases you should not worry about these extensions.
+
+ _Note 1_: this tool does not require an XE installation on the same machine. But in order to test and use what this tool produces you need to have an XE installation.
+
+ _Note 2_: if you want to build yourself the PHAR file for this tool you will need to have _Phing_ installed. But this is not mandatory because you can use an already built PHAR file or to use the raw files (not embedded everything in a PHP archive).
+
+= Prerequisites =
+
+= Download and Run =
+
+= Available Commands =
+
+= Module Generation =
+= Widget Generation =
+= Addon Generation =
