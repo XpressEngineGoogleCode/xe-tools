@@ -58,5 +58,43 @@
   The list of the possible addons that can be generate and their particular options are presented in the next sections.
 
 = Module Generation =
+
+ There are 3 types of modules that can be generated:
+  * _basic_
+  This generates a new module that contains the entire structure (necessary files and folders). So instead of loosing time with the creation of all files and folders (necessary for a module), one can use this new generated module and focus the energy on implementing their custom behaviour.<br/>
+  It’s recommended for XE advanced developers.
+  * _developer_
+  This generates an enhanced basic module. In addition to the basic one, this has a standard backend functionality implemented. So one can create, modify, delete and list instances of this module.<br/>
+  It’s recommended for XE intermediate developers.
+  * _demo_
+  This generates an enhanced developer module. In addition to the developer one, this has some functionality implemented on front end. This functionality consist of: adding a some email addresses into a table(created especially for this module), displaying the list of already inserted email addresses. From this module one can learn how to: create a new table for a certain module, create some front end view methods, some front end associated controller methods(actions), use the rulesets.<br/>
+  It’s recommended for XE beginner developers.
+
+ You can see below the descriptions of the possible options:
+  * _name_ - required (`*`)
+  Description: the name of the module<br/>Applies to: basic, developer, demo
+  * _desc_ - `[`optional`]`
+  Description: the description of the module<br/>Applies to: basic, developer, demo
+  * _vers_ - `[`optional`]`
+  Description: the version number of the module<br/>Applies to: basic, developer, demo
+  * _date_ - `[`optional`]`
+  Description: creation date of the module<br/>Applies to: basic, developer, demo
+  * _cat_ - `[`optional`]`
+  Description: the category of the module<br/>Applies to: basic, developer, demo
+  * _author-name_ - `[`optional`]`
+  Description: the name of the module’s author<br/>Applies to: basic, developer, demo
+  * _author-url_ - `[`optional`]`
+  Description: the URL of the module’s author<br/>Applies to: basic, developer, demo
+  * _author-email_ - `[`optional`]`
+  Description: the email of the module’s author<br/>Applies to: basic, developer, demo
+  * _about_ - `[`optional`]`
+  Description: the about field of the module that will appear in the lang file<br/>Applies to: basic, developer, demo 
+  * _del-warn-msg_ - `[`optional`]`
+  Description: the delete warning message that will be displayed when deleting an instance of the module<br/>Applies to: basic, developer, demo
+<br />
+ You can see below an example of a command line that will create a new demo module called email:
+
+   _php xe-generator.phar module demo name email desc "This module is for managing email addresses" vers "0.3" date "2012-03-15" cat "service" author-name "Surname Name" author-url "http://www.domain.com" author-email "admin@domain.com" about "It helps you manage email addresses" del-warn-msg "If you delete it you cannot undo the operation"_
+
 = Widget Generation =
 = Addon Generation =
