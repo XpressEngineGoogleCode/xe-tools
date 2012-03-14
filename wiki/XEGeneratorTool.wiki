@@ -95,4 +95,34 @@
   _php xe-generator.phar module demo name email desc "This module is for managing email addresses" vers "0.3" date "2012-03-15" cat "service" author-name "Surname Name" author-url "http://www.domain.com" author-email "admin@domain.com" about "It helps you manage email addresses" del-warn-msg "If you delete it you cannot undo the operation"_
 
 = Widget Generation =
+
+ There are 2 types of widgets that can be generated:
+  * basic
+  This generates a new widget that contains the entire structure (necessary files and folders). So instead of loosing time with the creation of all files and folders (necessary for a module), one can use this new generated widget and focus the energy on implementing their custom behaviour.<br />
+  It’s recommended for XE advanced developers.
+  * demo
+  This generates an enhanced basic widget. In addition to the basic one, this has some functionality implemented. This functionality consist of: showing the usage percentage of well-known browsers (Mozilla, Chrome, IE, others)<br />
+  It’s recommended for XE beginner developers.
+
+ You can see below the descriptions of the possible options:
+  * _name_ - required (`*`)
+  Description: the name of the widget<br/>Applies to: basic, demo
+  * _alias_ - required (`*`)
+  Description: the alias of the widget (how it appears in the widgets list)<br/>Applies to: basic, demo
+  * _desc_ - `[`optional`]`
+  Description: the description of the widget<br/>Applies to: basic, demo
+  * _vers_ - `[`optional`]`
+  Description: the version number of the widget<br/>Applies to: basic, demo
+  * _date_ - `[`optional`]`
+  Description: creation date of the widget<br/>Applies to: basic, demo
+  * _author-name_ - `[`optional`]`
+  Description: the name of the widget’s author<br/>Applies to: basic, demo
+  * _author-url_ - `[`optional`]`
+  Description: the URL of the widget’s author<br/>Applies to: basic, demo
+  * _author-email_ - `[`optional`]`
+  Description: the email of the widget’s author<br/>Applies to: basic, demo
+
+ You can see below an example of a command line that will create a new demo widget called _browser_usage_:<br />
+  _php xe-generator.phar widget demo name browser_usage alias "Browser Usage" desc "This widget displays the statistics of the browser usage" vers "0.4" date "2012-03-15" author-name "Surname Name" author-url "http://www.domain.com" author-email "admin@domain.com"_
+
 = Addon Generation =
