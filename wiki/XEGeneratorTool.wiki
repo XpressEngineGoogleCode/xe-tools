@@ -43,6 +43,20 @@
 
 = Available Commands =
 
+ You can see below the list of available commands that are supported by the tool:
+    * _module_
+  This helps you generate a new module.<br />
+  A module in XE is a program. Multiple modules can be combined into a bigger module, and each module can operate independently. In short, modules are programs that are additionally installed to implement specific features on websites. Bulletin board, Forum, Wiki and Textyle can be considered the representative modules provided in XE.<br />
+  The list of the possible modules that can be generated and their particular options are presented in the next sections.
+  * _widget_
+  This helps you generate a new widget.<br />
+  A widget is inserted into and operated in a layout or a page module. Widgets can display data already created in modules, or create its own data. For example, you can use a widget to display the list of the latest posts in the front page of your website. Language selection and login information display widgets are examples of representative widgets provided by XE.<br />
+  The list of the possible widgets that can be generate and their particular options are presented in the next sections.
+  * _addon_
+  This helps you generate a new addon.<br />
+  Add-ons are used to control operation, and not to display HTML results. They are small programs that interrupt the operations of modules and performs its own operations. In addition to modules, addons execute their own features by themselves. However, addons are different from modules in that they do not provide the execution results to outside. Default counter and mobile XE are examples of the representative Addons provided by XE.<br />
+  The list of the possible addons that can be generate and their particular options are presented in the next sections.
+
 = Module Generation =
 = Widget Generation =
 = Addon Generation =
