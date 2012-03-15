@@ -98,7 +98,7 @@
 
  There are 2 types of widgets that can be generated:
   * basic
-  This generates a new widget that contains the entire structure (necessary files and folders). So instead of loosing time with the creation of all files and folders (necessary for a module), one can use this new generated widget and focus the energy on implementing their custom behaviour.<br />
+  This generates a new widget that contains the entire structure (necessary files and folders). So instead of loosing time with the creation of all files and folders (necessary for a widget), one can use this new generated widget and focus the energy on implementing their custom behaviour.<br />
   It’s recommended for XE advanced developers.
   * demo
   This generates an enhanced basic widget. In addition to the basic one, this has some functionality implemented. This functionality consist of: showing the usage percentage of well-known browsers (Mozilla, Chrome, IE, others)<br />
