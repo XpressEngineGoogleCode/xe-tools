@@ -1,4 +1,4 @@
-#summary How to use the XE Generator Tool
+#summary Tutorial on how to use the XE Generator Tool
 
 = Introduction =
 
