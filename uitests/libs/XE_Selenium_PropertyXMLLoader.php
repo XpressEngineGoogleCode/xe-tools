@@ -84,7 +84,7 @@ class XE_Selenium_PropertyXMLLoader extends XE_Selenium_PropertyLoader
 		$webdriver = $this->oXMLHelper->configSeleniumWebdriver('body');
 		if(!$webdriver)
 		{
-			return 'firfox';
+			return 'firefox';
 		}
 
 		return $webdriver;
