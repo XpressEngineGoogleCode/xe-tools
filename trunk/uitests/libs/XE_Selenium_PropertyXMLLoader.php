@@ -16,7 +16,7 @@ class XE_Selenium_PropertyXMLLoader extends XE_Selenium_PropertyLoader
 		$this->propertyFile = $propertyFile;
 		if(!file_exists($this->propertyFile))
 		{
-			$this->propertyFile = $_ENV['PWD'] . '/' . $this->propertyFile;
+			$this->propertyFile = getcwd() . '/' . $this->propertyFile;
 		}
 
 		if(!file_exists($this->propertyFile))
