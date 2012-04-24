@@ -8,7 +8,7 @@ class XEInstallTest extends PHPUnit_Framework_TestCase
 	public static function setUpBeforeClass()
 	{
 		// load and copy file
-		self::$oXESelenium = new XE_Selenium(new XE_Selenium_PropertyXMLLoader(static::$property));
+		self::$oXESelenium = new XE_Selenium(new XE_Selenium_PropertyXMLLoader(dirname(__FILE__) . '/' .static::$property));
 		self::$oXESelenium->install(new XE_Selenium_InstallLocalHelper());
 	}
 
@@ -27,7 +27,7 @@ class XEInstallTest extends PHPUnit_Framework_TestCase
 	{
 		if($this->hasFailed())
 		{
-			self::$oXESelenium->getScreenshotAndSaveToFile(static::$errorScreenFile);
+			self::$oXESelenium->getScreenshotAndSaveToFile(dirname(__FILE__) . '/' . static::$errorScreenFile);
 		}
 	}
 
