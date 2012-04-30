@@ -4,6 +4,9 @@
 			<file>./install/XEInstallMySQLTest.php</file>
 			<file>./install/XEInstallCUBRIDTest.php</file>
 		</testsuite>
+        <testsuite name="XE Admin Tasks">
+            <file>./mysql/XEAdminFavoritesTest.php</file>
+        </testsuite>
 	</testsuites>
 	<logging>
 		<log type="junit" target="./logs/junit.install.xml"/>
