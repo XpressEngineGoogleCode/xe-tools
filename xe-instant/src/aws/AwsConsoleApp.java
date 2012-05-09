@@ -1,6 +1,7 @@
 /**
  * This tool helps XpressEngine users to easily deploy an XE in Amazon Cloud
  */
+package aws;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -97,7 +98,8 @@ class CommandOptionComparator implements Comparator<Object>
 	}
 	
 }
-public class AwsConsoleApp {
+public class AwsConsoleApp 
+{
 
 	AmazonEC2 ec2;
 	HashMap<String, String> commands = new HashMap<String, String>();
@@ -354,7 +356,8 @@ public class AwsConsoleApp {
     		}
     		catch(IOException ioe)
     		{
-    		
+    			System.err.println("Caught Exception: " + ioe.getMessage());
+				ioe.printStackTrace(System.err);
     		}
     		
     	}
