@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class LatestXEVersion 
+public class LatestXEVersion
 {
 	private final static int PARSE_XE_ORG_TIMEOUT = 10000;
 	private final static String XE_ORG_DOWNLOAD_URL = "http://www.xpressengine.org/download";

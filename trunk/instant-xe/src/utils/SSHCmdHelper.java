@@ -12,11 +12,12 @@ import com.jcraft.jsch.*;
  *
  */
 
-public class SSHCmdHelper 
+public class SSHCmdHelper
 {
 	JSch jsch = null;
 	Session session = null;
 	String lastErrorMessage = null;
+	int lastExitStatus = 0;
 	
 	public SSHCmdHelper()
 	{
@@ -117,6 +118,7 @@ public class SSHCmdHelper
 		    	
 		        if(channel.isClosed())
 		        {
+		        	lastExitStatus = channel.getExitStatus();
 		        	outputText.append("exit-status: "+channel.getExitStatus());
 		        	outputText.append("\r\n");
 		        	break;
@@ -154,6 +156,22 @@ public class SSHCmdHelper
 		}
 		
 		return true;
+	}
+	
+	/**
+	* Retrieve the last error message
+	*/
+	public String getLastErrorMessage()
+	{
+		return lastErrorMessage;
+	}
+	
+	/**
+	* Retrieve the last exit status
+	*/
+	public int getLastExitStatus()
+	{
+		return lastExitStatus;
 	}
 	
 	/**
