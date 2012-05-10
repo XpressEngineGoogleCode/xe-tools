@@ -11,7 +11,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,45 +58,13 @@ import com.amazonaws.services.route53.model.ListResourceRecordSetsRequest;
 import com.amazonaws.services.route53.model.RRType;
 import com.amazonaws.services.route53.model.ResourceRecord;
 import com.amazonaws.services.route53.model.ResourceRecordSet;
-
+import utils.CommandOptionComparator;
 
 /**
  * @author Catalin
  *
  */
 
-class CommandOptionComparator implements Comparator<Object>
-{
-	AwsConsoleApp app;
-	public CommandOptionComparator(AwsConsoleApp app)
-	{
-		this.app = app;
-	}
-	public int compare(Object o1, Object o2)
-	{
-		byte o1Priority = 0;
-		byte o2Priority = 0;
-		if (o1.toString().indexOf('.') == -1)
-			o1Priority = 2;//2 means mandatory parameters have higher priority (should be displayed firsts)
-		if (o2.toString().indexOf('.') == -1)
-			o2Priority = 2;//2 means mandatory parameters have higher priority (should be displayed firsts)
-		
-		o1Priority += app.options.get(o1).get(1).equalsIgnoreCase("true")?1:0;//1 means required parameters have higher priority but less than mandatory
-		o2Priority += app.options.get(o2).get(1).equalsIgnoreCase("true")?1:0;//1 means required parameters have higher priority but less than mandatory 
-		
-		if (o1Priority != o2Priority)
-			return (o2Priority - o1Priority);
-		else
-			return o1.toString().compareToIgnoreCase(o2.toString());
-
-	}
-	
-	public boolean equals(Object obj)
-	{
-		return this.equals(obj);
-	}
-	
-}
 public class AwsConsoleApp 
 {
 
@@ -204,7 +171,7 @@ public class AwsConsoleApp
     	{
     		System.out.println("List of options:");
     		Object[] optNames = options.keySet().toArray();
-    		CommandOptionComparator comparator = new CommandOptionComparator(this);
+    		CommandOptionComparator comparator = new CommandOptionComparator(options);
     		Arrays.sort(optNames, comparator);
     		//Compute the length of the biggest option
     		int maxLen = 0;
