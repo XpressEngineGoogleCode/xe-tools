@@ -97,6 +97,7 @@ public class SSHCmdHelper
 		{
 			Channel channel = session.openChannel("exec");
 			((ChannelExec)channel).setCommand(sshCmd);
+			((ChannelExec)channel).setPty(true);
 			
 			channel.setInputStream(null);
 			((ChannelExec)channel).setErrStream(System.err);
