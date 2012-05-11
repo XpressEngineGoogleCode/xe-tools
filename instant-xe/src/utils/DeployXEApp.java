@@ -39,6 +39,8 @@ public class DeployXEApp
 		options.put("private-key-file",			list);
 		list = new ArrayList<String>();list.add("An alternative URL where to download XE-Core from");list.add("false");
 		options.put("xe-core-download-url",		list);
+		list = new ArrayList<String>();list.add("Setup an Apache virtual host for the provided domain");list.add("false");
+		options.put("domain-name",		list);
 	}
 	
 	/**
@@ -184,6 +186,7 @@ public class DeployXEApp
 			return;
 		}
 		System.out.println(OK);
+		//now remove the temporary download log file 
 		sshHelper.executeCmd("rm -rf " + DOWNLOAD_LOG_FILE_NAME, output);
 		
 		//now we have downloaded the XE-Core zip file, let's unzip it
@@ -199,6 +202,59 @@ public class DeployXEApp
 			return;
 		}
 		System.out.println(OK);
+		
+		//now delete the XE-Core archive
+		sshHelper.executeCmd("rm -rf " + ZIP_ARCHIVE_NAME, output);
+		
+		//now we have to setup the virtual host for the provided domain name (in case one was provided)
+		if (app.parameters.get("domain-name") != null)
+		{
+			boolean lastSshCmdFailed = false;
+			//first we un-comment the virtual host lines
+			System.out.print("Setup the virtual host for the " + app.parameters.get("domain-name") + " domain - step 1" + DOTS);
+			sshHelper.executeCmd("sed -i 's/#xe//g' /etc/httpd/conf/httpd.conf", output);
+			if (sshHelper.getLastExitStatus() != 0)
+			{
+				System.out.println(NG);
+				System.out.println("Setting up the virtual host - step 1 failed.");
+				System.out.println("You will have to manually setup the virtual host.");
+				lastSshCmdFailed = true;
+			}
+			else
+				System.out.println(OK);
+			
+			//now we add the domain name
+			if (!lastSshCmdFailed)
+			{
+				System.out.print("Setup the virtual host for the " + app.parameters.get("domain-name") + " domain - step 2" + DOTS);
+				sshHelper.executeCmd("sed -i 's/instant-xe.org/" + app.parameters.get("domain-name") + "/g' /etc/httpd/conf/httpd.conf", output);
+				
+				if (sshHelper.getLastExitStatus() != 0)
+				{
+					System.out.println(NG);
+					System.out.println("Setting up the virtual host - step 2 failed.");
+					System.out.println("You will have to manually setup the virtual host.");
+					lastSshCmdFailed = true;
+				}
+				else
+					System.out.println(OK);
+			}
+			//finally restart the apache service in order to reflect the changes
+			if (!lastSshCmdFailed)
+			{
+				System.out.print("Restarting apache" + DOTS);
+				sshHelper.executeCmd("sudo /etc/init.d/httpd restart", output);
+				if (sshHelper.getLastExitStatus() != 0)
+				{
+					System.out.println(NG);
+					System.out.println("Restarting apache failed.");
+					System.out.println("You will have to manually restart the apache service.");
+					lastSshCmdFailed = true;
+				}
+				else
+					System.out.println(OK);
+			}
+		}
 		
 		System.out.println("XE has successfully been deployed to the remote machine. You can now proceed with the installation phase.");
 		//we have finished our job on the remote host so we disconnect now
