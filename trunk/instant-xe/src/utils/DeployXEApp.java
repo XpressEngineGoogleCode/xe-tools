@@ -115,7 +115,8 @@ public class DeployXEApp
     }
 	
 	/**
-	 * @param args
+	 * This is the entry point of the application
+	 * @param args	The parameters passed to application in the command line
 	 */
 	public static void main(String[] args) 
 	{
