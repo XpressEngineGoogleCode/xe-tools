@@ -17,7 +17,7 @@ public class Dispatcher
 {
 
     private static final Map<String, Class<?>> ENTRY_POINTS = new HashMap<String, Class<?>>();
-    private static final String VERSION = "0.0.1";
+    public static final String VERSION = "0.0.1";
     
     static
     {
