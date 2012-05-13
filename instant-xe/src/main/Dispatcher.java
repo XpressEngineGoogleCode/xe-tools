@@ -17,11 +17,12 @@ public class Dispatcher
 {
 
     private static final Map<String, Class<?>> ENTRY_POINTS = new HashMap<String, Class<?>>();
+    private static final String VERSION = "0.0.1";
     
     static
     {
-        ENTRY_POINTS.put("aws", AwsConsoleApp.class);
-        ENTRY_POINTS.put("deploy", DeployXEApp.class);
+        ENTRY_POINTS.put("setup-aws", AwsConsoleApp.class);
+        ENTRY_POINTS.put("deploy-xe", DeployXEApp.class);
     }
     
     /**
@@ -30,7 +31,7 @@ public class Dispatcher
 	 */
     public static void displayUsage(String entryPoint)
     {
-    	System.out.println("\n");    	
+    	System.out.println("\n");
     	if (entryPoint != null)
     		System.out.println(entryPoint + " is not a valid COMMAND");
     	else
@@ -53,10 +54,11 @@ public class Dispatcher
 	 */
     public static void main(final String[] args) throws Exception
     {
-
+    	System.out.println("\r\nInstant-XE version " + VERSION);
         if(args.length < 1)
         {
             displayUsage(null);
+            return;
         }
         final Class<?> entryPoint = ENTRY_POINTS.get(args[0]);
         

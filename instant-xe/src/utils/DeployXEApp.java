@@ -58,7 +58,7 @@ public class DeployXEApp
     {
     	System.out.println("\n");
     	System.out.println("Invalid options");
-    	System.out.println("Usage: java - jar instant-xe COMMAND options");
+    	System.out.println("Usage: java -jar instant-xe.jar deploy options");
     	
     	System.out.println("List of options:");
     	Object[] optNames = options.keySet().toArray();
