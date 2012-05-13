@@ -6,14 +6,17 @@ package aws;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
+import main.Dispatcher;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
@@ -77,7 +80,8 @@ public class AwsConsoleApp
 	private static final String SECURITY_GROUP_NAME = "instant-xe-security-group";
 	private static final String OUTPUT_KEY_PAIR_FILE_NAME = "instant-xe.pem";
 	private static final String SECURITY_GROUP_DESCRIPTION = "Security group for the XpressEngine installation";
-	private static final String XE_INSTANT_AMI_NAME = "ami-2dea3344";
+	private static final String XE_DEFAULT_INSTANT_AMI_NAME = "ami-74bb3744";
+	private static final String XE_AWS_AMI_URL = "https://xe-tools.googlecode.com/svn/trunk/instant-xe/aws-ami.in";
 	private static final String XE_INSTANCE_TAG_NAME = "xe-instant";
 	private static final String XE_AWS_ROUTE53_HOSTED_ZONE_COMMENT = "Made by xe-instant";
 	private static final Long	XE_AWS_ROUTE53_DEFAULT_TTL = new Long(900);
@@ -250,6 +254,49 @@ public class AwsConsoleApp
     }
     
     /**
+	* Connects to the SVN and obtain the latest AWS AMI for the current version
+	*/
+    private String getLatestAMI()
+    {
+    	String latestAMI = XE_DEFAULT_INSTANT_AMI_NAME;
+    	
+    	try
+    	{
+    		StringBuffer sb = new StringBuffer();
+    		URL url = new URL(XE_AWS_AMI_URL);
+    		InputStream is = url.openStream();
+    		char c = (char)is.read();
+    		while (c != -1)
+    		{
+    			sb.append(c);
+    			c = (char)is.read();
+    		}
+    		
+    		is.close();
+    		
+    		String[] tokens = new String(sb).split("[ \\t\\n\\x0B\\f\\r]+");
+    		for (int i=0;i<tokens.length;i+=2)
+    			if (tokens[i+1].compareToIgnoreCase(Dispatcher.VERSION) == 0)
+    			{
+    				latestAMI = tokens[i];
+    				break;
+    			}
+    	}
+    	catch(MalformedURLException mfue)
+		{
+    		System.err.println("Caught Exception: " + mfue.getMessage());
+			mfue.printStackTrace(System.err);
+		}
+    	catch(IOException ioe)
+		{
+			System.err.println("Caught Exception: " + ioe.getMessage());
+			ioe.printStackTrace(System.err);
+		}
+    	
+    	return latestAMI;
+    }
+    
+    /**
      * Will take a URL such as http://www.stackoverflow.com and return www.stackoverflow.com
      * @param url	The URL to parse
      */
@@ -362,7 +409,7 @@ public class AwsConsoleApp
     	//now create the actual ec2 instance
     	RunInstancesRequest runInstancesRequest = new RunInstancesRequest()
 												        .withInstanceType(parameters.get("instance-type"))
-												        .withImageId(XE_INSTANT_AMI_NAME)
+												        .withImageId(getLatestAMI())
 												        .withMinCount(1)
 												        .withMaxCount(1)
 												        .withSecurityGroups(securityGroup)
