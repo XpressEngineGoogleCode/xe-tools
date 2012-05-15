@@ -151,7 +151,7 @@ public class AwsConsoleApp
     {
     	System.out.println("\n");
     	System.out.println((command == null)?"Invalid command":"Invalid options");
-    	System.out.println("Usage: java -jar instant-xe.jar aws COMMAND options");
+    	System.out.println("Usage: java -jar instant-xe.jar setup-aws COMMAND options");
     	if (command == null)
     	{
     		System.out.println("List of commands:");
