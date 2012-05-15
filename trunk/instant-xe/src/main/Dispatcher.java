@@ -3,6 +3,11 @@
  */
 package main;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,12 +22,41 @@ public class Dispatcher
 {
 
     private static final Map<String, Class<?>> ENTRY_POINTS = new HashMap<String, Class<?>>();
-    public static final String VERSION = "0.0.1";
+    public static String VERSION = null;
     
     static
     {
         ENTRY_POINTS.put("setup-aws", AwsConsoleApp.class);
         ENTRY_POINTS.put("deploy-xe", DeployXEApp.class);
+        VERSION = Dispatcher.class.getPackage().getImplementationVersion();
+        
+        if (VERSION == null)//if we are not in the builded jar 
+        {
+        	try
+        	{
+        		FileInputStream fstream = new FileInputStream("build.properties");
+        		DataInputStream in = new DataInputStream(fstream);
+        		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        		String strLine;
+        		while ((strLine = br.readLine()) != null)
+        		{
+        			  if (strLine.startsWith("build.version"))
+        			  {
+        				  int pos = strLine.indexOf("=");
+        				  VERSION = strLine.substring(pos+1);
+        				  break;
+        			  }
+        		}
+        		br.close();
+        		in.close();
+        		fstream.close();
+        	}
+        	catch(IOException ioe)
+        	{
+        		System.err.println("Caught Exception: " + ioe.getMessage());
+    			ioe.printStackTrace(System.err);
+        	}
+        }
     }
     
     /**
@@ -37,7 +71,7 @@ public class Dispatcher
     	else
     		System.out.println("You must specify a COMMAND");
     	
-    	System.out.println("Usage: java - jar instant-xe COMMAND options");
+    	System.out.println("Usage: java - jar instant-xe.jar COMMAND options");
     	System.out.println("List of available COMMAND(s):");
     	
     	for (int i=0;i < ENTRY_POINTS.size();i++)
