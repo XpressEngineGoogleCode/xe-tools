@@ -88,6 +88,7 @@ public class AwsConsoleApp
 	private static final String XE_AWS_ROUTE53_CALLER_REFERENCE = "xe-instant-dns";
 	private static final String XE_AWS_ROUTE53_REMOVE_RECORDS_BATCH_COMMENT = "Remove instant XE DNS record entries";
 	private static final long	XE_WAIT_TERMINATE_INSTANCE_TIMEOUT = 120;//this value is expressed in seconds
+	private static final long	XE_WAIT_STARTING_INSTANCE_TIMEOUT = 60;//this value is expressed in seconds
 	
 	public AwsConsoleApp()
 	{
@@ -265,11 +266,11 @@ public class AwsConsoleApp
     		StringBuffer sb = new StringBuffer();
     		URL url = new URL(XE_AWS_AMI_URL);
     		InputStream is = url.openStream();
-    		char c = (char)is.read();
+    		int c = is.read();
     		while (c != -1)
     		{
-    			sb.append(c);
-    			c = (char)is.read();
+    			sb.append((char)c);
+    			c = is.read();
     		}
     		
     		is.close();
@@ -362,7 +363,7 @@ public class AwsConsoleApp
     			// now open an output stream to write the new created key-pair
     			FileOutputStream fOut = new FileOutputStream(file.getPath());
     			PrintWriter pOut = new PrintWriter(fOut);
-    			pOut.print(ckpr.getKeyPair().toString());
+    			pOut.print(ckpr.getKeyPair().getKeyMaterial());
     			System.out.println("The new key-pair created:\n" + ckpr.getKeyPair().toString());
     			pOut.flush();
     			pOut.close();
@@ -416,6 +417,7 @@ public class AwsConsoleApp
 												        .withKeyName(keyPair);
 
     	RunInstancesResult runInstances = ec2.runInstances(runInstancesRequest);
+    	
     	//tag the new created instance in order to be able to refer it later
     	System.out.println("The Name of the new instance is: " + parameters.get("tag-name"));
     	List<Instance> instances = runInstances.getReservation().getInstances();
@@ -423,6 +425,44 @@ public class AwsConsoleApp
     	  											.withResources(instances.get(0).getInstanceId())
     	  											.withTags(new Tag("Name", parameters.get("tag-name")));
     	ec2.createTags(createTagsRequest);
+    	
+    	//now let's wait until the status is changed from pending to running
+    	System.out.println("Waiting for the new machine to boot up (entering running state)");
+    	System.out.println("(this may take up to 1 minute)");
+    	long lInitialTimestamp = System.currentTimeMillis();
+    	do
+    	{
+    		if ( ((System.currentTimeMillis() - lInitialTimestamp)/1000) > XE_WAIT_STARTING_INSTANCE_TIMEOUT )
+    			break;
+    		Filter filter = new Filter()    								
+    								.withName("instance-state-name")
+    								.withValues(InstanceStateName.Running.toString());
+    		DescribeInstancesResult dir = ec2.describeInstances(new DescribeInstancesRequest()
+    																	.withFilters(filter)
+    																	.withInstanceIds(instances.get(0).getInstanceId()));
+    		
+    		if (dir.getReservations().size() > 0)
+    		{
+    			System.out.println("The new machine is in the running state");
+    			System.out.println("The public DNS of the new created instance is: " + dir.getReservations().get(0).getInstances().get(0).getPublicDnsName());
+    	    	System.out.println("The public IP of the new created instance is: " + dir.getReservations().get(0).getInstances().get(0).getPublicIpAddress());
+    			break;//the instance is in the running state
+    		}
+    		else
+    		{
+    			try
+    			{
+    				Thread.sleep(500);
+    			}
+    			catch(InterruptedException ie)
+    			{
+    				System.err.println("Caught Exception: " + ie.getMessage());
+    				ie.printStackTrace(System.err);
+    			}
+    		}
+    	}
+    	while(true);
+    	
     	System.out.println("Executing create instance command...ended successfully!");
     }
     
