@@ -131,6 +131,8 @@ public class AwsConsoleApp
 		options.put("delete_instance.delete-security-group",			list);
 		list = new ArrayList<String>();list.add("The name of the domain you want to associate to your XE instance");list.add("true");
 		options.put("associate_domain.domain-name",						list);
+		list = new ArrayList<String>();list.add("Skip elastic IP association (yes/no) (default: no)");list.add("false");
+		options.put("resume_instance.skip-elastic-ip-association",		list);
 	}
 	
 	/**
@@ -143,6 +145,7 @@ public class AwsConsoleApp
 		parameters.put("tag-name", XE_INSTANCE_TAG_NAME);
 		parameters.put("delete-key-pair", "yes");
 		parameters.put("delete-security-group", "yes");
+		parameters.put("skip-elastic-ip-association", "no");
 	}
 	
 	/**
@@ -516,6 +519,62 @@ public class AwsConsoleApp
     	DescribeTagsResult dtr =  ec2.describeTags(new DescribeTagsRequest()
     													.withFilters(filterList));
     	ec2.startInstances(new StartInstancesRequest().withInstanceIds(dtr.getTags().get(0).getResourceId()));
+    	
+    	//now let's wait until the status is changed from pending to running
+    	System.out.println("Waiting for the resumed machine to boot up (entering running state)");
+    	System.out.println("(this may take up to 1 minute)");
+    	long lInitialTimestamp = System.currentTimeMillis();
+    	do
+    	{
+    		if ( ((System.currentTimeMillis() - lInitialTimestamp)/1000) > XE_WAIT_STARTING_INSTANCE_TIMEOUT )
+    			break;
+    		Filter filter = new Filter()    								
+    								.withName("instance-state-name")
+    								.withValues(InstanceStateName.Running.toString());
+    		DescribeInstancesResult dir = ec2.describeInstances(new DescribeInstancesRequest()
+    																	.withFilters(filter)
+    																	.withInstanceIds(dtr.getTags().get(0).getResourceId()));
+    		
+    		if (dir.getReservations().size() > 0)
+    		{
+    			System.out.println("The resumed machine is in the running state");
+    			System.out.println("The new public DNS of the resumed instance is: " + dir.getReservations().get(0).getInstances().get(0).getPublicDnsName());
+    	    	System.out.println("The new public IP of the resumed instance is: " + dir.getReservations().get(0).getInstances().get(0).getPublicIpAddress());
+    			break;//the instance is in the running state
+    		}
+    		else
+    		{
+    			try
+    			{
+    				Thread.sleep(500);
+    			}
+    			catch(InterruptedException ie)
+    			{
+    				System.err.println("Caught Exception: " + ie.getMessage());
+    				ie.printStackTrace(System.err);
+    			}
+    		}
+    	}
+    	while(true);
+    	
+    	//now let's try to re-associate the elastic IP to the instance
+    	List<Address> addressList = ec2.describeAddresses().getAddresses();
+    	//obtain the allocated public IP address associated with our XE instance
+    	String publicIp = null;
+    	for (int i=0;i<addressList.size();i++)
+    		if (addressList.get(i).getInstanceId().length() == 0)
+    		{
+    			publicIp = addressList.get(i).getPublicIp();
+    			break;
+    		}
+    	if (publicIp != null && parameters.get("skip-elastic-ip-association") != null && parameters.get("skip-elastic-ip-association").compareToIgnoreCase("no") == 0)
+    	{
+    		//associate the elastic IP address to the XE instance
+        	ec2.associateAddress(new AssociateAddressRequest()
+        							.withInstanceId(dtr.getTags().get(0).getResourceId())
+        							.withPublicIp(publicIp));
+        	System.out.println(publicIp + " elastic IP was associated to the resumed instance");
+    	}
     	System.out.println("Executing resume instance command...ended successfully!");
     }
     
@@ -549,7 +608,9 @@ public class AwsConsoleApp
     	//terminate the instance (delete it more precisely)
     	ec2.terminateInstances(new TerminateInstancesRequest().withInstanceIds(dtr.getTags().get(0).getResourceId()));
     	
-    	//now let's wait until the status is changed from terminated (so the terminating process is complete)
+    	System.out.println("Waiting for the machine to shutdown (entering terminated state)");
+    	System.out.println("(this may take up to 1 minute)");
+    	//now let's wait until the status is changed from runnning to terminated (so the terminating process is complete)
     	long lInitialTimestamp = System.currentTimeMillis();
     	do
     	{
