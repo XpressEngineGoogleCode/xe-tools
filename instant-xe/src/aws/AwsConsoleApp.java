@@ -81,7 +81,7 @@ public class AwsConsoleApp
 	private static final String SECURITY_GROUP_NAME = "instant-xe-security-group";
 	private static final String OUTPUT_KEY_PAIR_FILE_NAME = "instant-xe.pem";
 	private static final String SECURITY_GROUP_DESCRIPTION = "Security group for the XpressEngine installation";
-	private static final String XE_DEFAULT_INSTANT_AMI_NAME = "ami-74bb3744";
+	private static final String XE_DEFAULT_INSTANT_AMI_NAME = "ami-da49c5ea";
 	private static final String XE_AWS_AMI_URL = "https://xe-tools.googlecode.com/svn/trunk/instant-xe/aws-ami.in";
 	private static final String XE_INSTANCE_TAG_NAME = "xe-instant";
 	private static final String XE_AWS_ROUTE53_HOSTED_ZONE_COMMENT = "Made by xe-instant";
