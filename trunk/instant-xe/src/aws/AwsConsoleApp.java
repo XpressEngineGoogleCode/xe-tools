@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import main.Dispatcher;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
@@ -129,7 +130,7 @@ public class AwsConsoleApp
 		list = new ArrayList<String>();list.add("Delete the default security group (yes/no) (default: yes)");list.add("false");
 		options.put("delete_instance.delete-security-group",			list);
 		list = new ArrayList<String>();list.add("The name of the domain you want to associate to your XE instance");list.add("true");
-		options.put("assign_domain.domain-name",						list);
+		options.put("associate_domain.domain-name",						list);
 	}
 	
 	/**
@@ -720,12 +721,32 @@ public class AwsConsoleApp
     	if (hostedZoneId == null)
     		hostedZoneId = route53.createHostedZone(new CreateHostedZoneRequest()
     										.withName(baseDomain)
-    										.withCallerReference(XE_AWS_ROUTE53_CALLER_REFERENCE)
+    										.withCallerReference(XE_AWS_ROUTE53_CALLER_REFERENCE + "_" + UUID.randomUUID().toString())
     										.withHostedZoneConfig(new HostedZoneConfig().withComment(XE_AWS_ROUTE53_HOSTED_ZONE_COMMENT))).getHostedZone().getId();
     	
     	//if there is still no hosted zone Id we should stop processing this command
     	if (hostedZoneId == null)
     		return;
+    	
+    	//let's display the associated NS and SOA records to the user 
+    	List<ResourceRecordSet> resourceRecordSetList = route53.listResourceRecordSets(new ListResourceRecordSetsRequest(hostedZoneId)).getResourceRecordSets();
+    	for (int i=0;i < resourceRecordSetList.size();i++)
+    	{
+    		if (resourceRecordSetList.get(i).getType().compareToIgnoreCase(RRType.NS.toString()) == 0)
+    		{
+    			System.out.println("The NS record:");
+    			for (int j=0;j < resourceRecordSetList.get(i).getResourceRecords().size();j++)
+    				System.out.println(resourceRecordSetList.get(i).getResourceRecords().get(j).getValue());
+    			System.out.println();
+    		}
+    		if (resourceRecordSetList.get(i).getType().compareToIgnoreCase(RRType.SOA.toString()) == 0)
+    		{
+    			System.out.println("The SOA record:");
+    			for (int j=0;j < resourceRecordSetList.get(i).getResourceRecords().size();j++)
+    				System.out.println(resourceRecordSetList.get(i).getResourceRecords().get(j).getValue());
+    			System.out.println();
+    		}
+    	}
     	
     	ChangeBatch changes = new ChangeBatch().withChanges(new Change()
     																.withAction(ChangeAction.CREATE)
