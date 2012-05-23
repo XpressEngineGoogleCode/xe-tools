@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
+
 import utils.CommandOptionComparator;
 
 /**
@@ -21,6 +23,7 @@ public class DeployXEApp
 	private static final String DEFAULT_USERNAME = "ec2-user";
 	private static final String WWW_FOLDER = "/var/www/html/";
 	private static final String ZIP_ARCHIVE_NAME = "xecore.zip";
+	private static final String CHG_PWD_SCRIPT_NAME = "chgpwd.sql";
 	private static final String DOWNLOAD_LOG_FILE_NAME = "download.out";
 	private static final String DOWNLOAD_CONTENT_TYPE = "application/octet-stream";
 	private static final String DOTS = "................";
@@ -207,6 +210,42 @@ public class DeployXEApp
 		//now delete the XE-Core archive
 		sshHelper.executeCmd("rm -rf " + ZIP_ARCHIVE_NAME, output);
 		
+		//now generate a new password for MySQL 'xeuser' user
+		String newPassword = UUID.randomUUID().toString().replace("-", "");
+		
+		System.out.print("Change the password for MySQL" + DOTS);
+		if (sshHelper.getLastExitStatus() != 0)
+		{
+			System.out.println(NG);
+			System.out.println("Change password for MySQL failed.");
+			System.out.println("The script will exit now!");
+			sshHelper.disconnect();
+			return;
+		}
+		sshHelper.executeCmd("sed -i 's/#xe/" + newPassword + "/g' " + CHG_PWD_SCRIPT_NAME, output);
+		if (sshHelper.getLastExitStatus() != 0)
+		{
+			System.out.println(NG);
+			System.out.println("Change password for MySQL failed.");
+			System.out.println("The script will exit now!");
+			sshHelper.disconnect();
+			return;
+		}
+		
+		sshHelper.executeCmd("mysql -u root < " + CHG_PWD_SCRIPT_NAME, output);
+		if (sshHelper.getLastExitStatus() != 0)
+		{
+			System.out.println(NG);
+			System.out.println("Change password for MySQL failed.");
+			System.out.println("The script will exit now!");
+			sshHelper.disconnect();
+			return;
+		}
+		System.out.println(OK);
+		
+		//remove the changing pwd script file (we don't need it anymore)
+		sshHelper.executeCmd("rm -rf " + CHG_PWD_SCRIPT_NAME, output);
+		
 		//now we have to setup the virtual host for the provided domain name (in case one was provided)
 		if (app.parameters.get("domain-name") != null)
 		{
@@ -257,6 +296,7 @@ public class DeployXEApp
 			}
 		}
 		
+		System.out.println("The random generated password for MySQL is: " + newPassword);
 		System.out.println("XE has successfully been deployed to the remote machine. You can now proceed with the installation phase.");
 		//we have finished our job on the remote host so we disconnect now
 		sshHelper.disconnect();
