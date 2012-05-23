@@ -81,7 +81,7 @@ public class AwsConsoleApp
 	private static final String SECURITY_GROUP_NAME = "instant-xe-security-group";
 	private static final String OUTPUT_KEY_PAIR_FILE_NAME = "instant-xe.pem";
 	private static final String SECURITY_GROUP_DESCRIPTION = "Security group for the XpressEngine installation";
-	private static final String XE_DEFAULT_INSTANT_AMI_NAME = "ami-da49c5ea";
+	private static final String XE_DEFAULT_INSTANT_AMI_NAME = "ami-8c5fd3bc";
 	private static final String XE_AWS_AMI_URL = "https://xe-tools.googlecode.com/svn/trunk/instant-xe/aws-ami.in";
 	private static final String XE_INSTANCE_TAG_NAME = "xe-instant";
 	private static final String XE_AWS_ROUTE53_HOSTED_ZONE_COMMENT = "Made by xe-instant";
@@ -268,6 +268,8 @@ public class AwsConsoleApp
     	try
     	{
     		StringBuffer sb = new StringBuffer();
+    		String toolVersion = Dispatcher.VERSION;
+    		toolVersion = toolVersion.split("-")[0];//for the cases like '1.0.0-b3' we need only version (not the build no)
     		URL url = new URL(XE_AWS_AMI_URL);
     		InputStream is = url.openStream();
     		int c = is.read();
@@ -281,7 +283,7 @@ public class AwsConsoleApp
     		
     		String[] tokens = new String(sb).split("[ \\t\\n\\x0B\\f\\r]+");
     		for (int i=0;i<tokens.length;i+=2)
-    			if (tokens[i+1].compareToIgnoreCase(Dispatcher.VERSION) == 0)
+    			if (tokens[i+1].compareToIgnoreCase(toolVersion) == 0)
     			{
     				latestAMI = tokens[i];
     				break;
