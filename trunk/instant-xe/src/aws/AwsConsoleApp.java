@@ -77,19 +77,19 @@ public class AwsConsoleApp
 	HashMap<String, List<String>> options = new HashMap<String, List<String>>();
 	HashMap<String, String> parameters = new HashMap<String, String>();
 	
-	private static final String KEY_PAIR_NAME = "instant-xe-key-pair";
-	private static final String SECURITY_GROUP_NAME = "instant-xe-security-group";
-	private static final String OUTPUT_KEY_PAIR_FILE_NAME = "instant-xe.pem";
-	private static final String SECURITY_GROUP_DESCRIPTION = "Security group for the XpressEngine installation";
-	private static final String XE_DEFAULT_INSTANT_AMI_NAME = "ami-8c5fd3bc";
-	private static final String XE_AWS_AMI_URL = "https://xe-tools.googlecode.com/svn/trunk/instant-xe/aws-ami.in";
-	private static final String XE_INSTANCE_TAG_NAME = "xe-instant";
-	private static final String XE_AWS_ROUTE53_HOSTED_ZONE_COMMENT = "Made by xe-instant";
-	private static final Long	XE_AWS_ROUTE53_DEFAULT_TTL = new Long(900);
-	private static final String XE_AWS_ROUTE53_CALLER_REFERENCE = "xe-instant-dns";
-	private static final String XE_AWS_ROUTE53_REMOVE_RECORDS_BATCH_COMMENT = "Remove instant XE DNS record entries";
-	private static final long	XE_WAIT_TERMINATE_INSTANCE_TIMEOUT = 120;//this value is expressed in seconds
-	private static final long	XE_WAIT_STARTING_INSTANCE_TIMEOUT = 60;//this value is expressed in seconds
+	public static final String KEY_PAIR_NAME = "instant-xe-key-pair";
+	public static final String SECURITY_GROUP_NAME = "instant-xe-security-group";
+	public static final String OUTPUT_KEY_PAIR_FILE_NAME = "instant-xe.pem";
+	public static final String SECURITY_GROUP_DESCRIPTION = "Security group for the XpressEngine installation";
+	public static final String XE_DEFAULT_INSTANT_AMI_NAME = "ami-8c5fd3bc";
+	public static final String XE_AWS_AMI_URL = "https://xe-tools.googlecode.com/svn/trunk/instant-xe/aws-ami.in";
+	public static final String XE_INSTANCE_TAG_NAME = "xe-instant";
+	public static final String XE_AWS_ROUTE53_HOSTED_ZONE_COMMENT = "Made by xe-instant";
+	public static final Long	XE_AWS_ROUTE53_DEFAULT_TTL = new Long(900);
+	public static final String XE_AWS_ROUTE53_CALLER_REFERENCE = "xe-instant-dns";
+	public static final String XE_AWS_ROUTE53_REMOVE_RECORDS_BATCH_COMMENT = "Remove instant XE DNS record entries";
+	public static final long	XE_WAIT_TERMINATE_INSTANCE_TIMEOUT = 120;//this value is expressed in seconds
+	public static final long	XE_WAIT_STARTING_INSTANCE_TIMEOUT = 60;//this value is expressed in seconds
 	
 	public AwsConsoleApp()
 	{
