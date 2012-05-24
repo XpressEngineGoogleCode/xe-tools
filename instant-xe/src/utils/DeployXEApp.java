@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-
+import aws.AwsConsoleApp;
 import utils.CommandOptionComparator;
 
 /**
@@ -20,15 +20,16 @@ public class DeployXEApp
 	HashMap<String, List<String>> options = new HashMap<String, List<String>>();
 	HashMap<String, String> parameters = new HashMap<String, String>();
 	
-	private static final String DEFAULT_USERNAME = "ec2-user";
-	private static final String WWW_FOLDER = "/var/www/html/";
-	private static final String ZIP_ARCHIVE_NAME = "xecore.zip";
-	private static final String CHG_PWD_SCRIPT_NAME = "chgpwd.sql";
-	private static final String DOWNLOAD_LOG_FILE_NAME = "download.out";
-	private static final String DOWNLOAD_CONTENT_TYPE = "application/octet-stream";
-	private static final String DOTS = "................";
-	private static final String OK = "OK";
-	private static final String NG = "Failed";
+	public static final String DEFAULT_USERNAME = "ec2-user";
+	public static final String DEFAULT_PACKAGE_TYPE = "core";
+	public static final String WWW_FOLDER = "/var/www/html/";
+	public static final String ZIP_ARCHIVE_NAME = "xepackage.zip";
+	public static final String CHG_PWD_SCRIPT_NAME = "chgpwd.sql";
+	public static final String DOWNLOAD_LOG_FILE_NAME = "download.out";
+	public static final String DOWNLOAD_CONTENT_TYPE = "application/octet-stream";
+	public static final String DOTS = "................";
+	public static final String OK = "OK";
+	public static final String NG = "Failed";
 	
 	public DeployXEApp()
 	{
@@ -38,12 +39,14 @@ public class DeployXEApp
 		options.put("username",					list);
 		list = new ArrayList<String>();list.add("The remote hostname to connect to(where the deploy is made)");list.add("true");
 		options.put("hostname",					list);
-		list = new ArrayList<String>();list.add("The private key file path");list.add("true");
+		list = new ArrayList<String>();list.add("The private key file path (default: " + AwsConsoleApp.OUTPUT_KEY_PAIR_FILE_NAME + ")");list.add("false");
 		options.put("private-key-file",			list);
-		list = new ArrayList<String>();list.add("An alternative URL where to download XE-Core from");list.add("false");
-		options.put("xe-core-download-url",		list);
+		list = new ArrayList<String>();list.add("An alternative URL where to download XE package from");list.add("false");
+		options.put("xe-download-url",			list);
 		list = new ArrayList<String>();list.add("Setup an Apache virtual host for the provided domain");list.add("false");
-		options.put("domain-name",		list);
+		options.put("domain-name",				list);
+		list = new ArrayList<String>();list.add("XE package type (core/blog/forum) (default: core)");list.add("false");
+		options.put("package-type",				list);
 	}
 	
 	/**
@@ -52,6 +55,8 @@ public class DeployXEApp
 	void initializeDefaultOptionValues()
 	{
 		parameters.put("username", DEFAULT_USERNAME);
+		parameters.put("private-key-file", AwsConsoleApp.OUTPUT_KEY_PAIR_FILE_NAME);
+		parameters.put("package-type", DEFAULT_PACKAGE_TYPE);
 	}
 	
 	/**
@@ -130,20 +135,29 @@ public class DeployXEApp
 		
 		//now everything is ready to start the actual deploy operation
 		
-		//let's first take care about the XE-Core download URL
-		if (app.parameters.get("xe-core-download-url") == null)//the user did not provided any URL
+		//let's first take care about the XE download URL
+		if (app.parameters.get("xe-download-url") == null)//the user did not provided any URL
 		{
-			String xeCoreURL = LatestXEVersion.getLatestXELatestVersionURL();
-			if (xeCoreURL == null)//there was an error trying to obtain the URL from xpressengine.org
+			String xeURL = null;
+			if (app.parameters.get("package-type").compareToIgnoreCase("blog") == 0)
+				xeURL = LatestXEVersion.getLatestXEPackageVersionURL("textyle");
+			else
+				if (app.parameters.get("package-type").compareToIgnoreCase("forum") == 0)
+					xeURL = LatestXEVersion.getLatestXEPackageVersionURL("forum");
+				else
+					if (app.parameters.get("package-type").compareToIgnoreCase("core") == 0)
+						xeURL = LatestXEVersion.getLatestXECoreVersionURL();
+			
+			if (xeURL == null)//there was an error trying to obtain the URL from xpressengine.org
 			{
-				System.out.println("Error trying to obtain the XE-Core download URL:");
+				System.out.println("Error trying to obtain the XE download URL:");
 				System.out.println(LatestXEVersion.getLastErrorMessage());
-				System.out.println("The script will exit now but you can try again but specifying the 'xe-core-download-url' parameter.");
+				System.out.println("The script will exit now but you can try again but specifying the 'xe-download-url' parameter.");
 				return;
 			}
-			app.parameters.put("xe-core-download-url", xeCoreURL);
+			app.parameters.put("xe-download-url", xeURL);
 		}
-		//now we have also the XE-Core download URL, let's move on with downloading it on the remote machine
+		//now we have also the XE download URL, let's move on with downloading it on the remote machine
 		SSHCmdHelper sshHelper = new SSHCmdHelper();
 		System.out.print("Remote host log-in" + DOTS );
 		boolean result = sshHelper.connect(app.parameters.get("username"), app.parameters.get("hostname"), app.parameters.get("private-key-file"));
@@ -156,14 +170,14 @@ public class DeployXEApp
 			return;
 		}
 		System.out.println(OK);
-		//now we have connected to the remote host, let's download the XE-Core
+		//now we have connected to the remote host, let's download XE
 		StringBuffer output = new StringBuffer();
-		System.out.print("Download XE-Core archive" + DOTS);
-		sshHelper.executeCmd("wget \"" + app.parameters.get("xe-core-download-url") + "\" -O " + ZIP_ARCHIVE_NAME + " -o " + DOWNLOAD_LOG_FILE_NAME, output);
+		System.out.print("Download XE archive" + DOTS);
+		sshHelper.executeCmd("wget \"" + app.parameters.get("xe-download-url") + "\" -O " + ZIP_ARCHIVE_NAME + " -o " + DOWNLOAD_LOG_FILE_NAME, output);
 		if (sshHelper.getLastExitStatus() != 0)
 		{
 			System.out.println(NG);
-			System.out.println("Downloading XE-Core on the remote host failed.");
+			System.out.println("Downloading XE on the remote host failed.");
 			sshHelper.disconnect();
 			return;
 		}
@@ -173,7 +187,7 @@ public class DeployXEApp
 		if (output.indexOf(DOWNLOAD_CONTENT_TYPE) == -1)//this means something went bad so we need to quit
 		{
 			System.out.println(NG);
-			System.out.println("Downloading XE-Core on the remote host failed.");
+			System.out.println("Downloading XE on the remote host failed.");
 			System.out.println("The script will exit now!");
 			sshHelper.disconnect();
 			return;
@@ -184,7 +198,7 @@ public class DeployXEApp
 		if (output.indexOf("100%") == -1)//this means something went bad so we need to quit
 		{
 			System.out.println(NG);
-			System.out.println("Downloading XE-Core on the remote host failed. The download process was not completed.");
+			System.out.println("Downloading XE on the remote host failed. The download process was not completed.");
 			System.out.println("The script will exit now!");
 			sshHelper.disconnect();
 			return;
@@ -193,21 +207,21 @@ public class DeployXEApp
 		//now remove the temporary download log file 
 		sshHelper.executeCmd("rm -rf " + DOWNLOAD_LOG_FILE_NAME, output);
 		
-		//now we have downloaded the XE-Core zip file, let's unzip it
-		System.out.print("Unzip the XE-Core archive" + DOTS);
+		//now we have downloaded the XE zip file, let's unzip it
+		System.out.print("Unzip the XE archive" + DOTS);
 		sshHelper.executeCmd("unzip " + ZIP_ARCHIVE_NAME + " -d " + WWW_FOLDER, output);
 		
 		if (sshHelper.getLastExitStatus() != 0)
 		{
 			System.out.println(NG);
-			System.out.println("Unziping XE-Core on the remote host failed.");
+			System.out.println("Unziping XE on the remote host failed.");
 			System.out.println("The script will exit now!");
 			sshHelper.disconnect();
 			return;
 		}
 		System.out.println(OK);
 		
-		//now delete the XE-Core archive
+		//now delete the XE archive
 		sshHelper.executeCmd("rm -rf " + ZIP_ARCHIVE_NAME, output);
 		
 		//now generate a new password for MySQL 'xeuser' user
