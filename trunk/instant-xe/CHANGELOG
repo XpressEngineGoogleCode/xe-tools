@@ -1,0 +1,8 @@
+1.0.0	- Release Date: May 23 2012
+		- Description: first version that supports AWS as cloud service and XE deploy
+		- Changes: none
+1.0.1	- Release Date: May 24 2012
+		- Description: added support for multiple type of XE packages (forum, blog)
+		- Changes: 	- added support for multiple XE packages: core, forum, blog (new parameter: package-type)
+					- changed (added) default value for private-key-file parameter
+					- changed the name of the parameter xe-core-download url into xe-download-url
