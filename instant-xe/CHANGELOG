@@ -6,3 +6,12 @@
 		- Changes: 	- added support for multiple XE packages: core, forum, blog (new parameter: package-type)
 					- changed (added) default value for private-key-file parameter
 					- changed the name of the parameter xe-core-download url into xe-download-url
+1.0.2	- Release Date: June 12 2012
+		- Description: small improvements in the command line tool and added setup tool (gui)
+		- Changes:	- when deleting an instance the tag is changed to a particular value to avoid waiting for 30 minutes
+					- assign address timeout (assign address involves eth0 down and up which means you cannot connect for about 30 sec)
+					- verify for already existing instances (warning displayed)
+					- .pem file is always created in the current dir
+					- delete all (instead of the first one) hosted zones created by the tool
+					- added setup tool (gui on top of command line tool)
+					- modified ant script to include the additional jar

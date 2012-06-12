@@ -209,7 +209,7 @@ public class DeployXEApp
 		
 		//now we have downloaded the XE zip file, let's unzip it
 		System.out.print("Unzip the XE archive" + DOTS);
-		sshHelper.executeCmd("unzip " + ZIP_ARCHIVE_NAME + " -d " + WWW_FOLDER, output);
+		sshHelper.executeCmd("unzip -o " + ZIP_ARCHIVE_NAME + " -d " + WWW_FOLDER, output);
 		
 		if (sshHelper.getLastExitStatus() != 0)
 		{
