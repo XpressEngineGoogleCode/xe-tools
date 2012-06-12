@@ -3,10 +3,12 @@
  */
 package aws;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -84,12 +86,14 @@ public class AwsConsoleApp
 	public static final String XE_DEFAULT_INSTANT_AMI_NAME = "ami-8c5fd3bc";
 	public static final String XE_AWS_AMI_URL = "https://xe-tools.googlecode.com/svn/trunk/instant-xe/aws-ami.in";
 	public static final String XE_INSTANCE_TAG_NAME = "xe-instant";
+	public static final String XE_INSTANCE_DELETED_TAG_NAME = "xe-instant-deleted";
 	public static final String XE_AWS_ROUTE53_HOSTED_ZONE_COMMENT = "Made by xe-instant";
 	public static final Long	XE_AWS_ROUTE53_DEFAULT_TTL = new Long(900);
 	public static final String XE_AWS_ROUTE53_CALLER_REFERENCE = "xe-instant-dns";
 	public static final String XE_AWS_ROUTE53_REMOVE_RECORDS_BATCH_COMMENT = "Remove instant XE DNS record entries";
 	public static final long	XE_WAIT_TERMINATE_INSTANCE_TIMEOUT = 120;//this value is expressed in seconds
 	public static final long	XE_WAIT_STARTING_INSTANCE_TIMEOUT = 60;//this value is expressed in seconds
+	public static final long	XE_WAIT_ASSIGN_ADDRESS_TIMEOUT = 30;//this value is expressed in seconds
 	
 	public AwsConsoleApp()
 	{
@@ -349,6 +353,29 @@ public class AwsConsoleApp
 	 */
     public void process_create_instance_command()
     {
+    	ArrayList<Filter> filterList = new ArrayList<Filter>();
+    	filterList.add(new Filter()
+    						.withName("resource-type")
+    						.withValues("instance"));
+    	
+    	filterList.add(new Filter()
+							.withName("key")
+							.withValues("Name"));
+
+    	filterList.add(new Filter()
+							.withName("value")
+							.withValues(parameters.get("tag-name")));
+    	
+    	DescribeTagsResult dtr =  ec2.describeTags(new DescribeTagsRequest()
+    													.withFilters(filterList));
+    	
+    	//if there is already an XE instance then we should stop this command processing
+    	if (dtr.getTags().size() > 0) {
+    		System.err.println("Cannot create instance: Instance already exists.");
+    		System.exit(1);
+    		return;
+    	}
+    	
     	System.out.println("Executing create instance command...");
     	
     	String keyPair = parameters.get("key-pair");
@@ -362,9 +389,10 @@ public class AwsConsoleApp
     		{
     			if (!file.createNewFile())// the desired file already exits so we will create a temporary one
     			{
-    				System.out.println("WARNING: The output file for key pair already exists. We will create a new temporary one:");
-    				file = File.createTempFile("instant-xe-key-pair", ".pem");
-    				System.out.println(file.getPath());
+    				file = File.createTempFile("instant-xe-key-pair", ".pem", new File("."));	//create file in current directory
+    				System.out.println("The output file for key pair is: "+file.getAbsolutePath());
+    			} else {
+    				System.out.println("The output file for key pair is: "+file.getAbsolutePath());
     			}
     			// now open an output stream to write the new created key-pair
     			FileOutputStream fOut = new FileOutputStream(file.getPath());
@@ -651,6 +679,12 @@ public class AwsConsoleApp
     	String keyPair = KEY_PAIR_NAME;
     	if (parameters.get("delete-key-pair") != null && parameters.get("delete-key-pair").equalsIgnoreCase("yes"))   	
     		ec2.deleteKeyPair(new DeleteKeyPairRequest(keyPair));
+    	
+    	CreateTagsRequest changeTagsRequest = new CreateTagsRequest()
+    	  											.withResources(dtr.getTags().get(0).getResourceId())
+    	  											.withTags(new Tag("Name", XE_INSTANCE_DELETED_TAG_NAME));
+    	ec2.createTags(changeTagsRequest);
+    	
     	System.out.println("Executing delete instance command...ended successfully!");
     }
     
@@ -688,7 +722,52 @@ public class AwsConsoleApp
     	ec2.associateAddress(new AssociateAddressRequest()
     							.withInstanceId(dtr.getTags().get(0).getResourceId())
     							.withPublicIp(publicIp));
-    	System.out.println("Executing assign address command...ended successfully!");
+    	
+    	System.out.println("Waiting for IP address to be reachable...");
+    	System.out.println("(this may take up to 30 seconds)");
+    	long lInitialTimestamp = System.currentTimeMillis();
+    	do
+    	{
+    		if ( ((System.currentTimeMillis() - lInitialTimestamp)/1000) > XE_WAIT_ASSIGN_ADDRESS_TIMEOUT )
+    			break;
+    		
+			//execute command "ping ip_address"
+	    	try {
+		        Process p = Runtime.getRuntime().exec("ping "+publicIp);
+		        
+		        //get its output and errors
+		        BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		        boolean timeout = false;
+		        String line;
+		        while((line = stdInput.readLine()) != null) {
+		        	if(line.contains("Received = 0")) {
+		        		timeout = true;
+		        	}
+		        }
+		        stdInput.close();
+		        p.destroy();
+		        
+	    		if (!timeout)
+	    			break;//the instance was terminated
+	    		else
+	    		{
+	    			try
+	    			{
+	    				Thread.sleep(500);
+	    			}
+	    			catch(InterruptedException ie)
+	    			{
+	    				System.err.println("Caught Exception: " + ie.getMessage());
+	    				ie.printStackTrace(System.err);
+	    			}
+	    		}
+	    	} catch(IOException ioe) {
+	    		ioe.printStackTrace();
+	    		System.exit(1);
+	    		break;
+	    	}
+    	} while(true);
+		System.out.println("Executing assign address command...ended successfully!");
     }
     
     /**
@@ -841,28 +920,24 @@ public class AwsConsoleApp
     		if (hostedZoneList.get(i).getConfig().getComment().compareToIgnoreCase(XE_AWS_ROUTE53_HOSTED_ZONE_COMMENT) == 0)
     		{
     			hostedZoneId = hostedZoneList.get(i).getId();
-    			break;
+ 	
+		    	List<ResourceRecordSet> resourceRecordSetList = route53.listResourceRecordSets(new ListResourceRecordSetsRequest(hostedZoneId)).getResourceRecordSets();
+		    	ChangeBatch changeBatch = new ChangeBatch().withComment(XE_AWS_ROUTE53_REMOVE_RECORDS_BATCH_COMMENT);
+		    	List<Change> changes = new ArrayList<Change>();
+		    	for (int j=0;j<resourceRecordSetList.size();j++)
+		    		if (resourceRecordSetList.get(j).getType().compareToIgnoreCase(RRType.A.toString()) == 0)
+		    			changes.add(new Change()
+		    								.withAction(ChangeAction.DELETE )
+		    								.withResourceRecordSet(resourceRecordSetList.get(j)));
+		    	
+		    	changeBatch.setChanges(changes);
+		    	route53.changeResourceRecordSets(new ChangeResourceRecordSetsRequest()
+		    											.withHostedZoneId(hostedZoneId)
+		    											.withChangeBatch(changeBatch));
+		    	
+		    	//now that the hosted zone is empty we can actually delete it
+		    	route53.deleteHostedZone(new DeleteHostedZoneRequest(hostedZoneId));
     		}
-    	//if there is no associated hosted zone stop this command processing
-    	if (hostedZoneId == null)
-    		return;
-    	
-    	List<ResourceRecordSet> resourceRecordSetList = route53.listResourceRecordSets(new ListResourceRecordSetsRequest(hostedZoneId)).getResourceRecordSets();
-    	ChangeBatch changeBatch = new ChangeBatch().withComment(XE_AWS_ROUTE53_REMOVE_RECORDS_BATCH_COMMENT);
-    	List<Change> changes = new ArrayList<Change>();
-    	for (int i=0;i<resourceRecordSetList.size();i++)
-    		if (resourceRecordSetList.get(i).getType().compareToIgnoreCase(RRType.A.toString()) == 0)
-    			changes.add(new Change()
-    								.withAction(ChangeAction.DELETE )
-    								.withResourceRecordSet(resourceRecordSetList.get(i)));
-    	
-    	changeBatch.setChanges(changes);
-    	route53.changeResourceRecordSets(new ChangeResourceRecordSetsRequest()
-    											.withHostedZoneId(hostedZoneId)
-    											.withChangeBatch(changeBatch));
-    	
-    	//now that the hosted zone is empty we can actually delete it
-    	route53.deleteHostedZone(new DeleteHostedZoneRequest(hostedZoneId));
     	
     	System.out.println("Executing remove domain command...ended successfully!");
     }
