@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import setup.Main;
 import utils.DeployXEApp;
 import aws.AwsConsoleApp;
 
@@ -28,6 +30,7 @@ public class Dispatcher
     {
         ENTRY_POINTS.put("setup-aws", AwsConsoleApp.class);
         ENTRY_POINTS.put("deploy-xe", DeployXEApp.class);
+        ENTRY_POINTS.put("setup", Main.class);
         VERSION = Dispatcher.class.getPackage().getImplementationVersion();
         
         if (VERSION == null)//if we are not in the builded jar 
