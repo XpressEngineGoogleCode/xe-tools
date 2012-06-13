@@ -280,7 +280,7 @@ public class EnterOptions extends JFrameCommon implements ActionListener {
 	}
 	
 	/**
-	 * Verifies if the domain given is in the form malux.org or www.malux.org
+	 * Verifies if the domain given is in the form xpressengine.org or www.xpressengine.org
 	 */
 	public boolean verifyDomain(String domain, boolean error) {
 		if(domain.length() == 0) {
@@ -293,13 +293,13 @@ public class EnterOptions extends JFrameCommon implements ActionListener {
 		//check that the domain has 2 or 3 parts
 		if(parts.length != 2 && parts.length != 3) {
 			if(error)
-				JOptionPane.showMessageDialog(null, "Domain Name Example: malux.org or www.malux.org", "Incorrect Domain Name", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Domain Name Example: xpressengine.org or www.xpressengine.org", "Incorrect Domain Name", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		//if the domain has 3 parts, the first must be "www" (if the domain has 2 parts, the first must not be "www")
 		if((parts.length == 3 && !parts[0].equals("www")) || (parts.length == 2 && parts[0].equals("www"))) {
 			if(error)
-				JOptionPane.showMessageDialog(null, "Domain Name Example: malux.org or www.malux.org", "Incorrect Domain Name", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Domain Name Example: xpressengine.org or www.xpressengine.org", "Incorrect Domain Name", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;

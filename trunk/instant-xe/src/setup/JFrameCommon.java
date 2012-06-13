@@ -34,7 +34,7 @@ public class JFrameCommon extends JFrame {
 		try {
 			setIconImage(new ImageIcon(getClass().getResource("/xe.png")).getImage());
 		} catch(NullPointerException err) {
-			setIconImage(new ImageIcon("photos/xe.png").getImage());
+			setIconImage(new ImageIcon("externals/xe.png").getImage());
 		}
 		
 		//set the location of the frame in the middle of the screen
