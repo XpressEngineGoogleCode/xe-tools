@@ -47,6 +47,7 @@
             <zipfileset excludes="META-INF/*.SF" src="./externals/jsoup-1.6.2-sources.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="./externals/jsoup-1.6.2.jar"/>
 		</jar>
+		<signjar jar="instant-xe.jar" alias="XpressEngine" keystore="xe" storepass="secret"/>
 	</target>
 	
 	<target name="cleanup">
