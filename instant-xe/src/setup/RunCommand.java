@@ -1,5 +1,6 @@
 package setup;
 
+import java.util.ArrayList;
 import java.util.Vector;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -10,6 +11,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.io.PrintStream;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -19,12 +23,13 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import main.Dispatcher;
+
 /**
  * Runs the commands and displays the output (stdout/stderr) of the commands
  */
 public class RunCommand extends JFrameCommon implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	private final String jarFileName = "instant-xe.jar";
 	
 	RunProcess run;	//thread that runs the commands
 	
@@ -45,10 +50,29 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 	SimpleAttributeSet okStyle;
 	SimpleAttributeSet boldStyle;
 	
+    PipedOutputStream postream;
+    PipedOutputStream pestream;
+    
+    //get its output and errors
+    BufferedReader stdInput;
+    BufferedReader stdError;
+	
 	/**
 	 * Initializes commands and set properties
 	 */
 	public RunCommand() {
+        postream = new PipedOutputStream();
+        pestream = new PipedOutputStream();
+        System.setOut(new PrintStream(postream));
+        System.setErr(new PrintStream(pestream));
+        
+        try {
+			stdInput = new BufferedReader(new InputStreamReader(new PipedInputStream(postream)));
+			stdError = new BufferedReader(new InputStreamReader(new PipedInputStream(pestream)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+       
 		WIDTH = 700;
 		HEIGHT = 600;
 		initFrame("Running Commands");
@@ -92,6 +116,11 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 		pane.add(finish);
 	}
 	
+	/**
+	 * Appends a string to the output text pane
+	 * @param s string to be appended
+	 * @param attr attributes for the string (such as bold, red color (errors) or green color (ok))
+	 */
 	public void append(String s,AttributeSet attr) {
 	   try {
 	      text.insertString(text.getLength(),s,attr);
@@ -100,6 +129,9 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 	   }
 	}
 	
+	/**
+	 * Clears the contents of the text pane
+	 */
 	public void clear() {
 	   try {
 		   text.remove(0, text.getLength());
@@ -125,8 +157,7 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 	public void runDeployCommands(Deploy command) {
 		//disable finish/previous buttons
 		disableButtons();
-		clear();
-	    
+
 	    //according to command call correct type of command
 		switch(command) {
 		case NEW:
@@ -151,9 +182,6 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 	public String addQuotes(String str) {
 		str = str.replaceAll("\"","");
 		str = str.trim();
-		if(str.length() > 0 && (str.contains(" ") || str.contains("\t"))) {
-			str = "\""+str+"\"";
-		}
 		return str;
 	}
 	
@@ -161,9 +189,8 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 	 * Adds the option to the command string
 	 * @param command command to be executed
 	 * @param option option value to be added
-	 * @return the command with the option name and value appended to it
 	 */
-	public String addToCommand(String command, Option option) {
+	public void addToCommand(ArrayList<String> command, Option option) {
 		String value;
 		//if it is a select box get selected value
 		if(option.isSelectBox) {
@@ -172,22 +199,25 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 			value = addQuotes(option.text.getText());
 		}
 		if(value.length() > 0) {
-			command += " " + option.optionName + " " + value;
+			command.add(option.optionName);
+			command.add(value);
 		}
-		return command;
 	}
 	
 	/**
 	 * Returns the default command with access-key,secret-key and endpoint added
 	 * (Adds each required field to the command)
-	 * @param commandType command type to pass to executing jar
-	 * @return the default command
+	 * @param commandType command type to pass to executing jar (setup-aws or deploy-xe)
+	 * @param subCommand secondary command (create_instance, assign_address etc)
+	 * @return the default command (command with access key, secret key and endpoint)
 	 */
-	public String defaultCommand(String commandType) {
-		String command = "java -jar "+jarFileName+" "+commandType;
-		command = addToCommand(command,enterOptions.accessKey);
-		command = addToCommand(command,enterOptions.secretKey);
-		command = addToCommand(command,enterOptions.endpoint);
+	public ArrayList<String> defaultCommand(String commandType, String subCommand) {
+		ArrayList<String> command = new ArrayList<String>();
+		command.add(commandType);
+		command.add(subCommand);
+		addToCommand(command,enterOptions.accessKey);
+		addToCommand(command,enterOptions.secretKey);
+		addToCommand(command,enterOptions.endpoint);
 		return command;
 	}
 	
@@ -196,32 +226,39 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 	 */
 	public void newDeployCommand() {
 		//create command has access-key,secret-key,endpoint and any of the 5 optional parameters
-		String createCommand = defaultCommand("setup-aws create_instance");
-		createCommand = addToCommand(createCommand,enterOptions.tagName);
-		createCommand = addToCommand(createCommand,enterOptions.instanceType);
-		createCommand = addToCommand(createCommand,enterOptions.keyPair);
-		createCommand = addToCommand(createCommand,enterOptions.outputKeyPairFile);
-		createCommand = addToCommand(createCommand,enterOptions.securityGroup);
+		ArrayList<String> createCommand = defaultCommand("setup-aws","create_instance");
+		addToCommand(createCommand,enterOptions.tagName);
+		addToCommand(createCommand,enterOptions.instanceType);
+		addToCommand(createCommand,enterOptions.keyPair);
+		addToCommand(createCommand,enterOptions.outputKeyPairFile);
+		addToCommand(createCommand,enterOptions.securityGroup);
 		runConsoleCommand(createCommand,CommandType.CREATE_INSTANCE);	//run create instance command
 		
 		//address command has only the access-key,secret-key,endpoint parameters
-		String addressCommand = defaultCommand("setup-aws assign_address");
+		ArrayList<String> addressCommand = defaultCommand("setup-aws","assign_address");
 		runConsoleCommand(addressCommand,CommandType.ASSIGN_ADDRESS);	//run associate address command
 		
 		//get number of domains entered by the user
 		int nr_domains = associateDomain.domains.size();
 		String mainDomain = enterOptions.domainName.text.getText().replaceAll("\"","").trim();
 		
-		//domain command has only the access-key,secret-key,endpoint parameters
-		//run domain command for each domain
-		String domainCommand = defaultCommand("setup-aws associate_domain");
-		
 		//retain all domains added
 		Vector<String> domains = new Vector<String>();
 		
 		if(mainDomain.length() > 0) {
-			runConsoleCommand(domainCommand+" domain-name \""+mainDomain+"\"",CommandType.ASSOCIATE_DOMAIN);
-			runConsoleCommand(domainCommand+" domain-name \"www."+mainDomain+"\"",CommandType.ASSOCIATE_DOMAIN);
+			//run for domain
+			ArrayList<String> mainDomainCommand = defaultCommand("setup-aws","associate_domain");
+			mainDomainCommand.add("domain-name");
+			mainDomainCommand.add(mainDomain);
+			runConsoleCommand(mainDomainCommand,CommandType.ASSOCIATE_DOMAIN);
+			
+			//run for main domain with "www" before it
+			ArrayList<String> mainWWWDomainCommand = defaultCommand("setup-aws","associate_domain");
+			mainWWWDomainCommand.add("domain-name");
+			mainWWWDomainCommand.add("www."+mainDomain);
+			runConsoleCommand(mainWWWDomainCommand,CommandType.ASSOCIATE_DOMAIN);
+			
+			//add domains to array
 			domains.add(mainDomain);
 			domains.add("www."+mainDomain);
 		}
@@ -245,23 +282,32 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 				//add double quotes around each domain and add the domains if they were not added already
 				if(!domains.contains(domain) && enterOptions.verifyDomain(domain,false)) {
 					domains.add(domain);
-					domain = "\""+domain+"\"";
-					runConsoleCommand(domainCommand+" domain-name "+domain,CommandType.ASSOCIATE_DOMAIN);
+					ArrayList<String> domainCommand = defaultCommand("setup-aws","associate_domain");
+					domainCommand.add("domain-name");
+					domainCommand.add(domain);
+					runConsoleCommand(domainCommand,CommandType.ASSOCIATE_DOMAIN);
 				}
 				if(!domains.contains(otherDomain) && enterOptions.verifyDomain(otherDomain,false)) {
 					domains.add(otherDomain);
-					otherDomain = "\""+otherDomain+"\"";
-					runConsoleCommand(domainCommand+" domain-name "+otherDomain,CommandType.ASSOCIATE_DOMAIN);
+					ArrayList<String> domainCommand = defaultCommand("setup-aws","associate_domain");
+					domainCommand.add("domain-name");
+					domainCommand.add(otherDomain);
+					runConsoleCommand(domainCommand,CommandType.ASSOCIATE_DOMAIN);
 				}
 			}
 		}
 		
 		//form and execute deploy XE command
-		String xeCommand = "java -jar "+jarFileName+" deploy-xe hostname elastic-ip private-key-file private-key-file-path";
-		xeCommand = addToCommand(xeCommand,enterOptions.domainName);
-		xeCommand = addToCommand(xeCommand,enterOptions.packageType);
-		xeCommand = addToCommand(xeCommand,enterOptions.username);
-		xeCommand = addToCommand(xeCommand,enterOptions.xeDownloadUrl);
+		ArrayList<String> xeCommand = new ArrayList<String>();
+		xeCommand.add("deploy-xe");
+		xeCommand.add("hostname");
+		xeCommand.add("elastic-ip");
+		xeCommand.add("private-key-file");
+		xeCommand.add("private-key-file-path");
+		addToCommand(xeCommand,enterOptions.domainName);
+		addToCommand(xeCommand,enterOptions.packageType);
+		addToCommand(xeCommand,enterOptions.username);
+		addToCommand(xeCommand,enterOptions.xeDownloadUrl);
 		runConsoleCommand(xeCommand,CommandType.DEPLOY_XE);	//run deploy xe command
 	}
 	
@@ -269,8 +315,8 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 	 * Runs a Pause Deploy command
 	 */
 	public void pauseDeployCommand() {
-		String pauseCommand = defaultCommand("setup-aws pause_instance");
-		pauseCommand = addToCommand(pauseCommand,enterOptions.tagName);
+		ArrayList<String> pauseCommand = defaultCommand("setup-aws","pause_instance");
+		addToCommand(pauseCommand,enterOptions.tagName);
 		runConsoleCommand(pauseCommand,CommandType.PAUSE_INSTANCE);
 	}
 	
@@ -278,9 +324,9 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 	 * Runs the Resume Deploy command
 	 */
 	public void resumeDeployCommand() {
-		String resumeCommand = defaultCommand("setup-aws resume_instance");
-		resumeCommand = addToCommand(resumeCommand,enterOptions.tagName);
-		resumeCommand = addToCommand(resumeCommand,enterOptions.skipElasticIpAssociation);
+		ArrayList<String> resumeCommand = defaultCommand("setup-aws","resume_instance");
+		addToCommand(resumeCommand,enterOptions.tagName);
+		addToCommand(resumeCommand,enterOptions.skipElasticIpAssociation);
 		runConsoleCommand(resumeCommand,CommandType.RESUME_INSTANCE);
 	}	
 	
@@ -289,20 +335,20 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 	 */
 	public void deleteDeployCommand() {
 		//first, remove domain
-		String removeDomainCommand = defaultCommand("setup-aws remove_domain");
-		removeDomainCommand = addToCommand(removeDomainCommand,enterOptions.tagName);
+		ArrayList<String> removeDomainCommand = defaultCommand("setup-aws","remove_domain");
+		addToCommand(removeDomainCommand,enterOptions.tagName);
 		runConsoleCommand(removeDomainCommand,CommandType.REMOVE_DOMAIN);
 		
 		//then, remove associated address
-		String removeAddressCommand = defaultCommand("setup-aws remove_address");
-		removeAddressCommand = addToCommand(removeAddressCommand,enterOptions.tagName);
+		ArrayList<String> removeAddressCommand = defaultCommand("setup-aws","remove_address");
+		addToCommand(removeAddressCommand,enterOptions.tagName);
 		runConsoleCommand(removeAddressCommand,CommandType.REMOVE_ADDRESS);
 		
 		//then delete the instance
-		String deleteCommand = defaultCommand("setup-aws delete_instance");
-		deleteCommand = addToCommand(deleteCommand,enterOptions.tagName);
-		deleteCommand = addToCommand(deleteCommand,enterOptions.deleteKeyPair);
-		deleteCommand = addToCommand(deleteCommand,enterOptions.deleteSecurityGroup);
+		ArrayList<String> deleteCommand = defaultCommand("setup-aws","delete_instance");
+		addToCommand(deleteCommand,enterOptions.tagName);
+		addToCommand(deleteCommand,enterOptions.deleteKeyPair);
+		addToCommand(deleteCommand,enterOptions.deleteSecurityGroup);
 		runConsoleCommand(deleteCommand,CommandType.DELETE_INSTANCE);
 	}
 	
@@ -318,7 +364,7 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 		/**
 		 * Set the first command to be executed
 		 */
-		public RunProcess(String command,CommandType commandType) {
+		public RunProcess(ArrayList<String> command,CommandType commandType) {
 			commands = new Vector<Command>();
 			commands.add(new Command(command,commandType));
 			finished = false;
@@ -327,7 +373,7 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 		/**
 		 * Adds a command to be executed
 		 */
-		public void addCommand(String command,CommandType commandType) {
+		public void addCommand(ArrayList<String> command,CommandType commandType) {
 			commands.add(new Command(command,commandType));
 		}
 		
@@ -443,6 +489,28 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 				
 			}
 		}
+		
+		/**
+		 * Runs a command using Dispatcher
+		 */
+		class RunDispatcher extends Thread {
+			String[] args;
+
+			public RunDispatcher(String args[]) {
+				this.args = args;
+			}
+			
+			public void run() {
+        		//execute command
+	            try {
+					Dispatcher.main(args);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+	            //print finished message (important because it is used to know when a command has finished)
+	            System.out.println("Command Execution Finished\n");
+			}
+		}
 				
 		/**
 		 * Runs the thread that checks for commands in list, then executes the first one and displays output
@@ -496,8 +564,8 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 			            		append("Associating domains...",null);
 			            	break;
 			            case DEPLOY_XE:
-			            	command.cmd = command.cmd.replace("elastic-ip", elasticIp);
-			            	command.cmd = command.cmd.replace("private-key-file-path","\""+keyPairFile+"\"");
+			            	command.cmd.set(2,elasticIp);
+			            	command.cmd.set(4,keyPairFile.replace("\\.\\","\\"));
 			            	break;
 			            case PAUSE_INSTANCE:
 			            	append("Pausing instance......",null);
@@ -516,12 +584,16 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 			            	break;
 			            }
 			            
-		        		//execute command
-			            Process p = Runtime.getRuntime().exec(command.cmd);
+			            //get all arguments in a String[] from the command
+			            Object[] parameters = command.cmd.toArray();
+			            String[] args = new String[parameters.length];
+			            for(int i=0;i<parameters.length;i++) {
+			            	args[i] = parameters[i].toString();
+			            }
 			            
-			            //get its output and errors
-			            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+		        		//execute command
+			            RunDispatcher runCmd = new RunDispatcher(args);
+			            runCmd.start();
 
 			            while(true) {
 			            	if(stdInput.ready()) {
@@ -575,15 +647,13 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 			            	}
 			            	//if there is no more output or errors to display and the process has exited, then exit loop
 			            	if(!stdError.ready() && !stdInput.ready()) {
-			            		try {
-			            			p.exitValue();
+			            		if(commandOutput.contains("Command Execution Finished")) {
+			            			commandOutput = commandOutput.replace("Command Execution Finished","");
 			            			break;
-			            		} catch(Exception e) {
-			            			
 			            		}
 			            	}
 			            	try {
-				        		Thread.sleep(1);
+				        		Thread.sleep(1000);
 				        	} catch(Exception err) {
 				        		
 				        	}
@@ -666,7 +736,7 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 		            }
 	        	}
 	        }
-	        catch (IOException e) {
+	        catch (Exception e) {
 	            e.printStackTrace();
 	        }
 		}
@@ -699,7 +769,7 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 	 * @param command command to be executed
 	 * @param commandType type of command to execute (from create_instance to delete_instance)
 	 */
-	public void runConsoleCommand(String command,CommandType commandType) {
+	public void runConsoleCommand(ArrayList<String> command,CommandType commandType) {
         if(run == null) {	//if run thread is not initialized
         	run = new RunProcess(command,commandType);	//create a new run thread
         	run.start();	//start run thread
@@ -719,6 +789,7 @@ public class RunCommand extends JFrameCommon implements ActionListener {
 		if(source == previous) {			//if previous button clicked
 			previousFrame.setVisible(true);	//display previous frame
 			setVisible(false);				//hide current frame
+			clear();						//clear text
 		} else if(source == finish) {		//if finish button clicked
 			((JFrameCommon)previousFrame).close();	//close everything
 		}

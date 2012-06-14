@@ -372,7 +372,6 @@ public class AwsConsoleApp
     	//if there is already an XE instance then we should stop this command processing
     	if (dtr.getTags().size() > 0) {
     		System.err.println("Cannot create instance: Instance already exists.");
-    		System.exit(1);
     		return;
     	}
     	
