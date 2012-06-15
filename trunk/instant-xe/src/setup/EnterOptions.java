@@ -289,15 +289,8 @@ public class EnterOptions extends JFrameCommon implements ActionListener {
 			return false;
 		}
 		String parts[] = domain.toLowerCase().split("\\.");
-		
-		//check that the domain has 2 or 3 parts
-		if(parts.length != 2 && parts.length != 3) {
-			if(error)
-				JOptionPane.showMessageDialog(null, "Domain Name Example: xpressengine.org or www.xpressengine.org", "Incorrect Domain Name", JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		//if the domain has 3 parts, the first must be "www" (if the domain has 2 parts, the first must not be "www")
-		if((parts.length == 3 && !parts[0].equals("www")) || (parts.length == 2 && parts[0].equals("www"))) {
+		//if the domain has 2 parts, the first must not be "www"
+		if(parts.length < 2 || (parts.length == 2 && parts[0].equals("www"))) {
 			if(error)
 				JOptionPane.showMessageDialog(null, "Domain Name Example: xpressengine.org or www.xpressengine.org", "Incorrect Domain Name", JOptionPane.ERROR_MESSAGE);
 			return false;
