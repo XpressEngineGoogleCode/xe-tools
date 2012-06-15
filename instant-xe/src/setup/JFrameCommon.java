@@ -111,7 +111,8 @@ public class JFrameCommon extends JFrame {
 	 * Function called when cancel button is clicked
 	 */
 	public void cancel() {
-		int option = JOptionPane.showConfirmDialog(null,"Are you sure you want to cancel?","Cancel Operation",JOptionPane.YES_NO_OPTION);
+		Object[] options = {"Yes","No"};
+		int option = JOptionPane.showOptionDialog(null,"Are you sure you want to cancel?","Cancel Operation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[1]);
 		if(option == JOptionPane.YES_OPTION) {
 			close();
 		}
@@ -124,7 +125,8 @@ public class JFrameCommon extends JFrame {
 	 * @return true if the YES option was selected
 	 */
 	public boolean confirm(String message, String title) {
-		int option = JOptionPane.showConfirmDialog(null,message,title, JOptionPane.YES_NO_OPTION);
+		Object[] options = {"Yes","No"};
+		int option = JOptionPane.showOptionDialog(null,message,title,JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[1]);
 		if(option == JOptionPane.YES_OPTION) {
 			return true;
 		}
