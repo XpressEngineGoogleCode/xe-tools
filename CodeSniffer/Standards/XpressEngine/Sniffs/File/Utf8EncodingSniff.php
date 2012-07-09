@@ -26,6 +26,10 @@
  */
 class XpressEngine_Sniffs_File_Utf8EncodingSniff implements PHP_CodeSniffer_Sniff
 {
+    public function __construct()
+    {
+	mb_internal_encoding('UTF-8');
+    }
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -49,31 +53,25 @@ class XpressEngine_Sniffs_File_Utf8EncodingSniff implements PHP_CodeSniffer_Snif
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-		if(!function_exists('mb_check_encoding'))
-		{
-			return;
-		}
+	if(!function_exists('mb_check_encoding'))
+	    return;
 
         // We are only interested if this is the first open tag.
         if($stackPtr !== 0) 
-		{
             if($phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1)) !== FALSE)
-			{
                 return;
-            }
-        }
 
         $file_path = $phpcsFile->getFilename();
         $file_name = basename($file_path);
         $file_content = file_get_contents($file_path);
-        if(FALSE === mb_check_encoding($file_content, 'UTF-8'))
-		{
+        if (FALSE === mb_check_encoding($file_content, 'UTF-8'))
+	{
             $error = 'File "' . $file_name . '" should be saved with Unicode (UTF-8) encoding.';
             $phpcsFile->addError($error, 0);
         }
         
-		if(!self::_checkUtf8W3c($file_content))
-		{
+	if(!self::_checkUtf8W3c($file_content))
+	{
             $error = 'File "' . $file_name . '" should be saved with Unicode (UTF-8) encoding, but it did not successfully pass the W3C test.';
             $phpcsFile->addError($error, 0);
         }
@@ -102,28 +100,28 @@ class XpressEngine_Sniffs_File_Utf8EncodingSniff implements PHP_CodeSniffer_Snif
     {
         $content_chunks = self::mb_chunk_split($content, 4096, '');
     	foreach($content_chunks as $content_chunk)
+	    {
+		$preg_result = preg_match(
+			    '%^(?:
+				      [\x09\x0A\x0D\x20-\x7E]            # ASCII
+				    | [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
+				    |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
+				    | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
+				    |  \xED[\x80-\x9F][\x80-\xBF]        # excluding surrogates
+				    |  \xF0[\x90-\xBF][\x80-\xBF]{2}     # planes 1-3
+				    | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
+				    |  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
+			    )*$%xs',
+			    $content_chunk
+			);
+
+		if($preg_result !== 1)
 		{
-			$preg_result = preg_match(
-					'%^(?:
-						  [\x09\x0A\x0D\x20-\x7E]            # ASCII
-						| [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
-						|  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
-						| [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
-						|  \xED[\x80-\x9F][\x80-\xBF]        # excluding surrogates
-						|  \xF0[\x90-\xBF][\x80-\xBF]{2}     # planes 1-3
-						| [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
-						|  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
-					)*$%xs',
-					$content_chunk
-				);
-
-			if($preg_result !== 1)
-			{
-				return FALSE;
-			}
+		    return FALSE;
 		}
+	    }
 
-		return TRUE;
+	return TRUE;
     }//end _checkUtf8W3c()
 
     /**
@@ -141,50 +139,50 @@ class XpressEngine_Sniffs_File_Utf8EncodingSniff implements PHP_CodeSniffer_Snif
     {
         $len = strlen($content);
         for($i = 0; $i < $len; $i++)
-		{
+	{
             $c = ord($content[$i]);
             if($c > 128)
-			{
+	    {
                 if(($c >= 254))
-				{
+		{
                     return FALSE;
                 }
-				elseif($c >= 252)
-				{
+		elseif($c >= 252)
+		{
                     $bits=6;
                 }
-				elseif($c >= 248)
-				{
+		elseif($c >= 248)
+		{
                     $bits=5;
                 }
-				elseif($c >= 240)
-				{
+		elseif($c >= 240)
+		{
                     $bytes = 4;
                 }
-				elseif($c >= 224)
-				{
+		elseif($c >= 224)
+		{
                     $bytes = 3;
                 }
-				elseif($c >= 192)
-				{
+		elseif($c >= 192)
+		{
                     $bytes = 2;
                 }
-				else
-				{
+		else
+		{
                     return FALSE;
                 }
 				
-				if(($i + $bytes) > $len)
-				{
+		if(($i + $bytes) > $len)
+		{
                     return FALSE;
                 } 
 				
-				while($bytes > 1)
-				{
+		while($bytes > 1)
+		{
                     $i++;
                     $b = ord($content[$i]);
                     if($b < 128 || $b > 191)
-					{
+		    {
                         return FALSE;
                     }
                     $bytes--;
@@ -209,53 +207,52 @@ class XpressEngine_Sniffs_File_Utf8EncodingSniff implements PHP_CodeSniffer_Snif
      */
 	private static function mb_chunk_split($str, $len, $glue) 
 	{
-		if(empty($str))
-		{
-			return false;
-		}
+	    if(empty($str))
+	    {
+		return false;
+	    }
 
-		$array = self::mbStringToArray ($str);
-		$n = -1;
-		$new = array();
-		foreach($array as $char)
+	    $array = self::mbStringToArray ($str);
+	    $n = -1;
+	    $new = array();
+	    foreach($array as $char)
+	    {
+		$n++;
+		if($n < $len)
 		{
-			$n++;
-			if($n < $len)
-			{
-				$new[] = $char;
-			}
-			elseif($n == $len)
-			{
-				$new[] = $glue . $char;
-				$n = 0;
-			}
+		    $new[] = $char;
 		}
+		elseif($n == $len)
+		{
+		    $new[] = $glue . $char;
+		    $n = 0;
+		}
+	    }
 
-		return $new;
+	    return $new;
 	}//mb_chunk_split
-	/**
+
+    /**
      * Supporting function for mb_chunk_split
      *
      * @param string $str   
-	 *
+     *
      * @return array 
      *
      * @see http://php.net/manual/en/function.chunk-split.php
      */
-	private static function mbStringToArray ($str) 
-	{
-		if(empty($str))
-		{
-			return false;
-		}
-		$len = mb_strlen($str);
-		$array = array();
-		for($i = 0; $i < $len; $i++)
-		{
-			$array[] = mb_substr($str, $i, 1);
-		}
+    private static function mbStringToArray ($str) 
+    {
+	if(empty($str))
+	    return false;
 
-		return $array;
-	}
+	$len = mb_strlen($str);
+	$array = array();
 
+	for($i = 0; $i < $len; $i++)
+	    $array[] = mb_substr($str, $i, 1);
+
+	return $array;
+    }
 }//end class
+
