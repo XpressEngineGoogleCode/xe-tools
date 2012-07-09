@@ -1,0 +1,30 @@
+#!/bin/sh
+
+file_name="$1"
+
+set -e
+
+BASEDIR="$(dirname "$0")"
+
+if test -z "$2"
+then
+    trap 'rm -f "/tmp/formatter/$$"*.php' EXIT
+fi
+
+mkdir -p /tmp/formatter
+
+sed 's#^[[:space:]]*$#/* blank line marker: 164e5c50-fbfb-4e16-a6fa-1d0640968b33 */#' "$1" >"/tmp/formatter/$$--.php"
+php_beautifier \
+    --directory_filters="${BASEDIR}/Beautifier/Filter" \
+    -l"XpressEngine(project_root=.,file_name=$1)" \
+    --indent_tabs="1" \
+	<"/tmp/formatter/$$--.php" \
+	>"/tmp/formatter/$$-.php"
+sed 's#^[[:space:]]*/\* blank line marker: 164e5c50-fbfb-4e16-a6fa-1d0640968b33 \*/[[:space:]]*$##' <"/tmp/formatter/$$-.php" >"/tmp/formatter/$$.php"
+
+php -l "/tmp/formatter/$$.php" >&2
+phpcs "--standard=$(readlink -f "${BASEDIR}/CodeSniffer/Standards/XpressEngine")" "/tmp/formatter/$$.php" >&2
+
+cat "/tmp/formatter/$$.php"
+
+# -l"IndentStyles(style=gnu)" 
