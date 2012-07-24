@@ -1,0 +1,1007 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C167504F15B9484E006CDBDD /* XEMobileSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD690615B943F70061924B /* XEMobileSettingsViewController.m */; };
+		C167505015B94853006CDBDD /* XEMobileTextyleSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD690815B9440D0061924B /* XEMobileTextyleSelectViewController.m */; };
+		C167505115B9485B006CDBDD /* XEMobileStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD690A15B944200061924B /* XEMobileStatisticsViewController.m */; };
+		C167505915B948BF006CDBDD /* XEMobileTextyleMainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167505815B948BF006CDBDD /* XEMobileTextyleMainPageViewController.m */; };
+		C167505C15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167505B15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.m */; };
+		C167505F15B948D4006CDBDD /* XEMobileTextyleStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167505E15B948D4006CDBDD /* XEMobileTextyleStatsViewController.m */; };
+		C167506415B948E7006CDBDD /* XEMobileTextyleCommentsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167506115B948E7006CDBDD /* XEMobileTextyleCommentsListViewController.m */; };
+		C167506515B948E7006CDBDD /* XEMobileTextyleReplyCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167506315B948E7006CDBDD /* XEMobileTextyleReplyCommentViewController.m */; };
+		C167506E15B948FA006CDBDD /* XEMobileTextyleSkinsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167506715B948FA006CDBDD /* XEMobileTextyleSkinsViewController.m */; };
+		C167506F15B948FA006CDBDD /* XEMobileTextyleSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167506915B948FA006CDBDD /* XEMobileTextyleSettingsViewController.m */; };
+		C167507015B948FA006CDBDD /* XEMobileTextyleWritingSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167506B15B948FA006CDBDD /* XEMobileTextyleWritingSettingsViewController.m */; };
+		C167507115B948FA006CDBDD /* XEMobileTextyleChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167506D15B948FA006CDBDD /* XEMobileTextyleChangePasswordViewController.m */; };
+		C167507815B94914006CDBDD /* XEMobileTextylePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167507315B94914006CDBDD /* XEMobileTextylePageViewController.m */; };
+		C167507915B94914006CDBDD /* XEMobileTextyleAddPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167507515B94914006CDBDD /* XEMobileTextyleAddPageViewController.m */; };
+		C167507A15B94914006CDBDD /* XEMobileTextyleEditPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167507715B94914006CDBDD /* XEMobileTextyleEditPageViewController.m */; };
+		C167508115B94922006CDBDD /* XEMobileTextyleAddPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167507C15B94922006CDBDD /* XEMobileTextyleAddPostViewController.m */; };
+		C167508215B94922006CDBDD /* XEMobileTextylePostsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167507E15B94922006CDBDD /* XEMobileTextylePostsTableViewController.m */; };
+		C167508315B94922006CDBDD /* XEMobileTextyleEditPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167508015B94922006CDBDD /* XEMobileTextyleEditPostViewController.m */; };
+		C167508B15B94961006CDBDD /* XEMobileCommentsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C167508615B94961006CDBDD /* XEMobileCommentsViewCell.m */; };
+		C167508C15B94961006CDBDD /* XEMobileSkinCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C167508815B94961006CDBDD /* XEMobileSkinCell.m */; };
+		C167508D15B94961006CDBDD /* XEMobileStatsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C167508A15B94961006CDBDD /* XEMobileStatsCell.m */; };
+		C167509015B94979006CDBDD /* XEMobileOptionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167508F15B94979006CDBDD /* XEMobileOptionsTableViewController.m */; };
+		C167509F15B94F8F006CDBDD /* XEMobileMainPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C167509E15B94F8F006CDBDD /* XEMobileMainPageViewController.xib */; };
+		C16750A115B950EC006CDBDD /* XEMobileMembersManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750A015B950EB006CDBDD /* XEMobileMembersManagementViewController.xib */; };
+		C16750A315B9527D006CDBDD /* XEMobileMemberEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750A215B9527D006CDBDD /* XEMobileMemberEditViewController.xib */; };
+		C16750B415B95A15006CDBDD /* logo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C16750B315B95A15006CDBDD /* logo.jpeg */; };
+		C16750B615B95EB6006CDBDD /* XEMobileStatisticsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750B515B95EB6006CDBDD /* XEMobileStatisticsViewController.xib */; };
+		C16750BA15B95FCC006CDBDD /* XEMobileStatsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750B915B95FCC006CDBDD /* XEMobileStatsCell.xib */; };
+		C16750BC15B9616E006CDBDD /* XEMobileSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750BB15B9616E006CDBDD /* XEMobileSettingsViewController.xib */; };
+		C16750CB15B968FD006CDBDD /* XEMobilePageManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750CA15B968FD006CDBDD /* XEMobilePageManagementViewController.xib */; };
+		C16750CD15B96A64006CDBDD /* XEMobileEditContentPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750CC15B96A64006CDBDD /* XEMobileEditContentPageViewController.xib */; };
+		C16750CF15B97474006CDBDD /* XEMobileEditPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750CE15B97474006CDBDD /* XEMobileEditPageViewController.xib */; };
+		C16750D115B976A4006CDBDD /* XEMobileAddPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750D015B976A4006CDBDD /* XEMobileAddPageViewController.xib */; };
+		C16750D315B97962006CDBDD /* XEMobileWidgetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750D215B97962006CDBDD /* XEMobileWidgetViewController.xib */; };
+		C16750E215B97AE0006CDBDD /* XEMobileMenuManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750E115B97AE0006CDBDD /* XEMobileMenuManagementViewController.xib */; };
+		C16750E615B97E61006CDBDD /* XEMobileMenuItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750E515B97E61006CDBDD /* XEMobileMenuItemViewController.xib */; };
+		C16750E815B97EEE006CDBDD /* XEMobileAddMenuItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750E715B97EEE006CDBDD /* XEMobileAddMenuItemViewController.xib */; };
+		C16750EA15B98424006CDBDD /* XEMobileTextyleMainPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C16750E915B98424006CDBDD /* XEMobileTextyleMainPageViewController.xib */; };
+		C1BD68B215B941030061924B /* XEMobileLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68B115B941030061924B /* XEMobileLoginViewController.m */; };
+		C1BD68B415B9411B0061924B /* XEMobileLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1BD68B315B9411B0061924B /* XEMobileLoginViewController.xib */; };
+		C1BD68B715B941770061924B /* XEMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68B615B941770061924B /* XEMobileViewController.m */; };
+		C1BD68DB15B941B30061924B /* XEUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68BA15B941B30061924B /* XEUser.m */; };
+		C1BD68DC15B941B30061924B /* XEMember.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68BC15B941B30061924B /* XEMember.m */; };
+		C1BD68DD15B941B30061924B /* XEMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68BE15B941B30061924B /* XEMenuItem.m */; };
+		C1BD68DE15B941B30061924B /* XEMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68C015B941B30061924B /* XEMenu.m */; };
+		C1BD68DF15B941B30061924B /* XEPage.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68C215B941B30061924B /* XEPage.m */; };
+		C1BD68E015B941B30061924B /* XEModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68C415B941B30061924B /* XEModule.m */; };
+		C1BD68E115B941B30061924B /* XESettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68C615B941B30061924B /* XESettings.m */; };
+		C1BD68E215B941B30061924B /* XETextyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68C815B941B30061924B /* XETextyle.m */; };
+		C1BD68E315B941B30061924B /* XETextylePost.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68CA15B941B30061924B /* XETextylePost.m */; };
+		C1BD68E515B941B30061924B /* XEGlobalSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68CE15B941B30061924B /* XEGlobalSettings.m */; };
+		C1BD68E615B941B30061924B /* XETextyleSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68D015B941B30061924B /* XETextyleSettings.m */; };
+		C1BD68E715B941B30061924B /* XETextylePage.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68D215B941B30061924B /* XETextylePage.m */; };
+		C1BD68E815B941B30061924B /* XESkin.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68D415B941B30061924B /* XESkin.m */; };
+		C1BD68E915B941B30061924B /* XETextyleStats.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68D615B941B30061924B /* XETextyleStats.m */; };
+		C1BD68EA15B941B30061924B /* XEStats.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68D815B941B30061924B /* XEStats.m */; };
+		C1BD68EB15B941B30061924B /* XELayout.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68DA15B941B30061924B /* XELayout.m */; };
+		C1BD68FB15B943610061924B /* XEMobileMainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68FA15B943610061924B /* XEMobileMainPageViewController.m */; };
+		C1BD68FE15B943CA0061924B /* XEMobilePageManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD68FD15B943CA0061924B /* XEMobilePageManagementViewController.m */; };
+		C1BD690115B943DD0061924B /* XEMobileMenuManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD690015B943DD0061924B /* XEMobileMenuManagementViewController.m */; };
+		C1BD690415B943EA0061924B /* XEMobileMembersManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD690315B943EA0061924B /* XEMobileMembersManagementViewController.m */; };
+		C1BD691915B945260061924B /* XEMobileAddPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD691215B945260061924B /* XEMobileAddPageViewController.m */; };
+		C1BD691A15B945260061924B /* XEMobileEditContentPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD691415B945260061924B /* XEMobileEditContentPageViewController.m */; };
+		C1BD691B15B945260061924B /* XEMobileWidgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD691615B945260061924B /* XEMobileWidgetViewController.m */; };
+		C1BD691C15B945260061924B /* XEMobileEditPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD691815B945260061924B /* XEMobileEditPageViewController.m */; };
+		C1BD692115B9453C0061924B /* XEMobileMenuItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD691E15B9453C0061924B /* XEMobileMenuItemViewController.m */; };
+		C1BD692215B9453C0061924B /* XEMobileAddMenuItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD692015B9453C0061924B /* XEMobileAddMenuItemViewController.m */; };
+		C1BD692515B945510061924B /* XEMobileMemberEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD692415B945510061924B /* XEMobileMemberEditViewController.m */; };
+		C1BD692815B9456B0061924B /* XEMobileTextEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD692715B9456B0061924B /* XEMobileTextEditorViewController.m */; };
+		C1BD692A15B9464F0061924B /* XEMobileTextyleSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1BD692915B9464F0061924B /* XEMobileTextyleSelectViewController.xib */; };
+		C1D7C28615B83C1500764E16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D7C28515B83C1500764E16 /* UIKit.framework */; };
+		C1D7C28815B83C1500764E16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D7C28715B83C1500764E16 /* Foundation.framework */; };
+		C1D7C28A15B83C1500764E16 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D7C28915B83C1500764E16 /* CoreGraphics.framework */; };
+		C1D7C29015B83C1500764E16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1D7C28E15B83C1500764E16 /* InfoPlist.strings */; };
+		C1D7C29215B83C1500764E16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C1D7C29115B83C1500764E16 /* main.m */; };
+		C1D7C29615B83C1500764E16 /* XEMobileAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C1D7C29515B83C1500764E16 /* XEMobileAppDelegate.m */; };
+		C1D7C29C15B83C1500764E16 /* XEMobileDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1D7C29B15B83C1500764E16 /* XEMobileDetailViewController.m */; };
+		C1D7C2A215B83C1500764E16 /* XEMobileDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1D7C2A015B83C1500764E16 /* XEMobileDetailViewController.xib */; };
+		C1D7C2D615B83DB000764E16 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D7C2CB15B83D6400764E16 /* libRestKit.a */; };
+		C1D7C2D815B83DBE00764E16 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D7C2D715B83DBE00764E16 /* CFNetwork.framework */; };
+		C1D7C2DA15B83DC300764E16 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D7C2D915B83DC300764E16 /* CoreData.framework */; };
+		C1D7C2DC15B83DC800764E16 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D7C2DB15B83DC800764E16 /* MobileCoreServices.framework */; };
+		C1D7C2DE15B83DCD00764E16 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D7C2DD15B83DCD00764E16 /* Security.framework */; };
+		C1D7C2E015B83DD300764E16 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D7C2DF15B83DD300764E16 /* SystemConfiguration.framework */; };
+		C1D7C2E215B83DD800764E16 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D7C2E115B83DD800764E16 /* QuartzCore.framework */; };
+		C1D7C2E415B83DDE00764E16 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D7C2E315B83DDE00764E16 /* libxml2.dylib */; };
+		C1EA25CE15BEDC210019AED5 /* XEComment.m in Sources */ = {isa = PBXBuildFile; fileRef = C1EA25CD15BEDC210019AED5 /* XEComment.m */; };
+		C1F0C4F215BD321E004BF686 /* XEMobileTextyleEditPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F0C4F115BD321E004BF686 /* XEMobileTextyleEditPostViewController.xib */; };
+		C1F0C4F415BD36AA004BF686 /* XEMobileTextyleAddPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F0C4F315BD36AA004BF686 /* XEMobileTextyleAddPostViewController.xib */; };
+		C1F0C50315BD3C05004BF686 /* XEMobileCommentsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F0C50215BD3C05004BF686 /* XEMobileCommentsViewCell.xib */; };
+		C1FEDF8B15B98C1B0079DB44 /* XEMobileTextyleAddTextyleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FEDF8A15B98C1B0079DB44 /* XEMobileTextyleAddTextyleViewController.xib */; };
+		C1FEDF9A15B98D550079DB44 /* XEMobileTextylePostsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FEDF9915B98D550079DB44 /* XEMobileTextylePostsTableViewController.xib */; };
+		C1FEDF9C15B9903B0079DB44 /* XEMobileTextylePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FEDF9B15B9903B0079DB44 /* XEMobileTextylePageViewController.xib */; };
+		C1FEDF9E15B9919A0079DB44 /* XEMobileTextyleCommentsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FEDF9D15B9919A0079DB44 /* XEMobileTextyleCommentsListViewController.xib */; };
+		C1FEDFA015B992A80079DB44 /* XEMobileTextyleReplyCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FEDF9F15B992A80079DB44 /* XEMobileTextyleReplyCommentViewController.xib */; };
+		C1FEDFA215B9936D0079DB44 /* XEMobileTextyleSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FEDFA115B9936D0079DB44 /* XEMobileTextyleSettingsViewController.xib */; };
+		C1FEDFA415B993840079DB44 /* XEMobileTextyleSkinsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FEDFA315B993840079DB44 /* XEMobileTextyleSkinsViewController.xib */; };
+		C1FEDFA615B993A40079DB44 /* XEMobileTextyleWritingSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FEDFA515B993A30079DB44 /* XEMobileTextyleWritingSettingsViewController.xib */; };
+		C1FEDFA815B993B60079DB44 /* XEMobileTextyleChangePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FEDFA715B993B60079DB44 /* XEMobileTextyleChangePasswordViewController.xib */; };
+		C1FEDFB715B99ADA0079DB44 /* XEMobileSkinCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FEDFB615B99ADA0079DB44 /* XEMobileSkinCell.xib */; };
+		C1FEDFB915B99B4C0079DB44 /* XEMobileOptionsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FEDFB815B99B4C0079DB44 /* XEMobileOptionsTableViewController.xib */; };
+		C1FEDFBB15B99DF20079DB44 /* XEMobileTextyleEditPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FEDFBA15B99DF20079DB44 /* XEMobileTextyleEditPageViewController.xib */; };
+		C1FEDFBD15B99FEA0079DB44 /* XEMobileTextyleAddPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FEDFBC15B99FEA0079DB44 /* XEMobileTextyleAddPageViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C1D7C2CA15B83D6400764E16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C1D7C2BF15B83D6300764E16 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D1614564E810060A5C5;
+			remoteInfo = RestKit;
+		};
+		C1D7C2CC15B83D6400764E16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C1D7C2BF15B83D6300764E16 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D2614564E820060A5C5;
+			remoteInfo = RestKitTests;
+		};
+		C1D7C2CE15B83D6400764E16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C1D7C2BF15B83D6300764E16 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E62145651060060A5C5;
+			remoteInfo = RestKitFramework;
+		};
+		C1D7C2D015B83D6400764E16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C1D7C2BF15B83D6300764E16 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E78145651060060A5C5;
+			remoteInfo = RestKitFrameworkTests;
+		};
+		C1D7C2D215B83D6400764E16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C1D7C2BF15B83D6300764E16 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 259C301615128079003066A2;
+			remoteInfo = RestKitResources;
+		};
+		C1D7C2D415B83D7900764E16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C1D7C2BF15B83D6300764E16 /* RestKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 25160D1514564E810060A5C5;
+			remoteInfo = RestKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C167505715B948BF006CDBDD /* XEMobileTextyleMainPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleMainPageViewController.h; sourceTree = "<group>"; };
+		C167505815B948BF006CDBDD /* XEMobileTextyleMainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleMainPageViewController.m; sourceTree = "<group>"; };
+		C167505A15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleAddTextyleViewController.h; sourceTree = "<group>"; };
+		C167505B15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleAddTextyleViewController.m; sourceTree = "<group>"; };
+		C167505D15B948D4006CDBDD /* XEMobileTextyleStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleStatsViewController.h; sourceTree = "<group>"; };
+		C167505E15B948D4006CDBDD /* XEMobileTextyleStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleStatsViewController.m; sourceTree = "<group>"; };
+		C167506015B948E7006CDBDD /* XEMobileTextyleCommentsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleCommentsListViewController.h; sourceTree = "<group>"; };
+		C167506115B948E7006CDBDD /* XEMobileTextyleCommentsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleCommentsListViewController.m; sourceTree = "<group>"; };
+		C167506215B948E7006CDBDD /* XEMobileTextyleReplyCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleReplyCommentViewController.h; sourceTree = "<group>"; };
+		C167506315B948E7006CDBDD /* XEMobileTextyleReplyCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleReplyCommentViewController.m; sourceTree = "<group>"; };
+		C167506615B948FA006CDBDD /* XEMobileTextyleSkinsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleSkinsViewController.h; sourceTree = "<group>"; };
+		C167506715B948FA006CDBDD /* XEMobileTextyleSkinsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleSkinsViewController.m; sourceTree = "<group>"; };
+		C167506815B948FA006CDBDD /* XEMobileTextyleSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleSettingsViewController.h; sourceTree = "<group>"; };
+		C167506915B948FA006CDBDD /* XEMobileTextyleSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleSettingsViewController.m; sourceTree = "<group>"; };
+		C167506A15B948FA006CDBDD /* XEMobileTextyleWritingSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleWritingSettingsViewController.h; sourceTree = "<group>"; };
+		C167506B15B948FA006CDBDD /* XEMobileTextyleWritingSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleWritingSettingsViewController.m; sourceTree = "<group>"; };
+		C167506C15B948FA006CDBDD /* XEMobileTextyleChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleChangePasswordViewController.h; sourceTree = "<group>"; };
+		C167506D15B948FA006CDBDD /* XEMobileTextyleChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleChangePasswordViewController.m; sourceTree = "<group>"; };
+		C167507215B94914006CDBDD /* XEMobileTextylePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextylePageViewController.h; sourceTree = "<group>"; };
+		C167507315B94914006CDBDD /* XEMobileTextylePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextylePageViewController.m; sourceTree = "<group>"; };
+		C167507415B94914006CDBDD /* XEMobileTextyleAddPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleAddPageViewController.h; sourceTree = "<group>"; };
+		C167507515B94914006CDBDD /* XEMobileTextyleAddPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleAddPageViewController.m; sourceTree = "<group>"; };
+		C167507615B94914006CDBDD /* XEMobileTextyleEditPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleEditPageViewController.h; sourceTree = "<group>"; };
+		C167507715B94914006CDBDD /* XEMobileTextyleEditPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleEditPageViewController.m; sourceTree = "<group>"; };
+		C167507B15B94922006CDBDD /* XEMobileTextyleAddPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleAddPostViewController.h; sourceTree = "<group>"; };
+		C167507C15B94922006CDBDD /* XEMobileTextyleAddPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleAddPostViewController.m; sourceTree = "<group>"; };
+		C167507D15B94922006CDBDD /* XEMobileTextylePostsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextylePostsTableViewController.h; sourceTree = "<group>"; };
+		C167507E15B94922006CDBDD /* XEMobileTextylePostsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextylePostsTableViewController.m; sourceTree = "<group>"; };
+		C167507F15B94922006CDBDD /* XEMobileTextyleEditPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleEditPostViewController.h; sourceTree = "<group>"; };
+		C167508015B94922006CDBDD /* XEMobileTextyleEditPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleEditPostViewController.m; sourceTree = "<group>"; };
+		C167508515B94961006CDBDD /* XEMobileCommentsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileCommentsViewCell.h; sourceTree = "<group>"; };
+		C167508615B94961006CDBDD /* XEMobileCommentsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileCommentsViewCell.m; sourceTree = "<group>"; };
+		C167508715B94961006CDBDD /* XEMobileSkinCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileSkinCell.h; sourceTree = "<group>"; };
+		C167508815B94961006CDBDD /* XEMobileSkinCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileSkinCell.m; sourceTree = "<group>"; };
+		C167508915B94961006CDBDD /* XEMobileStatsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileStatsCell.h; sourceTree = "<group>"; };
+		C167508A15B94961006CDBDD /* XEMobileStatsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileStatsCell.m; sourceTree = "<group>"; };
+		C167508E15B94979006CDBDD /* XEMobileOptionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileOptionsTableViewController.h; sourceTree = "<group>"; };
+		C167508F15B94979006CDBDD /* XEMobileOptionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileOptionsTableViewController.m; sourceTree = "<group>"; };
+		C167509E15B94F8F006CDBDD /* XEMobileMainPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileMainPageViewController.xib; sourceTree = "<group>"; };
+		C16750A015B950EB006CDBDD /* XEMobileMembersManagementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileMembersManagementViewController.xib; sourceTree = "<group>"; };
+		C16750A215B9527D006CDBDD /* XEMobileMemberEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileMemberEditViewController.xib; sourceTree = "<group>"; };
+		C16750B115B95650006CDBDD /* XpressEngine.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = XpressEngine.jpeg; sourceTree = "<group>"; };
+		C16750B315B95A15006CDBDD /* logo.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = logo.jpeg; sourceTree = "<group>"; };
+		C16750B515B95EB6006CDBDD /* XEMobileStatisticsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileStatisticsViewController.xib; sourceTree = "<group>"; };
+		C16750B915B95FCC006CDBDD /* XEMobileStatsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileStatsCell.xib; sourceTree = "<group>"; };
+		C16750BB15B9616E006CDBDD /* XEMobileSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileSettingsViewController.xib; sourceTree = "<group>"; };
+		C16750CA15B968FD006CDBDD /* XEMobilePageManagementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobilePageManagementViewController.xib; sourceTree = "<group>"; };
+		C16750CC15B96A64006CDBDD /* XEMobileEditContentPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileEditContentPageViewController.xib; sourceTree = "<group>"; };
+		C16750CE15B97474006CDBDD /* XEMobileEditPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileEditPageViewController.xib; sourceTree = "<group>"; };
+		C16750D015B976A4006CDBDD /* XEMobileAddPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileAddPageViewController.xib; sourceTree = "<group>"; };
+		C16750D215B97962006CDBDD /* XEMobileWidgetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileWidgetViewController.xib; sourceTree = "<group>"; };
+		C16750E115B97AE0006CDBDD /* XEMobileMenuManagementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileMenuManagementViewController.xib; sourceTree = "<group>"; };
+		C16750E515B97E61006CDBDD /* XEMobileMenuItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileMenuItemViewController.xib; sourceTree = "<group>"; };
+		C16750E715B97EEE006CDBDD /* XEMobileAddMenuItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileAddMenuItemViewController.xib; sourceTree = "<group>"; };
+		C16750E915B98424006CDBDD /* XEMobileTextyleMainPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleMainPageViewController.xib; sourceTree = "<group>"; };
+		C1BD68B015B941030061924B /* XEMobileLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileLoginViewController.h; sourceTree = "<group>"; };
+		C1BD68B115B941030061924B /* XEMobileLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileLoginViewController.m; sourceTree = "<group>"; };
+		C1BD68B315B9411B0061924B /* XEMobileLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileLoginViewController.xib; sourceTree = "<group>"; };
+		C1BD68B515B941770061924B /* XEMobileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileViewController.h; sourceTree = "<group>"; };
+		C1BD68B615B941770061924B /* XEMobileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileViewController.m; sourceTree = "<group>"; };
+		C1BD68B915B941B30061924B /* XEUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEUser.h; sourceTree = "<group>"; };
+		C1BD68BA15B941B30061924B /* XEUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEUser.m; sourceTree = "<group>"; };
+		C1BD68BB15B941B30061924B /* XEMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMember.h; sourceTree = "<group>"; };
+		C1BD68BC15B941B30061924B /* XEMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMember.m; sourceTree = "<group>"; };
+		C1BD68BD15B941B30061924B /* XEMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMenuItem.h; sourceTree = "<group>"; };
+		C1BD68BE15B941B30061924B /* XEMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMenuItem.m; sourceTree = "<group>"; };
+		C1BD68BF15B941B30061924B /* XEMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMenu.h; sourceTree = "<group>"; };
+		C1BD68C015B941B30061924B /* XEMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMenu.m; sourceTree = "<group>"; };
+		C1BD68C115B941B30061924B /* XEPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEPage.h; sourceTree = "<group>"; };
+		C1BD68C215B941B30061924B /* XEPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEPage.m; sourceTree = "<group>"; };
+		C1BD68C315B941B30061924B /* XEModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEModule.h; sourceTree = "<group>"; };
+		C1BD68C415B941B30061924B /* XEModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEModule.m; sourceTree = "<group>"; };
+		C1BD68C515B941B30061924B /* XESettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XESettings.h; sourceTree = "<group>"; };
+		C1BD68C615B941B30061924B /* XESettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XESettings.m; sourceTree = "<group>"; };
+		C1BD68C715B941B30061924B /* XETextyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XETextyle.h; sourceTree = "<group>"; };
+		C1BD68C815B941B30061924B /* XETextyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XETextyle.m; sourceTree = "<group>"; };
+		C1BD68C915B941B30061924B /* XETextylePost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XETextylePost.h; sourceTree = "<group>"; };
+		C1BD68CA15B941B30061924B /* XETextylePost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XETextylePost.m; sourceTree = "<group>"; };
+		C1BD68CD15B941B30061924B /* XEGlobalSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEGlobalSettings.h; sourceTree = "<group>"; };
+		C1BD68CE15B941B30061924B /* XEGlobalSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEGlobalSettings.m; sourceTree = "<group>"; };
+		C1BD68CF15B941B30061924B /* XETextyleSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XETextyleSettings.h; sourceTree = "<group>"; };
+		C1BD68D015B941B30061924B /* XETextyleSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XETextyleSettings.m; sourceTree = "<group>"; };
+		C1BD68D115B941B30061924B /* XETextylePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XETextylePage.h; sourceTree = "<group>"; };
+		C1BD68D215B941B30061924B /* XETextylePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XETextylePage.m; sourceTree = "<group>"; };
+		C1BD68D315B941B30061924B /* XESkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XESkin.h; sourceTree = "<group>"; };
+		C1BD68D415B941B30061924B /* XESkin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XESkin.m; sourceTree = "<group>"; };
+		C1BD68D515B941B30061924B /* XETextyleStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XETextyleStats.h; sourceTree = "<group>"; };
+		C1BD68D615B941B30061924B /* XETextyleStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XETextyleStats.m; sourceTree = "<group>"; };
+		C1BD68D715B941B30061924B /* XEStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEStats.h; sourceTree = "<group>"; };
+		C1BD68D815B941B30061924B /* XEStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEStats.m; sourceTree = "<group>"; };
+		C1BD68D915B941B30061924B /* XELayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XELayout.h; sourceTree = "<group>"; };
+		C1BD68DA15B941B30061924B /* XELayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XELayout.m; sourceTree = "<group>"; };
+		C1BD68F915B943610061924B /* XEMobileMainPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileMainPageViewController.h; sourceTree = "<group>"; };
+		C1BD68FA15B943610061924B /* XEMobileMainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileMainPageViewController.m; sourceTree = "<group>"; };
+		C1BD68FC15B943CA0061924B /* XEMobilePageManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobilePageManagementViewController.h; sourceTree = "<group>"; };
+		C1BD68FD15B943CA0061924B /* XEMobilePageManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobilePageManagementViewController.m; sourceTree = "<group>"; };
+		C1BD68FF15B943DD0061924B /* XEMobileMenuManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileMenuManagementViewController.h; sourceTree = "<group>"; };
+		C1BD690015B943DD0061924B /* XEMobileMenuManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileMenuManagementViewController.m; sourceTree = "<group>"; };
+		C1BD690215B943EA0061924B /* XEMobileMembersManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileMembersManagementViewController.h; sourceTree = "<group>"; };
+		C1BD690315B943EA0061924B /* XEMobileMembersManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileMembersManagementViewController.m; sourceTree = "<group>"; };
+		C1BD690515B943F70061924B /* XEMobileSettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XEMobileSettingsViewController.h; sourceTree = "<group>"; };
+		C1BD690615B943F70061924B /* XEMobileSettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XEMobileSettingsViewController.m; sourceTree = "<group>"; };
+		C1BD690715B9440D0061924B /* XEMobileTextyleSelectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleSelectViewController.h; sourceTree = "<group>"; };
+		C1BD690815B9440D0061924B /* XEMobileTextyleSelectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleSelectViewController.m; sourceTree = "<group>"; };
+		C1BD690915B944200061924B /* XEMobileStatisticsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XEMobileStatisticsViewController.h; sourceTree = "<group>"; };
+		C1BD690A15B944200061924B /* XEMobileStatisticsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XEMobileStatisticsViewController.m; sourceTree = "<group>"; };
+		C1BD691115B945260061924B /* XEMobileAddPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileAddPageViewController.h; sourceTree = "<group>"; };
+		C1BD691215B945260061924B /* XEMobileAddPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileAddPageViewController.m; sourceTree = "<group>"; };
+		C1BD691315B945260061924B /* XEMobileEditContentPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileEditContentPageViewController.h; sourceTree = "<group>"; };
+		C1BD691415B945260061924B /* XEMobileEditContentPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileEditContentPageViewController.m; sourceTree = "<group>"; };
+		C1BD691515B945260061924B /* XEMobileWidgetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileWidgetViewController.h; sourceTree = "<group>"; };
+		C1BD691615B945260061924B /* XEMobileWidgetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileWidgetViewController.m; sourceTree = "<group>"; };
+		C1BD691715B945260061924B /* XEMobileEditPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileEditPageViewController.h; sourceTree = "<group>"; };
+		C1BD691815B945260061924B /* XEMobileEditPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileEditPageViewController.m; sourceTree = "<group>"; };
+		C1BD691D15B9453C0061924B /* XEMobileMenuItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileMenuItemViewController.h; sourceTree = "<group>"; };
+		C1BD691E15B9453C0061924B /* XEMobileMenuItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileMenuItemViewController.m; sourceTree = "<group>"; };
+		C1BD691F15B9453C0061924B /* XEMobileAddMenuItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileAddMenuItemViewController.h; sourceTree = "<group>"; };
+		C1BD692015B9453C0061924B /* XEMobileAddMenuItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileAddMenuItemViewController.m; sourceTree = "<group>"; };
+		C1BD692315B945510061924B /* XEMobileMemberEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileMemberEditViewController.h; sourceTree = "<group>"; };
+		C1BD692415B945510061924B /* XEMobileMemberEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileMemberEditViewController.m; sourceTree = "<group>"; };
+		C1BD692615B9456B0061924B /* XEMobileTextEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextEditorViewController.h; sourceTree = "<group>"; };
+		C1BD692715B9456B0061924B /* XEMobileTextEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextEditorViewController.m; sourceTree = "<group>"; };
+		C1BD692915B9464F0061924B /* XEMobileTextyleSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleSelectViewController.xib; sourceTree = "<group>"; };
+		C1D7C28115B83C1500764E16 /* XEMobile HD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "XEMobile HD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1D7C28515B83C1500764E16 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C1D7C28715B83C1500764E16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C1D7C28915B83C1500764E16 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		C1D7C28D15B83C1500764E16 /* XEMobile HD-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XEMobile HD-Info.plist"; sourceTree = "<group>"; };
+		C1D7C28F15B83C1500764E16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C1D7C29115B83C1500764E16 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C1D7C29315B83C1500764E16 /* XEMobile HD-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XEMobile HD-Prefix.pch"; sourceTree = "<group>"; };
+		C1D7C29415B83C1500764E16 /* XEMobileAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XEMobileAppDelegate.h; sourceTree = "<group>"; };
+		C1D7C29515B83C1500764E16 /* XEMobileAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XEMobileAppDelegate.m; sourceTree = "<group>"; };
+		C1D7C29A15B83C1500764E16 /* XEMobileDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XEMobileDetailViewController.h; sourceTree = "<group>"; };
+		C1D7C29B15B83C1500764E16 /* XEMobileDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XEMobileDetailViewController.m; sourceTree = "<group>"; };
+		C1D7C2A115B83C1500764E16 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/XEMobileDetailViewController.xib; sourceTree = "<group>"; };
+		C1D7C2BF15B83D6300764E16 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
+		C1D7C2D715B83DBE00764E16 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		C1D7C2D915B83DC300764E16 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C1D7C2DB15B83DC800764E16 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		C1D7C2DD15B83DCD00764E16 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		C1D7C2DF15B83DD300764E16 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		C1D7C2E115B83DD800764E16 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C1D7C2E315B83DDE00764E16 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		C1EA25CC15BEDC210019AED5 /* XEComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEComment.h; sourceTree = "<group>"; };
+		C1EA25CD15BEDC210019AED5 /* XEComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEComment.m; sourceTree = "<group>"; };
+		C1F0C4F115BD321E004BF686 /* XEMobileTextyleEditPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleEditPostViewController.xib; sourceTree = "<group>"; };
+		C1F0C4F315BD36AA004BF686 /* XEMobileTextyleAddPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleAddPostViewController.xib; sourceTree = "<group>"; };
+		C1F0C50215BD3C05004BF686 /* XEMobileCommentsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileCommentsViewCell.xib; sourceTree = "<group>"; };
+		C1FEDF8A15B98C1B0079DB44 /* XEMobileTextyleAddTextyleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleAddTextyleViewController.xib; sourceTree = "<group>"; };
+		C1FEDF9915B98D550079DB44 /* XEMobileTextylePostsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextylePostsTableViewController.xib; sourceTree = "<group>"; };
+		C1FEDF9B15B9903B0079DB44 /* XEMobileTextylePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextylePageViewController.xib; sourceTree = "<group>"; };
+		C1FEDF9D15B9919A0079DB44 /* XEMobileTextyleCommentsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleCommentsListViewController.xib; sourceTree = "<group>"; };
+		C1FEDF9F15B992A80079DB44 /* XEMobileTextyleReplyCommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleReplyCommentViewController.xib; sourceTree = "<group>"; };
+		C1FEDFA115B9936D0079DB44 /* XEMobileTextyleSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleSettingsViewController.xib; sourceTree = "<group>"; };
+		C1FEDFA315B993840079DB44 /* XEMobileTextyleSkinsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleSkinsViewController.xib; sourceTree = "<group>"; };
+		C1FEDFA515B993A30079DB44 /* XEMobileTextyleWritingSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleWritingSettingsViewController.xib; sourceTree = "<group>"; };
+		C1FEDFA715B993B60079DB44 /* XEMobileTextyleChangePasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleChangePasswordViewController.xib; sourceTree = "<group>"; };
+		C1FEDFB615B99ADA0079DB44 /* XEMobileSkinCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileSkinCell.xib; sourceTree = "<group>"; };
+		C1FEDFB815B99B4C0079DB44 /* XEMobileOptionsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileOptionsTableViewController.xib; sourceTree = "<group>"; };
+		C1FEDFBA15B99DF20079DB44 /* XEMobileTextyleEditPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleEditPageViewController.xib; sourceTree = "<group>"; };
+		C1FEDFBC15B99FEA0079DB44 /* XEMobileTextyleAddPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleAddPageViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C1D7C27E15B83C1500764E16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C1D7C2E415B83DDE00764E16 /* libxml2.dylib in Frameworks */,
+				C1D7C2E215B83DD800764E16 /* QuartzCore.framework in Frameworks */,
+				C1D7C2E015B83DD300764E16 /* SystemConfiguration.framework in Frameworks */,
+				C1D7C2DE15B83DCD00764E16 /* Security.framework in Frameworks */,
+				C1D7C2DC15B83DC800764E16 /* MobileCoreServices.framework in Frameworks */,
+				C1D7C2DA15B83DC300764E16 /* CoreData.framework in Frameworks */,
+				C1D7C2D815B83DBE00764E16 /* CFNetwork.framework in Frameworks */,
+				C1D7C2D615B83DB000764E16 /* libRestKit.a in Frameworks */,
+				C1D7C28615B83C1500764E16 /* UIKit.framework in Frameworks */,
+				C1D7C28815B83C1500764E16 /* Foundation.framework in Frameworks */,
+				C1D7C28A15B83C1500764E16 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C167505215B94888006CDBDD /* Page Management */ = {
+			isa = PBXGroup;
+			children = (
+				C167507215B94914006CDBDD /* XEMobileTextylePageViewController.h */,
+				C167507315B94914006CDBDD /* XEMobileTextylePageViewController.m */,
+				C1FEDF9B15B9903B0079DB44 /* XEMobileTextylePageViewController.xib */,
+				C167507415B94914006CDBDD /* XEMobileTextyleAddPageViewController.h */,
+				C167507515B94914006CDBDD /* XEMobileTextyleAddPageViewController.m */,
+				C1FEDFBC15B99FEA0079DB44 /* XEMobileTextyleAddPageViewController.xib */,
+				C167507615B94914006CDBDD /* XEMobileTextyleEditPageViewController.h */,
+				C167507715B94914006CDBDD /* XEMobileTextyleEditPageViewController.m */,
+				C1FEDFBA15B99DF20079DB44 /* XEMobileTextyleEditPageViewController.xib */,
+			);
+			name = "Page Management";
+			sourceTree = "<group>";
+		};
+		C167505315B94894006CDBDD /* Post Management */ = {
+			isa = PBXGroup;
+			children = (
+				C167507B15B94922006CDBDD /* XEMobileTextyleAddPostViewController.h */,
+				C167507C15B94922006CDBDD /* XEMobileTextyleAddPostViewController.m */,
+				C1F0C4F315BD36AA004BF686 /* XEMobileTextyleAddPostViewController.xib */,
+				C167507D15B94922006CDBDD /* XEMobileTextylePostsTableViewController.h */,
+				C167507E15B94922006CDBDD /* XEMobileTextylePostsTableViewController.m */,
+				C1FEDF9915B98D550079DB44 /* XEMobileTextylePostsTableViewController.xib */,
+				C167507F15B94922006CDBDD /* XEMobileTextyleEditPostViewController.h */,
+				C167508015B94922006CDBDD /* XEMobileTextyleEditPostViewController.m */,
+				C1F0C4F115BD321E004BF686 /* XEMobileTextyleEditPostViewController.xib */,
+			);
+			name = "Post Management";
+			sourceTree = "<group>";
+		};
+		C167505415B948A3006CDBDD /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C167506615B948FA006CDBDD /* XEMobileTextyleSkinsViewController.h */,
+				C167506715B948FA006CDBDD /* XEMobileTextyleSkinsViewController.m */,
+				C1FEDFA315B993840079DB44 /* XEMobileTextyleSkinsViewController.xib */,
+				C167506815B948FA006CDBDD /* XEMobileTextyleSettingsViewController.h */,
+				C167506915B948FA006CDBDD /* XEMobileTextyleSettingsViewController.m */,
+				C1FEDFA115B9936D0079DB44 /* XEMobileTextyleSettingsViewController.xib */,
+				C167506A15B948FA006CDBDD /* XEMobileTextyleWritingSettingsViewController.h */,
+				C167506B15B948FA006CDBDD /* XEMobileTextyleWritingSettingsViewController.m */,
+				C1FEDFA515B993A30079DB44 /* XEMobileTextyleWritingSettingsViewController.xib */,
+				C167506C15B948FA006CDBDD /* XEMobileTextyleChangePasswordViewController.h */,
+				C167506D15B948FA006CDBDD /* XEMobileTextyleChangePasswordViewController.m */,
+				C1FEDFA715B993B60079DB44 /* XEMobileTextyleChangePasswordViewController.xib */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		C167505515B948A7006CDBDD /* Comments */ = {
+			isa = PBXGroup;
+			children = (
+				C167506015B948E7006CDBDD /* XEMobileTextyleCommentsListViewController.h */,
+				C167506115B948E7006CDBDD /* XEMobileTextyleCommentsListViewController.m */,
+				C1FEDF9D15B9919A0079DB44 /* XEMobileTextyleCommentsListViewController.xib */,
+				C167506215B948E7006CDBDD /* XEMobileTextyleReplyCommentViewController.h */,
+				C167506315B948E7006CDBDD /* XEMobileTextyleReplyCommentViewController.m */,
+				C1FEDF9F15B992A80079DB44 /* XEMobileTextyleReplyCommentViewController.xib */,
+			);
+			name = Comments;
+			sourceTree = "<group>";
+		};
+		C167505615B948B2006CDBDD /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				C167505715B948BF006CDBDD /* XEMobileTextyleMainPageViewController.h */,
+				C167505815B948BF006CDBDD /* XEMobileTextyleMainPageViewController.m */,
+				C16750E915B98424006CDBDD /* XEMobileTextyleMainPageViewController.xib */,
+				C167505A15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.h */,
+				C167505B15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.m */,
+				C1FEDF8A15B98C1B0079DB44 /* XEMobileTextyleAddTextyleViewController.xib */,
+				C167505E15B948D4006CDBDD /* XEMobileTextyleStatsViewController.m */,
+				C167505D15B948D4006CDBDD /* XEMobileTextyleStatsViewController.h */,
+			);
+			name = Others;
+			sourceTree = "<group>";
+		};
+		C167508415B94946006CDBDD /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				C167508515B94961006CDBDD /* XEMobileCommentsViewCell.h */,
+				C167508615B94961006CDBDD /* XEMobileCommentsViewCell.m */,
+				C1F0C50215BD3C05004BF686 /* XEMobileCommentsViewCell.xib */,
+				C167508715B94961006CDBDD /* XEMobileSkinCell.h */,
+				C167508815B94961006CDBDD /* XEMobileSkinCell.m */,
+				C1FEDFB615B99ADA0079DB44 /* XEMobileSkinCell.xib */,
+				C167508915B94961006CDBDD /* XEMobileStatsCell.h */,
+				C167508A15B94961006CDBDD /* XEMobileStatsCell.m */,
+				C16750B915B95FCC006CDBDD /* XEMobileStatsCell.xib */,
+			);
+			name = "Custom Views";
+			sourceTree = "<group>";
+		};
+		C16750B215B95654006CDBDD /* Pictures */ = {
+			isa = PBXGroup;
+			children = (
+				C16750B315B95A15006CDBDD /* logo.jpeg */,
+				C16750B115B95650006CDBDD /* XpressEngine.jpeg */,
+			);
+			name = Pictures;
+			sourceTree = "<group>";
+		};
+		C1BD68B815B941910061924B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C1BD68B915B941B30061924B /* XEUser.h */,
+				C1BD68BA15B941B30061924B /* XEUser.m */,
+				C1BD68BB15B941B30061924B /* XEMember.h */,
+				C1BD68BC15B941B30061924B /* XEMember.m */,
+				C1BD68BD15B941B30061924B /* XEMenuItem.h */,
+				C1BD68BE15B941B30061924B /* XEMenuItem.m */,
+				C1BD68BF15B941B30061924B /* XEMenu.h */,
+				C1BD68C015B941B30061924B /* XEMenu.m */,
+				C1BD68C115B941B30061924B /* XEPage.h */,
+				C1BD68C215B941B30061924B /* XEPage.m */,
+				C1BD68C315B941B30061924B /* XEModule.h */,
+				C1BD68C415B941B30061924B /* XEModule.m */,
+				C1BD68C515B941B30061924B /* XESettings.h */,
+				C1BD68C615B941B30061924B /* XESettings.m */,
+				C1BD68C715B941B30061924B /* XETextyle.h */,
+				C1BD68C815B941B30061924B /* XETextyle.m */,
+				C1BD68C915B941B30061924B /* XETextylePost.h */,
+				C1BD68CA15B941B30061924B /* XETextylePost.m */,
+				C1BD68CD15B941B30061924B /* XEGlobalSettings.h */,
+				C1BD68CE15B941B30061924B /* XEGlobalSettings.m */,
+				C1BD68CF15B941B30061924B /* XETextyleSettings.h */,
+				C1BD68D015B941B30061924B /* XETextyleSettings.m */,
+				C1EA25CC15BEDC210019AED5 /* XEComment.h */,
+				C1EA25CD15BEDC210019AED5 /* XEComment.m */,
+				C1BD68D115B941B30061924B /* XETextylePage.h */,
+				C1BD68D215B941B30061924B /* XETextylePage.m */,
+				C1BD68D315B941B30061924B /* XESkin.h */,
+				C1BD68D415B941B30061924B /* XESkin.m */,
+				C1BD68D515B941B30061924B /* XETextyleStats.h */,
+				C1BD68D615B941B30061924B /* XETextyleStats.m */,
+				C1BD68D715B941B30061924B /* XEStats.h */,
+				C1BD68D815B941B30061924B /* XEStats.m */,
+				C1BD68D915B941B30061924B /* XELayout.h */,
+				C1BD68DA15B941B30061924B /* XELayout.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		C1BD690B15B9444A0061924B /* XE */ = {
+			isa = PBXGroup;
+			children = (
+				C1BD68F915B943610061924B /* XEMobileMainPageViewController.h */,
+				C1BD68FA15B943610061924B /* XEMobileMainPageViewController.m */,
+				C167509E15B94F8F006CDBDD /* XEMobileMainPageViewController.xib */,
+				C1BD691015B944900061924B /* Other View Controllers */,
+				C1BD690F15B944680061924B /* Member View Controllers */,
+				C1BD690E15B944620061924B /* Menu View Controllers */,
+				C1BD690D15B944590061924B /* Page View Controllers */,
+			);
+			name = XE;
+			sourceTree = "<group>";
+		};
+		C1BD690C15B944530061924B /* Textyle */ = {
+			isa = PBXGroup;
+			children = (
+				C167505615B948B2006CDBDD /* Others */,
+				C167505515B948A7006CDBDD /* Comments */,
+				C167505415B948A3006CDBDD /* Settings */,
+				C167505315B94894006CDBDD /* Post Management */,
+				C167505215B94888006CDBDD /* Page Management */,
+				C1BD690715B9440D0061924B /* XEMobileTextyleSelectViewController.h */,
+				C1BD690815B9440D0061924B /* XEMobileTextyleSelectViewController.m */,
+				C1BD692915B9464F0061924B /* XEMobileTextyleSelectViewController.xib */,
+			);
+			name = Textyle;
+			sourceTree = "<group>";
+		};
+		C1BD690D15B944590061924B /* Page View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C1BD691115B945260061924B /* XEMobileAddPageViewController.h */,
+				C1BD691215B945260061924B /* XEMobileAddPageViewController.m */,
+				C16750D015B976A4006CDBDD /* XEMobileAddPageViewController.xib */,
+				C1BD691315B945260061924B /* XEMobileEditContentPageViewController.h */,
+				C1BD691415B945260061924B /* XEMobileEditContentPageViewController.m */,
+				C16750CC15B96A64006CDBDD /* XEMobileEditContentPageViewController.xib */,
+				C1BD691515B945260061924B /* XEMobileWidgetViewController.h */,
+				C1BD691615B945260061924B /* XEMobileWidgetViewController.m */,
+				C16750D215B97962006CDBDD /* XEMobileWidgetViewController.xib */,
+				C1BD691715B945260061924B /* XEMobileEditPageViewController.h */,
+				C1BD691815B945260061924B /* XEMobileEditPageViewController.m */,
+				C16750CE15B97474006CDBDD /* XEMobileEditPageViewController.xib */,
+				C1BD68FC15B943CA0061924B /* XEMobilePageManagementViewController.h */,
+				C1BD68FD15B943CA0061924B /* XEMobilePageManagementViewController.m */,
+				C16750CA15B968FD006CDBDD /* XEMobilePageManagementViewController.xib */,
+			);
+			name = "Page View Controllers";
+			sourceTree = "<group>";
+		};
+		C1BD690E15B944620061924B /* Menu View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C1BD691D15B9453C0061924B /* XEMobileMenuItemViewController.h */,
+				C1BD691E15B9453C0061924B /* XEMobileMenuItemViewController.m */,
+				C16750E515B97E61006CDBDD /* XEMobileMenuItemViewController.xib */,
+				C1BD691F15B9453C0061924B /* XEMobileAddMenuItemViewController.h */,
+				C1BD692015B9453C0061924B /* XEMobileAddMenuItemViewController.m */,
+				C16750E715B97EEE006CDBDD /* XEMobileAddMenuItemViewController.xib */,
+				C1BD68FF15B943DD0061924B /* XEMobileMenuManagementViewController.h */,
+				C1BD690015B943DD0061924B /* XEMobileMenuManagementViewController.m */,
+				C16750E115B97AE0006CDBDD /* XEMobileMenuManagementViewController.xib */,
+			);
+			name = "Menu View Controllers";
+			sourceTree = "<group>";
+		};
+		C1BD690F15B944680061924B /* Member View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C1BD692315B945510061924B /* XEMobileMemberEditViewController.h */,
+				C1BD692415B945510061924B /* XEMobileMemberEditViewController.m */,
+				C16750A215B9527D006CDBDD /* XEMobileMemberEditViewController.xib */,
+				C1BD690215B943EA0061924B /* XEMobileMembersManagementViewController.h */,
+				C1BD690315B943EA0061924B /* XEMobileMembersManagementViewController.m */,
+				C16750A015B950EB006CDBDD /* XEMobileMembersManagementViewController.xib */,
+			);
+			name = "Member View Controllers";
+			sourceTree = "<group>";
+		};
+		C1BD691015B944900061924B /* Other View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C1BD690515B943F70061924B /* XEMobileSettingsViewController.h */,
+				C1BD690615B943F70061924B /* XEMobileSettingsViewController.m */,
+				C16750BB15B9616E006CDBDD /* XEMobileSettingsViewController.xib */,
+				C1BD690915B944200061924B /* XEMobileStatisticsViewController.h */,
+				C1BD690A15B944200061924B /* XEMobileStatisticsViewController.m */,
+				C16750B515B95EB6006CDBDD /* XEMobileStatisticsViewController.xib */,
+			);
+			name = "Other View Controllers";
+			sourceTree = "<group>";
+		};
+		C1D7C27615B83C1500764E16 = {
+			isa = PBXGroup;
+			children = (
+				C1D7C2BF15B83D6300764E16 /* RestKit.xcodeproj */,
+				C1D7C28B15B83C1500764E16 /* XEMobile HD */,
+				C1BD68B815B941910061924B /* Classes */,
+				C1D7C28415B83C1500764E16 /* Frameworks */,
+				C1D7C28215B83C1500764E16 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C1D7C28215B83C1500764E16 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C1D7C28115B83C1500764E16 /* XEMobile HD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C1D7C28415B83C1500764E16 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C1D7C2E315B83DDE00764E16 /* libxml2.dylib */,
+				C1D7C2E115B83DD800764E16 /* QuartzCore.framework */,
+				C1D7C2DF15B83DD300764E16 /* SystemConfiguration.framework */,
+				C1D7C2DD15B83DCD00764E16 /* Security.framework */,
+				C1D7C2DB15B83DC800764E16 /* MobileCoreServices.framework */,
+				C1D7C2D915B83DC300764E16 /* CoreData.framework */,
+				C1D7C2D715B83DBE00764E16 /* CFNetwork.framework */,
+				C1D7C28515B83C1500764E16 /* UIKit.framework */,
+				C1D7C28715B83C1500764E16 /* Foundation.framework */,
+				C1D7C28915B83C1500764E16 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C1D7C28B15B83C1500764E16 /* XEMobile HD */ = {
+			isa = PBXGroup;
+			children = (
+				C16750B215B95654006CDBDD /* Pictures */,
+				C167508415B94946006CDBDD /* Custom Views */,
+				C1BD690C15B944530061924B /* Textyle */,
+				C1BD690B15B9444A0061924B /* XE */,
+				C1D7C29415B83C1500764E16 /* XEMobileAppDelegate.h */,
+				C1D7C29515B83C1500764E16 /* XEMobileAppDelegate.m */,
+				C1BD692615B9456B0061924B /* XEMobileTextEditorViewController.h */,
+				C1BD692715B9456B0061924B /* XEMobileTextEditorViewController.m */,
+				C1BD68B015B941030061924B /* XEMobileLoginViewController.h */,
+				C1BD68B115B941030061924B /* XEMobileLoginViewController.m */,
+				C1BD68B315B9411B0061924B /* XEMobileLoginViewController.xib */,
+				C1D7C29A15B83C1500764E16 /* XEMobileDetailViewController.h */,
+				C1D7C29B15B83C1500764E16 /* XEMobileDetailViewController.m */,
+				C1D7C2A015B83C1500764E16 /* XEMobileDetailViewController.xib */,
+				C1BD68B515B941770061924B /* XEMobileViewController.h */,
+				C1BD68B615B941770061924B /* XEMobileViewController.m */,
+				C167508E15B94979006CDBDD /* XEMobileOptionsTableViewController.h */,
+				C167508F15B94979006CDBDD /* XEMobileOptionsTableViewController.m */,
+				C1FEDFB815B99B4C0079DB44 /* XEMobileOptionsTableViewController.xib */,
+				C1D7C28C15B83C1500764E16 /* Supporting Files */,
+			);
+			path = "XEMobile HD";
+			sourceTree = "<group>";
+		};
+		C1D7C28C15B83C1500764E16 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C1D7C28D15B83C1500764E16 /* XEMobile HD-Info.plist */,
+				C1D7C28E15B83C1500764E16 /* InfoPlist.strings */,
+				C1D7C29115B83C1500764E16 /* main.m */,
+				C1D7C29315B83C1500764E16 /* XEMobile HD-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C1D7C2C015B83D6300764E16 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C1D7C2CB15B83D6400764E16 /* libRestKit.a */,
+				C1D7C2CD15B83D6400764E16 /* RestKitTests.octest */,
+				C1D7C2CF15B83D6400764E16 /* RestKit.framework */,
+				C1D7C2D115B83D6400764E16 /* RestKitFrameworkTests.octest */,
+				C1D7C2D315B83D6400764E16 /* RestKitResources.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C1D7C28015B83C1500764E16 /* XEMobile HD */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C1D7C2A515B83C1500764E16 /* Build configuration list for PBXNativeTarget "XEMobile HD" */;
+			buildPhases = (
+				C1D7C27D15B83C1500764E16 /* Sources */,
+				C1D7C27E15B83C1500764E16 /* Frameworks */,
+				C1D7C27F15B83C1500764E16 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C1D7C2D515B83D7900764E16 /* PBXTargetDependency */,
+			);
+			name = "XEMobile HD";
+			productName = "XEMobile HD";
+			productReference = C1D7C28115B83C1500764E16 /* XEMobile HD.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C1D7C27815B83C1500764E16 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = XEMobile;
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = C1D7C27B15B83C1500764E16 /* Build configuration list for PBXProject "XEMobile HD" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C1D7C27615B83C1500764E16;
+			productRefGroup = C1D7C28215B83C1500764E16 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C1D7C2C015B83D6300764E16 /* Products */;
+					ProjectRef = C1D7C2BF15B83D6300764E16 /* RestKit.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				C1D7C28015B83C1500764E16 /* XEMobile HD */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C1D7C2CB15B83D6400764E16 /* libRestKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRestKit.a;
+			remoteRef = C1D7C2CA15B83D6400764E16 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C1D7C2CD15B83D6400764E16 /* RestKitTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitTests.octest;
+			remoteRef = C1D7C2CC15B83D6400764E16 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C1D7C2CF15B83D6400764E16 /* RestKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RestKit.framework;
+			remoteRef = C1D7C2CE15B83D6400764E16 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C1D7C2D115B83D6400764E16 /* RestKitFrameworkTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitFrameworkTests.octest;
+			remoteRef = C1D7C2D015B83D6400764E16 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C1D7C2D315B83D6400764E16 /* RestKitResources.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitResources.bundle;
+			remoteRef = C1D7C2D215B83D6400764E16 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C1D7C27F15B83C1500764E16 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C1D7C29015B83C1500764E16 /* InfoPlist.strings in Resources */,
+				C1D7C2A215B83C1500764E16 /* XEMobileDetailViewController.xib in Resources */,
+				C1BD68B415B9411B0061924B /* XEMobileLoginViewController.xib in Resources */,
+				C1BD692A15B9464F0061924B /* XEMobileTextyleSelectViewController.xib in Resources */,
+				C167509F15B94F8F006CDBDD /* XEMobileMainPageViewController.xib in Resources */,
+				C16750A115B950EC006CDBDD /* XEMobileMembersManagementViewController.xib in Resources */,
+				C16750A315B9527D006CDBDD /* XEMobileMemberEditViewController.xib in Resources */,
+				C16750B415B95A15006CDBDD /* logo.jpeg in Resources */,
+				C16750B615B95EB6006CDBDD /* XEMobileStatisticsViewController.xib in Resources */,
+				C16750BA15B95FCC006CDBDD /* XEMobileStatsCell.xib in Resources */,
+				C16750BC15B9616E006CDBDD /* XEMobileSettingsViewController.xib in Resources */,
+				C16750CB15B968FD006CDBDD /* XEMobilePageManagementViewController.xib in Resources */,
+				C16750CD15B96A64006CDBDD /* XEMobileEditContentPageViewController.xib in Resources */,
+				C16750CF15B97474006CDBDD /* XEMobileEditPageViewController.xib in Resources */,
+				C16750D115B976A4006CDBDD /* XEMobileAddPageViewController.xib in Resources */,
+				C16750D315B97962006CDBDD /* XEMobileWidgetViewController.xib in Resources */,
+				C16750E215B97AE0006CDBDD /* XEMobileMenuManagementViewController.xib in Resources */,
+				C16750E615B97E61006CDBDD /* XEMobileMenuItemViewController.xib in Resources */,
+				C16750E815B97EEE006CDBDD /* XEMobileAddMenuItemViewController.xib in Resources */,
+				C16750EA15B98424006CDBDD /* XEMobileTextyleMainPageViewController.xib in Resources */,
+				C1FEDF8B15B98C1B0079DB44 /* XEMobileTextyleAddTextyleViewController.xib in Resources */,
+				C1FEDF9A15B98D550079DB44 /* XEMobileTextylePostsTableViewController.xib in Resources */,
+				C1FEDF9C15B9903B0079DB44 /* XEMobileTextylePageViewController.xib in Resources */,
+				C1FEDF9E15B9919A0079DB44 /* XEMobileTextyleCommentsListViewController.xib in Resources */,
+				C1FEDFA015B992A80079DB44 /* XEMobileTextyleReplyCommentViewController.xib in Resources */,
+				C1FEDFA215B9936D0079DB44 /* XEMobileTextyleSettingsViewController.xib in Resources */,
+				C1FEDFA415B993840079DB44 /* XEMobileTextyleSkinsViewController.xib in Resources */,
+				C1FEDFA615B993A40079DB44 /* XEMobileTextyleWritingSettingsViewController.xib in Resources */,
+				C1FEDFA815B993B60079DB44 /* XEMobileTextyleChangePasswordViewController.xib in Resources */,
+				C1FEDFB715B99ADA0079DB44 /* XEMobileSkinCell.xib in Resources */,
+				C1FEDFB915B99B4C0079DB44 /* XEMobileOptionsTableViewController.xib in Resources */,
+				C1FEDFBB15B99DF20079DB44 /* XEMobileTextyleEditPageViewController.xib in Resources */,
+				C1FEDFBD15B99FEA0079DB44 /* XEMobileTextyleAddPageViewController.xib in Resources */,
+				C1F0C4F215BD321E004BF686 /* XEMobileTextyleEditPostViewController.xib in Resources */,
+				C1F0C4F415BD36AA004BF686 /* XEMobileTextyleAddPostViewController.xib in Resources */,
+				C1F0C50315BD3C05004BF686 /* XEMobileCommentsViewCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C1D7C27D15B83C1500764E16 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C167505115B9485B006CDBDD /* XEMobileStatisticsViewController.m in Sources */,
+				C167505015B94853006CDBDD /* XEMobileTextyleSelectViewController.m in Sources */,
+				C167504F15B9484E006CDBDD /* XEMobileSettingsViewController.m in Sources */,
+				C1D7C29215B83C1500764E16 /* main.m in Sources */,
+				C1D7C29615B83C1500764E16 /* XEMobileAppDelegate.m in Sources */,
+				C1D7C29C15B83C1500764E16 /* XEMobileDetailViewController.m in Sources */,
+				C1BD68B215B941030061924B /* XEMobileLoginViewController.m in Sources */,
+				C1BD68B715B941770061924B /* XEMobileViewController.m in Sources */,
+				C1BD68DB15B941B30061924B /* XEUser.m in Sources */,
+				C1BD68DC15B941B30061924B /* XEMember.m in Sources */,
+				C1BD68DD15B941B30061924B /* XEMenuItem.m in Sources */,
+				C1BD68DE15B941B30061924B /* XEMenu.m in Sources */,
+				C1BD68DF15B941B30061924B /* XEPage.m in Sources */,
+				C1BD68E015B941B30061924B /* XEModule.m in Sources */,
+				C1BD68E115B941B30061924B /* XESettings.m in Sources */,
+				C1BD68E215B941B30061924B /* XETextyle.m in Sources */,
+				C1BD68E315B941B30061924B /* XETextylePost.m in Sources */,
+				C1BD68E515B941B30061924B /* XEGlobalSettings.m in Sources */,
+				C1BD68E615B941B30061924B /* XETextyleSettings.m in Sources */,
+				C1BD68E715B941B30061924B /* XETextylePage.m in Sources */,
+				C1BD68E815B941B30061924B /* XESkin.m in Sources */,
+				C1BD68E915B941B30061924B /* XETextyleStats.m in Sources */,
+				C1BD68EA15B941B30061924B /* XEStats.m in Sources */,
+				C1BD68EB15B941B30061924B /* XELayout.m in Sources */,
+				C1BD68FB15B943610061924B /* XEMobileMainPageViewController.m in Sources */,
+				C1BD68FE15B943CA0061924B /* XEMobilePageManagementViewController.m in Sources */,
+				C1BD690115B943DD0061924B /* XEMobileMenuManagementViewController.m in Sources */,
+				C1BD690415B943EA0061924B /* XEMobileMembersManagementViewController.m in Sources */,
+				C1BD691915B945260061924B /* XEMobileAddPageViewController.m in Sources */,
+				C1BD691A15B945260061924B /* XEMobileEditContentPageViewController.m in Sources */,
+				C1BD691B15B945260061924B /* XEMobileWidgetViewController.m in Sources */,
+				C1BD691C15B945260061924B /* XEMobileEditPageViewController.m in Sources */,
+				C1BD692115B9453C0061924B /* XEMobileMenuItemViewController.m in Sources */,
+				C1BD692215B9453C0061924B /* XEMobileAddMenuItemViewController.m in Sources */,
+				C1BD692515B945510061924B /* XEMobileMemberEditViewController.m in Sources */,
+				C1BD692815B9456B0061924B /* XEMobileTextEditorViewController.m in Sources */,
+				C167505915B948BF006CDBDD /* XEMobileTextyleMainPageViewController.m in Sources */,
+				C167505C15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.m in Sources */,
+				C167505F15B948D4006CDBDD /* XEMobileTextyleStatsViewController.m in Sources */,
+				C167506415B948E7006CDBDD /* XEMobileTextyleCommentsListViewController.m in Sources */,
+				C167506515B948E7006CDBDD /* XEMobileTextyleReplyCommentViewController.m in Sources */,
+				C167506E15B948FA006CDBDD /* XEMobileTextyleSkinsViewController.m in Sources */,
+				C167506F15B948FA006CDBDD /* XEMobileTextyleSettingsViewController.m in Sources */,
+				C167507015B948FA006CDBDD /* XEMobileTextyleWritingSettingsViewController.m in Sources */,
+				C167507115B948FA006CDBDD /* XEMobileTextyleChangePasswordViewController.m in Sources */,
+				C167507815B94914006CDBDD /* XEMobileTextylePageViewController.m in Sources */,
+				C167507915B94914006CDBDD /* XEMobileTextyleAddPageViewController.m in Sources */,
+				C167507A15B94914006CDBDD /* XEMobileTextyleEditPageViewController.m in Sources */,
+				C167508115B94922006CDBDD /* XEMobileTextyleAddPostViewController.m in Sources */,
+				C167508215B94922006CDBDD /* XEMobileTextylePostsTableViewController.m in Sources */,
+				C167508315B94922006CDBDD /* XEMobileTextyleEditPostViewController.m in Sources */,
+				C167508B15B94961006CDBDD /* XEMobileCommentsViewCell.m in Sources */,
+				C167508C15B94961006CDBDD /* XEMobileSkinCell.m in Sources */,
+				C167508D15B94961006CDBDD /* XEMobileStatsCell.m in Sources */,
+				C167509015B94979006CDBDD /* XEMobileOptionsTableViewController.m in Sources */,
+				C1EA25CE15BEDC210019AED5 /* XEComment.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C1D7C2D515B83D7900764E16 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RestKit;
+			targetProxy = C1D7C2D415B83D7900764E16 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C1D7C28E15B83C1500764E16 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C1D7C28F15B83C1500764E16 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		C1D7C2A015B83C1500764E16 /* XEMobileDetailViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C1D7C2A115B83C1500764E16 /* en */,
+			);
+			name = XEMobileDetailViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C1D7C2A315B83C1500764E16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		C1D7C2A415B83C1500764E16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C1D7C2A615B83C1500764E16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "XEMobile HD/XEMobile HD-Prefix.pch";
+				INFOPLIST_FILE = "XEMobile HD/XEMobile HD-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C1D7C2A715B83C1500764E16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "XEMobile HD/XEMobile HD-Prefix.pch";
+				INFOPLIST_FILE = "XEMobile HD/XEMobile HD-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C1D7C27B15B83C1500764E16 /* Build configuration list for PBXProject "XEMobile HD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C1D7C2A315B83C1500764E16 /* Debug */,
+				C1D7C2A415B83C1500764E16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C1D7C2A515B83C1500764E16 /* Build configuration list for PBXNativeTarget "XEMobile HD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C1D7C2A615B83C1500764E16 /* Debug */,
+				C1D7C2A715B83C1500764E16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C1D7C27815B83C1500764E16 /* Project object */;
+}
