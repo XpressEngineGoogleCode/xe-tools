@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+// TextEditorViewController that gets pushed when the user wants 
+// to edit the content of a page or post
+
 @interface XEMobileTextEditorViewController : UIViewController
 
 @property (unsafe_unretained, nonatomic) IBOutlet UITextView *textView;

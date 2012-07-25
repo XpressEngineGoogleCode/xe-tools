@@ -12,6 +12,9 @@
 #import "XEMobileCommentsViewCell.h"
 #import "XEMobileViewController.h"
 
+// ViewController that contains a UITableView with comments
+// The UITableViewCells in UITableView are XEMobileCommentsViewCell
+
 @interface XEMobileTextyleCommentsListViewController : XEMobileViewController
 <RKObjectLoaderDelegate, XEMobileCommentsViewCellProtocol, UITableViewDelegate, UITableViewDataSource>
 

@@ -12,6 +12,8 @@
 #import "RestKit/RestKit.h"
 #import "XEMobileViewController.h"
 
+// ViewController used to edit the content of a Textyle's page
+
 @interface XEMobileTextyleEditPageViewController : XEMobileViewController
 <RKObjectLoaderDelegate, UITextViewDelegate>
 

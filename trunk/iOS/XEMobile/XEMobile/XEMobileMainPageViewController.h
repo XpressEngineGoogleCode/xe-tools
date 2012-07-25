@@ -10,10 +10,15 @@
 #import "Restkit/Restkit.h"
 #import "XEMobileViewController.h"
 
+// View Controller that represents the Dashboard of XE
+// it contains 6 buttons, a logout button and a title label
+
 @interface XEMobileMainPageViewController : XEMobileViewController
 <RKObjectLoaderDelegate>
 
+//appears only if XE has Textyle module installed
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *textyleButton;
+
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *titleLabel;
 
 -(IBAction)logoutButtonPressed:(id)sender;

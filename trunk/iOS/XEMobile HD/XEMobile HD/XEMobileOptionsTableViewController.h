@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "XESettings.h"
 
+// Universal UITableViewController for option selected.
+// three types:
+// - langD = default language : single selection option
+// - timeZ = timezone : single selection option
+// - selectedLangs - selected languages : multiple selection option
+
+// used when the user has to choose between multiple choices
 
 typedef enum
 {

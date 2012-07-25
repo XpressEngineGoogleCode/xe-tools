@@ -11,6 +11,8 @@
 #import "RestKit/RestKit.h"
 #import "XEMobileViewController.h"
 
+// ViewController that contains a UITableView with Textyle Skins
+
 @interface XEMobileTextyleSkinsViewController : XEMobileViewController
 <RKObjectLoaderDelegate, UITableViewDelegate, UITableViewDataSource>
 

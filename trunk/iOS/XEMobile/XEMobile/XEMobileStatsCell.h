@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+// Custom UITableViewCell for Statistics section in XE
+
 @interface XEMobileStatsCell : UITableViewCell
+
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *dayLabel;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *uniqueVisitorsLabel;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *pageViewsLabel;

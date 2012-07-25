@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+// Custom UITableViewCell for Skin section in Textyle
+
 @interface XEMobileSkinCell : UITableViewCell
 
 @property (assign, nonatomic) IBOutlet UIImageView *skinView;

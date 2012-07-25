@@ -11,6 +11,9 @@
 #import "XEMobileViewController.h"
 #import "XEMenu.h"
 
+// ViewController that contains a UITableView with all the MenuItems in the "parentMenu"
+
+
 @interface XEMobileMenuItemViewController : XEMobileViewController
 <RKRequestDelegate,RKObjectLoaderDelegate, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
 

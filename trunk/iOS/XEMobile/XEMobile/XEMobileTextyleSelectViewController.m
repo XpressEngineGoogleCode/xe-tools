@@ -32,45 +32,6 @@
     self.navigationItem.title = @"Textyle List";
 }
 
--(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
-{
-    //check if user is logged ouy
-    if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
-}
-
--(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
-{
-    // an error occurred
-}
-
--(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
-{
-    //load the array with XETextyle
-    if( objects.count != 0 )
-        if( [[objects objectAtIndex:0] isKindOfClass:[XETextyle class]] )
-        {
-                self.arrayWithTextyles = objects;
-                [self.indicator stopAnimating];
-                [self.tableView reloadData];
-        }
-}
-
--(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
-{
-    if( [object isKindOfClass:[XEUser class]] )
-    {
-        XEUser *auxObject = object;
-        
-        //check if response is ok at delete request
-        if( [auxObject.auxVariable isEqualToString:@"Deleted successfully."] )
-        {
-            [self.indicator stopAnimating];
-            [self loadTextyles];
-            [self.tableView reloadData];
-        }
-    }
-}
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -111,14 +72,69 @@
     [self.indicator startAnimating];
 }
 
+//called when a message is received
+-(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
+{
+    //check if user is logged ouy
+    if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
+}
+
+-(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
+{
+    // an error occurred
+}
+
+//called when the response is mapped to an array of objects
+-(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
+{
+    // check if the received answer is the expected one
+    if( objects.count != 0 )
+        if( [[objects objectAtIndex:0] isKindOfClass:[XETextyle class]] )
+        {
+            //load the array with XETextyle
+                self.arrayWithTextyles = objects;
+                [self.indicator stopAnimating];
+                [self.tableView reloadData];
+        }
+}
+
+//called when the response is mapped to an object
+-(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
+{
+    if( [object isKindOfClass:[XEUser class]] )
+    {
+        XEUser *auxObject = object;
+        
+        //check if response is ok at delete request
+        if( [auxObject.auxVariable isEqualToString:@"Deleted successfully."] )
+        {
+            [self.indicator stopAnimating];
+            [self loadTextyles];
+            [self.tableView reloadData];
+        }
+    }
+}
+
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    //when the viewcontroller dissapears we cancel the queued requests
     [[RKObjectManager sharedManager].requestQueue cancelRequestsWithDelegate:self];
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
+
+// UITableView protocol methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    XEMobileTextyleMainPageViewController *textyleMainPageVC = [[XEMobileTextyleMainPageViewController alloc] initWithNibName:@"XEMobileTextyleMainPageViewController" bundle:nil];
+    XETextyle *textyle =  [self.arrayWithTextyles objectAtIndex:indexPath.row];
+    textyleMainPageVC.textyleItem =textyle;
+    if( [textyle.domain rangeOfString:@"."].location == NSNotFound )
+        [self.navigationController pushViewController:textyleMainPageVC animated:YES];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -153,6 +169,8 @@
     return cell;
 }
 
+//when the delete button is pressed this method is called
+//a confirmation from user is required
 -(void)deleteTextyleButtonPressed:(UIButton *)button
 {
     self.textyleToDelete = [self.arrayWithTextyles objectAtIndex:button.tag];
@@ -161,6 +179,7 @@
     [action showInView:self.view];
 }
 
+//if user confirms the delete, the objects gets deleted
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
         if( buttonIndex == 0)
@@ -169,9 +188,9 @@
         }
 }
 
+//prepare and send request to delete the textyle
 -(void)deleteSelectedItem
 {
-    
     NSString *deleteXML = [ NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<methodCall>\n<params>\n<_filter><![CDATA[delete_textyle]]></_filter>\n<error_return_url><![CDATA[/xe3/index.php?module=admin&act=dispTextyleAdminDelete&module_srl=%@]]></error_return_url>\n<act><![CDATA[procTextyleAdminDelete]]></act>\n<site_srl><![CDATA[%@]]></site_srl>\n<module><![CDATA[textyle]]></module>\n</params>\n</methodCall>",self.textyleToDelete.siteSRL,self.textyleToDelete.siteSRL];
     
     RKObjectMapping *mapping = [ RKObjectMapping mappingForClass:[XEUser class]];
@@ -196,15 +215,6 @@
     [self.navigationController pushViewController:addTextyle animated:YES];
 }
 
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    XEMobileTextyleMainPageViewController *textyleMainPageVC = [[XEMobileTextyleMainPageViewController alloc] initWithNibName:@"XEMobileTextyleMainPageViewController" bundle:nil];
-    XETextyle *textyle =  [self.arrayWithTextyles objectAtIndex:indexPath.row];
-    textyleMainPageVC.textyleItem =textyle;
-    if( [textyle.domain rangeOfString:@"."].location == NSNotFound )
-            [self.navigationController pushViewController:textyleMainPageVC animated:YES];
-}
 
 -(void)viewDidUnload
 {

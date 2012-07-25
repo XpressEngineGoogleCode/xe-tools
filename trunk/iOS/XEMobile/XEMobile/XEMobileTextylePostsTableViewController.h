@@ -12,6 +12,8 @@
 #import "XETextylePost.h"
 #import "XEMobileViewController.h"
 
+// ViewController that contains a UITableView with all the posts from Textyle
+
 @interface XEMobileTextylePostsTableViewController : XEMobileViewController
 <UITableViewDelegate,UITableViewDelegate, RKObjectLoaderDelegate>
 

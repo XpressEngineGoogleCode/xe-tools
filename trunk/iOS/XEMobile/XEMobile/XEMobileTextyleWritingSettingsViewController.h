@@ -12,6 +12,13 @@
 #import "XETextyle.h"
 #import "XEMobileViewController.h"
 
+// SettingsViewController contains the following settings:
+// - change editor
+// - font family
+// - font size
+// - prefix 
+// - suffix
+
 @interface XEMobileTextyleWritingSettingsViewController : XEMobileViewController
 <RKObjectLoaderDelegate, UIScrollViewDelegate, UITextFieldDelegate>
 

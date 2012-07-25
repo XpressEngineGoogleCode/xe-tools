@@ -11,6 +11,8 @@
 #import "RestKit/RestKit.h"
 #import "XEMobileViewController.h"
 
+// ViewController used to modify the settings of a XE's Page
+
 @interface XEMobileEditPageViewController : XEMobileViewController
 <RKObjectLoaderDelegate>
 

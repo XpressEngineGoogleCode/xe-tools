@@ -12,7 +12,6 @@
 		C167505115B9485B006CDBDD /* XEMobileStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BD690A15B944200061924B /* XEMobileStatisticsViewController.m */; };
 		C167505915B948BF006CDBDD /* XEMobileTextyleMainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167505815B948BF006CDBDD /* XEMobileTextyleMainPageViewController.m */; };
 		C167505C15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167505B15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.m */; };
-		C167505F15B948D4006CDBDD /* XEMobileTextyleStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167505E15B948D4006CDBDD /* XEMobileTextyleStatsViewController.m */; };
 		C167506415B948E7006CDBDD /* XEMobileTextyleCommentsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167506115B948E7006CDBDD /* XEMobileTextyleCommentsListViewController.m */; };
 		C167506515B948E7006CDBDD /* XEMobileTextyleReplyCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167506315B948E7006CDBDD /* XEMobileTextyleReplyCommentViewController.m */; };
 		C167506E15B948FA006CDBDD /* XEMobileTextyleSkinsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C167506715B948FA006CDBDD /* XEMobileTextyleSkinsViewController.m */; };
@@ -162,8 +161,6 @@
 		C167505815B948BF006CDBDD /* XEMobileTextyleMainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleMainPageViewController.m; sourceTree = "<group>"; };
 		C167505A15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleAddTextyleViewController.h; sourceTree = "<group>"; };
 		C167505B15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleAddTextyleViewController.m; sourceTree = "<group>"; };
-		C167505D15B948D4006CDBDD /* XEMobileTextyleStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleStatsViewController.h; sourceTree = "<group>"; };
-		C167505E15B948D4006CDBDD /* XEMobileTextyleStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleStatsViewController.m; sourceTree = "<group>"; };
 		C167506015B948E7006CDBDD /* XEMobileTextyleCommentsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleCommentsListViewController.h; sourceTree = "<group>"; };
 		C167506115B948E7006CDBDD /* XEMobileTextyleCommentsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleCommentsListViewController.m; sourceTree = "<group>"; };
 		C167506215B948E7006CDBDD /* XEMobileTextyleReplyCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleReplyCommentViewController.h; sourceTree = "<group>"; };
@@ -417,8 +414,9 @@
 				C167505A15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.h */,
 				C167505B15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.m */,
 				C1FEDF8A15B98C1B0079DB44 /* XEMobileTextyleAddTextyleViewController.xib */,
-				C167505E15B948D4006CDBDD /* XEMobileTextyleStatsViewController.m */,
-				C167505D15B948D4006CDBDD /* XEMobileTextyleStatsViewController.h */,
+				C1BD690715B9440D0061924B /* XEMobileTextyleSelectViewController.h */,
+				C1BD690815B9440D0061924B /* XEMobileTextyleSelectViewController.m */,
+				C1BD692915B9464F0061924B /* XEMobileTextyleSelectViewController.xib */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -511,9 +509,6 @@
 				C167505415B948A3006CDBDD /* Settings */,
 				C167505315B94894006CDBDD /* Post Management */,
 				C167505215B94888006CDBDD /* Page Management */,
-				C1BD690715B9440D0061924B /* XEMobileTextyleSelectViewController.h */,
-				C1BD690815B9440D0061924B /* XEMobileTextyleSelectViewController.m */,
-				C1BD692915B9464F0061924B /* XEMobileTextyleSelectViewController.xib */,
 			);
 			name = Textyle;
 			sourceTree = "<group>";
@@ -848,7 +843,6 @@
 				C1BD692815B9456B0061924B /* XEMobileTextEditorViewController.m in Sources */,
 				C167505915B948BF006CDBDD /* XEMobileTextyleMainPageViewController.m in Sources */,
 				C167505C15B948C9006CDBDD /* XEMobileTextyleAddTextyleViewController.m in Sources */,
-				C167505F15B948D4006CDBDD /* XEMobileTextyleStatsViewController.m in Sources */,
 				C167506415B948E7006CDBDD /* XEMobileTextyleCommentsListViewController.m in Sources */,
 				C167506515B948E7006CDBDD /* XEMobileTextyleReplyCommentViewController.m in Sources */,
 				C167506E15B948FA006CDBDD /* XEMobileTextyleSkinsViewController.m in Sources */,

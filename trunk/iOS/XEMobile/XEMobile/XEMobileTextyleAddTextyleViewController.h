@@ -9,6 +9,8 @@
 #import "XEMobileViewController.h"
 #import "RestKit/RestKit.h"
 
+//ViewController used to create a new Textyle blog
+
 @interface XEMobileTextyleAddTextyleViewController : XEMobileViewController
 <RKObjectLoaderDelegate>
 

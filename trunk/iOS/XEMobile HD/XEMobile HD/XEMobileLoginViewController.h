@@ -10,6 +10,10 @@
 #import "RestKit/RestKit.h"
 #import "XEMobileViewController.h"
 
+// Login View Controller:
+// - pushed when the application starts
+// - pushed when the user is logged out
+
 @interface XEMobileLoginViewController : XEMobileViewController
 <UITextFieldDelegate,RKObjectLoaderDelegate>
 

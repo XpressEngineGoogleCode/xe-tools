@@ -12,6 +12,8 @@
 #import "XETextylePage.h"
 #import "XEMobileViewController.h"
 
+// ViewController that contains a UITableView with all the XETextylePage
+
 @interface XEMobileTextylePageViewController : XEMobileViewController
 <RKObjectLoaderDelegate, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
 

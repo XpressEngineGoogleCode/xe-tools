@@ -11,6 +11,8 @@
 #import "RestKit/RestKit.h"
 #import "XEMobileViewController.h"
 
+// ViewController used to edit the content of a XE's Page
+
 @interface XEMobileEditContentPageViewController : XEMobileViewController
 <RKRequestDelegate, UITextViewDelegate,RKObjectLoaderDelegate, UITextFieldDelegate>
 

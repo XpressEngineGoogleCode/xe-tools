@@ -13,7 +13,6 @@
 #import "XEMobileTextylePageViewController.h"
 #import "XEMobileTextyleWritingSettingsViewController.h"
 #import "XEMobileTextyleSkinsViewController.h"
-#import "XEMobileTextyleStatsViewController.h"
 
 @interface XEMobileTextyleMainPageViewController ()
 
@@ -155,21 +154,6 @@
     [self.detailViewController.navigationController pushViewController:pagesVC animated:YES];
 }
 
--(IBAction)skinsButtonPressed:(id)sender
-{
-    XEMobileTextyleSkinsViewController *skinsVC = [[XEMobileTextyleSkinsViewController alloc] initWithNibName:@"XEMobileTextyleSkinsViewController" bundle:nil];
-    skinsVC.textyle = self.textyleItem;
-    
-    [self.detailViewController.navigationController pushViewController:skinsVC animated:YES];
-}
-
-
-- (IBAction)statisticsButtonPressed:(id)sender 
-{
-    XEMobileTextyleStatsViewController *statsVC = [[XEMobileTextyleStatsViewController alloc] initWithNibName:@"XEMobileTextyleStatsViewController" bundle:nil];
-    statsVC.textyle = self.textyleItem;
-    [self.navigationController pushViewController:statsVC animated:YES];
-}
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

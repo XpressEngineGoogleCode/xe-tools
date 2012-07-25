@@ -12,6 +12,13 @@
 #import "RestKit/RestKit.h"
 #import "XEMobileViewController.h"
 
+// SettingsViewContoller contains the following settings:
+// - blog title
+// - language
+// - timezones
+// - password
+// - reset all data
+
 @interface XEMobileTextyleSettingsViewController : XEMobileViewController
 <RKObjectLoaderDelegate, UITextFieldDelegate>
 
@@ -22,7 +29,7 @@
 @property (retain, nonatomic) IBOutlet UIButton *languageButton;
 @property (retain, nonatomic) IBOutlet UIButton *timezoneButton;
 
--(IBAction)saveButtonPressed:(id)sender;
+-(void)saveButtonPressed:(id)sender;
 -(IBAction)changeLanguageButtonPressed;
 -(IBAction)changeTimezoneButtonPressed;
 -(IBAction)changePasswordButtonPressed:(id)sender;

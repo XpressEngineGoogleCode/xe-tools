@@ -14,7 +14,7 @@
 
 @interface XEMobileTextylePageViewController ()
 
-@property (strong, nonatomic) NSArray *arrayWithPages;
+
 @property (strong, nonatomic) XETextylePage *pageForDelete;
 
 @end
