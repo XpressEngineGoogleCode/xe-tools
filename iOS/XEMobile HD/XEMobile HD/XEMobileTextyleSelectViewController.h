@@ -10,6 +10,12 @@
 #import "RestKit/RestKit.h"
 #import "XEMobileViewController.h"
 
+// ViewController that contains:
+// - a TableView with a list of Textyle blogs
+// - "add button" to create a new Textyle blog
+
+//when a UITableViewCell is pressed XEMobileTextyleMainPageViewController is pushed
+
 @interface XEMobileTextyleSelectViewController : XEMobileViewController
 <RKObjectLoaderDelegate, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
 

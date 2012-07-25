@@ -10,6 +10,8 @@
 #import "RestKit/RestKit.h"
 #import "XEMobileViewController.h"
 
+// ViewController used to add a new Page to XE
+
 @interface XEMobileAddPageViewController : XEMobileViewController
 <RKRequestDelegate, UITextFieldDelegate, RKObjectLoaderDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 

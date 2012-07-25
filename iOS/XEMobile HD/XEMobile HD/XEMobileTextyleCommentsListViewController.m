@@ -72,6 +72,7 @@
     {
         self.arrayWithComments = objects;
         
+        //sort the array with comments
         self.arrayWithComments = [self.arrayWithComments sortedArrayUsingComparator:^NSComparisonResult(id a, id b)
                                   {
                                       XEComment *comment1 = a;
@@ -83,6 +84,7 @@
                                       return [date1 compare:date2];
                                   }];
         
+        //put replies at their place
         self.arrayWithComments = [self prepareArrayForTableView:self.arrayWithComments];
         
         [self.tableView reloadData];
@@ -95,17 +97,21 @@
     NSMutableArray *anotherArray = [[NSMutableArray alloc] init];
     NSMutableArray *arrayWithReplies = [[NSMutableArray alloc ] init ];
     
+    //search for replies and insert them after the comment
     for(XEComment *comment in array)
     {
+        // normal comment
         if( [comment.parentSRL isEqualToString:@"0"] )
         {
             [anotherArray addObject:comment];
         }
-        else 
+        else
+        //reply to a comment
         {
             [arrayWithReplies addObject:comment];
         }
     }
+    
     
     for(XEComment *reply in arrayWithReplies)
     {

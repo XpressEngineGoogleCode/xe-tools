@@ -75,7 +75,8 @@
     optionsVC.type = timeZ;
     optionsVC.settings = self.settings;
     optionsVC.delegateData = [self.settings.timezones allValues];
-    optionsVC.selected = self.settings.timezone;
+    optionsVC.selected = [self.settings.timezones objectForKey:self.settings.timezone];
+
     
     [self.navigationController pushViewController:optionsVC animated:YES];
 }
@@ -86,7 +87,7 @@
     
     self.textyle.defaultLanguage =[self.settings getKeyForLanguage:self.settings.defaultLanguage];
     self.textyle.timezone = self.settings.timezone;
-    self.textyle.textyleTitle = self.settings.blogTitle;
+    self.textyle.textyleTitle = self.blogTitleTextField.text;
     [[RKObjectManager sharedManager].requestQueue cancelRequestsWithDelegate:self];
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
@@ -103,7 +104,7 @@
 
 }
 
--(IBAction)saveButtonPressed:(id)sender
+-(void)saveButtonPressed:(id)sender
 {
     RKParams *params = [RKParams params];
     [params setValue:@"procTextyleInfoUpdate" forParam:@"act"];

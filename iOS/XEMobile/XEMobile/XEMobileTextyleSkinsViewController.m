@@ -165,6 +165,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if( selected.row != indexPath.row )
+    {
     XEMobileSkinCell *cell = (XEMobileSkinCell *)[tableView cellForRowAtIndexPath:indexPath];
     XESkin *skin = [self.arrayWithSkins objectAtIndex:indexPath.row];
     
@@ -174,6 +176,7 @@
     XEMobileSkinCell *deselectCell = (XEMobileSkinCell *)[tableView cellForRowAtIndexPath:selected];
     [deselectCell uncheckBox];
     selected = indexPath;
+    }
 }
 
 @end

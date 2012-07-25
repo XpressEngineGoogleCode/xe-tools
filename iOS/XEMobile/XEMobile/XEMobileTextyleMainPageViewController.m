@@ -13,7 +13,6 @@
 #import "XEMobileTextylePageViewController.h"
 #import "XEMobileTextyleWritingSettingsViewController.h"
 #import "XEMobileTextyleSkinsViewController.h"
-#import "XEMobileTextyleStatsViewController.h"
 
 @interface XEMobileTextyleMainPageViewController ()
 
@@ -88,7 +87,6 @@
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
     
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:[NSString stringWithFormat:@"/index.php?module=mobile_communication&act=procmobile_communicationTextyleStats&site_srl=%@",self.textyleItem.siteSRL] delegate:self];
-
 }
 
 - (void)viewDidUnload
@@ -117,6 +115,7 @@
     [self.navigationController pushViewController:commentsVC animated:YES];
 }
 
+
 - (IBAction)settingsButtonPressed:(id)sender
 {
     XEMobileTextyleSettingsViewController *settings = [[XEMobileTextyleSettingsViewController alloc] initWithNibName:@"XEMobileTextyleSettingsViewController" bundle:nil];    
@@ -126,8 +125,7 @@
     settingsObject.blogTitle = self.textyleItem.textyleTitle;
     settings.textyle = self.textyleItem;
     settings.settings = settingsObject;
-    UINavigationController *generalSettingNavCon = [[ UINavigationController alloc] initWithRootViewController:settings];
-    
+    UINavigationController *generalSettingNavCon = [[ UINavigationController alloc] initWithRootViewController:settings];    
     
     XEMobileTextyleWritingSettingsViewController *writing = [[XEMobileTextyleWritingSettingsViewController alloc] initWithNibName:@"XEMobileTextyleWritingSettingsViewController" bundle:nil];
     writing.title = @"Writing";
@@ -151,22 +149,6 @@
     XEMobileTextylePageViewController *pagesVC = [[XEMobileTextylePageViewController alloc] initWithNibName:@"XEMobileTextylePageViewController" bundle:nil];
     pagesVC.textyle = self.textyleItem;
     [self.navigationController pushViewController:pagesVC animated:YES];
-}
-
--(IBAction)skinsButtonPressed:(id)sender
-{
-    XEMobileTextyleSkinsViewController *skinsVC = [[XEMobileTextyleSkinsViewController alloc] initWithNibName:@"XEMobileTextyleSkinsViewController" bundle:nil];
-    skinsVC.textyle = self.textyleItem;
-    
-    [self.navigationController pushViewController:skinsVC animated:YES];
-}
-
-
-- (IBAction)statisticsButtonPressed:(id)sender 
-{
-    XEMobileTextyleStatsViewController *statsVC = [[XEMobileTextyleStatsViewController alloc] initWithNibName:@"XEMobileTextyleStatsViewController" bundle:nil];
-    statsVC.textyle = self.textyleItem;
-    [self.navigationController pushViewController:statsVC animated:YES];
 }
 
 

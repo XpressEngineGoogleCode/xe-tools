@@ -10,6 +10,8 @@
 #import "XEStats.h"
 #import "RestKit/RestKit.h"
 
+// ViewController that contains the statistics of XE's views
+
 @interface XEMobileStatisticsViewController : XEMobileViewController
 <UITableViewDelegate, UITableViewDataSource, RKObjectLoaderDelegate>
 

@@ -12,6 +12,8 @@
 #import "XEMobileViewController.h"
 #import "XEMobileTextEditorViewController.h"
 
+// ViewController used to edit the content of a XE's Page
+
 @interface XEMobileEditContentPageViewController : XEMobileTextEditorViewController
 <RKRequestDelegate,RKObjectLoaderDelegate, UITextFieldDelegate>
 

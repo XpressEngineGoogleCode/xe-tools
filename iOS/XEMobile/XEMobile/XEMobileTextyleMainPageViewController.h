@@ -12,6 +12,9 @@
 #import "XEMobileViewController.h"
 #import "XETextyleStats.h"
 
+// ViewController that represents the Dashboard of a Textyle blog
+// It contains the 4 buttons and the statistics
+
 @interface XEMobileTextyleMainPageViewController : XEMobileViewController
 <RKObjectLoaderDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -21,11 +24,7 @@
 
 - (IBAction)settingsButtonPressed:(id)sender;
 
-- (IBAction)statisticsButtonPressed:(id)sender;
-
 - (IBAction)pagesButtonPressed:(id)sender;
-
-- (IBAction)skinsButtonPressed:(id)sender;
 
 @property (strong, nonatomic) XETextyleStats *stats;
 @property (strong, nonatomic) XETextyle *textyleItem;

@@ -10,6 +10,8 @@
 #import "RestKit/RestKit.h"
 #import "XEMobileViewController.h"
 
+// ViewController that contains a UITableView with all pages of XE
+
 @interface XEMobilePageManagementViewController : XEMobileViewController
 <RKRequestDelegate, UITableViewDataSource, UITableViewDelegate, RKObjectLoaderDelegate, UIActionSheetDelegate>
 

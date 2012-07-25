@@ -12,6 +12,8 @@
 #import "RestKit/RestKit.h"
 #import "XEMobileViewController.h"
 
+//ViewController that has a UITextView which is used to reply to a comment
+
 @interface XEMobileTextyleReplyCommentViewController : XEMobileViewController
 <RKRequestDelegate, RKObjectLoaderDelegate>
 

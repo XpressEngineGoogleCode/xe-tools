@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "XEMobileDetailViewController.h"
 
-//FOUNDATION_EXPORT NSString *const isLogged;
+// XEMobileViewController is the parent for all ViewControllers in XEMobile application
 
 @interface XEMobileViewController : UIViewController
 

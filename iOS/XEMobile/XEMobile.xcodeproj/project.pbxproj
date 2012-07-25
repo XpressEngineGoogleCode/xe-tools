@@ -95,11 +95,8 @@
 		C1EA0B6F15A5DA48002860D4 /* XEMobileTextyleChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1EA0B6D15A5DA43002860D4 /* XEMobileTextyleChangePasswordViewController.m */; };
 		C1EA0B7015A5DA48002860D4 /* XEMobileTextyleChangePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1EA0B6E15A5DA46002860D4 /* XEMobileTextyleChangePasswordViewController.xib */; };
 		C1EF8DBB15AC13560026524A /* XEMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1EF8DBA15AC13560026524A /* XEMobileViewController.m */; };
-		C1EF8DBE15AC14C10026524A /* XEMobileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1EF8DBD15AC14C10026524A /* XEMobileTableViewController.m */; };
 		C1EF8DC215AC3BC70026524A /* XEMobileTextyleAddTextyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1EF8DC015AC3BC10026524A /* XEMobileTextyleAddTextyleViewController.m */; };
 		C1EF8DC315AC3BC70026524A /* XEMobileTextyleAddTextyleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1EF8DC115AC3BC40026524A /* XEMobileTextyleAddTextyleViewController.xib */; };
-		C1EF8DC715AC6C980026524A /* XEMobileTextyleStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1EF8DC515AC6C900026524A /* XEMobileTextyleStatsViewController.m */; };
-		C1EF8DC815AC6C980026524A /* XEMobileTextyleStatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1EF8DC615AC6C940026524A /* XEMobileTextyleStatsViewController.xib */; };
 		C1EF8DCB15AC6D210026524A /* XETextyleStats.m in Sources */ = {isa = PBXBuildFile; fileRef = C1EF8DCA15AC6D210026524A /* XETextyleStats.m */; };
 		C1F23A9115A6D28900D6CB4C /* XEMobileTextylePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F23A8F15A6D28900D6CB4C /* XEMobileTextylePageViewController.m */; };
 		C1F23A9215A6D28900D6CB4C /* XEMobileTextylePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F23A9015A6D28900D6CB4C /* XEMobileTextylePageViewController.xib */; };
@@ -298,14 +295,9 @@
 		C1EA0B6E15A5DA46002860D4 /* XEMobileTextyleChangePasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleChangePasswordViewController.xib; sourceTree = "<group>"; };
 		C1EF8DB915AC13560026524A /* XEMobileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileViewController.h; sourceTree = "<group>"; };
 		C1EF8DBA15AC13560026524A /* XEMobileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileViewController.m; sourceTree = "<group>"; };
-		C1EF8DBC15AC14C10026524A /* XEMobileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTableViewController.h; sourceTree = "<group>"; };
-		C1EF8DBD15AC14C10026524A /* XEMobileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTableViewController.m; sourceTree = "<group>"; };
 		C1EF8DBF15AC3BBE0026524A /* XEMobileTextyleAddTextyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleAddTextyleViewController.h; sourceTree = "<group>"; };
 		C1EF8DC015AC3BC10026524A /* XEMobileTextyleAddTextyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleAddTextyleViewController.m; sourceTree = "<group>"; };
 		C1EF8DC115AC3BC40026524A /* XEMobileTextyleAddTextyleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleAddTextyleViewController.xib; sourceTree = "<group>"; };
-		C1EF8DC415AC6C8B0026524A /* XEMobileTextyleStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextyleStatsViewController.h; sourceTree = "<group>"; };
-		C1EF8DC515AC6C900026524A /* XEMobileTextyleStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XEMobileTextyleStatsViewController.m; sourceTree = "<group>"; };
-		C1EF8DC615AC6C940026524A /* XEMobileTextyleStatsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XEMobileTextyleStatsViewController.xib; sourceTree = "<group>"; };
 		C1EF8DC915AC6D210026524A /* XETextyleStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XETextyleStats.h; sourceTree = "<group>"; };
 		C1EF8DCA15AC6D210026524A /* XETextyleStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XETextyleStats.m; sourceTree = "<group>"; };
 		C1F23A8E15A6D28900D6CB4C /* XEMobileTextylePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XEMobileTextylePageViewController.h; sourceTree = "<group>"; };
@@ -596,8 +588,6 @@
 				C1EA0B0C15A58942002860D4 /* XEMobileOptionsTableViewController.xib */,
 				C1EF8DB915AC13560026524A /* XEMobileViewController.h */,
 				C1EF8DBA15AC13560026524A /* XEMobileViewController.m */,
-				C1EF8DBC15AC14C10026524A /* XEMobileTableViewController.h */,
-				C1EF8DBD15AC14C10026524A /* XEMobileTableViewController.m */,
 				C175192015AEF7D60061D61C /* XEMobileTextEditorViewController.h */,
 				C175192115AEF7D60061D61C /* XEMobileTextEditorViewController.m */,
 				C175192215AEF7D70061D61C /* XEMobileTextEditorViewController.xib */,
@@ -659,15 +649,12 @@
 				C1EA0B3D15A5A730002860D4 /* XEMobileTextyleSelectViewController.h */,
 				C1EA0B3E15A5A730002860D4 /* XEMobileTextyleSelectViewController.m */,
 				C1EA0B3F15A5A730002860D4 /* XEMobileTextyleSelectViewController.xib */,
-				C1EA0B4215A5A783002860D4 /* XEMobileTextyleMainPageViewController.h */,
-				C1EA0B4315A5A783002860D4 /* XEMobileTextyleMainPageViewController.m */,
-				C1EA0B4415A5A783002860D4 /* XEMobileTextyleMainPageViewController.xib */,
 				C1EF8DBF15AC3BBE0026524A /* XEMobileTextyleAddTextyleViewController.h */,
 				C1EF8DC015AC3BC10026524A /* XEMobileTextyleAddTextyleViewController.m */,
 				C1EF8DC115AC3BC40026524A /* XEMobileTextyleAddTextyleViewController.xib */,
-				C1EF8DC415AC6C8B0026524A /* XEMobileTextyleStatsViewController.h */,
-				C1EF8DC515AC6C900026524A /* XEMobileTextyleStatsViewController.m */,
-				C1EF8DC615AC6C940026524A /* XEMobileTextyleStatsViewController.xib */,
+				C1EA0B4215A5A783002860D4 /* XEMobileTextyleMainPageViewController.h */,
+				C1EA0B4315A5A783002860D4 /* XEMobileTextyleMainPageViewController.m */,
+				C1EA0B4415A5A783002860D4 /* XEMobileTextyleMainPageViewController.xib */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -815,7 +802,6 @@
 				C1F5008115AADF0D005DBCB5 /* XEMobileTextyleWritingSettingsViewController.xib in Resources */,
 				C1F5008915AB0D31005DBCB5 /* XEMobileTextyleSkinsViewController.xib in Resources */,
 				C1EF8DC315AC3BC70026524A /* XEMobileTextyleAddTextyleViewController.xib in Resources */,
-				C1EF8DC815AC6C980026524A /* XEMobileTextyleStatsViewController.xib in Resources */,
 				C132563215AD84E1001BF6BF /* XEMobileSkinCell.xib in Resources */,
 				C175190815AED0540061D61C /* XEMobileMemberEditViewController.xib in Resources */,
 				C175192415AEF7D80061D61C /* XEMobileTextEditorViewController.xib in Resources */,
@@ -877,9 +863,7 @@
 				C1F5008815AB0D31005DBCB5 /* XEMobileTextyleSkinsViewController.m in Sources */,
 				C1F5008C15AB0E84005DBCB5 /* XESkin.m in Sources */,
 				C1EF8DBB15AC13560026524A /* XEMobileViewController.m in Sources */,
-				C1EF8DBE15AC14C10026524A /* XEMobileTableViewController.m in Sources */,
 				C1EF8DC215AC3BC70026524A /* XEMobileTextyleAddTextyleViewController.m in Sources */,
-				C1EF8DC715AC6C980026524A /* XEMobileTextyleStatsViewController.m in Sources */,
 				C1EF8DCB15AC6D210026524A /* XETextyleStats.m in Sources */,
 				C132563015AD8474001BF6BF /* XEMobileSkinCell.m in Sources */,
 				C175190715AED0540061D61C /* XEMobileMemberEditViewController.m in Sources */,

@@ -69,10 +69,14 @@
     [self sendStringRequestToServer:saveXML withUserData:@"save"];
 }
 
+
+//to publish a post, firstly the post is saved, the server returns the document SRL of the new post created,
+//and then a publish request is send
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(XETextylePost *)object
 {
     self.documentSRL = object.documentSRL;
     [self.indicator stopAnimating];
+    
     if( [objectLoader.userData isEqualToString:@"published"] )
         {
             [self.navigationController popViewControllerAnimated:YES];
@@ -81,7 +85,7 @@
     if( self.publish ) 
     {
         NSString *publishXML = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<methodCall>\n<params>\n<_filter><![CDATA[publish_post]]></_filter>\n<act><![CDATA[procTextylePostPublish]]></act>\n<document_srl><![CDATA[%@]]></document_srl>\n<mid><![CDATA[textyle]]></mid>\n<vid><![CDATA[%@]]></vid>\n<trackback_charset><![CDATA[UTF-8]]></trackback_charset>\n<use_alias><![CDATA[N]]></use_alias>\n<allow_comment><![CDATA[Y]]></allow_comment>\n<allow_trackback><![CDATA[Y]]></allow_trackback>\n<subscription><![CDATA[N]]></subscription>\n<module><![CDATA[textyle]]></module>\n</params>\n</methodCall>",self.documentSRL,self.textyle.domain];
-        NSLog(@"se trimite = %@",publishXML);
+        
         [self sendStringRequestToServer:publishXML withUserData:@"published"];
         self.publish = NO;
     }

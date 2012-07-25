@@ -11,6 +11,8 @@
 #import "XEMobileViewController.h"
 #import "RestKit/RestKit.h"
 
+// ViewController with 3 TextFields for changing the password
+
 @interface XEMobileTextyleChangePasswordViewController : XEMobileViewController
 <RKObjectLoaderDelegate>
 

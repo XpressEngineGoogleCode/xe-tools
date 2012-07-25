@@ -10,6 +10,8 @@
 #import "RestKit/RestKit.h"
 #import "XEMobileViewController.h"
 
+// ViewController with a UITableView that contains all the members
+
 @interface XEMobileMembersManagementViewController : XEMobileViewController
 <RKRequestDelegate,RKObjectLoaderDelegate, UITableViewDelegate, UITableViewDataSource> 
 

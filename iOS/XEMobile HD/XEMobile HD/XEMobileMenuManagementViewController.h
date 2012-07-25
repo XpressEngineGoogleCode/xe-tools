@@ -10,6 +10,8 @@
 #import "RestKit/RestKit.h"
 #import "XEMobileViewController.h"
 
+// ViewController that contains a UITableView with all the XE's Menu
+
 @interface XEMobileMenuManagementViewController : XEMobileViewController
 <UITableViewDataSource, UITableViewDelegate,RKObjectLoaderDelegate, UIActionSheetDelegate>
 

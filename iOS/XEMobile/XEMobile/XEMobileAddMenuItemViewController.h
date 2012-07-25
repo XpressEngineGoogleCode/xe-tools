@@ -11,6 +11,8 @@
 #import "XEMenuItem.h"
 #import "XEMobileViewController.h"
 
+// ViewController used to add and edit a Menu Item
+
 @interface XEMobileAddMenuItemViewController : XEMobileViewController
 <UIPickerViewDelegate, UIPickerViewDataSource, RKRequestDelegate, UITextFieldDelegate, RKObjectLoaderDelegate>
 
@@ -23,8 +25,11 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *labelForErrors;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *createOrSelectLabel;
 
+// module SRL of the parent where we create a new Menu Item
 @property (strong, nonatomic) NSString *parentModuleSRL;
 
+// in case of edit, "editedMenu" isn't null
+// in case of add a new Menu Item, "editedMenu" is null
 @property (strong, nonatomic) XEMenuItem *editedMenu;
 
 -(IBAction)moduleSegmentChanged:(UISegmentedControl *)sender;

@@ -11,6 +11,8 @@
 #import "XEGlobalSettings.h"
 #import "XEMobileViewController.h"
 
+// ViewController used to modify the settings of XE
+
 @interface XEMobileSettingsViewController: XEMobileViewController
 <RKRequestDelegate, UITextFieldDelegate, UITextViewDelegate, RKObjectLoaderDelegate>
 

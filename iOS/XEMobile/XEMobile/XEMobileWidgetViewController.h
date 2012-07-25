@@ -10,6 +10,8 @@
 #import "XEPage.h"
 #import "RestKit/RestKit.h"
 
+// ViewController which contains a UIWebView used to display the widgets
+
 @interface XEMobileWidgetViewController : UIViewController
 <UIWebViewDelegate>
 

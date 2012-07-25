@@ -11,6 +11,8 @@
 #import "RestKit/RestKit.h"
 #import "XEMember.h"
 
+// ViewController used to modify the settings of a member
+
 @interface XEMobileMemberEditViewController : XEMobileViewController
 <RKObjectLoaderDelegate>
 

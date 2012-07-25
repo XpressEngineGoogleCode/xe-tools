@@ -6,7 +6,11 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+
 #import <UIKit/UIKit.h>
+
+//Custom UITableViewCell for Comment section in Textyle 
+//each cell has 3 button: reply, delete and visibility
 
 @class XEMobileCommentsViewCell;
 @protocol XEMobileCommentsViewCellProtocol

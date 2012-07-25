@@ -104,7 +104,7 @@
 
 }
 
--(IBAction)saveButtonPressed:(id)sender
+-(void)saveButtonPressed:(id)sender
 {
     RKParams *params = [RKParams params];
     [params setValue:@"procTextyleInfoUpdate" forParam:@"act"];

@@ -13,6 +13,8 @@
 #import "XEMobileViewController.h"
 #import "XEMobileTextEditorViewController.h"
 
+// ViewController used to edit the content of a Textyle post
+
 @interface XEMobileTextyleEditPostViewController : XEMobileTextEditorViewController
 <RKObjectLoaderDelegate, UIActionSheetDelegate, UITextViewDelegate>
 

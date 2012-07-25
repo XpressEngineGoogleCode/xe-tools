@@ -12,10 +12,12 @@
 #import "RestKit/RKRequestSerialization.h"
 #import "XEMobileViewController.h"
 
+// ViewController used to add a new post to Textyle blog
+
 @interface XEMobileTextyleAddPostViewController : XEMobileViewController
 <RKObjectLoaderDelegate, UITextFieldDelegate,RKRequestDelegate, UITextViewDelegate>
-@property (strong, nonatomic) XETextyle *textyle;
 
+@property (strong, nonatomic) XETextyle *textyle;
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (retain, nonatomic) IBOutlet UITextField *titleTextField;
 @property (retain, nonatomic) IBOutlet UITextView *contentTextView;

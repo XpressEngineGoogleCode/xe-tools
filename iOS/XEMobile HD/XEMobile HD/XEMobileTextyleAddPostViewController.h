@@ -13,6 +13,8 @@
 #import "XEMobileViewController.h"
 #import "XEMobileTextEditorViewController.h"
 
+// ViewController used to add a new post to Textyle blog
+
 @interface XEMobileTextyleAddPostViewController : XEMobileTextEditorViewController
 <RKObjectLoaderDelegate, UITextFieldDelegate,RKRequestDelegate, UITextViewDelegate>
 @property (strong, nonatomic) XETextyle *textyle;

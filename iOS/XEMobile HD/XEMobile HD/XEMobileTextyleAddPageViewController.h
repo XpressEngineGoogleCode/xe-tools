@@ -12,6 +12,8 @@
 #import "RestKit/RestKit.h"
 #import "XEMobileTextEditorViewController.h"
 
+// ViewController used to create a new page on Textyle blog
+
 @interface XEMobileTextyleAddPageViewController : XEMobileTextEditorViewController
 <RKObjectLoaderDelegate, UITextViewDelegate>
 @property (strong, nonatomic) XETextyle *textyle;
