@@ -120,7 +120,7 @@
     [menu mapKeyPath:@"menuSrl" toAttribute:@"moduleSrl"];
     [menu mapKeyPath:@"menuItem" toRelationship:@"menuItems" withMapping:menuItems];
     
-    [[RKObjectManager sharedManager].mappingProvider setMapping:menu forKeyPath:@"test.response"];
+    [[RKObjectManager sharedManager].mappingProvider setMapping:menu forKeyPath:@"response.menu"];
     
     NSDictionary *parametr = [[NSDictionary alloc] 
                               initWithObjects:[NSArray arrayWithObjects:@"mobile_communication",@"procmobile_communicationDisplayMenu", nil] 
