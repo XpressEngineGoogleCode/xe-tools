@@ -112,7 +112,7 @@
     [params setValue:self.menuForDelete.moduleSrl forParam:@"menu_srl"];
     [params setValue:self.menuForDelete.name forParam:@"title"];
     
-    RKRequest *request= [[RKClient sharedClient] post:@"/index.php?module=mobile_communication&&act=procmobile_communicationMenuDelete" params:params delegate:self];
+    RKRequest *request= [[RKClient sharedClient] post:@"/index.php?module=mobile_communication&act=procmobile_communicationMenuDelete" params:params delegate:self];
     //for identify in "request:didLoadResponse:"
     request.userData = @"delete_request";
     [self.indicator startAnimating];
@@ -172,7 +172,7 @@
     [menu mapKeyPath:@"menuSrl" toAttribute:@"moduleSrl"];
     [menu mapKeyPath:@"menuItem" toRelationship:@"menuItems" withMapping:menuItems];
     
-    [[RKObjectManager sharedManager].mappingProvider setMapping:menu forKeyPath:@"test.response"];
+    [[RKObjectManager sharedManager].mappingProvider setMapping:menu forKeyPath:@"response.menu"];
     
     NSDictionary *parametr = [[NSDictionary alloc] 
                               initWithObjects:[NSArray arrayWithObjects:@"mobile_communication",@"procmobile_communicationDisplayMenu", nil] 
