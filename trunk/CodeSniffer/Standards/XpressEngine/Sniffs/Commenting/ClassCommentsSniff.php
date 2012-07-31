@@ -67,7 +67,7 @@ class XpressEngine_Sniffs_Commenting_ClassCommentsSniff implements PHP_CodeSniff
 		}
 
 		$comment = join("\n", $comments);
-		$commentParams = array('@brief', '@developer');
+		$commentParams = array('@author');
 		foreach($commentParams as $val)
 		{
 			if(strpos($comment, $val) === false)
