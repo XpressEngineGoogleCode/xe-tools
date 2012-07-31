@@ -85,12 +85,7 @@ class XpressEngine_Sniffs_Commenting_MethodCommentsSniff implements PHP_CodeSnif
 		}
 
 		$comment = join("\n", $comments);
-		$commentParams = array('@return', '@brief', '@developer');
-		if($type == 'METHOD')
-		{
-			$commentParams[] = '@access';
-		}
-
+		$commentParams = array('@author');
 
 		$params = $phpcsFile->getMethodParameters($stackPtr);
 		if($params)
