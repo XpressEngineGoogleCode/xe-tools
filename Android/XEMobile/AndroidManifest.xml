@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="arnia.xemobile"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="10" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+        <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission
+        android:name="arnia.xemobile.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="arnia.xemobile.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+   <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".XEMobileLoginController"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity 
+            android:name=".XEMobileMainPageController"
+            android:label="Dashboard"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>" 
+        <activity 
+            android:name=".XEMobileMembersController"
+            android:label="Members"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>   
+        <activity 
+            android:name=".XEMobileEditMemberController"
+            android:label="Edit Member"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>  
+        <activity
+            android:name="arnia.xemobile.menu_management.XEMobileMenuController"
+            android:label="Menu Management"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>  
+        <activity 
+            android:name="arnia.xemobile.menu_management.XEMobileMenuItemsController"
+            android:label="Menu Items"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity
+            android:name="arnia.xemobile.menu_management.XEMobileMenuItemEditController"
+            android:label="Edit Menu Item"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name="arnia.xemobile.menu_management.XEMobileAddMenuItemController"
+            android:label="Add Menu Item"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name="arnia.xemobile.page_management.XEMobilePageController"
+            android:label="Pages"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name="arnia.xemobile.page_management.XEMobilePageEditController"
+            android:label="Edit Page"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name="arnia.xemobile.page_management.XEMobilePageAddController"
+            android:label="Add Page"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name="arnia.xemobile.page_management.XEMobileTextEditor"
+            android:label="Edit Content"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name="arnia.xemobile.page_management.XEMobilePageTextEditor"
+            android:label="Edit Content"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity
+            android:name="arnia.xemobile.global_settings.XEMobileGlobalSettingsController"
+            android:label="Global Settings"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name=".XEMobileStatisticsController"
+            android:label="Statistics"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity
+            android:name="arnia.xemobile_textyle.XEMobileTextyleSelectTextyleController"
+            android:label="Choose a Textyle"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity
+            android:name="arnia.xemobile_textyle.XEMobileTextyleMainPageController"
+            android:label="Main Page"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        
+        <activity 
+            android:name="arnia.xemobile_textyle_posts.XEMobileTextylePostsController"
+            android:label="Posts"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name ="arnia.xemobile_textyle_posts.XEMobileTextyleAddPostController"
+            android:label="Add Post"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name = "arnia.xemobile_textyle_posts.XEMobileTextyleEditPostContentController"
+            android:label="Edit Post"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name = "arnia.xemobile_textyle_pages.XEMobileTextylePagesController"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name = "arnia.xemobile_textyle_pages.XEMobileTextyleAddPageController"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name = "arnia.xemobile_textyle_pages.XEMobileTextyleEditPageController"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name = "arnia.xemobile_textyle_settings.XEMobileTextyleSettingsGeneralController"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name = "arnia.xemobile_textyle_settings.XEMobileTextyleSettingsSkinsController"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name = "arnia.xemobile_textyle_settings.XEMobileTextyleSettingsTabController"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name = "arnia.xemobile_textyle_settings.XEMobileTextyleSettingsWritingController"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name = "arnia.xemobile_textyle_comments.XEMobileTextyleCommentsController"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity 
+            android:name = "arnia.xemobile_textyle_comments.XEMobileTextyleCommentsReplyController"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity
+            android:name="arnia.xemobile.page_management.XEMobileWidgetController"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity
+            android:name="arnia.xemobile_textyle_settings.XEMobileTextyleSettingsChangePasswordController"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+        
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="arnia.xemobile" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="arnia.xemobile.GCMIntentService" />
+        
+        </application>
+
+</manifest>

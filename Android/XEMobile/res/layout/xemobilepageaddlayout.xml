@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+	
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <RadioGroup
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:orientation="horizontal">
+    				<RadioButton android:id="@+id/XEMOBILE_ADDPAGE_RADIO_WIDGET"
+        				android:layout_width="wrap_content"
+        				android:layout_height="wrap_content"
+        				android:text="Widget"/>
+    				<RadioButton android:id="@+id/XEMOBILE_ADDPAGE_RADIO_ARTICLE"
+        				android:layout_width="wrap_content"
+        				android:layout_height="wrap_content"
+        				android:text="Article"/>
+    				<RadioButton android:id="@+id/XEMOBILE_ADDPAGE_RADIO_EXTERNAL"
+        				android:layout_width="wrap_content"
+        				android:layout_height="wrap_content"
+        				android:text="External"/>
+		</RadioGroup>   
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Page name:"/>
+        
+        <EditText 
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+ 			android:id="@+id/XEMOBILE_ADDPAGE_PAGENAME"/>
+    </LinearLayout>
+    
+        <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Browser title:"/>
+        
+        <EditText 
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+ 			android:id="@+id/XEMOBILE_ADDPAGE_BROWSERTITLE"/>
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Caching time:"/>
+        
+        <EditText 
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+ 			android:id="@+id/XEMOBILE_ADDPAGE_CACHING"/>
+    </LinearLayout>
+    
+    <Spinner 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/XEMOBILE_ADDPAGE_LAYOUTSPINNER"/>
+    
+    <Button 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/XEMOBILE_ADDPAGE_SAVEBUTTON"
+        android:layout_gravity="center_horizontal"/>
+    
+</LinearLayout>

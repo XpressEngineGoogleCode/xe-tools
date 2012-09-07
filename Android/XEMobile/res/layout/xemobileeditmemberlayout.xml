@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="E-mail:"/>
+        
+        <TextView 
+        android:id="@+id/XEMOBILE_EDITMEMBER_EMAIL"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+        
+    </LinearLayout>
+    
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nickname:"/>
+        
+        <EditText
+        android:id="@+id/XEMOBILE_EDITMEMBER_NICKNAME"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+        
+    </LinearLayout>
+    
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description:"/>
+        
+        <EditText
+        android:id="@+id/XEMOBILE_EDITMEMBER_DESCRIPTION"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+        
+    </LinearLayout>
+    
+        <CheckBox 
+            android:id="@+id/XEMOBILE_EDITMEMBER_ALLOWMAILING"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Allow mailing"/>
+        <CheckBox 
+            android:id="@+id/XEMOBILE_EDITMEMBER_ALLOWMESSAGE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Allow message"/>   
+        <CheckBox 
+            android:id="@+id/XEMOBILE_EDITMEMBER_APPROVEMEMBER"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Approved"/>
+        <CheckBox 
+            android:id="@+id/XEMOBILE_EDITMEMBER_ISADMIN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin"/>  
+            
+        <Button 
+            android:id="@+id/XEMOBILE_EDITMEMBER_SAVE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Save"/>
+            </LinearLayout>
