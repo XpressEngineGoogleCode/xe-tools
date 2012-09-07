@@ -34,16 +34,19 @@
     
     self.navigationItem.title = self.post.title;
     
+    // put a Cancel button on the navigation bar
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed)];
 
     [self loadPostContentAndTitle];
 }
 
+//method called when the Cancel button is pressed
 -(void)cancelButtonPressed
 {
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
+//send request to load the content and the title of the post
 -(void)loadPostContentAndTitle
 {
     RKRequest *load = [[RKClient sharedClient] get:[NSString stringWithFormat:@"/index.php?module=mobile_communication&act=procmobile_communicationContentForPost&module_srl=%@&document_srl=%@",self.textyle.moduleSrl,self.post.documentSRL] 
@@ -52,17 +55,19 @@
     [self.indicator startAnimating];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:self.errorMessage];
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
     NSLog(@"Error!");
 }
 
-
+//method called when an objects was mapped from the response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(XEUser *)object
 {
     [self.indicator stopAnimating];
@@ -93,12 +98,14 @@
     }
 }
 
+//method called when the Save button is pressed
 -(IBAction)saveButtonPressed:(id)sender
 {
     self.publish = NO;
     [self actionForSave];
 }
 
+//method that sends the request to save the post
 -(void)actionForSave
 {
     NSString *contentForSave = @"<p>";
@@ -111,6 +118,7 @@
     [self sendStringRequestToServer:saveXML withUserData:@"save"];
 }
 
+//method called when a response is received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     [self.indicator stopAnimating];
@@ -125,14 +133,18 @@
     }
 }
 
+//method called when the Delete button is pressed
 -(IBAction)deleteButtonPressed:(id)sender
 {
+    // push a Confirmation Window 
     UIActionSheet *action = [[ UIActionSheet alloc] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles:nil];
     [action showInView:self.view];
 }
 
+//method called when a button in Confirmation Window is pressed
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    //buttonIndex == 0 => the Delete button was pressed
     if( buttonIndex == 0 )
     {
         NSString *deleteXML = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<methodCall>\n<params>\n<document_srl><![CDATA[%@]]></document_srl>\n<page><![CDATA[1]]></page>\n<module><![CDATA[textyle]]></module>\n<act><![CDATA[procTextylePostTrash]]></act>\n<vid><![CDATA[%@]]></vid>\n</params>\n</methodCall>",self.post.documentSRL,self.textyle.domain];
@@ -141,6 +153,7 @@
     }
 }
 
+//method called when the Publish button is pressed
 -(IBAction)publishButtonPressed:(id)sender
 {
     self.publish = YES;

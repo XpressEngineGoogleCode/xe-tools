@@ -31,58 +31,14 @@
 @synthesize mobileTemplateSwitch = _mobileTemplateSwitch;
 @synthesize settings = _settings;
 @synthesize localStandardTimeButton = _localStandardTimeButton;
-
 @synthesize defaultLanguageButton = _defaultLanguageButton;
 
--(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
-{
-    if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
-    
-    if ( [request.userData isEqualToString:@"set_settings"] )
-    {
-        [self.indicator stopAnimating];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
--(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error 
-{
-    NSLog(@"Error!");
-}
-
--(IBAction)changeDefaultLanguage
-{
-    XEMobileOptionsTableViewController *optionsVC = [[ XEMobileOptionsTableViewController alloc] initWithNibName:@"XEMobileOptionsTableViewController" bundle:nil];
-    optionsVC.settings = self.settings;
-    optionsVC.delegateData = self.settings.selectedLanguages;
-    optionsVC.selected = self.settings.defaultLanguage;
-    optionsVC.type = langD;
-    [self.navigationController pushViewController:optionsVC animated:YES];
-}
--(IBAction)changeTimeZone
-{
-    XEMobileOptionsTableViewController *optionTVC = [[XEMobileOptionsTableViewController alloc] initWithNibName:@"XEMobileOptionsTableViewController" bundle:nil];
-    optionTVC.settings = self.settings;
-    optionTVC.delegateData = [self.settings.timezones allValues];
-    optionTVC.selected = [self.settings.timezones objectForKey:self.settings.timezone];
-    optionTVC.type = timeZ;
-    [self.navigationController pushViewController:optionTVC animated:YES];
-}
-
--(IBAction)changeSelectedLanguages
-{
-    XEMobileOptionsTableViewController *optionTVC = [[XEMobileOptionsTableViewController alloc] initWithNibName:@"XEMobileOptionsTableViewController" bundle:nil];
-    optionTVC.settings = self.settings;
-    optionTVC.delegateData = [self.settings.languages allValues];
-    optionTVC.selected = self.settings.selectedLanguages;
-    optionTVC.type = selectedLangs;
-    [self.navigationController pushViewController:optionTVC animated:YES];
-}
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
     
+    //map the response to an object
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEGlobalSettings class]];
     
     [mapping mapKeyPath:@"langs" toAttribute:@"selectedLangString"];
@@ -100,12 +56,15 @@
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
     
+    //send the request to load the current settings configuration
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php?module=mobile_communication&act=procmobile_communicationLoadSettings" usingBlock:^(RKObjectLoader *loader)
      {
          loader.userData = @"load";
          loader.delegate = self;
      }];
     [self.indicator startAnimating];
+    
+    //put a Done button in navigation bar
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveButtonPressed)];
 }
 
@@ -116,8 +75,61 @@
     self.navigationItem.title = @"Settings";
     self.scrollView.contentSize = CGSizeMake(320, 1100);
     
+    // load the current settings configuration
     [self loadSettings];
 }
+
+//method called when a response is received
+-(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
+{
+    if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
+    
+    if ( [request.userData isEqualToString:@"set_settings"] )
+    {
+        [self.indicator stopAnimating];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+//method called when an error occured
+-(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error 
+{
+    NSLog(@"Error!");
+}
+
+//method called when the Language button is pressed
+-(IBAction)changeDefaultLanguage
+{
+    XEMobileOptionsTableViewController *optionsVC = [[ XEMobileOptionsTableViewController alloc] initWithNibName:@"XEMobileOptionsTableViewController" bundle:nil];
+    optionsVC.settings = self.settings;
+    optionsVC.delegateData = self.settings.selectedLanguages;
+    optionsVC.selected = self.settings.defaultLanguage;
+    optionsVC.type = langD;
+    [self.navigationController pushViewController:optionsVC animated:YES];
+}
+
+//method called when the Timezone button is pressed
+-(IBAction)changeTimeZone
+{
+    XEMobileOptionsTableViewController *optionTVC = [[XEMobileOptionsTableViewController alloc] initWithNibName:@"XEMobileOptionsTableViewController" bundle:nil];
+    optionTVC.settings = self.settings;
+    optionTVC.delegateData = [self.settings.timezones allValues];
+    optionTVC.selected = [self.settings.timezones objectForKey:self.settings.timezone];
+    optionTVC.type = timeZ;
+    [self.navigationController pushViewController:optionTVC animated:YES];
+}
+
+//method called when the Selected Languages button is pressed
+-(IBAction)changeSelectedLanguages
+{
+    XEMobileOptionsTableViewController *optionTVC = [[XEMobileOptionsTableViewController alloc] initWithNibName:@"XEMobileOptionsTableViewController" bundle:nil];
+    optionTVC.settings = self.settings;
+    optionTVC.delegateData = [self.settings.languages allValues];
+    optionTVC.selected = self.settings.selectedLanguages;
+    optionTVC.type = selectedLangs;
+    [self.navigationController pushViewController:optionTVC animated:YES];
+}
+
 
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -127,6 +139,7 @@
     [[RKObjectManager sharedManager].requestQueue cancelRequestsWithDelegate:self];
 }
 
+//set up the UI with the current settings configuration
 -(void) loadSettings
 {
     self.defaulURLTextField.text = self.settings.defaultURL;
@@ -150,11 +163,16 @@
     [self.localStandardTimeButton setTitle:[NSString stringWithFormat:@"GMT %@",self.settings.timezone] forState:UIControlStateNormal];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:@"There is a problem with your internet connection!"];
 
 }
+
+//
+// methods called when the switches or segmentcontrollers change their selected option
+//
 
 -(IBAction)useSSLSegmentedControlChange:(UISegmentedControl *)sender
 {
@@ -214,15 +232,20 @@
     }
 }
 
+// keyboard hides when the Return button is pressed
 -(BOOL)textFieldShouldReturn:(UITextField *)textField 
 {
     [textField resignFirstResponder];
     return NO;
 }
 
+//method called when the Done button is pressed
 -(void)saveButtonPressed
 {
     [self.indicator startAnimating];
+    
+    //prepare the request
+    
     RKParams *params = [RKParams params];
     [params setValue:@"install" forParam:@"module"];
     [params setValue:@"procInstallAdminConfig" forParam:@"act"];
@@ -267,6 +290,7 @@
     [params setValue:self.settings.qmail forParam:@"qmail_compatibility"];
     [params setValue:self.settings.html5 forParam:@"use_html5"];
     
+    //send the request
     RKRequest * request = [[RKClient sharedClient] post:@"/index.php?module=admin&act=dispAdminConfigGeneral" params:params delegate:self];
     request.userData = @"set_settings";
     

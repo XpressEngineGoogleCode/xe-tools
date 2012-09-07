@@ -8,6 +8,8 @@
 
 #import "XEMobileCommentsViewCell.h"
 
+
+//the custom cell that contains an XEComment
 @interface XEMobileCommentsViewCell()
 {
     BOOL cellIsModified;
@@ -24,14 +26,16 @@
 @synthesize delegate = _delegate;
 @synthesize elementsSuperView = _elementsSuperView;
 
+//called when the object is loaded from .xib
 -(void)awakeFromNib
 {
+    //set targets on buttons
     [self.replyButton addTarget:self action:@selector(replyButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.deleteButton addTarget:self action:@selector(deleteButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.visibilityButton addTarget:self action:@selector(visibilityButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    
 }
 
+//method that sets reply comment indentation
 -(void)setReplyComment
 {
     if( cellIsModified == false )
@@ -42,22 +46,26 @@
     }
 }
 
+//method that sets normal comment indentation
 -(void)setNormalComment
 {
     self.elementsSuperView.frame = CGRectMake(11, 8, 269, 108);
     cellIsModified = false;
 }
 
+//reply button is pressed. call delegate's implementation
 -(void)replyButtonPressed
 {
     [self.delegate replyButtonPressedInCell:self];
 }
 
+//delete button is pressed. call delegate's implementation
 -(void)deleteButtonPressed
-    {
-        [self.delegate deleteButtonPressedInCell:self];   
-    }
-     
+{
+    [self.delegate deleteButtonPressedInCell:self];   
+}
+
+//visibility button is pressed. call delegate's implementation     
 -(void)visibilityButtonPressed
 {
     [self.delegate visibilityButtonPressedInCell:self];

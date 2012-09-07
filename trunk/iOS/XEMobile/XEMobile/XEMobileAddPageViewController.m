@@ -37,10 +37,12 @@
     
     [self getLayout];
     
+    //put a Done and a Cancel button on navigation bar
     self.navigationItem.rightBarButtonItem = [[ UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(postItButton:)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButton:)];
 }
 
+//method that sends a requests to load all the layouts
 -(void)getLayout
 {
     RKObjectMapping *mapping = [ RKObjectMapping mappingForClass:[XELayout class]];
@@ -51,6 +53,7 @@
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response.layout"];
     
+    //send the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php?module=mobile_communication&act=procmobile_communicationGetLayout" usingBlock:^(RKObjectLoader *loader)
      {
          loader.userData = @"layout_request";
@@ -58,6 +61,7 @@
      }];
 }
 
+//method called when an object is loaded from response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     if( [object isKindOfClass:[XEUser class]])
@@ -76,6 +80,7 @@
     }
 }
 
+//method called when an array with objects is loaded from response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     if( objects.count != 0 && [[objects objectAtIndex:0] isKindOfClass:[XELayout class]])
@@ -85,20 +90,24 @@
     }
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
 
 }
 
+//method called when the Cancel button is pressed
 -(void)cancelButton:(id)sender
 {
     [self dismissModalViewControllerAnimated:YES];
 }
 
+//method called when the Post button is pressed
 -(void)postItButton:(id)sender
 {
     RKParams* params = [RKParams params];
     
+    //map the response to an object
     [params setValue:@"/xe_dev/index.php?module=admin&act=dispPageAdminInsert" forParam:@"error_return_url"];
     [params setValue:@"insertPage" forParam:@"ruleset"];
     [params setValue:@"mobile_communication" forParam:@"module"];
@@ -131,6 +140,7 @@
     [mapping mapKeyPath:@"value" toAttribute:@"auxVariable"];
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
     
+    //send the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/" usingBlock:^(RKObjectLoader * loader)
      {
          loader.params = params;

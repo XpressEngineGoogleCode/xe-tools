@@ -25,6 +25,22 @@
 @synthesize tableView = _tableView;
 @synthesize menuForDelete = _menuForDelete;
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.tableView.rowHeight = 100;
+    
+    self.navigationItem.title = @"Menu List";
+    
+    //add menu button declaration
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMenuBarButtonPressed)];
+    
+    //send request to get the menus
+    [self getMenusRequest];
+}
+
+//method called when a response is received
 - (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response 
 {
     if( [response.bodyAsString isEqualToString:[self isLogged]]) [self pushLoginViewController];
@@ -41,12 +57,14 @@
     }
 }
 
+//method called when an error occured
 - (void)request:(RKRequest*)request didFailLoadWithError:(NSError *)error 
 {
     [self showErrorWithMessage:self.errorMessage];
-    NSLog(@"error!");
 }
 
+
+//TABLE VIEW with menus
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -82,15 +100,31 @@
         button.tag = indexPath.row;
     }
     
+    //get the menu that will be displayed in cell
     XEMenu *menu = [self.arrayWithMenus objectAtIndex:indexPath.row];
+    
     cell.textLabel.text = menu.name;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
+
+//method called when a cell in TableView is pressed
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    XEMobileMenuItemViewController *menuItemVC = [[XEMobileMenuItemViewController alloc] initWithNibName:@"XEMobileMenuItemViewController" bundle:nil];
+    
+    XEMenu *menu = [self.arrayWithMenus objectAtIndex:indexPath.row];
+    
+    menuItemVC.parentMenu = menu;
+    
+    [self.navigationController pushViewController:menuItemVC animated:YES];
+}
+
 //method called when the delete button get's pressed
 -(void)deletePressed:(UIButton *)sender
 {
+    //push a confirmation window
     UIActionSheet *action = [[ UIActionSheet alloc] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles: nil];
     [action showInView:self.view];
     
@@ -98,14 +132,17 @@
     
 }
 
+//method called when a button in the confirmation window is clicked
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    // buttonIndex == 0 => Delete button was clicked
     if( buttonIndex == 0)
     {
         [self deleteSelectedItem];
     }
 }
 
+//method that deletes the menu selected for removing
 -(void)deleteSelectedItem
 {
     RKParams *params = [RKParams params];
@@ -118,32 +155,20 @@
     [self.indicator startAnimating];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.tableView.rowHeight = 100;
-    
-    self.navigationItem.title = @"Menu List";
-    
-    //add menu button declaration
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMenuBarButtonPressed)];
-    
-    [self getMenusRequest];
-}
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
 }
 
+//method called when an array with objects was mapped from response
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     self.arrayWithMenus = [objects mutableCopy];
     [self.indicator stopAnimating];
     [self.tableView reloadData];
 }
+
 
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
@@ -156,11 +181,12 @@
     NSLog(@"Error!");
 }
 
+//method that makes a request to load the menus
 -(void)getMenusRequest
 {
     [self.indicator startAnimating];
     
-    
+    //map the response to an object
     RKObjectMapping *menuItems = [RKObjectMapping mappingForClass:[XEMenuItem class]];
     [menuItems mapKeyPath:@"menuItemName" toAttribute:@"name"];
     [menuItems mapKeyPath:@"srl" toAttribute:@"moduleSrl"];
@@ -179,11 +205,17 @@
                               forKeys:[NSArray arrayWithObjects:@"module",@"act", nil]];
     
     NSString *resourcePath = [@"/index.php" stringByAppendingQueryParameters:parametr];
+    
+    //sends the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:resourcePath delegate:self];
     
 }
 
-//Method to add a menu
+//
+//WINDOW FOR ADDING A MENU
+//
+
+//Method that pops up the window
 -(void)addMenuBarButtonPressed
 {
     UIView *transparentBackground = [[UIView alloc] initWithFrame:self.view.frame];
@@ -208,6 +240,7 @@
     [self.view addSubview:transparentBackground];
 }
 
+//method called when the back button in Add Menu Window
 -(void)backButton:(UIButton *)sender
 {
     UIView *view = [sender superview];
@@ -217,6 +250,8 @@
     [background removeFromSuperview];
 }
 
+//method called when the OK button is pressed
+//sends a request to add the menu
 -(void)addMenu:(UITextField *)sender
 {
     [sender resignFirstResponder];
@@ -239,16 +274,7 @@
     [self.indicator startAnimating];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    XEMobileMenuItemViewController *menuItemVC = [[XEMobileMenuItemViewController alloc] initWithNibName:@"XEMobileMenuItemViewController" bundle:nil];
-    
-    XEMenu *menu = [self.arrayWithMenus objectAtIndex:indexPath.row];
-    
-    menuItemVC.parentMenu = menu;
-    
-    [self.navigationController pushViewController:menuItemVC animated:YES];
-}
+
 
 
 - (void)viewDidUnload

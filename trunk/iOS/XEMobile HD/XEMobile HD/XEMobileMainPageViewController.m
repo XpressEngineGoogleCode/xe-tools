@@ -47,7 +47,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     
-    //prepare and send request to see if textyle module is installed on server
+    //prepare and send request to see if textyle and forum modules are installed
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEUser class]];
     [mapping mapKeyPath:@"forum" toAttribute:@"forum"];
     [mapping mapKeyPath:@"textyle" toAttribute:@"textyle"];
@@ -71,21 +71,24 @@
     [self.indicator startAnimating];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:self.errorMessage];
 }
 
+//method called when a response is received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
 }
 
-
+//method called when an error occured
 - (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
 }
 
+//method called when an object was mapped from a response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     
@@ -127,12 +130,16 @@
     self.indicator = nil;
 }
 
+// method called when the logout button is pressed
+// it sends a request for logout
 -(IBAction)logoutButtonPressed:(id)sender
 {
     //prepare and send request for logout
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEUser class]];
     [mapping mapKeyPath:@"value" toAttribute:@"loggedOut"];
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
+    
+    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
     
     NSDictionary *parametr = [[NSDictionary alloc] 
                               initWithObjects:[NSArray arrayWithObjects:@"mobile_communication",@"procmobile_communicationLogout", nil] 
@@ -152,6 +159,7 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
+// these methods are called when the buttons in the Dashboard are pressed: stats, members, pages, menus, global settings and textyle
 
 -(IBAction)statsButtonPressed:(id)sender
 {

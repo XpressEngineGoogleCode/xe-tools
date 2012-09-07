@@ -22,6 +22,7 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *passwordField;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *errorLabel;
 @property (unsafe_unretained, nonatomic) IBOutlet UISwitch *rememberSwitch;
+@property (strong, nonatomic) NSData *deviceToken;
 
 -(IBAction)loginButtonPressed;
 

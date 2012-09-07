@@ -16,7 +16,7 @@
 // The UITableViewCells in UITableView are XEMobileCommentsViewCell
 
 @interface XEMobileTextyleCommentsListViewController : XEMobileViewController
-<RKObjectLoaderDelegate, XEMobileCommentsViewCellProtocol, UITableViewDelegate, UITableViewDataSource>
+<RKObjectLoaderDelegate, XEMobileCommentsViewCellProtocol, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
 
 @property (strong, nonatomic) XETextyle *textyle;
 @property (unsafe_unretained, nonatomic) IBOutlet UITableView *tableView;

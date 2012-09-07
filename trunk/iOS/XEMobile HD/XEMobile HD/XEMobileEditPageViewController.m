@@ -47,11 +47,15 @@
     self.moduleNameTextField.text = self.page.mid;
     self.browserTitleTextField.text = self.page.browserTitle;
     
+    //put a Done button on the navigation bar
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed)];
     
+    //make the request to get the layouts
     [self getLayout];
 }
 
+//method called when the Done button is pressed
 -(void)doneButtonPressed
 {
     RKParams* params = [RKParams params];
@@ -93,6 +97,7 @@
     self.layoutPickerView = nil;
 }
 
+//method that sends a request to get all the Layouts
 -(void)getLayout
 {
     RKObjectMapping *mapping = [ RKObjectMapping mappingForClass:[XELayout class]];
@@ -110,21 +115,25 @@
      }];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:@"Error!"];
 }
 
+//method called when a response is received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
-    NSLog(@"%@",response.bodyAsString);
+    //check if the user is logged out
     if( [response.bodyAsString isEqualToString:self.isLogged] ) [self pushLoginViewController];
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
 }
 
+//method called when an object was mapped from the response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     if( [object isKindOfClass:[XEUser class]] )
@@ -137,6 +146,7 @@
     }
 }
 
+//method called when an array with objects are mapped from the response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     if( objects.count != 0 && [[objects objectAtIndex:0] isKindOfClass:[XELayout class]])

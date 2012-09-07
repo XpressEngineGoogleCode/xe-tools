@@ -14,7 +14,6 @@
 
 @property (strong, nonatomic) NSArray *arrayWithPublishedTextylePosts;
 @property (strong, nonatomic) NSArray *arrayWithSavedTextylePosts;
-
 @property (strong, nonatomic) NSArray *arrayForTableView;
 
 @end
@@ -34,6 +33,7 @@
     
     self.navigationItem.title = @"Posts";
     
+    //put an add button to the navigation bar
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPostButtonPressed)];
 }
 
@@ -44,21 +44,25 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
+//method called when a response came
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:self.errorMessage];
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
     NSLog(@"error!");
 }
 
+//method called when an object is loaded
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     [self.indicator stopAnimating];
@@ -80,6 +84,8 @@
 {
     [super viewWillAppear:animated];
     
+    //when the view appear, 2 requests are send: one for saved posts and one for published posts
+    
     RKObjectMapping *mapping = [ RKObjectMapping mappingForClass:[XETextylePost class]];
     
     [mapping mapKeyPath:@"document_srl" toAttribute:@"documentSRL"];
@@ -94,6 +100,8 @@
     NSDictionary *paramsForSaved = [NSDictionary dictionaryWithKeysAndObjects:@"module",@"mobile_communication",@"act",@"procmobile_communicationTextylePostList",@"module_srl",self.textyleItem.moduleSrl,@"published",@"-1", nil];
     
     NSString *pathForPublished = [@"/index.php" stringByAppendingQueryParameters:paramsForPublised];
+    
+    //send request for published posts
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:pathForPublished usingBlock:^(RKObjectLoader *loader)
      {
          loader.delegate = self;
@@ -102,6 +110,7 @@
     
     NSString *pathForSaved = [@"/index.php" stringByAppendingQueryParameters:paramsForSaved];
     
+    //send request for saved posts
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:pathForSaved usingBlock:^(RKObjectLoader *loader)
      {
          loader.delegate = self;
@@ -116,6 +125,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+//method called when the selectPublishOrSave segmentControll changed its selected segment
 -(IBAction)segmentedControlChanged:(UISegmentedControl *)sender
 {
     switch (sender.selectedSegmentIndex) 
@@ -131,6 +141,9 @@
     [self.tableView reloadData];
 }
 
+//method called a cell in tableView is pressde
+//another View Controller is pushed
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     XEMobileTextyleEditPostViewController *editPostVC = [[XEMobileTextyleEditPostViewController alloc] initWithNibName:@"XEMobileTextyleEditPostViewController" bundle:nil];
@@ -139,6 +152,8 @@
     editPostVC.textyle = self.textyleItem;
     [self.navigationController pushViewController:editPostVC animated:YES];
 }
+
+//TABLE VIEW with posts
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -161,6 +176,7 @@
     return cell;
 }
 
+//method called when the Add button is pressed
 -(void)addPostButtonPressed
 {
     XEMobileTextyleAddPostViewController *addPostVC = [[ XEMobileTextyleAddPostViewController alloc] initWithNibName:@"XEMobileTextyleAddPostViewController" bundle:nil];

@@ -99,6 +99,10 @@
     {
         XEMobileMainPageViewController *mainPage = [[XEMobileMainPageViewController alloc] initWithNibName:@"XEMobileMainPageViewController" bundle:nil];
         mainPage.navigationItem.hidesBackButton = YES;
+        
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+         (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+        
         mainPage.detailViewController = self.detailViewController;
         [self.navigationController pushViewController:mainPage animated:YES];
     }

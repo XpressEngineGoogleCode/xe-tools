@@ -34,12 +34,16 @@
     
     self.tableView.rowHeight = 100;
     
+    // put an Add button on the navigation bar
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMenuItem)];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    //send a request to load all the menu items
     
     [self makeRequestForMenuItems];
 }
@@ -51,6 +55,7 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
+//method called when an object was mapped from the response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     if( [objectLoader.userData isEqualToString:@"edit_menu"] )
@@ -74,6 +79,7 @@
     }
 }
 
+//method called when an array with objects was mapped from the response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects 
 {
     if( objects.count != 0 && [[objects objectAtIndex:0] isKindOfClass:[XEMenu class]] )
@@ -89,17 +95,20 @@
     
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
     NSLog(@"load object %@",error);
 }
 
+//method called when a response is received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
-    NSLog(@"%@",response.bodyAsString);
+    //check if the user is logged out
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:self.errorMessage];
@@ -125,7 +134,6 @@
     NSDictionary *parametr = [[NSDictionary alloc] 
                               initWithObjects:[NSArray arrayWithObjects:@"mobile_communication",@"procmobile_communicationDisplayMenu", nil] 
                               forKeys:[NSArray arrayWithObjects:@"module",@"act", nil]];
-    //for identify in "request:didLoadResponse:"
     
     NSString *path = [@"/index.php" stringByAppendingQueryParameters:parametr];
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:path usingBlock:^(RKObjectLoader *loader)
@@ -136,7 +144,7 @@
     
 }
 
-
+//method called when the Add button is pressed
 -(void)addMenuItem
 {
     XEMobileAddMenuItemViewController *addMenuItemVC = [[XEMobileAddMenuItemViewController alloc] initWithNibName:@"XEMobileAddMenuItemViewController" bundle:nil];
@@ -144,6 +152,7 @@
     [self.navigationController pushViewController:addMenuItemVC animated:YES];
 }
 
+// TABLE VIEW with menu items
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -188,7 +197,8 @@
     return cell;
 }
 
-
+//method called when the Edit button is pressed
+//it sends a request to obtain aditional details about the menu item
 -(void)editMenuItem:(UIButton *)button
 {
     XEMenuItem *menuItem = [self.arrayWithMenuItems objectAtIndex:button.tag];
@@ -204,6 +214,7 @@
     [[RKClient sharedClient] setValue:@"application/xml" forHTTPHeaderField:@"Accept"];
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response.menu_item"];
     
+    //send the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php" usingBlock:^(RKObjectLoader *loader)
      {
          loader.method = RKRequestMethodPOST;
@@ -215,14 +226,17 @@
      }];
 }
 
+//method called when the Delete button is pressed
 -(void)deleteMenuItem:(UIButton *)button
 {
+    // push a Confirmation Window
     UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles:nil];
     [action showInView:self.view];
     
+    //set the menu item that will be removed
     self.menuItemForDelete = [self.arrayWithMenuItems objectAtIndex:button.tag];
 }
-
+//method called when a button in the Confirmation window was pressed
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if( buttonIndex == 0 )
@@ -237,6 +251,7 @@
     self.tableView = nil;
 }
 
+//method that removes the selected menu item 
 -(void)deleteSelecteditem
 {
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEUser class]];

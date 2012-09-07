@@ -37,6 +37,48 @@
     return YES;
 }
 
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+	NSLog(@"My token is: %@", deviceToken);
+    NSLog(@"HOST: %@/index.php&module=mobile_communication&act=procmobile_communicationRegistreForPopUp",[RKObjectManager sharedManager].baseURL.absoluteString);
+    
+    NSString *deviceTokenString = [[[deviceToken description]
+                                    stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]] 
+                                   stringByReplacingOccurrencesOfString:@" " 
+                                   withString:@""];
+    
+    NSLog(@"My token string before: %@",deviceTokenString);
+    
+    deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@">" withString:@">"];
+    
+    NSLog(@"My token string is %@",deviceTokenString);
+    
+    [[RKClient sharedClient] get:[NSString stringWithFormat:@"/index.php?module=mobile_communication&act=procmobile_communicationRegistreForPopUp&id=%@",deviceTokenString] delegate:nil];
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+	NSLog(@"Failed to get token, error: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo 
+{
+    NSLog(@"%@",userInfo);
+    
+    NSDictionary *messageDictionary = [userInfo objectForKey:@"aps"];
+    
+    NSString *message = [messageDictionary objectForKey:@"alert"];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New comment!"
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

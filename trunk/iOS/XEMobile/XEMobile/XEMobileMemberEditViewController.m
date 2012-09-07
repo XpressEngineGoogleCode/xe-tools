@@ -30,6 +30,7 @@
     
     self.navigationItem.title = self.member.nickname;
     
+    //put a Done and a Cancel button on the navigation bar
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed)];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed)];
@@ -41,10 +42,11 @@
 {
     [super viewWillAppear:animated];
     
-    [self loadInterface];
+    //send request to load the current setting configuration for the selected member
+    [self loadCurrentSettingConfiguration];
 }
 
--(void)loadInterface
+-(void)loadCurrentSettingConfiguration
 {
     self.emailLabel.text = self.member.email;
     self.nicknameTextField.text = self.member.nickname;
@@ -58,6 +60,7 @@
     else self.statusSegmentedBar.selectedSegmentIndex = 1;
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
 
@@ -76,9 +79,13 @@
     }
 }
 
+//method called when the Done button is pressed
+// sends a request to save the member's settings
 -(void)doneButtonPressed
 {
     RKParams *params = [RKParams params];
+    
+    //map the response to an object
     
     [params setValue:@"insertAdminMember" forParam:@"ruleset"];
     [params setValue:@"mobile_communication" forParam:@"module"];
@@ -111,6 +118,7 @@
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
     
+    //send the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/" usingBlock:^(RKObjectLoader *loader)
     {
         loader.method = RKRequestMethodPOST;
@@ -122,6 +130,7 @@
     [self.indicator startAnimating];
 }
 
+//method called when the cancel button is pressed
 -(void)cancelButtonPressed
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -132,6 +141,7 @@
     [self.indicator stopAnimating];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:@"There is a problem with your internet connection!"];

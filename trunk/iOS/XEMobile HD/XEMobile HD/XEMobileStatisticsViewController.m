@@ -27,6 +27,8 @@
     self.navigationItem.title = @"Statistics";
     
     self.tableView.rowHeight = 85;
+    
+    //send the request to load the statistics
     [self loadStats];
 }
 
@@ -60,21 +62,27 @@
     [self.indicator startAnimating];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     NSLog(@"Error! %@",error.localizedDescription);
     [self showErrorWithMessage:@"There is a problem with your internet connection!"];
 }
 
+//method called when a response was received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
+    //check if the user is logged out
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
     NSLog(@"%@",error.localizedDescription);
 }
+
+//TABLE VIEW with statistics
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

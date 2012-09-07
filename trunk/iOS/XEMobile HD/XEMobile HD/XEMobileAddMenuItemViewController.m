@@ -30,8 +30,38 @@
 @synthesize labelForErrors = _labelForErrors;
 @synthesize indicator = _indicator;
 
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    //put a Cancel and a Done button on the navigation bar
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPressed)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveButtonPressed)];
+    
+    //send a request to load all the module
+    
+    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEModule class]];
+    
+    [mapping mapKeyPath:@"module" toAttribute:@"mid"];
+    [mapping mapKeyPath:@"module_srl" toAttribute:@"moduleSrl"];
+    
+    [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response.newmodule"];
+    
+    [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php?module=mobile_communication&act=procmobile_communicationListModules" usingBlock:^(RKObjectLoader *loader)
+     {
+         loader.delegate = self;
+         loader.userData = @"get_all_modules_request";
+     }];
+    
+    [self.indicator startAnimating];
+}
+
+//method called when the Done button is pressed
 -(void)saveButtonPressed
 {
+    //check with segment is selected
     switch (self.moduleSegment.selectedSegmentIndex) 
     {
         case 0:
@@ -47,11 +77,13 @@
     [self.indicator startAnimating];
 }
 
+//method called when the Cancel button is pressed
 -(void)cancelPressed
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+//return the index in array for the module ID
 -(NSInteger)searchForModuleWithName:(NSString*)moduleID
 {
     int contor = 0;
@@ -65,7 +97,8 @@
 
 //checks the segmentedcontrol responsable with module type
 -(NSString *)isArticleModuleOrExternal
-{    switch (self.articleWidgetExternalSegment.selectedSegmentIndex)  
+{    
+    switch (self.articleWidgetExternalSegment.selectedSegmentIndex)  
     {
         case 0:
             return @"ARTICLE";
@@ -115,6 +148,11 @@
     [params setValue:@"insertMenuItem" forParam:@"ruleset"];
     [params setValue:@"mobile_communication" forParam:@"module"];
     [params setValue:@"procmobile_communicationMenuItem" forParam:@"act"];
+    if( self.editedMenu )
+        [params setValue:self.editedMenu.moduleSrl forParam:@"menu_item_srl"];
+    else {
+        [params setValue:@"" forParam:@"menu_item_srl"];
+    }
     [params setValue:self.parentModuleSRL forParam:@"menu_srl"];
     [params setValue:self.browserTitleField.text forParam:@"menu_name_key"];
     [params setValue:self.browserTitleField.text forParam:@"menu_name"];
@@ -306,28 +344,7 @@
     self.labelForErrors.text = @"";
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPressed)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveButtonPressed)];
-    
-    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEModule class]];
-    
-    [mapping mapKeyPath:@"module" toAttribute:@"mid"];
-    [mapping mapKeyPath:@"module_srl" toAttribute:@"moduleSrl"];
-    
-    [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response.newmodule"];
-    
-    [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php?module=mobile_communication&act=procmobile_communicationListModules" usingBlock:^(RKObjectLoader *loader)
-     {
-         loader.delegate = self;
-         loader.userData = @"get_all_modules_request";
-     }];
-    
-    [self.indicator startAnimating];
-}
+
 
 -(void)viewDidUnload
 {

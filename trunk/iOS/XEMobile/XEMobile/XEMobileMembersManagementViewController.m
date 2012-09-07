@@ -21,16 +21,39 @@
 @synthesize arrayWithMembers = _arrayWithMembers;
 @synthesize tableView = _tableView;
 
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    //send request to load the members
+    [self loadMembers];
+    
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    //set the title in navigation bar
+    self.navigationItem.title = @"Members List";
+    
+}
+
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:@"There is a problem with your internet connection!"];
 }
 
+//method called when a response was received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
 }
 
+//method called when an array with objects was mapped from the response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(id)object
 {
     self.arrayWithMembers = object;
@@ -39,10 +62,13 @@
     [self.indicator stopAnimating];
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error 
 {
     NSLog(@"Error!");
 }
+
+//TABLE VIEW with members
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -82,22 +108,7 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self loadMembers];
-
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.navigationItem.title = @"Members List";
-
-}
-
+//method that sends the request that returns all the members
 -(void)loadMembers
 {
     NSDictionary *parametr = [[NSDictionary alloc] 

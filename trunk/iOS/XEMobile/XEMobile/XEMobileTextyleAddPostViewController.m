@@ -95,6 +95,7 @@
         }
 }
 
+//method to send a request
 -(void)sendStringRequestToServer:(NSString *)request withUserData:(NSString *)userData
 {
     
@@ -131,6 +132,7 @@
     self.contentTextView = nil;
 }
 
+//when contentTextView is pressed TextEditorViewController is pushed
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
     XEMobileTextEditorViewController *editorVC = [[ XEMobileTextEditorViewController alloc] initWithNibName:@"XEMobileTextEditorViewController" bundle:nil];

@@ -30,6 +30,7 @@
     self.navigationItem.title = @"Home";
 }
 
+//load XE's address as Title
 -(void)loadTitle
 {
     NSString *link = [RKObjectManager sharedManager].baseURL.absoluteString;
@@ -44,6 +45,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
+    //send a request to see if textyle and forum modules are installed
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEUser class]];
     [mapping mapKeyPath:@"forum" toAttribute:@"forum"];
     [mapping mapKeyPath:@"textyle" toAttribute:@"textyle"];
@@ -61,26 +64,30 @@
          loader.userData = @"modules";
      }
      ];
-    
+   
+    //load the tile of the XE Site
     [self loadTitle];
     [self.indicator startAnimating];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:self.errorMessage];
 }
 
+//method called when a response is received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
 }
 
-
+//method called when an error occured
 - (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
 }
 
+//method called when an object was mapped from the response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     
@@ -89,6 +96,8 @@
         XEUser *user = (XEUser *)object;
         if( [user.loggedOut isEqualToString:@"true"] )
         {
+            [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+            
             [self pushLoginViewController];
         }
     }
@@ -107,25 +116,10 @@
     }
 }
 
--(IBAction)statsButtonPressed:(id)sender
-{
-    XEMobileStatisticsViewController *statsVC = [[XEMobileStatisticsViewController alloc] initWithNibName:@"XEMobileStatisticsViewController" bundle:nil];
-    [self.navigationController pushViewController:statsVC animated:YES];
-}
-
--(void)viewDidUnload
-{
-    [super viewDidUnload];
-    
-    [[RKObjectManager sharedManager].requestQueue cancelRequestsWithDelegate:self];
-    
-    self.titleLabel = nil;
-    self.textyleButton = nil;
-    self.indicator = nil;
-}
-
+// method called when the Logout button is pressed
 -(IBAction)logoutButtonPressed:(id)sender
 {
+    
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEUser class]];
     [mapping mapKeyPath:@"value" toAttribute:@"loggedOut"];
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
@@ -141,13 +135,11 @@
      }];
 }
 
--(void)viewWillDisappear:(BOOL)animated
+-(IBAction)statsButtonPressed:(id)sender
 {
-    [super viewWillDisappear:animated];
-    [[RKObjectManager sharedManager].requestQueue cancelRequestsWithDelegate:self];
-    [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
+    XEMobileStatisticsViewController *statsVC = [[XEMobileStatisticsViewController alloc] initWithNibName:@"XEMobileStatisticsViewController" bundle:nil];
+    [self.navigationController pushViewController:statsVC animated:YES];
 }
-
 
 -(IBAction)membersButtonPressed:(id)sender
 {
@@ -175,5 +167,24 @@
     XEMobileTextyleSelectViewController *textyleVC = [[XEMobileTextyleSelectViewController alloc] initWithNibName:@"XEMobileTextyleSelectViewController" bundle:nil];
     [self.navigationController pushViewController:textyleVC animated:YES];
 }
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[RKObjectManager sharedManager].requestQueue cancelRequestsWithDelegate:self];
+    [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
+}
+
+-(void)viewDidUnload
+{
+    [super viewDidUnload];
+    
+    [[RKObjectManager sharedManager].requestQueue cancelRequestsWithDelegate:self];
+    
+    self.titleLabel = nil;
+    self.textyleButton = nil;
+    self.indicator = nil;
+}
+
 
 @end

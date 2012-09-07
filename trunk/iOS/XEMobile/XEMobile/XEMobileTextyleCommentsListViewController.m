@@ -16,6 +16,7 @@
 @interface XEMobileTextyleCommentsListViewController ()
 
 @property (strong, nonatomic) NSArray *arrayWithComments;
+@property (strong, nonatomic) XEComment *commentForRemoving;
 
 @end
 
@@ -24,7 +25,7 @@
 @synthesize textyle = _textyle;
 @synthesize arrayWithComments = _arrayWithComments;
 @synthesize tableView = _tableView;
-
+@synthesize commentForRemoving = _commentForRemoving;
 
 - (void)viewDidLoad
 {
@@ -38,6 +39,7 @@
 {
     [super viewWillAppear:animated];
     
+    //send request to get all the comments
     [self loadComments];
 }
 
@@ -48,12 +50,13 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
+//method called when a response came
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
-    NSLog(@"%@",response.bodyAsString);
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [ self pushLoginViewController ]; 
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:@"There is a problem with your internet connection!"];
@@ -65,7 +68,7 @@
    // [self showErrorWithMessage:@"There is a problem with your internet connection!"];
 }
 
-
+//method called when the array with objects was loaded
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     if( [objectLoader.userData isEqualToString:@"load_comments"] )
@@ -85,11 +88,11 @@
              return [date1 compare:date2];
          }];
         
-        //put replies at their place
+        //prepare the array for reply comments indentation
         self.arrayWithComments = [self prepareArrayForTableView:self.arrayWithComments];
         
         [self.tableView reloadData];
-
+        self.commentForRemoving = nil;
     }
 }
 
@@ -98,7 +101,7 @@
     NSMutableArray *anotherArray = [[NSMutableArray alloc] init];
     NSMutableArray *arrayWithReplies = [[NSMutableArray alloc ] init ];
     
-    //search for replies and insert them after the comment
+    //put reply comments and normal comments in two different arrays
     for(XEComment *comment in array)
     {
         // normal comment
@@ -113,6 +116,7 @@
         }
     }
     
+    //insert the reply comments after their parent comment
     for(XEComment *reply in arrayWithReplies)
     {
         int index = [self indexInArrayForCommentWithModuleSRL:reply.parentSRL inArray:anotherArray];
@@ -138,6 +142,8 @@
     return index;
 }
 
+
+//method called when an object was loaded
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     if( [objectLoader.userData isEqualToString:@"delete_comment"])
@@ -150,9 +156,10 @@
     }
 }
 
-
+// method that send the request for comments
 -(void)loadComments
 {
+    //map the response to an Object
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEComment class]];
     [mapping mapKeyPath:@"comment_srl" toAttribute:@"commentSRL"];
     [mapping mapKeyPath:@"module_srl" toAttribute:@"moduleSrl"];
@@ -168,8 +175,10 @@
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response.comment"];
     
-    NSLog(@"%@",self.textyle.moduleSrl);
+    
     NSString *path = [NSString stringWithFormat:@"/index.php?module=mobile_communication&act=procmobile_communicationShowComments&module_srl=%@",self.textyle.moduleSrl];
+    
+    //sends the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:path usingBlock:^(RKObjectLoader *loader)
      {
          loader.delegate = self;
@@ -177,6 +186,10 @@
      }];
     
 }
+
+//
+// UITableView to display XEComments 
+//
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -217,6 +230,12 @@
     return cell;
 }
 
+// XEMobileCommentsViewCellProtocol PROTOCOL METHODS IMPLEMENTED 
+
+//
+// method called when the reply button in UITableViewCell is pressed
+//
+
 -(void)replyButtonPressedInCell:(XEMobileCommentsViewCell *)cell
 {
     XEMobileTextyleReplyCommentViewController *replyVC = [[XEMobileTextyleReplyCommentViewController alloc] initWithNibName:@"XEMobileTextyleReplyCommentViewController" bundle:nil];
@@ -228,18 +247,45 @@
     
 }
 
-
+//
+// method called when the delete button in UITableViewCell is pressed
+//
 
 -(void)deleteButtonPressedInCell:(XEMobileCommentsViewCell *)cell
 {
+    if( self.commentForRemoving == nil )
+    {
     int index = [self.tableView indexPathForCell:cell].row;
     
-    XEComment *commentToDelete = [self.arrayWithComments objectAtIndex:index];
+    self.commentForRemoving = [self.arrayWithComments objectAtIndex:index];
     
-    NSString *requestDeleteXML = [ NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<methodCall>\n<params>\n<comment_srl><![CDATA[%@]]></comment_srl>\n<module><![CDATA[textyle]]></module>\n<act><![CDATA[procTextyleCommentItemDelete]]></act>\n<vid><![CDATA[%@]]></vid>\n</params>\n</methodCall>",commentToDelete.commentSRL,self.textyle.domain];
+    //confirmation
+    UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles:nil];
+    [action showInView:self.view];
+    }
+}
+
+//method called when a button in confirmation is pressed
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if( buttonIndex == 0)
+    {
+        [self removeSelectedComment];
+    }
+    else self.commentForRemoving = nil;
+}
+
+-(void)removeSelectedComment
+{
+    NSLog(@"%@",self.commentForRemoving.commentSRL);
+    NSString *requestDeleteXML = [ NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<methodCall>\n<params>\n<comment_srl><![CDATA[%@]]></comment_srl>\n<module><![CDATA[textyle]]></module>\n<act><![CDATA[procTextyleCommentItemDelete]]></act>\n<vid><![CDATA[%@]]></vid>\n</params>\n</methodCall>",self.commentForRemoving.commentSRL,self.textyle.domain];
     
     [self sendStringRequestToServer:requestDeleteXML withUserData:@"delete_comment"];
 }
+
+//
+// method that sends a request
+//
 
 -(void)sendStringRequestToServer:(NSString*)request withUserData:(NSString *)userData
 {
@@ -258,6 +304,9 @@
      }];
 }
 
+//
+// method called when the visibility button in UITableViewCell is pressed
+//
 
 -(void)visibilityButtonPressedInCell:(XEMobileCommentsViewCell *)cell
 {
