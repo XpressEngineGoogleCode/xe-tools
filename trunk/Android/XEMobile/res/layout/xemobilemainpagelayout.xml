@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+<LinearLayout 
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:paddingTop="50dp"
+   android:layout_centerInParent="true"
+   android:orientation="horizontal">
+        
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+          			  <Button 
+        				 	android:id="@+id/XEMOBILE_MAINPAGE_MEMBERS"
+       					 	android:layout_width="100dp"
+       					 	android:layout_height="100dp"
+       					 	android:text="Members"/>
+
+    					<Button 
+        					android:id="@+id/XEMOBILE_MAINPAGE_PAGE"
+        					android:layout_width="100dp"
+        					android:layout_height="100dp"
+        					android:text="Page"/>
+    
+    					<Button 
+        					android:id="@+id/XEMOBILE_MAINPAGE_MENU"
+        					android:layout_width="100dp"
+        					android:layout_height="100dp"
+        					android:text="Menu"/>
+                 
+    </LinearLayout>
+    
+    <LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+   
+    <Button 
+        android:id="@+id/XEMOBILE_MAINPAGE_SETTINGS"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="Settings"/>
+    
+    <Button 
+        android:id="@+id/XEMOBILE_MAINPAGE_TEXTYLE"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="Textyle"/>
+    
+    <Button 
+        android:id="@+id/XEMOBILE_MAINPAGE_STATS"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="Statistics"/>
+    
+</LinearLayout>
+    
+    
+</LinearLayout>
+</RelativeLayout>
+

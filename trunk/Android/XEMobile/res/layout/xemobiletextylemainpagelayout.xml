@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+<ListView 
+    android:id="@+id/XEMOBILE_TEXTYLE_MAIN_PGE_STATSLISTVIEW"
+    android:layout_marginTop="40dp"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"/>
+    
+<LinearLayout 
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:paddingTop="50dp"
+   android:layout_below="@+id/XEMOBILE_TEXTYLE_MAIN_PGE_STATSLISTVIEW"
+   android:layout_centerHorizontal="true"
+   android:orientation="horizontal">
+        
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+          			  <Button 
+        				 	android:id="@+id/XEMOBILE_TEXTYLE_MAINPAGE_POSTS"
+       					 	android:layout_width="100dp"
+       					 	android:layout_height="50dp"
+       					 	android:text="Posts"/>
+
+    					<Button 
+        					android:id="@+id/XEMOBILE_TEXTYLE_MAINPAGE_PAGES"
+        					android:layout_width="100dp"
+        					android:layout_height="50dp"
+        					android:text="Pages"/>
+                 
+    </LinearLayout>
+    
+    <LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+   
+
+   
+    <Button 
+        android:id="@+id/XEMOBILE_TEXTYLE_MAINPAGE_SETTINGS"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Settings"/>
+    
+    <Button 
+        android:id="@+id/XEMOBILE_TEXTYLE_MAINPAGE_COMMENTS"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Comments"/>
+
+    
+</LinearLayout>
+    
+    
+</LinearLayout>
+</RelativeLayout>
+
