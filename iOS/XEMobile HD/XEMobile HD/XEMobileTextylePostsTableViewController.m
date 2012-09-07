@@ -34,6 +34,8 @@
     
     self.navigationItem.title = @"Posts";
     
+    //method called when the Add button is pressed
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPostButtonPressed)];
 }
 
@@ -44,21 +46,25 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
+//method called when a response is received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:self.errorMessage];
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
     NSLog(@"error!");
 }
 
+//method called when an array with objects is mapped from the response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     [self.indicator stopAnimating];
@@ -75,6 +81,8 @@
     else self.arrayForTableView = self.arrayWithSavedTextylePosts;
     [self.tableView reloadData];
 }
+
+//when the view appears, two requests are made: one for publish posts and one for saved posts
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -94,6 +102,8 @@
     NSDictionary *paramsForSaved = [NSDictionary dictionaryWithKeysAndObjects:@"module",@"mobile_communication",@"act",@"procmobile_communicationTextylePostList",@"module_srl",self.textyleItem.moduleSrl,@"published",@"-1", nil];
     
     NSString *pathForPublished = [@"/index.php" stringByAppendingQueryParameters:paramsForPublised];
+    
+    //send the request for the publish posts
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:pathForPublished usingBlock:^(RKObjectLoader *loader)
      {
          loader.delegate = self;
@@ -102,6 +112,7 @@
     
     NSString *pathForSaved = [@"/index.php" stringByAppendingQueryParameters:paramsForSaved];
     
+    //send the request for the saved posts
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:pathForSaved usingBlock:^(RKObjectLoader *loader)
      {
          loader.delegate = self;
@@ -111,6 +122,7 @@
     [self.indicator startAnimating];
 }
 
+//method called when the selectPublishOrSaved SegmentedControl changed his selection segment
 -(IBAction)segmentedControlChanged:(UISegmentedControl *)sender
 {
     switch (sender.selectedSegmentIndex) 
@@ -126,17 +138,7 @@
     [self.tableView reloadData];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    XEMobileTextyleEditPostViewController *editPostVC = [[XEMobileTextyleEditPostViewController alloc] initWithNibName:@"XEMobileTextyleEditPostViewController" bundle:nil];
-
-    editPostVC.post = [self.arrayForTableView objectAtIndex:indexPath.row];
-    editPostVC.textyle = self.textyleItem;
-    
-    UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:editPostVC];
-    
-    [self.navigationController presentModalViewController:navCon animated:YES];
-}
+//TABLE VIEW with posts
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -152,6 +154,8 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    
+    //the post object that will be displayed in cell
     XETextylePost *post = [self.arrayForTableView objectAtIndex:indexPath.row];
     
     cell.textLabel.text = post.title;
@@ -159,6 +163,19 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    XEMobileTextyleEditPostViewController *editPostVC = [[XEMobileTextyleEditPostViewController alloc] initWithNibName:@"XEMobileTextyleEditPostViewController" bundle:nil];
+    
+    editPostVC.post = [self.arrayForTableView objectAtIndex:indexPath.row];
+    editPostVC.textyle = self.textyleItem;
+    
+    UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:editPostVC];
+    
+    [self.navigationController presentModalViewController:navCon animated:YES];
+}
+
+//method called when the Add button is pressed
 -(void)addPostButtonPressed
 {
     XEMobileTextyleAddPostViewController *addPostVC = [[ XEMobileTextyleAddPostViewController alloc] initWithNibName:@"XEMobileTextyleAddPostViewController" bundle:nil];

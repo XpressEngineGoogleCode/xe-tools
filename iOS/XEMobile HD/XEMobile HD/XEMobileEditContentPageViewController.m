@@ -33,7 +33,7 @@
     
     self.navigationItem.title = self.page.mid;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveButtonPressed:)];
+    //two requests: one for title and one for content
     
     RKRequest *requestForContent = [[RKClient sharedClient] get:[NSString stringWithFormat:@"/index.php?module=mobile_communication&act=procmobile_communicationArticleContent&srl=%@",self.page.document_srl] delegate:self];
     requestForContent.userData = @"contentRequest";
@@ -43,6 +43,8 @@
     
     [self.indicator startAnimating];
     
+        //put a Done and a Cancel button on the navigation bar
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveButtonPressed:)];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed:)];
@@ -51,6 +53,7 @@
     self.scrollView.scrollEnabled = NO;
 }
 
+//method called when an object was loaded
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     XEUser *obj = object;
@@ -63,10 +66,12 @@
     
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
 }
 
+//hide keyboard when the Return button is pressed 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -106,8 +111,10 @@
     [self showErrorWithMessage:self.errorMessage];
 }
 
+//method called when a response is received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
+    //check if the user is logged out
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) 
     {
         [ self pushLoginViewController ];
@@ -128,6 +135,7 @@
     }
 }
 
+//set the title and the content on the screen
 -(void)loadContent
 {
     self.textView.text = self.contentString;

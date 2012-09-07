@@ -32,12 +32,15 @@
     
     self.navigationItem.title = @"Skins";
     
+    //add Cancel button to navigation bar and sets an action to it
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed)];
     
+    //add Save button to navigation bar and sets an action to it
     self.navigationItem.rightBarButtonItem = [[ UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveButtonPressed) ];
     
     self.tableView.rowHeight = 130;
     
+    //send requests for loading the skins
     [self loadSkins];
 }
 
@@ -48,23 +51,29 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
+//method called when the save button is pressed
 -(void)saveButtonPressed
 {
+    //prepare request
     NSString *changeSkinXML = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<methodCall>\n<params>\n<skin><![CDATA[%@]]></skin>\n<mid><![CDATA[textyle]]></mid>\n<module><![CDATA[textyle]]></module>\n<act><![CDATA[procTextyleToolLayoutConfigSkin]]></act>\n<vid><![CDATA[%@]]></vid>\n</params>\n</methodCall>",self.textyle.skin,self.textyle.domain];
     
+    //send request for save
     RKRequest *request = [[RKClient sharedClient] post:@"/index.php" params:[RKRequestSerialization serializationWithData:[changeSkinXML dataUsingEncoding:NSUTF8StringEncoding] MIMEType:RKMIMETypeXML ] delegate:self];
     request.userData = @"change_skin";
     [self.indicator startAnimating];
 }
 
+//method called when the cancel is pressed
 -(void)cancelButtonPressed
 {
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
+
+//method called when a response came
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
-{
-    
+{    
+    //check if the user is logged
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [ self pushLoginViewController ];
     
     if ( [request.userData isEqualToString:@"change_skin"] )
@@ -74,7 +83,7 @@
         }
 }
 
-
+//method called when the array with mapped objects is loaded
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     
@@ -98,6 +107,7 @@
     [self showErrorWithMessage:self.errorMessage];
 }
 
+//send request for loading the skins
 -(void)loadSkins
 {
     RKObjectMapping *mapping = [ RKObjectMapping mappingForClass:[XESkin class]];
@@ -109,6 +119,7 @@
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response.skin"];
     
+    //send the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php?module=mobile_communication&act=procmobile_communicationGetSkins" delegate:self];
     [self.indicator startAnimating];
 }
@@ -124,6 +135,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+//UITableView with XESkins
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -137,6 +149,8 @@
     XEMobileSkinCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if( cell == nil )
     {
+        //if cell can't be dequeued we create a new one
+        
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"XEMobileSkinCell" owner:nil options:nil];
         
         for(id currentObject in topLevelObjects)
@@ -149,9 +163,11 @@
         }
     }
 
+    //the skin that will be displayed in cell
     XESkin *skin = [self.arrayWithSkins objectAtIndex:indexPath.row];
-    [cell.skinView setImage:skin.image];
     
+    
+    [cell.skinView setImage:skin.image];
     if( [skin.id isEqualToString:self.textyle.skin]) 
     {
         [cell checkBox];
@@ -163,6 +179,7 @@
     return cell;
 }
 
+//method called when a row in UITableView is pressed
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if( selected.row != indexPath.row )

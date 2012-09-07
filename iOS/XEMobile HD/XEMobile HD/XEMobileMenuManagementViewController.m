@@ -94,6 +94,7 @@
     UIActionSheet *action = [[ UIActionSheet alloc] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles: nil];
     [action showInView:self.view];
     
+    //select the menu for removing
     self.menuForDelete = [self.arrayWithMenus objectAtIndex:sender.tag];
     
 }
@@ -106,6 +107,7 @@
     }
 }
 
+//delete the selected menu
 -(void)deleteSelectedItem
 {
     RKParams *params = [RKParams params];
@@ -115,6 +117,7 @@
     RKRequest *request= [[RKClient sharedClient] post:@"/index.php?module=mobile_communication&act=procmobile_communicationMenuDelete" params:params delegate:self];
     //for identify in "request:didLoadResponse:"
     request.userData = @"delete_request";
+    
     [self.indicator startAnimating];
 }
 
@@ -156,6 +159,7 @@
     NSLog(@"Error!");
 }
 
+//method that sends a request to obtain all menus
 -(void)getMenusRequest
 {
     [self.indicator startAnimating];
@@ -183,7 +187,7 @@
     
 }
 
-//Method to add a menu
+//method that pop up the window for adding a Menu
 -(void)addMenuBarButtonPressed
 {
     UIView *transparentBackground = [[UIView alloc] initWithFrame:self.view.frame];
@@ -208,6 +212,7 @@
     [self.view addSubview:transparentBackground];
 }
 
+//method called when the Back button from the Adding Menu Window is pressed
 -(void)backButton:(UIButton *)sender
 {
     UIView *view = [sender superview];
@@ -217,6 +222,7 @@
     [background removeFromSuperview];
 }
 
+//method called when the Ok button from the Adding Menu Window is pressed
 -(void)addMenu:(UITextField *)sender
 {
     [sender resignFirstResponder];

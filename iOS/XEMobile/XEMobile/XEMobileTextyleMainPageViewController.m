@@ -29,9 +29,11 @@
     
     self.navigationItem.title = self.textyleItem.domain;
 	
+    //send request to get the statistics
     [self makeRequestForStatistics];
 }
 
+//method called when an object was loaded
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     if( [object isKindOfClass:[XETextyleStats class]] ) 
@@ -43,16 +45,19 @@
     }
 }
 
+//an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
     NSLog(@"Error!");
 }
 
+//method called when an response is received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:@"Error!"];
@@ -70,10 +75,14 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
+
+//method that sends a request for statistics
 -(void)makeRequestForStatistics
 {
     self.tableView.hidden = YES;
     [self.indicator startAnimating];
+    
+    //map the response to an object
     RKObjectMapping *mapping = [ RKObjectMapping mappingForClass:[XETextyleStats class]];
     
     [mapping mapKeyPath:@"monday" toAttribute:@"monday"];
@@ -86,6 +95,7 @@
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
     
+    //send the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:[NSString stringWithFormat:@"/index.php?module=mobile_communication&act=procmobile_communicationTextyleStats&site_srl=%@",self.textyleItem.siteSRL] delegate:self];
 }
 
@@ -99,14 +109,19 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
-
+//
+//Method called when the post button is pressed
+//
 - (IBAction)postsButtonPressed:(id)sender
 {
     XEMobileTextylePostsTableViewController *postsVC = [[XEMobileTextylePostsTableViewController alloc] initWithNibName:@"XEMobileTextylePostsTableViewController" bundle:nil];
     postsVC.textyleItem = self.textyleItem;
     [self.navigationController pushViewController:postsVC animated:YES];
 }
+
+//
+//Method called when the comments button is pressed
+//
 
 - (IBAction)commentsButtonPressed:(id)sender
 {
@@ -115,9 +130,15 @@
     [self.navigationController pushViewController:commentsVC animated:YES];
 }
 
+//
+//Method called when the settings button is pressed
+//
 
 - (IBAction)settingsButtonPressed:(id)sender
 {
+    
+    //build the UITabBarController with three View Controllers
+    
     XEMobileTextyleSettingsViewController *settings = [[XEMobileTextyleSettingsViewController alloc] initWithNibName:@"XEMobileTextyleSettingsViewController" bundle:nil];    
     XETextyleSettings *settingsObject = [[XETextyleSettings alloc] init];
     settingsObject.defaultLanguage = self.textyleItem.defaultLanguage;
@@ -140,9 +161,14 @@
     UITabBarController *tabBarController = [[UITabBarController alloc] init ];
     [tabBarController setViewControllers:[NSArray arrayWithObjects:generalSettingNavCon, writingSettingsNavCon, skinsNavCon, nil]];
     
-    
+    // push UITabBarController to navigation stack
     [self.navigationController presentModalViewController:tabBarController animated:YES];
 }
+
+
+//
+//Method called when pages button is pressed
+//
 
 -(IBAction)pagesButtonPressed:(id)sender
 {
@@ -151,6 +177,9 @@
     [self.navigationController pushViewController:pagesVC animated:YES];
 }
 
+//
+//TableView for displaying the Statistics
+//
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -168,7 +197,6 @@
         label = [[ UILabel alloc] initWithFrame:CGRectMake(200, 10, 60, 30)];
         cell.textLabel.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:label];
-        NSLog(@"index = %d",indexPath.row);
     }
     else 
     {

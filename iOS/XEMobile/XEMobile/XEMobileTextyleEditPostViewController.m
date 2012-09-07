@@ -38,9 +38,11 @@
     self.scrollView.contentSize = CGSizeMake(320, 800);
     self.scrollView.scrollEnabled = NO;
 
+    //send the request for loading the title and content of the post
     [self loadPostContentAndTitle];
 }
 
+//method that sends the request for title and content
 -(void)loadPostContentAndTitle
 {
     RKRequest *load = [[RKClient sharedClient] get:[NSString stringWithFormat:@"/index.php?module=mobile_communication&act=procmobile_communicationContentForPost&module_srl=%@&document_srl=%@",self.textyle.moduleSrl,self.post.documentSRL] 
@@ -49,17 +51,19 @@
     [self.indicator startAnimating];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:self.errorMessage];
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
     NSLog(@"Error!");
 }
 
-
+//method called when an object was loaded
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(XEUser *)object
 {
     [self.indicator stopAnimating];
@@ -77,19 +81,19 @@
         }
         else
         {
-            NSLog(@"saved response!");
+            // self.publish == YES or confirmation is negative
         }
     
     if ( [objectLoader.userData isEqualToString:@"publish"] )
     {
         if ( [object.auxVariable isEqualToString:@"success"] )
         {
-            NSLog(@"publish response!");
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
 }
 
+//method called when the save button is pressed
 -(IBAction)saveButtonPressed:(id)sender
 {
     self.publish = NO;
@@ -102,16 +106,21 @@
     contentForSave = [contentForSave stringByAppendingFormat:@"%@</p>",self.contentTextView.text];
     contentForSave = [contentForSave stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"];
     
-    
+    //prepare the request for saving the post
     NSString *saveXML = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<methodCall><params>\n<act><![CDATA[procTextylePostsave]]></act>\n<vid><![CDATA[%@]]></vid>\n<publish><![CDATA[%@]]></publish>\n<_filter><![CDATA[save_post]]></_filter>\n<mid><![CDATA[textyle]]></mid>\n<title><![CDATA[%@]]></title>\n<msg_close_before_write><![CDATA[Changed contents are not saved.]]></msg_close_before_write>\n<content><![CDATA[%@]]></content>\n<document_srl><![CDATA[%@]]></document_srl>\n<editor_sequence><![CDATA[%@]]></editor_sequence>\n<module><![CDATA[textyle]]></module>\n</params>\n</methodCall>\n",self.textyle.domain,@"N",self.titleTextField.text,contentForSave,self.post.documentSRL,self.post.documentSRL];
     
+    //send the request
     [self sendStringRequestToServer:saveXML withUserData:@"save"];
 }
 
+// method called when a response came
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     [self.indicator stopAnimating];
+    
+    //check if the user is logged out
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
+    
     if( [request.userData isEqualToString:@"load"] )
     {
         if( response.bodyAsString.length >= 7 )
@@ -119,12 +128,15 @@
     }
 }
 
+//method called when the delete button is pressed
 -(IBAction)deleteButtonPressed:(id)sender
 {
+    // show a confirmation window to the user
     UIActionSheet *action = [[ UIActionSheet alloc] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles:nil];
     [action showInView:self.view];
 }
 
+// method called when a button in confirmation window is pressed
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if( buttonIndex == 0 )
@@ -135,6 +147,7 @@
     }
 }
 
+//method called when the publish button is pressed
 -(IBAction)publishButtonPressed:(id)sender
 {
     self.publish = YES;
@@ -165,6 +178,9 @@
     self.deleteButton = nil;
 }
 
+
+//method called when contentTextView is clicked 
+// TextEditorViewController is pushed
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
     XEMobileTextEditorViewController *editorVC = [[XEMobileTextEditorViewController alloc] initWithNibName:@"XEMobileTextEditorViewController" bundle:nil];

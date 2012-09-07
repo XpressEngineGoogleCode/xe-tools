@@ -24,23 +24,19 @@
 @synthesize timezoneButton = _timezoneButton;
 @synthesize textyle = _textyle;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"language = %@, timezone = %@",self.settings.defaultLanguage,self.settings.timezone);
+
     self.blogTitleTextField.text = self.settings.blogTitle;
+    
+    //add actions on Language and Timezone buttons
     
     [self.languageButton addTarget:self action:@selector(changeLanguageButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.timezoneButton addTarget:self action:@selector(changeTimezoneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    //put a Done button on the navigation bar
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveButtonPressed:)];
     
@@ -53,11 +49,13 @@
 {
     [super viewWillAppear:animated];
     
+    //set the selected Language and Timezone on the button when the view controller appearrs
     [self.languageButton setTitle:self.settings.defaultLanguage forState:UIControlStateNormal];
     [self.timezoneButton setTitle:self.settings.timezone forState:UIControlStateNormal];
     
 }
 
+//method called when the Language button is pressed
 -(IBAction)changeLanguageButtonPressed
 {
     XEMobileOptionsTableViewController *optionsVC = [[XEMobileOptionsTableViewController alloc ]initWithNibName:@"XEMobileOptionsTableViewController" bundle:nil];
@@ -69,6 +67,7 @@
     [self.navigationController pushViewController:optionsVC animated:YES];
 }
 
+//method called when the Timezone button is pressed
 -(IBAction)changeTimezoneButtonPressed
 {
     XEMobileOptionsTableViewController *optionsVC = [[XEMobileOptionsTableViewController alloc] initWithNibName:@"XEMobileOptionsTableViewController" bundle:nil];
@@ -92,6 +91,7 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     NSLog(@"Error!");
@@ -99,13 +99,16 @@
 
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
 
 }
 
+//method called when the Done button is pressed
 -(void)saveButtonPressed:(id)sender
 {
+    //prepare the request
     RKParams *params = [RKParams params];
     [params setValue:@"procTextyleInfoUpdate" forParam:@"act"];
     [params setValue:@"textyle" forParam:@"module"];
@@ -118,10 +121,12 @@
     [params setValue:@"" forParam:@"textyle_content"];
     [params setValue:@"/xe2/index.php?mid=textyle&act=dispTextyleToolConfigInfo&vid=blog" forParam:@"error_return_url"];
     
+    //send the response
     RKRequest *request = [[RKClient sharedClient] post:@"/" params:params delegate:self];
     request.userData = @"save_settings";
 }
 
+//method called when a response is received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     [self.indicator stopAnimating];
@@ -133,6 +138,7 @@
         }
 }
 
+//method called when an object is mapped from the response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
      [self.indicator stopAnimating];
@@ -145,6 +151,7 @@
     }
 }
 
+//method called when the Change Password button is pressed
 -(IBAction)changePasswordButtonPressed:(id)sender
 {
     XEMobileTextyleChangePasswordViewController *changePasswordVC = [[ XEMobileTextyleChangePasswordViewController alloc] initWithNibName:@"XEMobileTextyleChangePasswordViewController" bundle:nil];
@@ -153,8 +160,10 @@
     [self.navigationController pushViewController:changePasswordVC animated:YES];
 }
 
+//method called when the Reset All Data button is pressed
 -(IBAction)resetAllDataButtonPressed:(id)sender
 {
+    //prepare the request to reset all data
     NSString *resetingXML = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<methodCall>\n<params>\n<mid><![CDATA[textyle]]></mid>\n<vid><![CDATA[%@]]></vid>\n<module><![CDATA[textyle]]></module>\n<act><![CDATA[procTextyleToolInit]]></act>\n</params>\n</methodCall>",self.textyle.domain];
     
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEUser class]];
@@ -162,6 +171,7 @@
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
     
+    //send the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php" usingBlock:^(RKObjectLoader *loader)
      {
          loader.delegate = self;
@@ -172,6 +182,7 @@
     [self.indicator startAnimating];
 }
 
+//hide the keyboard when the Return button is pressed
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];

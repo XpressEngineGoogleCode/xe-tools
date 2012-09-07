@@ -8,6 +8,10 @@
 
 #import "XEMobileOptionsTableViewController.h"
 
+//
+// ViewController used to select only one option or more options from a set of options
+//
+
 @interface XEMobileOptionsTableViewController ()
 
 {
@@ -22,14 +26,6 @@
 @synthesize selected = _selected;
 @synthesize type = _type;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 -(void)setDelegateData:(NSArray *)delegateData
 {

@@ -8,6 +8,8 @@
 
 #import "XEMobileSkinCell.h"
 
+//Custom UITableViewCell for XESkins
+
 @implementation XEMobileSkinCell
 @synthesize skinView = _skinView;
 @synthesize label = _label;

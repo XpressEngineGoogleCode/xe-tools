@@ -20,6 +20,8 @@
 
 @end
 
+
+
 @implementation XEMobileTextyleSelectViewController
 @synthesize arrayWithTextyles = _arrayWithTextyles;
 @synthesize tableView = _tableView;
@@ -36,12 +38,17 @@
 {
     [super viewWillAppear:animated];
     
+    // set an add button in navigation bar
+    // set an action to it
     self.navigationItem.rightBarButtonItem = [ [UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTextyleButtonPressed) ];
+    
+    // make requests to load all the textyles
     [self loadTextyles];
 }
 
 -(void)loadTextyles
 {
+    //building the request
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XETextyle class]];
     
     [mapping mapKeyPath:@"domain" toAttribute:@"domain"];
@@ -63,10 +70,10 @@
     NSDictionary *parametr = [[NSDictionary alloc] 
                               initWithObjects:[NSArray arrayWithObjects:@"mobile_communication",@"procmobile_communicationTextyleList", nil] 
                               forKeys:[NSArray arrayWithObjects:@"module",@"act", nil]];
-    //for identify in "request:didLoadResponse:"
     
     NSString *path = [@"/index.php" stringByAppendingQueryParameters:parametr];
     
+    //sending the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:path delegate:self];
     
     [self.indicator startAnimating];
@@ -199,6 +206,7 @@
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
     
+    //sending the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php" usingBlock:^(RKObjectLoader *loader)
      {
          loader.delegate = self;
@@ -209,8 +217,10 @@
     [self.indicator startAnimating];
 }
 
+//method called when the Add button is pressed
 -(void)addTextyleButtonPressed
 {
+    //it pushes 
     XEMobileTextyleAddTextyleViewController *addTextyle = [[XEMobileTextyleAddTextyleViewController alloc] initWithNibName:@"XEMobileTextyleAddTextyleViewController" bundle:nil];
     [self.navigationController pushViewController:addTextyle animated:YES];
 }

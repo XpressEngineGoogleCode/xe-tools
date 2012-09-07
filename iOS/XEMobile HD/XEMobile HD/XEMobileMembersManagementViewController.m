@@ -21,13 +21,34 @@
 @synthesize arrayWithMembers = _arrayWithMembers;
 @synthesize tableView = _tableView;
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    //send a request to load all the members
+    
+    [self loadMembers];
+    
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.navigationItem.title = @"Members List";
+    
+}
+
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:@"There is a problem with your internet connection!"];
 }
 
+//method called when a response is received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
+    //check if the user is logged out
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
 }
 
@@ -43,6 +64,8 @@
 {
     NSLog(@"Error!");
 }
+
+//TABLE VIEW with Members
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -82,24 +105,10 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self loadMembers];
-
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.navigationItem.title = @"Members List";
-
-}
-
+//the method that sends a request to load all the members 
 -(void)loadMembers
 {
+    //prepare the request
     NSDictionary *parametr = [[NSDictionary alloc] 
                               initWithObjects:[NSArray arrayWithObjects:@"mobile_communication",@"procmobile_communicationDisplayMembers", nil] 
                               forKeys:[NSArray arrayWithObjects:@"module",@"act", nil]];
@@ -121,6 +130,7 @@
     
     NSString *path = [@"/index.php" stringByAppendingQueryParameters:parametr];
     
+    //send the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:path delegate:self];
     [self.indicator startAnimating];
 }

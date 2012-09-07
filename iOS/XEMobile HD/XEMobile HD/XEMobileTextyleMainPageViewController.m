@@ -32,9 +32,12 @@
 	
     self.titleLabel.text = self.textyleItem.browserTitle;
     
+    //send request to get the current statistics
     [self makeRequestForStatistics];
 }
 
+
+//method called when an object was mapped from the response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     if( [object isKindOfClass:[XETextyleStats class]] ) 
@@ -46,25 +49,26 @@
     }
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
     NSLog(@"Error!");
 }
 
+
+//method called when a response was received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
+    //check if the user is logged out
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:@"Error!"];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
 
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -73,10 +77,13 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
+//method that sends the request for the statistics
 -(void)makeRequestForStatistics
 {
     self.tableView.hidden = YES;
     [self.indicator startAnimating];
+    
+    //map the response to an object
     RKObjectMapping *mapping = [ RKObjectMapping mappingForClass:[XETextyleStats class]];
     
     [mapping mapKeyPath:@"monday" toAttribute:@"monday"];
@@ -89,6 +96,7 @@
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
     
+    //send the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:[NSString stringWithFormat:@"/index.php?module=mobile_communication&act=procmobile_communicationTextyleStats&site_srl=%@",self.textyleItem.siteSRL] delegate:self];
 
 }
@@ -117,6 +125,11 @@
 
 - (IBAction)settingsButtonPressed:(id)sender
 {
+    //prepare the TabBarController with three ViewControllers: 
+    // - General Settings View Controller
+    // - Writing Settings View Controller
+    // - Skins View Controller
+    
     XEMobileTextyleSettingsViewController *settings = [[XEMobileTextyleSettingsViewController alloc] initWithNibName:@"XEMobileTextyleSettingsViewController" bundle:nil];    
     XETextyleSettings *settingsObject = [[XETextyleSettings alloc] init];
     settingsObject.defaultLanguage = self.textyleItem.defaultLanguage;
@@ -154,7 +167,7 @@
     [self.detailViewController.navigationController pushViewController:pagesVC animated:YES];
 }
 
-
+//TABLE VIEW with statistics
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -172,7 +185,6 @@
         label = [[ UILabel alloc] initWithFrame:CGRectMake(200, 10, 60, 30)];
         cell.textLabel.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:label];
-        NSLog(@"index = %d",indexPath.row);
     }
     else 
     {

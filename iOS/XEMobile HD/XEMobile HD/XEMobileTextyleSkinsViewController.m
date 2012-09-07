@@ -32,10 +32,12 @@
     
     self.navigationItem.title = @"Skins";
     
+    //put a Done button in the navigation bar
     self.navigationItem.rightBarButtonItem = [[ UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveButtonPressed) ];
     
     self.tableView.rowHeight = 130;
     
+    //send a requests to get an array with all the Skins
     [self loadSkins];
 }
 
@@ -46,16 +48,20 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
+//method called when the Done button is pressed 
 -(void)saveButtonPressed
 {
+    //prepare the request 
+    
     NSString *changeSkinXML = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<methodCall>\n<params>\n<skin><![CDATA[%@]]></skin>\n<mid><![CDATA[textyle]]></mid>\n<module><![CDATA[textyle]]></module>\n<act><![CDATA[procTextyleToolLayoutConfigSkin]]></act>\n<vid><![CDATA[%@]]></vid>\n</params>\n</methodCall>",self.textyle.skin,self.textyle.domain];
     
+    //sends the request
     RKRequest *request = [[RKClient sharedClient] post:@"/index.php" params:[RKRequestSerialization serializationWithData:[changeSkinXML dataUsingEncoding:NSUTF8StringEncoding] MIMEType:RKMIMETypeXML ] delegate:self];
     request.userData = @"change_skin";
     [self.indicator startAnimating];
 }
 
-
+//method called when the response was loaded
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     
@@ -68,10 +74,10 @@
         }
 }
 
-
+//method called when the array with objects was loaded
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
-    
+    //check if the array is empty and if it contains XESkins
     if( objects.count != 0 )
         if( [[objects objectAtIndex:0] isKindOfClass:[XESkin class]] )
         {
@@ -82,16 +88,19 @@
         else self.arrayWithSkins = [[NSArray alloc] init ];
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
     NSLog(@"Error!");
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:self.errorMessage];
 }
 
+//method that sends the request to obtain the skins
 -(void)loadSkins
 {
     RKObjectMapping *mapping = [ RKObjectMapping mappingForClass:[XESkin class]];
@@ -113,6 +122,7 @@
     self.tableView = nil;
 }
 
+//TABLE VIEW with skins
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -138,7 +148,9 @@
         }
     }
 
+    //the skin that will be displayed in the cell
     XESkin *skin = [self.arrayWithSkins objectAtIndex:indexPath.row];
+    
     [cell.skinView setImage:skin.image];
     
     if( [skin.id isEqualToString:self.textyle.skin]) 
@@ -152,6 +164,8 @@
     return cell;
 }
 
+
+//method called when a cell in table view is pressed
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if( selected.row != indexPath.row )

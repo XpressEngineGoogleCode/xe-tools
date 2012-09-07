@@ -26,19 +26,31 @@
 @synthesize tableView = _tableView;
 @synthesize pageForDelete = _pageForDelete; 
 
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.navigationItem.title = @"Pages";
+    
+    //set an add button to the navigation bar and add an action to the button
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPageButtonPressed)];
+}
+
+//method called when an array with objects is loaded
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     self.arrayWithPages = [[NSArray alloc] init];
+    
     [self.indicator stopAnimating];
     if( objects.count != 0 && [[objects objectAtIndex:0] isKindOfClass:[XETextylePage class]] )
     {
-    self.arrayWithPages = objects;
-    [self.tableView reloadData];
-    
+        self.arrayWithPages = objects;
+        [self.tableView reloadData];
     }
     
 }
 
+//method called when an object is loaded
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     if( [object isKindOfClass:[XEUser class]] )
@@ -52,17 +64,20 @@
     }
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
     NSLog(@"Error!");
 }
 
+//method called when a response came
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     [self.tableView reloadData];
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:self.errorMessage];
@@ -81,9 +96,11 @@
     [[RKObjectManager sharedManager].requestQueue cancelRequestsWithDelegate:self];
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
-             
+  
+//method that sends a request to load the pages
 -(void)loadPages
 {
+    //mapping the response to an object
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XETextylePage class]];
     
     [mapping mapKeyPath:@"module" toAttribute:@"module"];
@@ -92,25 +109,17 @@
     [mapping mapKeyPath:@"module_srl" toAttribute:@"moduleSrl"];
     [mapping mapKeyPath:@"mid" toAttribute:@"mid"];
     
-    [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response.page"];
+    [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response.textylePage"];
     
     NSString *path = [NSString stringWithFormat:@"/index.php?module=mobile_communication&act=procmobile_communicationExtraMenuList&site_srl=%@",self.textyle.siteSRL];
     
+    //send the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:path delegate:self];     
     
     [self.indicator startAnimating];
 }
 
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.navigationItem.title = @"Pages";
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPageButtonPressed)];
-    
-}
-
+// TABLE VIEW with Textyle's page
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -143,8 +152,7 @@
         button.tag = indexPath.row;
          }
     
-    
-    
+    // page that is displayed in cell
     XETextylePage *page = [self.arrayWithPages objectAtIndex:indexPath.row];
     
     cell.textLabel.text = page.name;
@@ -152,15 +160,21 @@
     return cell;
 }
 
+//method called when delete button is pressed
 -(void)deleteButtonPressed:(UIButton *)button
 {
+    // pageForDelete is the page that was selected for removing
     self.pageForDelete = [self.arrayWithPages objectAtIndex:button.tag];
     
+    NSLog(@"bla bla%@",self.pageForDelete.moduleSrl);
+    
+    //confirmation
     UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles:nil];
     [action showInView:self.view];
     
 }
 
+//method called when a button in confirmation is pressed
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if( buttonIndex == 0 )
@@ -169,16 +183,20 @@
     }
 }
 
+//send the request to delete the selected page
 -(void)deleteSelectedItem
 {
+    //prepare the request
     NSString *deleteXML = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<methodCall>\n<params>\n<menu_mid><![CDATA[%@]]></menu_mid>\n<module><![CDATA[textyle]]></module>\n<act><![CDATA[procTextyleToolExtraMenuDelete]]></act>\n<vid><![CDATA[%@]]></vid>\n</params>\n</methodCall>",self.pageForDelete.mid,self.textyle.domain];
     
+    //map the response to an object
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEUser class]];
     
     [mapping mapKeyPath:@"message" toAttribute:@"auxVariable"];
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
     
+    //send the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php" usingBlock:^(RKObjectLoader *loader)
      {
          loader.delegate = self;
@@ -190,6 +208,8 @@
     [self.indicator startAnimating];
 }
 
+//method called when the Add Page is pressed
+//push another view controller
 -(void)addPageButtonPressed
 {
     XEMobileTextyleAddPageViewController *addPageVC = [[XEMobileTextyleAddPageViewController alloc] initWithNibName:@"XEMobileTextyleAddPageViewController" bundle:nil];
@@ -197,6 +217,8 @@
     [self.navigationController pushViewController:addPageVC animated:YES];
 }
 
+//method called when a cell in table view is pressed
+//push another view controller
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     XETextylePage *page = [self.arrayWithPages objectAtIndex:indexPath.row];

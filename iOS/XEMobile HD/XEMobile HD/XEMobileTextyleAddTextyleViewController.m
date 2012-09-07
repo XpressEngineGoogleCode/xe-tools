@@ -10,6 +10,8 @@
 #import "RestKit/RKRequestSerialization.h"
 #import "XEUser.h"
 
+// View Controller that adds a Textyle
+
 @interface XEMobileTextyleAddTextyleViewController ()
 
 @end
@@ -24,13 +26,17 @@
 {
     [super viewDidLoad];
     
+    //put a Done and a Cancel button on the navigation bar
+    
     self.navigationItem.rightBarButtonItem = [[ UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed)];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed)];
     
+    // check if the Textyle is external (domanin name) or internal (site ID) 
     [self setTypeOfTextyle];
 }
 
+//method called when the textyleTypeSegmentControll changes his selected segment
 -(IBAction)segmentControlChanged:(id)sender
 {
     [self setTypeOfTextyle];
@@ -43,16 +49,19 @@
     else self.idLabel.text = @"http://";
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
     
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:@"Error!"];
 }
 
+//method called when an array with objects was mapped from response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     if( [object isKindOfClass:[XEUser class]] )
@@ -78,6 +87,7 @@
     
 }
 
+//method called when the Done button is pressed
 -(void)doneButtonPressed
 {
     NSString *addTextyleXML;
@@ -100,6 +110,7 @@
      }];
 }
 
+//method called when the Cancel button is pressed
 -(void)cancelButtonPressed
 {
     [self.navigationController popViewControllerAnimated:YES];

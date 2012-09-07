@@ -12,7 +12,7 @@
 
 @class XEMobileViewController;
 
-@interface XEMobileAppDelegate : UIResponder <UIApplicationDelegate>
+@interface XEMobileAppDelegate : UIResponder <UIApplicationDelegate,RKRequestDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

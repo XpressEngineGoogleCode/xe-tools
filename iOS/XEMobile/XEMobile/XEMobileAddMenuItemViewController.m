@@ -30,8 +30,44 @@
 @synthesize labelForErrors = _labelForErrors;
 @synthesize indicator = _indicator;
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    //put a Cancel and a Done button on the navigation bar
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPressed)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveButtonPressed)];
+ 
+    //send request to get all modules
+    [self getModules];
+       
+    [self.indicator startAnimating];
+}
+
+//method that sends a request to get all modules
+-(void)getModules
+{
+    //map the response to an object
+    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEModule class]];
+    
+    [mapping mapKeyPath:@"module" toAttribute:@"mid"];
+    [mapping mapKeyPath:@"module_srl" toAttribute:@"moduleSrl"];
+    
+    [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response.newmodule"];
+    
+    //send the request
+    [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php?module=mobile_communication&act=procmobile_communicationListModules" usingBlock:^(RKObjectLoader *loader)
+     {
+         loader.delegate = self;
+         loader.userData = @"get_all_modules_request";
+     }];
+
+}
+
+//method called when the save button is pressed
 -(void)saveButtonPressed
 {
+    //check what segment is selected for making the correct request
     switch (self.moduleSegment.selectedSegmentIndex) 
     {
         case 0:
@@ -47,6 +83,7 @@
     [self.indicator startAnimating];
 }
 
+//method called when the cancel button is pressed
 -(void)cancelPressed
 {
     [self.navigationController dismissModalViewControllerAnimated:YES];
@@ -115,6 +152,11 @@
     [params setValue:@"insertMenuItem" forParam:@"ruleset"];
     [params setValue:@"mobile_communication" forParam:@"module"];
     [params setValue:@"procmobile_communicationMenuItem" forParam:@"act"];
+    if( self.editedMenu )
+        [params setValue:self.editedMenu.moduleSrl forParam:@"menu_item_srl"];
+    else {
+        [params setValue:@"" forParam:@"menu_item_srl"];
+    }
     [params setValue:self.parentModuleSRL forParam:@"menu_srl"];
     [params setValue:self.browserTitleField.text forParam:@"menu_name_key"];
     [params setValue:self.browserTitleField.text forParam:@"menu_name"];
@@ -137,7 +179,7 @@
     [params setValue:@"procmobile_communicationMenuItem" forParam:@"act"];
     [params setValue:self.parentModuleSRL forParam:@"menu_srl"];
     if(self.editedMenu != nil)
-        [params setValue:self.editedMenu.moduleSrl forParam:@"menu_item_srl"];
+    [params setValue:self.editedMenu.moduleSrl forParam:@"menu_item_srl"];
     [params setValue:self.browserTitleField.text forParam:@"menu_name_key"];
     [params setValue:self.browserTitleField.text forParam:@"menu_name"];
     [params setValue:@"SELECT" forParam:@"cType"];
@@ -199,6 +241,7 @@
     return module.mid;
 }
 
+//method called when the moduleSegment changes selected segment
 -(IBAction)moduleSegmentChanged:(UISegmentedControl *)sender
 {
     if ( sender.selectedSegmentIndex == 0)
@@ -226,12 +269,14 @@
             }
 }
 
+//hide the keyboard when Return is pressed
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return NO;
 }
 
+//load the current configuration settings if a Menu Item is edited
 -(void)loadEditedObject
 {
     self.browserTitleField.text = self.editedMenu.name;
@@ -254,6 +299,7 @@
     self.createModuleIDField.text = self.editedMenu.URL;
 }
 
+// method called when an array with objects was mapped from the response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     if([objectLoader.userData isEqualToString:@"get_all_modules_request"])
@@ -261,6 +307,8 @@
         self.arrayWithModules = objects;
         [self.selectModuleIDPicker reloadAllComponents];
         
+        // if editedMenu is nil => the View Controller adds a menu item
+        // editedMenu is not nil => the View Controller edits a menu item
         if(self.editedMenu != nil)
         {
             [self loadEditedObject];
@@ -269,6 +317,7 @@
     }
 }
 
+// method called when an object was mapped from the response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     if( [object isKindOfClass:[XEUser class]] )
@@ -287,6 +336,7 @@
     }
 }
 
+//methods called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:@"There is a problem with your internet connection!"];
@@ -296,8 +346,10 @@
 {
 }
 
+//method called when a response was received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
+    //check if the user is logged in
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [ self pushLoginViewController];
 }
 
@@ -306,28 +358,7 @@
     self.labelForErrors.text = @"";
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPressed)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveButtonPressed)];
-    
-    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEModule class]];
-    
-    [mapping mapKeyPath:@"module" toAttribute:@"mid"];
-    [mapping mapKeyPath:@"module_srl" toAttribute:@"moduleSrl"];
-    
-    [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response.newmodule"];
-    
-    [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php?module=mobile_communication&act=procmobile_communicationListModules" usingBlock:^(RKObjectLoader *loader)
-     {
-         loader.delegate = self;
-         loader.userData = @"get_all_modules_request";
-     }];
-    
-    [self.indicator startAnimating];
-}
+
 
 -(void)viewDidUnload
 {

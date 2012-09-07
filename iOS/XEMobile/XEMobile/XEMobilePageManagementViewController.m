@@ -33,6 +33,7 @@
     
     self.tableView.rowHeight = 100;
     
+    //set an add button to the navigation bar
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPost)];
 }
 
@@ -43,8 +44,10 @@
     self.tableView = nil;
 }
 
+//method called when a response is received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
+    //check if the user is logged out
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
     if( [request.userData isEqualToString:@"delete_page"] ) 
     {
@@ -53,6 +56,7 @@
     }
 }
 
+//method called when an array with object was loaded from response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     self.arrayWithPages = objects;
@@ -60,11 +64,13 @@
     [self.tableView reloadData];
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
 
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:@"There is a problem with your internet connection!"];
@@ -77,10 +83,12 @@
     [self getPages];
 }
 
+//method that sends a request for pages
 -(void)getPages
 {
     [self.indicator startAnimating];
     
+    //map the response to an object
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEPage class]];
     
     [mapping mapKeyPath:@"module_srl" toAttribute:@"moduleSrl"];
@@ -100,12 +108,14 @@
     
     NSString *path = [@"/index.php" stringByAppendingQueryParameters:parametr];
     
+    //sends the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:path usingBlock:^(RKObjectLoader *loader)
      {
          loader.delegate = self;
      }];
 }
 
+//method called when the add button is pressed
 -(void)addPost
 {
     XEMobileAddPageViewController *addPageVC = [[XEMobileAddPageViewController alloc] initWithNibName:@"XEMobileAddPageViewController" bundle:nil];
@@ -113,6 +123,7 @@
     [self.navigationController presentModalViewController:nav animated:YES];
 }
 
+//TABLE VIEW with Pages
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.arrayWithPages.count;
@@ -130,13 +141,13 @@
     if(cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        
+        //add a Delete button to the cell
         UIButton *buttonDelete = [ UIButton buttonWithType:UIButtonTypeRoundedRect];
         buttonDelete.frame = CGRectMake(190, 65, 70, 30);
         [buttonDelete setTitle:@"Delete" forState:UIControlStateNormal];
         [buttonDelete addTarget:self action:@selector(deletePageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         buttonDelete.tag = indexPath.row;
-        
+        //add an Edit button to the cell
         UIButton *buttonEdit = [ UIButton buttonWithType:UIButtonTypeRoundedRect];
         buttonEdit.frame = CGRectMake(110, 65, 70, 30);
         [buttonEdit setTitle:@"Edit" forState:UIControlStateNormal];
@@ -161,14 +172,37 @@
     return cell;
 }
 
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+//method called when the edit button is pressed
+-(void)editPageButtonPressed:(UIButton *)button
 {
-    if( buttonIndex == 0 )
-        {
-            [self deleteTheSelectedPage];
-        }
+    XEMobileEditPageViewController *editPageVC = [[XEMobileEditPageViewController alloc] initWithNibName:@"XEMobileEditPageViewController" bundle:nil];
+    editPageVC.page = [self.arrayWithPages objectAtIndex:button.tag];
+    [self.navigationController pushViewController:editPageVC animated:YES];
 }
 
+//method called when the delete button is pressed
+-(void)deletePageButtonPressed:(UIButton *)button
+{
+    //confirmation window 
+    UIActionSheet *action = [[UIActionSheet alloc ] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles: nil];
+    [action showInView:self.view];
+    
+    self.pageForDelete = [self.arrayWithPages objectAtIndex:button.tag];
+    
+    NSLog(@"%@",self.pageForDelete.moduleSrl);
+}
+
+//method called when a button in confirmation window is pressed
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    // if Delete button is pressed delete the selected page
+    if( buttonIndex == 0 )
+    {
+        [self deleteTheSelectedPage];
+    }
+}
+
+//method that sends the request to remove the selected page
 -(void)deleteTheSelectedPage
 {
     NSDictionary *params = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObjects:@"deletePage",@"page",@"procPageAdminDelete",self.pageForDelete.moduleSrl, nil] forKeys:[NSArray arrayWithObjects:@"ruleset",@"module",@"act",@"module_srl", nil]];
@@ -177,25 +211,10 @@
     request.userData = @"delete_page";
     
     [self.indicator startAnimating];
-
+    
 }
 
--(void)editPageButtonPressed:(UIButton *)button
-{
-    XEMobileEditPageViewController *editPageVC = [[XEMobileEditPageViewController alloc] initWithNibName:@"XEMobileEditPageViewController" bundle:nil];
-    editPageVC.page = [self.arrayWithPages objectAtIndex:button.tag];
-    [self.navigationController pushViewController:editPageVC animated:YES];
-}
-
--(void)deletePageButtonPressed:(UIButton *)button
-{
-    UIActionSheet *action = [[UIActionSheet alloc ] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles: nil];
-    [action showInView:self.view];
-    
-    self.pageForDelete = [self.arrayWithPages objectAtIndex:button.tag];
-    
-   }
-
+//method called when a cell in tableView is pressed
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     XEPage *page = [self.arrayWithPages objectAtIndex:indexPath.row];

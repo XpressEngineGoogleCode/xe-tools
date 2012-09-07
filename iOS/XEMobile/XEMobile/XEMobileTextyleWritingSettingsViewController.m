@@ -28,10 +28,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //add a cancel and a done button to the navigation bar and add an action to them
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed)];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed)];
     
+    //load the current setting configuration
     [self loadSettings];
     
     self.scrollView.contentSize = CGSizeMake(320, 1400);
@@ -42,6 +45,7 @@
     NSLog(@"Error!");
 }
 
+//method called when an object is loaded
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     if( [object isKindOfClass:[XETextyleSettings class]] )
@@ -52,6 +56,7 @@
     }
 }
 
+//method called when the response came
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     if( [response.bodyAsString isEqualToString:[self isLogged]]) [ self pushLoginViewController];
@@ -59,13 +64,16 @@
     [self.indicator stopAnimating];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:self.errorMessage];
 }
 
+//method that sends a request to get the current setting configuration for the current textyle
 -(void)loadSettings
 {
+    //map the response to an object
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XETextyleSettings class]];
     [mapping mapKeyPath:@"editor" toAttribute:@"editor"];
     [mapping mapKeyPath:@"fontFamily" toAttribute:@"fontFamily"];
@@ -77,10 +85,12 @@
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
     
+    //sending the response
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:[NSString stringWithFormat:@"/index.php?module=mobile_communication&act=procmobile_communicationToolConfig&module_srl=%@",self.textyle.moduleSrl] delegate:self];
     
     [self.indicator startAnimating];
 }
+
 
 -(void)adjustViewElements
 {
@@ -111,10 +121,11 @@
 }
 
 
-
+//method called when the done button is pressed
+// it saves the current setting configuration
 -(void)doneButtonPressed
 {
-
+    //building the request
     NSString *updateSettingsXML;
     
     if( [[self typeOfEditor] isEqualToString:@"xpresseditor"])
@@ -123,13 +134,16 @@
         updateSettingsXML = [ NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<methodCall>\n<params>\n<_filter><![CDATA[insert_config_postwrite]]></_filter>\n<act><![CDATA[procTextyleConfigPostwriteInsert]]></act>\n<vid><![CDATA[%@]]></vid>\n<mid><![CDATA[textyle]]></mid>\n<post_editor_skin><![CDATA[dreditor]]></post_editor_skin>\n<etc_post_editor_skin><![CDATA[xpresseditor]]></etc_post_editor_skin>\n<font_family><![CDATA[%@]]></font_family>\n<font_size><![CDATA[%@]]></font_size>\n<post_prefix><![CDATA[%@]]></post_prefix>\n<post_use_suffix><![CDATA[%@]]></post_use_suffix>\n<post_use_prefix><![CDATA[%@]]></post_use_prefix>\n<post_suffix><![CDATA[%@]]></post_suffix>\n<module><![CDATA[textyle]]></module>\n</params>\n</methodCall>",self.textyle.domain,self.fontFamilyTextField.text,self.fontSizeTextField.text,self.prefixTextView.text,[self hasSuffix],[self hasPrefix],self.suffixTextView.text];
     }
     
+    //sending the request
     [[RKClient sharedClient] post:@"/index.php" params:[RKRequestSerialization serializationWithData:[updateSettingsXML dataUsingEncoding:NSUTF8StringEncoding] MIMEType:RKMIMETypeXML] delegate:self];
     
     [self.indicator startAnimating];
 }
 
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+{   
+    //hide keyboard when the scrollview scrolls
     [self.prefixTextView resignFirstResponder];
     [self.suffixTextView resignFirstResponder];
     [self.fontSizeTextField resignFirstResponder];

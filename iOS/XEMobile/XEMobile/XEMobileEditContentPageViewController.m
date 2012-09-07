@@ -34,8 +34,10 @@
     
     self.navigationItem.title = self.page.mid;
     
+    //put a Done button on the navigation bar
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveButtonPressed:)];
     
+    //make two requests: one for page's title and one for page's content
     RKRequest *requestForContent = [[RKClient sharedClient] get:[NSString stringWithFormat:@"/index.php?module=mobile_communication&act=procmobile_communicationArticleContent&srl=%@",self.page.document_srl] delegate:self];
     requestForContent.userData = @"contentRequest";
     
@@ -48,6 +50,9 @@
     self.scrollView.scrollEnabled = NO;
 }
 
+//
+//method called when the response was mapped to an object
+//
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     XEUser *obj = object;
@@ -60,16 +65,25 @@
     
 }
 
+//
+//method called when an error occured
+//
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
 }
 
+//
+//hide keyboard when the Return button is pressed
+//
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return NO;
 }
 
+//
+//when the contentTextView is selected TextEditorViewController is pushed
+//
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
     XEMobileTextEditorViewController *editor = [[XEMobileTextEditorViewController alloc] initWithNibName:@"XEMobileTextEditorViewController" bundle:nil];
@@ -80,10 +94,13 @@
     return NO;
 }
 
-
+//
+//method called when the Done button is pressed
+//
 -(IBAction)saveButtonPressed:(id)sender
 {
-    NSLog(@"saving this %@",[self.contentTextView.text stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"]);
+    //prepare the request
+    
     NSString *requestString = [ NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<methodCall>\n<params>\n<_filter><![CDATA[insert_article]]></_filter>\n<error_return_url><![CDATA[/xe_dev2/index.php?mid=%@&act=dispPageAdminContentModify]]></error_return_url>\n<act><![CDATA[procPageAdminArticleDocumentInsert]]></act>\n<mid><![CDATA[%@]]></mid>\n<content><![CDATA[%@]]></content>\n<document_srl><![CDATA[%@]]></document_srl>\n<title><![CDATA[%@]]></title><module><![CDATA[page]]></module></params></methodCall>",self.page.mid,self.page.mid,[self.contentTextView.text stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"],self.page.moduleSrl,self.titleTextField.text];
     
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEUser class]];
@@ -92,6 +109,7 @@
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
     
+    //send the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php"usingBlock:^(RKObjectLoader *loader)
      {
          loader.method = RKRequestMethodPOST;
@@ -103,6 +121,7 @@
     [self.indicator startAnimating];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:self.errorMessage];

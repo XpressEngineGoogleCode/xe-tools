@@ -28,6 +28,7 @@
 {
     [super viewDidLoad];
     
+    //set a done button button to the navigation bar and adds a action to it
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed)];
     
     self.labelForURL.text = [NSString stringWithFormat:@"%@/index.php?vid=%@&mid=",[RKClient sharedClient].baseURL.absoluteString,self.textyle.domain];
@@ -43,21 +44,24 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
+//method called when a response came
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
-    NSLog(@"%@",response.bodyAsString);
     if( [response.bodyAsString isEqualToString:[self isLogged]]) [self pushLoginViewController];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:@"There is a problem with your internet connection!"];
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
 }
 
+//method called when an object was loaded
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     if( [object isKindOfClass:[XEUser class]] )
@@ -74,6 +78,8 @@
         }
 }
 
+// when the user clicked on contentTextView the method is called
+// and the TextEditorViewController is pushed
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
     XEMobileTextEditorViewController *editorVC = [[ XEMobileTextEditorViewController alloc] initWithNibName:@"XEMobileTextEditorViewController" bundle:nil];
@@ -82,16 +88,21 @@
     return NO;
 }
 
+//method called when a method is pressed
+//it sends the request for saving the page
 -(void)doneButtonPressed
 {
+    //prepare the request
     NSString *addPostXML = [ NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<methodCall>\n<params>\n<publish><![CDATA[N]]></publish>\n<_filter><![CDATA[insert_extra_menu]]></_filter>\n<mid><![CDATA[textyle]]></mid>\n<vid><![CDATA[%@]]></vid>\n<menu_mid><![CDATA[%@]]></menu_mid>\n<menu_name><![CDATA[%@]]></menu_name>\n<content><![CDATA[<p>%@</p>]]></content>\n<msg_close_before_write><![CDATA[Changed contents are not saved.]]></msg_close_before_write>\n<_saved_doc_message><![CDATA[There is a draft automatically saved. Do you want to restore it? The auto-saved draft will be discarded when you write and save it.]]></_saved_doc_message>\n<hx><![CDATA[h3]]></hx>\n<hr><![CDATA[hline]]></hr>\n<module><![CDATA[textyle]]></module>\n<act><![CDATA[procTextyleToolExtraMenuInsert]]></act>\n</params>\n</methodCall>",self.textyle.domain,self.urlTextField.text,self.nameTextField.text,[self.contentTextView.text stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"]];
 
+    //map the response to an object
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XEUser class]];
     
     [mapping mapKeyPath:@"message" toAttribute:@"auxVariable"];
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response"];
         
+    //send the request 
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php" usingBlock:^(RKObjectLoader *loader)
     {
         loader.delegate = self;

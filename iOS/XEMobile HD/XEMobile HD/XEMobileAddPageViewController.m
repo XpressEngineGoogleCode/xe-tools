@@ -37,10 +37,13 @@
     
     [self getLayout];
     
+    //put a Done and a Cancel button on the navigation bar
+    
     self.navigationItem.rightBarButtonItem = [[ UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(postItButton:)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButton:)];
 }
 
+//method that sends a request to obtain all Layouts
 -(void)getLayout
 {
     RKObjectMapping *mapping = [ RKObjectMapping mappingForClass:[XELayout class]];
@@ -58,6 +61,7 @@
      }];
 }
 
+//method called when an object was mapped from the request
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     if( [object isKindOfClass:[XEUser class]])
@@ -76,6 +80,7 @@
     }
 }
 
+//method called when an array with objects was mapped fron the request
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     if( objects.count != 0 && [[objects objectAtIndex:0] isKindOfClass:[XELayout class]])
@@ -85,16 +90,20 @@
     }
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
 
 }
 
+//method called when the Cancel button is pressed
 -(void)cancelButton:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+//method called when the Done button is pressed
+//sends a request to save the page
 -(void)postItButton:(id)sender
 {
     RKParams* params = [RKParams params];
@@ -141,11 +150,13 @@
     [self.indicator startAnimating];
 }
 
+//method called when a response was received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
     if( [response.bodyAsString isEqualToString:[self isLogged]] ) [ self pushLoginViewController ]; 
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self.indicator stopAnimating];

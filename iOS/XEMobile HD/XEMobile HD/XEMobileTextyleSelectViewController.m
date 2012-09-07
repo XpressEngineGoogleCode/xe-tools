@@ -75,14 +75,19 @@
 {
     [super viewWillAppear:animated];
     
+    // put an Add button on the navigation bar 
     self.navigationItem.rightBarButtonItem = [ [UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTextyleButtonPressed) ];
+    
+    //send request to obtain the array with Textyles
     [self loadTextyles];
 }
 
+//method that sends the request for Textyles
 -(void)loadTextyles
 {
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[XETextyle class]];
     
+    //map the response to an object
     [mapping mapKeyPath:@"domain" toAttribute:@"domain"];
     [mapping mapKeyPath:@"textyle_srl" toAttribute:@"textyleSRL"];
     [mapping mapKeyPath:@"module_srl" toAttribute:@"moduleSrl"];
@@ -102,10 +107,10 @@
     NSDictionary *parametr = [[NSDictionary alloc] 
                               initWithObjects:[NSArray arrayWithObjects:@"mobile_communication",@"procmobile_communicationTextyleList", nil] 
                               forKeys:[NSArray arrayWithObjects:@"module",@"act", nil]];
-    //for identify in "request:didLoadResponse:"
-    
+
     NSString *path = [@"/index.php" stringByAppendingQueryParameters:parametr];
-    
+
+    //send the request
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:path delegate:self];
     
     [self.indicator startAnimating];
@@ -119,6 +124,7 @@
     [[RKClient sharedClient].requestQueue cancelRequestsWithDelegate:self];
 }
 
+//TABLE VIEW with Textyles
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -147,28 +153,36 @@
         button.tag = indexPath.row;
          }
     
+    //the textyle that will be displayed in cell
     XETextyle *textyle = [self.arrayWithTextyles objectAtIndex:indexPath.row];
+    
     cell.textLabel.text = textyle.domain;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
+//method called when the Delete button is pressed
 -(void)deleteTextyleButtonPressed:(UIButton *)button
 {
+    //set the textyle that will be deleted
     self.textyleToDelete = [self.arrayWithTextyles objectAtIndex:button.tag];
     
+    //push a confirmation window 
     UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles:nil];
     [action showInView:self.view];
 }
 
+//method called when the a confirmation window's button is pressed
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+        //buttonIndex == 0 => the Delete button was pressed
         if( buttonIndex == 0)
         {
             [self deleteSelectedItem];
         }
 }
 
+//method that sends a request to delete the selected Textyle
 -(void)deleteSelectedItem
 {
     
@@ -190,6 +204,7 @@
     [self.indicator startAnimating];
 }
 
+//method called when the Add button is pressed
 -(void)addTextyleButtonPressed
 {
     XEMobileTextyleAddTextyleViewController *addTextyle = [[XEMobileTextyleAddTextyleViewController alloc] initWithNibName:@"XEMobileTextyleAddTextyleViewController" bundle:nil];

@@ -33,47 +33,16 @@
     
     self.tableView.rowHeight = 100;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPost)];
-}
-
--(void)viewDidUnload
-{
-    [super viewDidUnload];
+    //put an Add button on the navigation bar
     
-    self.tableView = nil;
-}
-
--(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
-{
-    if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
-    if( [request.userData isEqualToString:@"delete_page"] ) 
-    {
-        [self getPages];
-        [self.indicator stopAnimating];
-    }
-}
-
--(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
-{
-    self.arrayWithPages = objects;
-    [self.indicator stopAnimating];
-    [self.tableView reloadData];
-}
-
--(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
-{
-
-}
-
--(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
-{
-    [self showErrorWithMessage:@"There is a problem with your internet connection!"];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPost)];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
+    //send a request to get all Pages
     [self getPages];
 }
 
@@ -105,6 +74,48 @@
          loader.delegate = self;
      }];
 }
+
+
+-(void)viewDidUnload
+{
+    [super viewDidUnload];
+    
+    self.tableView = nil;
+}
+
+//method called when a response is received
+-(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
+{
+    //check if the user is logged out
+    if( [response.bodyAsString isEqualToString:[self isLogged]] ) [self pushLoginViewController];
+    
+    if( [request.userData isEqualToString:@"delete_page"] ) 
+    {
+        [self getPages];
+        [self.indicator stopAnimating];
+    }
+}
+
+//method called when an array with objects mapped from the response
+-(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
+{
+    self.arrayWithPages = objects;
+    [self.indicator stopAnimating];
+    [self.tableView reloadData];
+}
+
+//method called when an error occured
+-(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
+{
+
+}
+
+//method called when an error occured
+-(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
+{
+    [self showErrorWithMessage:@"There is a problem with your internet connection!"];
+}
+
 
 -(void)addPost
 {
@@ -204,11 +215,12 @@
     XEMobileEditContentPageViewController *editContentVC = [[XEMobileEditContentPageViewController alloc] initWithNibName:@"XEMobileEditContentPageViewController" bundle:nil];
         editContentVC.page = page;
         
-    //we present a modal view controller over the split view
+    //we present a modal view controller over the split view controller
     UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:0];
-        UISplitViewController *splitVC = (UISplitViewController *)window.rootViewController;
+    //get a pointer to the split view controller
+    UISplitViewController *splitVC = (UISplitViewController *)window.rootViewController;
         
-        UINavigationController *navcon = [[UINavigationController alloc] initWithRootViewController:editContentVC];
+    UINavigationController *navcon = [[UINavigationController alloc] initWithRootViewController:editContentVC];
     [splitVC presentModalViewController:navcon animated:YES];
     }
     else if( [page.pageType isEqualToString:@"WIDGET"] )

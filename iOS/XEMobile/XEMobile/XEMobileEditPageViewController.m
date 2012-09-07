@@ -25,6 +25,7 @@
 @synthesize page = _page;
 @synthesize arrayWithLayouts = _arrayWithLayouts;
 
+//lazy instantiation for arrayWithLayouts
 -(NSMutableArray *)arrayWithLayouts
 {
     if( _arrayWithLayouts == nil ) 
@@ -47,11 +48,14 @@
     self.moduleNameTextField.text = self.page.mid;
     self.browserTitleTextField.text = self.page.browserTitle;
     
+    //add a Done button to the navigation controller
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed)];
     
+    //make request to get all layouts
     [self getLayout];
 }
 
+//method called when the Save button is pressed
 -(void)doneButtonPressed
 {
     RKParams* params = [RKParams params];
@@ -93,6 +97,7 @@
     self.layoutPickerView = nil;
 }
 
+//method that sends a request for all layouts
 -(void)getLayout
 {
     RKObjectMapping *mapping = [ RKObjectMapping mappingForClass:[XELayout class]];
@@ -103,6 +108,7 @@
     
     [[RKObjectManager sharedManager].mappingProvider setMapping:mapping forKeyPath:@"response.layout"];
     
+    //request send 
     [[RKObjectManager sharedManager] loadObjectsAtResourcePath:@"/index.php?module=mobile_communication&act=procmobile_communicationGetLayout" usingBlock:^(RKObjectLoader *loader)
      {
          loader.userData = @"layout_request";
@@ -110,21 +116,24 @@
      }];
 }
 
+//method called when an error occured
 -(void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
 {
     [self showErrorWithMessage:@"Error!"];
 }
 
+//method called when a response is received
 -(void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
-    NSLog(@"%@",response.bodyAsString);
     if( [response.bodyAsString isEqualToString:self.isLogged] ) [self pushLoginViewController];
 }
 
+//method called when an error occured
 -(void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
 }
 
+//method called when an object was mapped from response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObject:(id)object
 {
     if( [object isKindOfClass:[XEUser class]] )
@@ -137,6 +146,7 @@
     }
 }
 
+//method called when an array with objects was mapped from response
 -(void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects
 {
     if( objects.count != 0 && [[objects objectAtIndex:0] isKindOfClass:[XELayout class]])
@@ -155,6 +165,7 @@
     [[RKObjectManager sharedManager].requestQueue cancelRequestsWithDelegate:self];
 }
 
+//tell the picker to select the correct layout
 -(void)loadSelectedLayout
 {
     [self.layoutPickerView selectRow:[self indexForLayoutSrl:self.page.layoutSRL] inComponent:0 animated:NO];
