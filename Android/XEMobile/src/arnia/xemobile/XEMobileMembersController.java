@@ -118,6 +118,8 @@ public class XEMobileMembersController extends XEActivity implements OnItemClick
 			//add members in adapter
 			if( arrayWithMembers.members != null )
 			{
+				//clear adapter 
+				adapter.clear();
 				for(int i=0;i<arrayWithMembers.members.size();i++)
 				{
 				adapter.add(arrayWithMembers.members.get(i));
