@@ -17,6 +17,7 @@ import org.simpleframework.xml.core.Persister;
 
 import com.google.android.gcm.GCMRegistrar;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -42,11 +43,12 @@ public class XEMobileLoginController extends XEActivity implements OnClickListen
     private EditText passwordEditText;
     private CheckBox rememberMeCheckBox;
     
+    
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.xemobileloginlayout);
+        setContentView(R.layout.xemobileloginlayout);        
     
         //take reference to the UI elements
         addressEditText = (EditText) findViewById(R.id.XEMOBILE_LOGIN_ADDRESS);
@@ -55,9 +57,9 @@ public class XEMobileLoginController extends XEActivity implements OnClickListen
         rememberMeCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_LOGIN_REMEMBERME);
         
 //        //ONLY for testing!
-//        addressEditText.setText("smilingmouse.ro/xe2");
-//        usernameEditText.setText("vlad.bogdan@me.com");
-//        passwordEditText.setText("prince");
+//        addressEditText.setText("192.168.10.250:8080/xe.mobile.ARNIA/xe");
+//        usernameEditText.setText("darayong@fsi.com.kh");
+//        passwordEditText.setText("admin");
         
         //if "Remember me" is checked, the username, password and url are saved in SharedPreferences
         //when the Activity is created they are putted on EditTexts. 
@@ -111,17 +113,24 @@ public class XEMobileLoginController extends XEActivity implements OnClickListen
     private class LogInInBackground extends AsyncTask<Void, Void, Void> 
     {
     	String xmlData;
+    	boolean request_url_error=false;
     	
     	//send the request in background
+		
 		@Override
 		protected Void doInBackground(Void... params) 
 		{
-			// set address in XEHost singleton
-			XEHost.getINSTANCE().setURL("http://" + addressEditText.getText().toString());
-			
-			xmlData = XEHost.getINSTANCE().getRequest("/index.php?module=mobile_communication&act=procmobile_communicationLogin&user_id="+ usernameEditText.getText().toString() + "&password=" + passwordEditText.getText().toString());
-	    	
-			return null;
+			try{
+				// set address in XEHost singleton
+				XEHost.getINSTANCE().setURL("http://" + addressEditText.getText().toString());
+				
+				xmlData = XEHost.getINSTANCE().getRequest("/index.php?module=mobile_communication&act=procmobile_communicationLogin&user_id="+ usernameEditText.getText().toString() + "&password=" + passwordEditText.getText().toString());
+		    	
+			}catch (Exception iae){				
+				request_url_error=true;
+			}finally{
+				return null;
+			}
 		}
 		
 		//verify the response after the request received a response
@@ -131,6 +140,12 @@ public class XEMobileLoginController extends XEActivity implements OnClickListen
 			super.onPostExecute(result);
 			//when the response came, remove the loading message
 			dismissProgress();
+			
+			if(request_url_error || xmlData==null){
+				Toast.makeText(getApplicationContext(), R.string.invalid_url, 1000).show();
+				
+			}			
+			
 			try {
 	            //parse the response
 	            Serializer serializer = new Persister();
