@@ -3,5 +3,5 @@
 
     <string name="hello">Hello World, XEMobileLoginController!</string>
     <string name="app_name">XEMobile</string>
-
+	<string name="invalid_url">Invalid URL...</string>
 </resources>
