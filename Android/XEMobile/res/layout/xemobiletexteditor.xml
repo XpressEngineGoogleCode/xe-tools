@@ -10,19 +10,28 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
         
-    <EditText
+    <EditText        
         android:id="@+id/XEMOBILE_TEXTEDITOR_TITLE"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:text=" "/>
 	
 	<EditText
+	    android:layout_weight="0.3"
 	    android:id="@+id/XEMOBILE_TEXTEDITOR_CONTENT"
 	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
+	    android:layout_height="fill_parent"	    
 	    android:gravity="top"
 	    android:text=" "/>	
-	      
+	        
+	   
+    <WebView
+        android:layout_weight="0.3"
+	    android:id="@+id/XEMOBILE_PREVIEW_CONTENT"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"    
+	    />
+		      
     </LinearLayout>
 	
 	<LinearLayout

@@ -18,14 +18,14 @@ import android.widget.Toast;
 import arnia.xemobile.R;
 import arnia.xemobile.XEActivity;
 
-public abstract class XEMobileTextEditor extends XEActivity 
+public abstract class XEMobileTextEditor extends XEActivity implements TextWatcher
 
 {
 
    protected EditText titleEditText;
    protected EditText contentEditText;
    
-   protected WebView  htmlEditor;
+   protected WebView  htmlPreview;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -35,7 +35,10 @@ public abstract class XEMobileTextEditor extends XEActivity
 		
 		titleEditText = (EditText) findViewById(R.id.XEMOBILE_TEXTEDITOR_TITLE);
 		contentEditText = (EditText) findViewById(R.id.XEMOBILE_TEXTEDITOR_CONTENT);	
+		htmlPreview = (WebView) findViewById(R.id.XEMOBILE_PREVIEW_CONTENT);
 		
+		//Register text content change listener 
+		contentEditText.addTextChangedListener(this);
 	}
 	
 	public void boldButton(View view)
@@ -201,6 +204,26 @@ public abstract class XEMobileTextEditor extends XEActivity
 	public void setContent(String string)
 	{
 		contentEditText.setText( string.replace("<br/>", "\n") );
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		// Add text to preview control
+		htmlPreview.loadData(contentEditText.getText().toString(), "text/html", "utf-8");
+		
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count,
+			int after) {
+		
+		
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		
+		
 	}
 		
 }
