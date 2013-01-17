@@ -4,22 +4,28 @@ package arnia.xemobile.page_management;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import arnia.xemobile.R;
 import arnia.xemobile.XEActivity;
 
-public abstract class XEMobileTextEditor extends XEActivity
+public abstract class XEMobileTextEditor extends XEActivity 
+
 {
 
    protected EditText titleEditText;
    protected EditText contentEditText;
+   
+   protected WebView  htmlEditor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -28,7 +34,8 @@ public abstract class XEMobileTextEditor extends XEActivity
 		setContentView(R.layout.xemobiletexteditor);
 		
 		titleEditText = (EditText) findViewById(R.id.XEMOBILE_TEXTEDITOR_TITLE);
-		contentEditText = (EditText) findViewById(R.id.XEMOBILE_TEXTEDITOR_CONTENT);
+		contentEditText = (EditText) findViewById(R.id.XEMOBILE_TEXTEDITOR_CONTENT);	
+		
 	}
 	
 	public void boldButton(View view)
@@ -195,4 +202,5 @@ public abstract class XEMobileTextEditor extends XEActivity
 	{
 		contentEditText.setText( string.replace("<br/>", "\n") );
 	}
+		
 }

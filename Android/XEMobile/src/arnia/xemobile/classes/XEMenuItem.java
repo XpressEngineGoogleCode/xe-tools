@@ -15,6 +15,6 @@ public class XEMenuItem
 	@Element
 	public String open_window;
 	
-	@Element 
+	@Element(required=false)
 	public String url;
 }

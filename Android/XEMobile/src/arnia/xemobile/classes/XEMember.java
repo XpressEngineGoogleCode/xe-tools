@@ -48,7 +48,7 @@ public class XEMember implements Serializable
 	@Element
 	public String find_account_question;
 	
-	@Element
+	@Element(required=false)
 	public String secret_answer;
 	
 	@Element

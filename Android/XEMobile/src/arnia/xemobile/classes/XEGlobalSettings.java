@@ -26,22 +26,22 @@ public class XEGlobalSettings extends XESettings
 	@Element
 	public String default_url;
 	
-	@Element
+	@Element(required = false)
 	public String use_ssl;
 	
 	@Element
 	public String rewrite_mode;
 	
-	@Element
+	@Element(required = false)
 	public String use_sso;
 	
-	@Element
+	@Element(required = false)
 	public String db_session;
 	
-	@Element
+	@Element(required = false)
 	public String qmail;
 	
-	@Element
+	@Element(required = false)
 	public String html5;
 	
 	public ArrayList<String> getSelectedLanguages()
