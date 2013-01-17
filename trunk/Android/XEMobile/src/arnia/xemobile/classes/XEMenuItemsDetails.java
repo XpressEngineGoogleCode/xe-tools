@@ -20,11 +20,11 @@ public class XEMenuItemsDetails
 	@Path("menu_item[1]")
 	public String open_window;
 	
-	@Element 
+	@Element (required=false)
 	@Path("menu_item[1]")
 	public String url;
 	
-	@Element
+	@Element (required=false)
 	@Path("menu_item[1]")
 	public String moduleType;
 }

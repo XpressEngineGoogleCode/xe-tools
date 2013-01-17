@@ -363,27 +363,31 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 			browserTitleEditText.setText(details.name);
 			if( details.open_window.equals("Y") ) newWindow.setChecked(true);
 							else newWindow.setChecked(false);
-		
-			if( details.moduleType.equals("page") )
-			{
-				//select the correct page in spinner
-				int i;
-				for(i=0;i<modules.modules.size();i++)
-				{	
-					if( details.url.equals(modules.modules.get(i).module) ) break;
-				}
-				Log.d("i=", i+ " ");
-				spinner.setSelection(i);
-				
-			}
-			else if( details.moduleType.equals("url") )
-			{
-				Log.d("ajunge aici", "dada");
-				menuURLRadioOption.setChecked(true);
-				
-				menuURLEditText.setText(details.url);
-			}
 			
+			//moduleType may be null somehow			
+			if(details.moduleType==null){
+				createRadioOption.setChecked(true);
+			}else{
+				if( details.moduleType.equals("page") )
+				{
+					//select the correct page in spinner
+					int i;
+					for(i=0;i<modules.modules.size();i++)
+					{	
+						if( details.url.equals(modules.modules.get(i).module) ) break;
+					}
+					Log.d("i=", i+ " ");
+					spinner.setSelection(i);
+					
+				}
+				else if( details.moduleType.equals("url") )
+				{
+					Log.d("ajunge aici", "dada");
+					menuURLRadioOption.setChecked(true);
+					
+					menuURLEditText.setText(details.url);
+				}
+			}
 			
 		}
 		

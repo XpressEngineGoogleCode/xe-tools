@@ -111,7 +111,7 @@ public class XEMobileEditMemberController extends XEActivity implements OnClickL
 			params.put("password",member.password);
 			params.put("nick_name",nicknameEditText.getText().toString());
 			params.put("description",descriptionEditText.getText().toString());
-			params.put("find_account_answer", member.secret_answer);
+			params.put("find_account_answer", (member.secret_answer==null)? "":member.secret_answer);
 			params.put("find_account_question", member.find_account_question);
 			if(isAdminCheckBox.isChecked()) params.put("is_admin", "Y");
 					else params.put("is_admin", "N");
