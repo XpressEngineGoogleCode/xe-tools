@@ -261,7 +261,9 @@ public class XEMobileGlobalSettingsController extends XEActivity implements OnCl
 	
 	public void setSSOOption()
 	{
-		if( settings.use_sso.equals("Y") ) enableSSOCheckBox.setChecked(true);
+		//by default SSO is not set in db config
+		
+		if(settings.use_sso!=null && settings.use_sso.equals("Y") ) enableSSOCheckBox.setChecked(true);			
 		else enableSSOCheckBox.setChecked(false);
 	}
 	
@@ -273,7 +275,9 @@ public class XEMobileGlobalSettingsController extends XEActivity implements OnCl
 	
 	public void setSessionDBOption()
 	{
-		if( settings.db_session.equals("Y") ) sessionDBCheckBox.setChecked(true);
+		//by default db_session is not set in db config
+		
+		if( settings.db_session!=null && settings.db_session.equals("Y") ) sessionDBCheckBox.setChecked(true);		
 		else sessionDBCheckBox.setChecked(false);
 	}
 	
@@ -285,7 +289,8 @@ public class XEMobileGlobalSettingsController extends XEActivity implements OnCl
 	
 	public void setQmailOption()
 	{
-		if( settings.qmail.equals("Y") ) qmailCheckBox.setChecked(true);
+		//by default Qmail is not set in db config
+		if( settings.qmail!=null && settings.qmail.equals("Y") ) qmailCheckBox.setChecked(true);
 		else qmailCheckBox.setChecked(false);
 	}
 	
@@ -297,7 +302,8 @@ public class XEMobileGlobalSettingsController extends XEActivity implements OnCl
 	
 	public void setHtmlDTDOption()
 	{
-		if( settings.html5.equals("Y") ) htmlDTDCheckBox.setChecked(true);
+		//by default html5 is not set in db config
+		if( settings.html5!=null && settings.html5.equals("Y") ) htmlDTDCheckBox.setChecked(true);
 		else htmlDTDCheckBox.setChecked(false);
 	}
 	
