@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import arnia.xemobile.R;
 import arnia.xemobile.XEActivity;
 import arnia.xemobile.classes.XEHost;
@@ -84,14 +85,14 @@ public class XEMobileTextyleAddPageController extends XEActivity
 			//sending the request
 			response = XEHost.getINSTANCE().postRequest("/index.php", xmlForSave);
 			
-			return null;
+			return response;
 		}
 		
 		@Override
 		protected void onPostExecute(Object result) 
 		{
 			super.onPostExecute(result);
-		
+			
 			//parsing the response
 			Serializer serializer = new Persister();
 			Reader reader = new StringReader(response);
@@ -107,6 +108,7 @@ public class XEMobileTextyleAddPageController extends XEActivity
 			//if the confirmation
 			if( response.message.equals("success"))
 				{
+					Toast.makeText(getApplicationContext(), "Saved new page", 1000).show();
 					finish();
 				}
 		}

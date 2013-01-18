@@ -75,8 +75,13 @@ public class XEMobileTextyleEditPageController extends XEMobileTextyleAddPageCon
 			//check if the user is logged in
 			if( isLoggedIn(content, XEMobileTextyleEditPageController.this) )
 			{
-			content = content.substring(3,content.length() - 4);
-			setContent(content);
+				//the content of page in textlye may empty
+				if(!content.isEmpty()){
+					content = content.substring(3,content.length() - 4);
+					setContent(content);
+				}else{
+					setContent(content);				
+				}
 			}
 		}
 	}

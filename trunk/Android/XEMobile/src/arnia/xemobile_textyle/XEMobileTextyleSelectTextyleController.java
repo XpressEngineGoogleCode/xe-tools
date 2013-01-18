@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import arnia.xemobile.R;
 import arnia.xemobile.XEActivity;
 import arnia.xemobile.classes.XEArrayList;
@@ -103,6 +104,8 @@ public class XEMobileTextyleSelectTextyleController extends XEActivity implement
 					adapter.add(array.textyles.get(i));
 				}
 				adapter.notifyDataSetChanged();
+			}else{
+				Toast.makeText(getApplicationContext(), R.string.no_textyle, 1000).show();
 			}
 		}
 	}
