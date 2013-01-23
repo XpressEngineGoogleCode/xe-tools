@@ -58,8 +58,8 @@ public class XEMobileTextyleEditPostContentController extends XEMobileTextEditor
 			// asking the user if he wants to save or publish
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage("Delete, save or publish?")
-			       .setCancelable(false)
-			        .setNeutralButton("Delete", new DialogInterface.OnClickListener() 
+			       .setCancelable(true)			       
+			       .setNeutralButton("Delete", new DialogInterface.OnClickListener() 
 			       {
 					
 					@Override
@@ -96,7 +96,7 @@ public class XEMobileTextyleEditPostContentController extends XEMobileTextEditor
 			// asking the user if he wants to save or publish
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage("Delete or save?")
-			       .setCancelable(false)
+			       .setCancelable(true)
 			       .setPositiveButton("Delete", new DialogInterface.OnClickListener() 
 			       	   {
 			           public void onClick(DialogInterface dialog, int id) 

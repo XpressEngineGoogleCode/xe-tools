@@ -80,6 +80,9 @@ public class XEMobilePageController extends XEActivity implements OnClickListene
 				{
 					Intent intent = new Intent(XEMobilePageController.this, XEMobileWidgetController.class);
 					intent.putExtra("mid", page.mid);
+					if(page.virtual_site!=null){
+						intent.putExtra("vid", page.virtual_site);
+					}
 					startActivity(intent);
 				
 				}

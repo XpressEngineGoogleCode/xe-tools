@@ -30,4 +30,7 @@ public class XEPage
 	
 	@Element
 	public String layout_srl;
+	
+	@Element(required=false)
+	public String virtual_site;
 }
