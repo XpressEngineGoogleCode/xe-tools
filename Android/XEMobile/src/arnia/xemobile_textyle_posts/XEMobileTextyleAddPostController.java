@@ -28,7 +28,7 @@ public class XEMobileTextyleAddPostController extends XEMobileTextEditor
 		// asking the user if he wants to save or publish
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Save or publish?")
-		       .setCancelable(false)
+		       .setCancelable(true)
 		       .setPositiveButton("Save", new DialogInterface.OnClickListener() 
 		       	   {
 		           public void onClick(DialogInterface dialog, int id) 
