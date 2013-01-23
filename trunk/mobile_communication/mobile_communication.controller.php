@@ -162,8 +162,15 @@
         			echo "<mid>". $value->mid . "</mid>";
         			echo "<content><![CDATA[" . $value->content . "]]></content>";
         			echo "<document_srl>" . $value->document_srl . "</document_srl>";
-        			echo "<browser_title>" . $value->browser_title . "</browser_title>";
+        			echo "<browser_title>" . $value->browser_title . "</browser_title>";                                
         			echo "<layout_srl>" . $value->layout_srl . "</layout_srl>";
+                                // Get virtual site
+                                $virtual_site="";
+                                if($value->site_srl!=0){
+                                    $result = executeQuery('module.getSite', $value);
+                                    $virtual_site=$result->data->domain;
+                                }
+                                echo "<virtual_site>". $virtual_site ."</virtual_site>";
         			echo "</page>";
         	}
         	echo "</response>\n";
