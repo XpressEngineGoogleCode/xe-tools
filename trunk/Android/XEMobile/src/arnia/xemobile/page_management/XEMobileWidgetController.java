@@ -26,10 +26,20 @@ public class XEMobileWidgetController extends Activity
 		
 		pageMid = getIntent().getStringExtra("mid");
 		
+		//get vid for virtual site
+		String vid="";
+		if(getIntent().getExtras().containsKey("vid")){
+			vid = getIntent().getExtras().getString("vid");
+		}
+		
 		webView = (WebView) findViewById(R.id.XEMOBILE_WIDGET_WEBVIEW);
 		
 	//	setCookies();
-		webView.loadUrl(XEHost.getINSTANCE().getURL() + "/index.php?mid=" + pageMid);
+		if(vid.compareTo("")==0){
+			webView.loadUrl(XEHost.getINSTANCE().getURL() + "/index.php?mid=" + pageMid);
+		}else{
+			webView.loadUrl(XEHost.getINSTANCE().getURL() + "/index.php?mid=" + pageMid +"&vid=" + vid);	
+		}
 	}
 
 //save the cookies from XEHost to webView
