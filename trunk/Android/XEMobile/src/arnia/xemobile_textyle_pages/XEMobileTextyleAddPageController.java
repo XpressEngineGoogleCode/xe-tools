@@ -9,9 +9,12 @@ import org.simpleframework.xml.core.Persister;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Selection;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +25,7 @@ import arnia.xemobile.classes.XEResponse;
 import arnia.xemobile.classes.XETextyle;
 
 
-public class XEMobileTextyleAddPageController extends XEActivity
+public class XEMobileTextyleAddPageController extends XEActivity implements TextWatcher
 {
 
 	protected XETextyle textyle;
@@ -32,6 +35,8 @@ public class XEMobileTextyleAddPageController extends XEActivity
 	protected EditText urlEditText;
 	protected EditText menuNameEditText;
 	protected TextView urlTextView;
+	
+	protected WebView contentPreview;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -47,6 +52,10 @@ public class XEMobileTextyleAddPageController extends XEActivity
 		
 		//get the textyle that is passed between activities
 		textyle = (XETextyle) getIntent().getSerializableExtra("textyle");
+		
+		
+		contentPreview = (WebView) findViewById(R.id.XEMOBILE_TEXTYLE_ADDPAGE_CONTENT_PREVIEW);
+		contentEditText.addTextChangedListener(this);
 	}
 	
 	// method called when the doneButton is pressed
@@ -282,5 +291,26 @@ public class XEMobileTextyleAddPageController extends XEActivity
 	public void setContent(String string)
 	{
 		contentEditText.setText( string.replace("<br/>", "\n") );
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		// Add text to preview control
+		this.contentPreview.loadData(this.contentEditText.getText().toString(), "text/html", "utf-8");
+		
+		
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count,
+			int after) {
+		
+		
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		
+		
 	}
 }

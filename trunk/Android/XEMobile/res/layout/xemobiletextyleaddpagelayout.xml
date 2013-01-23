@@ -50,8 +50,15 @@
         android:id="@+id/XEMOBILE_TEXTYLE_ADDPAGE_CONTENT"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="0.95"
+        android:layout_weight="0.50"
         android:gravity="top"/>
+     <WebView
+        android:id="@+id/XEMOBILE_TEXTYLE_ADDPAGE_CONTENT_PREVIEW"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.50"
+        />
+ 
     
     <LinearLayout
 	 	android:layout_width="fill_parent"

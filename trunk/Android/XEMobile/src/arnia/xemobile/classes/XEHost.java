@@ -23,6 +23,8 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import arnia.xemobile.*;
@@ -55,10 +57,17 @@ public class XEHost
 	{
 		if( client == null)
 		{
-		 client = new DefaultHttpClient();
-		 ClientConnectionManager mgr = client.getConnectionManager();
+		 //define timeout connection 
+		 HttpParams httpParams = new BasicHttpParams();
+		 HttpConnectionParams.setConnectionTimeout(httpParams, 3000);
+		 HttpConnectionParams.setSoTimeout(httpParams, 5000);
+		 //set param for connection
+		 
+		 client = new DefaultHttpClient(httpParams);		 
+		 ClientConnectionManager mgr = client.getConnectionManager();		 
 		 HttpParams params = client.getParams();
 		 client = new DefaultHttpClient(new ThreadSafeClientConnManager(params,mgr.getSchemeRegistry()), params);
+		 
 		}
 		 return client;
 	}
@@ -79,6 +88,7 @@ public class XEHost
 	{
 		String request = XEHost.getINSTANCE().getURL() + url;
         HttpGet getRequest = new HttpGet(request);
+        
 
         try {
 

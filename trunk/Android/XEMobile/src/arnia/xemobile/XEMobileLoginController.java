@@ -126,7 +126,8 @@ public class XEMobileLoginController extends XEActivity implements OnClickListen
 				
 				xmlData = XEHost.getINSTANCE().getRequest("/index.php?module=mobile_communication&act=procmobile_communicationLogin&user_id="+ usernameEditText.getText().toString() + "&password=" + passwordEditText.getText().toString());
 		    	
-			}catch (Exception iae){				
+			}catch(Exception e){		
+				e.printStackTrace();
 				request_url_error=true;
 			}finally{
 				return null;

@@ -111,7 +111,7 @@ public class XEMobileTextyleEditPageController extends XEMobileTextyleAddPageCon
 					"<module><![CDATA[textyle]]></module>\n</params>\n</methodCall>";
 
 			//sending the request for saving the page
-			response = XEHost.getINSTANCE().postRequest("/index.php", xml);
+			response = XEHost.getINSTANCE().postRequest("/index.php?XDEBUG_SESSION_START=netbeans-xdebug", xml);
 			
 			return null;
 		}
