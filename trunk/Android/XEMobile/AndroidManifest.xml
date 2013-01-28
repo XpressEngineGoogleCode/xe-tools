@@ -180,7 +180,12 @@
         <activity
             android:name="arnia.xemobile_textyle_settings.XEMobileTextyleSettingsChangePasswordController"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" />
+            android:theme="@android:style/Theme.Black.NoTitleBar" />        
+        <activity 
+            android:name="arnia.xemobile.theme_management.XEMobileThemeController"
+            android:label="Dashboard"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>"         
         
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"

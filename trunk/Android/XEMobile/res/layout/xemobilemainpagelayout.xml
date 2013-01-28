@@ -62,6 +62,20 @@
     
 </LinearLayout>
     
+    <LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+   
+    <Button 
+        android:id="@+id/XEMOBILE_MAINPAGE_THEMES"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="@string/main_page_theme_button"/>
+    
+    
+    
+</LinearLayout>
     
 </LinearLayout>
 </RelativeLayout>

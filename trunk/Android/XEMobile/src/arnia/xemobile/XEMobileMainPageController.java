@@ -30,6 +30,7 @@ import arnia.xemobile.classes.XETextyle;
 import arnia.xemobile.global_settings.XEMobileGlobalSettingsController;
 import arnia.xemobile.menu_management.XEMobileMenuController;
 import arnia.xemobile.page_management.XEMobilePageController;
+import arnia.xemobile.theme_management.XEMobileThemeController;
 import arnia.xemobile_textyle.XEMobileTextyleSelectTextyleController;
 
 //Activity for the Main Menu of XEMobile application
@@ -120,6 +121,19 @@ public class XEMobileMainPageController extends Activity
 				startActivity(intent);
 			}
 		});
+		
+		//theme button
+				Button themeButton = (Button) findViewById(R.id.XEMOBILE_MAINPAGE_THEMES);
+				themeButton.setOnClickListener(new OnClickListener() 
+				{
+					//called when the Themes button is pressed
+					@Override
+					public void onClick(View v) {
+						
+						Intent intent = new Intent (XEMobileMainPageController.this, XEMobileThemeController.class);
+						startActivity(intent);
+					}
+				});
 	}
 	
 }

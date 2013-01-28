@@ -59,8 +59,8 @@ public class XEHost
 		{
 		 //define timeout connection 
 		 HttpParams httpParams = new BasicHttpParams();
-		 HttpConnectionParams.setConnectionTimeout(httpParams, 3000);
-		 HttpConnectionParams.setSoTimeout(httpParams, 5000);
+//		 HttpConnectionParams.setConnectionTimeout(httpParams, 3000);
+//		 HttpConnectionParams.setSoTimeout(httpParams, 5000);
 		 //set param for connection
 		 
 		 client = new DefaultHttpClient(httpParams);		 
