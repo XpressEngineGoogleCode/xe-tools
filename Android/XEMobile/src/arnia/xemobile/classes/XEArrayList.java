@@ -42,4 +42,8 @@ public class XEArrayList
 	
 	@ElementList(inline=true,required=false)
 	public ArrayList<XEComment> comments;
+	
+	@ElementList(inline=true,required=false)
+	public ArrayList<XETheme> themes;
+	
 }
