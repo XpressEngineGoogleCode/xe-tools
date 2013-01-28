@@ -1446,5 +1446,56 @@
 
 			echo $result;
 		}
+                
+                function procmobile_communicationGetThemes(){
+                    // Get return all themes to mobile using built-in mthod
+                    $oAdminModel = &getAdminModel("admin");                    
+                    // Get selected layout
+			$theme_file = _XE_PATH_.'files/theme/theme_info.php';
+			if(is_readable($theme_file)){
+				@include($theme_file);
+				$selected_layout = $theme_info->layout;
+			}
+			else{
+				$oModuleModel = &getModel('module');
+				$default_mid = $oModuleModel->getDefaultMid();
+				$selected_layout = $default_mid->layout_srl;
+			}
+                    
+                    
+                    
+                    
+                    $themes = $oAdminModel->getThemeList();
+                    header('Content-Type: text/xml');
+                    echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' . "\n";
+                    echo "<response>" . "\n";
+                    foreach($themes as $theme){
+                        echo "<theme>";
+                        echo "<name>".$theme->name."</name>\n";
+                        echo "<thumbnail>".$theme->thumbnail."</thumbnail>\n";
+                        echo "<version>".$theme->version."</version>\n";
+                        echo "<date>".$theme->date."</date>\n";
+                        echo "<description>".$theme->description."</description>\n";                        
+                        foreach($theme->publisher as $publisher){
+                            echo "<publisher>\n";
+                            echo "<name>".$publisher->name."</name>\n";
+                            echo "<email>".$publisher->email_address."</email>\n";                            
+                            echo "</publisher>\n";
+                        }                        
+                        echo "<layout_srl>".$theme->layout_info->layout_srl."</layout_srl>\n";
+                        echo "<selected_layout>".(($selected_layout==$theme->layout_info->layout_srl)?1:0)."</selected_layout>";
+                        foreach($theme->skin_infos as $module_name => $skin_info){
+                            echo "<skin>\n";
+                            echo "<module>". $module_name. "-skin"."</module>\n";
+                            echo "<name>". $skin_info->name."</name>\n";
+                            echo "</skin>\n";
+                        }                                          
+                        echo "</theme>";
+                    }
+                    echo "</response>\n";
+                    exit();
+                }
+                
+                
 }
 ?>
