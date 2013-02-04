@@ -117,6 +117,7 @@ public class XEMobileThemeController extends XEActivity implements OnClickListen
 		@Override
 		protected void onPostExecute(Void result) {			
 			
+			isLoggedIn(xmlData, getApplicationContext());
 			//Notify data adapter change			
 			themeAdapter.setThemes(themes);
 			themeAdapter.setThemesImage(imgThumbnails);
