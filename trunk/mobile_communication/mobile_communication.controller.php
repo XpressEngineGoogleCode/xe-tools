@@ -1449,6 +1449,7 @@
                 
                 function procmobile_communicationGetThemes(){
                     // Get return all themes to mobile using built-in mthod
+                    if(!Context::get('is_logged')) $this->logout_message();
                     $oAdminModel = &getAdminModel("admin");                    
                     // Get selected layout
 			$theme_file = _XE_PATH_.'files/theme/theme_info.php';
