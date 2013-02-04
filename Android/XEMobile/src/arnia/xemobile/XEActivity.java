@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 //Activity that has a ProgressDialog and one method that verifies if the user is logged id
 public class XEActivity extends Activity
@@ -25,6 +26,7 @@ public class XEActivity extends Activity
 	{
 		if( response.equals("logout_error!") )
 		{
+			Toast.makeText(this, R.string.session_expired_msg, 5000).show();
 			Intent intent = new Intent(context,XEMobileLoginController.class);
 			startActivity(intent);
 			

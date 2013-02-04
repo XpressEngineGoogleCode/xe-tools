@@ -7,4 +7,5 @@
 	<string name="no_textyle">No textyle installed on your site</string>
 	<string name="theme_save_button">Save</string>
 	<string name="main_page_theme_button">Themes</string>
+	<string name="session_expired_msg">Please login again because your session has been expired.</string>
 </resources>
