@@ -204,6 +204,7 @@
     [params setValue:@"ARTICLE" forParam:@"module_type"];
     [params setValue:self.createModuleIDField.text forParam:@"menu_url"];
     [params setValue:[self openInNewWindowOrNot] forParam:@"menu_open_window"];
+    [params setValue:self.editedMenu.moduleSrl forParam:@"menu_item_srl"];
     
     [self sendRequestToInsertAMenuItemWithParams:params];
 }
@@ -283,7 +284,8 @@
     if([self.editedMenu.type isEqualToString:@"url"] )
             {
                 self.moduleSegment.selectedSegmentIndex = 2;
-                self.navigationItem.rightBarButtonItem = nil;
+//                self.navigationItem.rightBarButtonItem = nil;
+                [self moduleSegmentChanged:self.moduleSegment];
                 self.articleWidgetExternalSegment.hidden = YES;
             }
     else 
