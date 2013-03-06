@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" 
+    android:background="#ffffff"
+    android:id ="@+id/XEMOBILE_ROOT_CONTAINER"
+    android:weightSum="1"
+    >
+	<ScrollView 
+	    android:id="@+id/XEMOBILE_SCROLLVIEW_DASHBOARD"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    >
+	    <fragment 
+	        android:name="arnia.xemobile.XEMobileDashboardFragment"
+	        android:id="@+id/XEMOBILE_DASHBOARD_FRAGMENT"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        
+	    />
+    </ScrollView>
+   
+</LinearLayout>
