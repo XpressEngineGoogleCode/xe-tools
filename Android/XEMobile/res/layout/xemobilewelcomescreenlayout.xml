@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+     >
+
+    <ImageView
+        android:id="@+id/XEMOBILE_WELCOME_LOGO"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="top|center_horizontal"
+        android:contentDescription="@string/welcome_screen_logo_description"
+        android:src="@drawable/test" />
+
+    <TextView
+        android:id="@+id/XEMOBILE_APP_DESCRIPTION"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        
+        android:layout_gravity="center"
+        android:text="@string/welcome_screen_description"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" 
+    />
+
+    <Button
+        android:id="@+id/XEMOBILE_ADD_NEW_WEBSITE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/welcome_screen_add_new_website"
+   		android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"     
+    />
+
+    <TextView
+        android:id="@+id/XEMOBILE_TERM_OF_USE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:autoLink="web"
+        android:clickable="true"
+        android:text="@string/welcome_screen_term_of_use"
+        android:textColor="#0000ff"
+    	android:layout_marginTop="80dp"
+        android:layout_marginBottom="10dp"
+    />
+
+</LinearLayout>
