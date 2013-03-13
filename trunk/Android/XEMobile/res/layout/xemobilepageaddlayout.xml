@@ -1,93 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
-	
-    <LinearLayout 
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        
-        <RadioGroup
-    		android:layout_width="fill_parent"
-    		android:layout_height="wrap_content"
-    		android:orientation="horizontal">
-    				<RadioButton android:id="@+id/XEMOBILE_ADDPAGE_RADIO_WIDGET"
-        				android:layout_width="wrap_content"
-        				android:layout_height="wrap_content"
-        				android:text="Widget"/>
-    				<RadioButton android:id="@+id/XEMOBILE_ADDPAGE_RADIO_ARTICLE"
-        				android:layout_width="wrap_content"
-        				android:layout_height="wrap_content"
-        				android:text="Article"/>
-    				<RadioButton android:id="@+id/XEMOBILE_ADDPAGE_RADIO_EXTERNAL"
-        				android:layout_width="wrap_content"
-        				android:layout_height="wrap_content"
-        				android:text="External"/>
-		</RadioGroup>   
-    </LinearLayout>
-    
-    <LinearLayout 
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        
-        <TextView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Page name:"/>
-        
-        <EditText 
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
- 			android:id="@+id/XEMOBILE_ADDPAGE_PAGENAME"/>
-    </LinearLayout>
-    
-        <LinearLayout 
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        
-        <TextView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Browser title:"/>
-        
-        <EditText 
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
- 			android:id="@+id/XEMOBILE_ADDPAGE_BROWSERTITLE"/>
-    </LinearLayout>
-    
-    <LinearLayout 
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        
-        <TextView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Caching time:"/>
-        
-        <EditText 
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
- 			android:id="@+id/XEMOBILE_ADDPAGE_CACHING"/>
-    </LinearLayout>
-    
-    <Spinner 
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/XEMOBILE_ADDPAGE_LAYOUTSPINNER"/>
-    
-    <Button 
+    android:orientation="vertical" >
+
+    <Spinner
+        android:id="@+id/XEMOBILE_ADDPAGE_PAGETYPEPINNER"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:entries="@array/page_types" />
+
+    <EditText
+        android:id="@+id/XEMOBILE_ADDPAGE_PAGENAME"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Page name" />
+
+    <EditText
+        android:id="@+id/XEMOBILE_ADDPAGE_BROWSERTITLE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Browser title" />
+
+    <EditText
+        android:id="@+id/XEMOBILE_ADDPAGE_CACHING"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Caching time" />
+
+    <Spinner
+        android:id="@+id/XEMOBILE_ADDPAGE_LAYOUTSPINNER"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
         android:id="@+id/XEMOBILE_ADDPAGE_SAVEBUTTON"
-        android:layout_gravity="center_horizontal"/>
-    
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Save" />
+
 </LinearLayout>
