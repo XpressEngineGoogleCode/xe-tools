@@ -1,11 +1,9 @@
 package arnia.xemobile.page_management;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import arnia.xemobile.R;
-import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEPage;
 
 public class XEMobilePageAdapter extends BaseAdapter
@@ -68,9 +65,10 @@ public class XEMobilePageAdapter extends BaseAdapter
 		TextView menuItemNameTextView = (TextView) convertView.findViewById(R.id.XEMOBILE_PAGEITEMCELL_TEXTVIEW);
 		menuItemNameTextView.setText(page.mid);
 		
-		Button editButton = (Button) convertView.findViewById(R.id.XEMOBILE_PAGEITEMCELL_EDITBUTTON);
-		editButton.setTag(pos);
-		editButton.setOnClickListener((OnClickListener) context);
+		// Button editButton = (Button)
+		// convertView.findViewById(R.id.XEMOBILE_PAGEITEMCELL_EDITBUTTON);
+		// editButton.setTag(pos);
+		// editButton.setOnClickListener((OnClickListener) context);
 		
 		Button deleteButton = (Button) convertView.findViewById(R.id.XEMOBILE_PAGEITEMCELL_DELETEBUTTON);
 		deleteButton.setTag(pos);
