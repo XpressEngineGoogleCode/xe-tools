@@ -42,6 +42,19 @@
 	<string name="menu_settings_help">Help</string>
 	<string name="menu_settings_about">About</string>
 	
-	
+    <!-- New post layout -->
+    <string name="post_title">Post title</string>
+    <string name="url">URL</string>
+    <string name="body">Body</string>
+    <string name="save_and_publish">SAVE &amp; PUBLISH</string>
+    <string name="save">SAVE</string>
+    
+    <!-- Array -->
+    <string-array name="page_types">
+        <item>Widget page</item>
+        <item>Article page</item>
+        <item>External link</item>
+    </string-array>
+
 	
 </resources>
