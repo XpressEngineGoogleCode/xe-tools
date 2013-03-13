@@ -12,11 +12,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import arnia.xemobile.R;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEResponse;
 import arnia.xemobile.classes.XETextyle;
-import arnia.xemobile.menu_management.XEMobileAddMenuItemController;
 import arnia.xemobile.page_management.XEMobileTextEditor;
 
 public class XEMobileTextyleEditPostContentController extends XEMobileTextEditor
