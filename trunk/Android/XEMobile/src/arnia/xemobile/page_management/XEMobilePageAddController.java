@@ -2,13 +2,11 @@ package arnia.xemobile.page_management;
 
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -28,9 +26,6 @@ import arnia.xemobile.classes.XEResponse;
 public class XEMobilePageAddController extends XEActivity implements OnClickListener
 {
 	//UI references
-	private RadioButton widgetButton;
-	private RadioButton articleButton;
-	private RadioButton externalButton;
 	private EditText pageName;
 	private EditText browserTitle;
 	private EditText cachingTime;
@@ -47,11 +42,6 @@ public class XEMobilePageAddController extends XEActivity implements OnClickList
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.xemobilepageaddlayout);
-		
-		widgetButton = (RadioButton) findViewById(R.id.XEMOBILE_ADDPAGE_RADIO_WIDGET);
-		articleButton = (RadioButton) findViewById(R.id.XEMOBILE_ADDPAGE_RADIO_ARTICLE);
-		externalButton = (RadioButton) findViewById(R.id.XEMOBILE_ADDPAGE_RADIO_EXTERNAL);
-		articleButton.setChecked(true);
 		
 		pageName = (EditText) findViewById(R.id.XEMOBILE_ADDPAGE_PAGENAME);
 		browserTitle = (EditText) findViewById(R.id.XEMOBILE_ADDPAGE_BROWSERTITLE);
@@ -80,9 +70,9 @@ public class XEMobilePageAddController extends XEActivity implements OnClickList
 	//method that returns the type of the page
 	public String getPageType()
 	{
-		if( widgetButton.isChecked() ) return "WIDGET";
-		if( articleButton.isChecked()) return "ARTICLE";
-		if( externalButton.isChecked() ) return "EXTERNAL";
+//		if( widgetButton.isChecked() ) return "WIDGET";
+//		if( articleButton.isChecked()) return "ARTICLE";
+//		if( externalButton.isChecked() ) return "EXTERNAL";
 		
 		return "";
 	}
