@@ -7,11 +7,9 @@ import java.util.HashMap;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -95,23 +93,23 @@ public class XEMobilePageController extends XEActivity implements OnClickListene
 
 			
 			//edit button pressed
-			if( v.getId() == R.id.XEMOBILE_PAGEITEMCELL_EDITBUTTON )
-			{
-				int index = (Integer) v.getTag();
-				//page where the user clicked
-				XEPage page = list.pages.get(index);
-				
-				Intent intent = new Intent(XEMobilePageController.this,XEMobilePageEditController.class);
-				intent.putExtra("browser_title", page.browser_title);
-				intent.putExtra("mid", page.mid);
-				intent.putExtra("page type", page.page_type);
-				intent.putExtra("layout", page.layout_srl);
-				intent.putExtra("module_srl", page.module_srl);
-				
-				startActivity(intent);
-			}
+//			if( v.getId() == R.id.XEMOBILE_PAGEITEMCELL_EDITBUTTON )
+//			{
+//				int index = (Integer) v.getTag();
+//				//page where the user clicked
+//				XEPage page = list.pages.get(index);
+//				
+//				Intent intent = new Intent(XEMobilePageController.this,XEMobilePageEditController.class);
+//				intent.putExtra("browser_title", page.browser_title);
+//				intent.putExtra("mid", page.mid);
+//				intent.putExtra("page type", page.page_type);
+//				intent.putExtra("layout", page.layout_srl);
+//				intent.putExtra("module_srl", page.module_srl);
+//				
+//				startActivity(intent);
+//			}
 			//delete button pressed
-			else if( v.getId() == R.id.XEMOBILE_PAGEITEMCELL_DELETEBUTTON )
+			if( v.getId() == R.id.XEMOBILE_PAGEITEMCELL_DELETEBUTTON )
 			{
 				int index = (Integer) v.getTag();
 				//page where the user clicked
