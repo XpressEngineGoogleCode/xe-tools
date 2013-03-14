@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <Button
+        android:id="@+id/XEMOBILE_MENUITEMEDIT_EDITBUTTON"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="EDIT" />
+
+    <Button
+        android:id="@+id/XEMOBILE_MENUITEMEDIT_DELETEBUTTON"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/XEMOBILE_MENUITEMEDIT_EDITBUTTON"
+        android:text="DELETE" />
+
+    <TextView
+        android:id="@+id/XEMOBILE_MENUITEMEDIT_TITLE_TEXT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/XEMOBILE_MENUITEMEDIT_EDITBUTTON"
+        android:layout_alignParentLeft="true"
+        android:text="ITEM TITLE" />
+
+    <Button
+        android:id="@+id/XEMOBILE_MENUITEMEDIT_UPBUTTON"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/XEMOBILE_MENUITEMEDIT_DELETEBUTTON"
+        android:layout_alignParentLeft="true"
+        android:text="UP" />
+
+    <Button
+        android:id="@+id/XEMOBILE_MENUITEMEDIT_DOWNBUTTON"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/XEMOBILE_MENUITEMEDIT_DELETEBUTTON"
+        android:layout_toRightOf="@+id/XEMOBILE_MENUITEMEDIT_UPBUTTON"
+        android:text="DOWN" />
+
+    <Button
+        android:id="@+id/XEMOBILE_MENUITEMEDIT_LEFTRIGHTBUTTON"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/XEMOBILE_MENUITEMEDIT_DELETEBUTTON"
+        android:layout_toRightOf="@+id/XEMOBILE_MENUITEMEDIT_DOWNBUTTON"
+        android:text=">" />
+
+</RelativeLayout>

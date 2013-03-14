@@ -16,11 +16,12 @@
         android:hint="@string/url"
         android:singleLine="true" />
 
-    <WebView
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="top" />
+        android:gravity="top"
+        android:hint="Body" />
 
     <RelativeLayout
         android:layout_width="match_parent"
