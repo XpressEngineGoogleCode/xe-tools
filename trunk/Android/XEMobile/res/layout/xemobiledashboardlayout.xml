@@ -6,16 +6,13 @@
     android:scrollbars="vertical"
     android:background="#ffffff"
     >
-    
-    
-    <TextView 
-        android:background="#00ff00"
-        android:layout_columnSpan="2"        
-    	android:layout_height="150dp"
-    	android:layout_width="match_parent"	     
-    />
-    
-    
+    <fragment
+        android:name="arnia.xemobile.XEMobileStatisticsController"
+        android:id="@+id/XEMOBILE_WEBSITE_STATISTIC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+   		android:layout_columnSpan="2"
+        />
     
 	<TextView 
 		android:id="@+id/XEMOBILE_DASHBOARD_NEW_POST"
