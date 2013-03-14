@@ -9,7 +9,9 @@ import org.simpleframework.xml.core.Persister;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,19 +20,25 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import arnia.xemobile.R;
 import arnia.xemobile.XEActivity;
+import arnia.xemobile.XEFragment;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XELayout;
 import arnia.xemobile.classes.XEResponse;
 
-public class XEMobilePageAddController extends XEActivity implements OnClickListener
+public class XEMobilePageAddController extends XEFragment implements OnClickListener
 {
 	//UI references
+//	private RadioButton widgetButton;
+//	private RadioButton articleButton;
+//	private RadioButton externalButton;
 	private EditText pageName;
 	private EditText browserTitle;
 	private EditText cachingTime;
 	private Spinner layoutSpinner;
 	private Button saveButton;
+	
+	private View view ;
 	
 	//adapter for the list with pages
 	private ArrayAdapter<String> adapter;
@@ -38,25 +46,51 @@ public class XEMobilePageAddController extends XEActivity implements OnClickList
 	private XEArrayList listLayouts;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.xemobilepageaddlayout);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		view = inflater.inflate(R.layout.xemobilepageaddlayout, container,false);
 		
-		pageName = (EditText) findViewById(R.id.XEMOBILE_ADDPAGE_PAGENAME);
-		browserTitle = (EditText) findViewById(R.id.XEMOBILE_ADDPAGE_BROWSERTITLE);
-		cachingTime = (EditText) findViewById(R.id.XEMOBILE_ADDPAGE_CACHING);
+		pageName = (EditText) view.findViewById(R.id.XEMOBILE_ADDPAGE_PAGENAME);
+		browserTitle = (EditText) view.findViewById(R.id.XEMOBILE_ADDPAGE_BROWSERTITLE);
+		cachingTime = (EditText) view.findViewById(R.id.XEMOBILE_ADDPAGE_CACHING);
 		
-		layoutSpinner = (Spinner) findViewById(R.id.XEMOBILE_ADDPAGE_LAYOUTSPINNER);
-		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+		layoutSpinner = (Spinner) view.findViewById(R.id.XEMOBILE_ADDPAGE_LAYOUTSPINNER);
+		adapter = new ArrayAdapter<String>(this.activity, android.R.layout.simple_spinner_item);
 		
-		saveButton = (Button) findViewById(R.id.XEMOBILE_ADDPAGE_SAVEBUTTON);
+		saveButton = (Button) view.findViewById(R.id.XEMOBILE_ADDPAGE_SAVEBUTTON);
 		
 		saveButton.setOnClickListener(this);
 			
-		GetLayoutsAsyncTask task = new GetLayoutsAsyncTask();
-		task.execute();
+//		GetLayoutsAsyncTask task = new GetLayoutsAsyncTask();
+//		task.execute();
+		
+		return view;
 	}
+	
+//	protected void onCreate(Bundle savedInstanceState) 
+//	{
+//		super.onCreate(savedInstanceState);
+//		setContentView(R.layout.xemobilepageaddlayout);
+//		
+////		widgetButton = (RadioButton) findViewById(R.id.XEMOBILE_ADDPAGE_RADIO_WIDGET);
+////		articleButton = (RadioButton) findViewById(R.id.XEMOBILE_ADDPAGE_RADIO_ARTICLE);
+////		externalButton = (RadioButton) findViewById(R.id.XEMOBILE_ADDPAGE_RADIO_EXTERNAL);
+////		articleButton.setChecked(true);
+//		
+//		pageName = (EditText) findViewById(R.id.XEMOBILE_ADDPAGE_PAGENAME);
+//		browserTitle = (EditText) findViewById(R.id.XEMOBILE_ADDPAGE_BROWSERTITLE);
+//		cachingTime = (EditText) findViewById(R.id.XEMOBILE_ADDPAGE_CACHING);
+//		
+//		layoutSpinner = (Spinner) findViewById(R.id.XEMOBILE_ADDPAGE_LAYOUTSPINNER);
+//		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+//		
+//		saveButton = (Button) findViewById(R.id.XEMOBILE_ADDPAGE_SAVEBUTTON);
+//		
+//		saveButton.setOnClickListener(this);
+//			
+//		GetLayoutsAsyncTask task = new GetLayoutsAsyncTask();
+//		task.execute();
+//	}
 	
 	//method called when the save button is pressed
 	@Override
@@ -124,7 +158,7 @@ public class XEMobilePageAddController extends XEActivity implements OnClickList
 				e.printStackTrace();
 			}
 			
-			if( responseConfirmation.value.equals("true") ) finish();
+//			if( responseConfirmation.value.equals("true") ) finish();
 		}
 	}
 	
@@ -158,7 +192,7 @@ public class XEMobilePageAddController extends XEActivity implements OnClickList
 			super.onPostExecute(result);
 			
 			//check to see if user is logged in
-			isLoggedIn(response, XEMobilePageAddController.this);
+//			isLoggedIn(response, XEMobilePageAddController.this);
 			
 			//add layouts to spinner adapter
 			if( listLayouts != null && listLayouts.layouts != null )

@@ -5,6 +5,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -21,6 +22,7 @@ import org.simpleframework.xml.core.Persister;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.app.ActionBar.OnNavigationListener;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +34,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 import android.util.Log;
 import android.view.ContextMenu;
@@ -66,156 +73,79 @@ import arnia.xemobile.theme_management.XEMobileThemeController;
 import arnia.xemobile_textyle.XEMobileTextyleSelectTextyleController;
 
 //Activity for the Main Menu of XEMobile application
-public class XEMobileMainActivityController extends FragmentActivity
+public class XEMobileMainActivityController extends FragmentActivity implements OnPageChangeListener
 {	
-	private Spinner selectSiteSpinner;
-	private Cursor siteCursor;
-	private SiteAdapter siteAdapter ;
-	private Cursor selectingSite=null;
+	public ViewPager pager;
 	
-	protected ProgressDialog progress;
+	public XEMobilePageAdapter pageAdapter; 
 	
-	public void startProgress(String message)
-	{
-		progress = ProgressDialog.show(this, null, message , true,false);
-	}
+	private int prevPageIndex=0;
 	
-	public void dismissProgress()
-	{
-		progress.dismiss();
-	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.xemobilemainactivitylayout);
-		ActionBar actionBar = getActionBar();
-		actionBar.setCustomView(R.layout.xemobileactionbarlayout);
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);		
 		
-		this.selectSiteSpinner = (Spinner)  actionBar.getCustomView().findViewById(R.id.XEMOBILE_MENU_SELECT_SITE);
+		this.pager = (ViewPager) findViewById(R.id.pager);
+		pageAdapter = new XEMobilePageAdapter(getSupportFragmentManager());
 		
-		ImageView menuLogo = (ImageView) actionBar.getCustomView().findViewById(R.id.XEMOBILE_MENU_LOGO);
-		menuLogo.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-//				selectSiteSpinner.setVisibility(Spinner.VISIBLE);
-				
-			}
-		});
-		this.selectSiteSpinner.setOnTouchListener(new OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				Log.i("Touch event",event.toString());
-				return false;
-			}
-		});
-		this.selectSiteSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				Log.i("XEMobile","Handler item selected");
-				Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-				String userSelectingSite = cursor.getString(1);
-				SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplication());
-				String loggedInSite = pref.getString("ACTIVE_SITE", "");
-				//if user select different site, login to another site
-				if(loggedInSite.compareTo(userSelectingSite)!=0){
-					selectingSite = cursor;					
-					startProgress("Logging...");
-					new LogInInBackground().execute();
-				}
-				
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
+		pager.setAdapter(pageAdapter);
+		pageAdapter.addFragment(new XEMobileDashboardFragment());
+		pager.setOnPageChangeListener(this);
 	}	
-	
-	@Override
-	protected void onResume() {	
-		
-		XEDatabaseHelper dbHelper = XEDatabaseHelper.getDBHelper(this);
-		SQLiteDatabase db = dbHelper.getReadableDatabase();
-		this.siteCursor = db.rawQuery("SELECT * FROM " + dbHelper.XE_SITES, null);
-		this.siteAdapter = new SiteAdapter(this, siteCursor);
-		this.selectSiteSpinner.setAdapter(siteAdapter);
-		this.siteAdapter.notifyDataSetChanged();
-		super.onResume();
-	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main_menu, menu);
 		return true;
 	}
-	
-	//AsyncTask for LogIn
-    private class LogInInBackground extends AsyncTask<Void, Void, Void> 
-    {
-    	
-    	
-    	private String xmlData;
-    	private boolean request_url_error=false;
-    	
-    	//send the request in background
-		
-		@Override
-		protected Void doInBackground(Void... params) 
-		{
-			try{
-				// set address in XEHost singleton
-				String url = selectingSite.getString(1) ;
-				String userid = selectingSite.getString(2) ;
-				String password = selectingSite.getString(3) ;
-				
-				XEHost.getINSTANCE().setURL(url);
-				
-				xmlData = XEHost.getINSTANCE().getRequest("/index.php?module=mobile_communication&act=procmobile_communicationLogin&user_id="+ userid + "&password=" + password);
-		    	
-			}catch(Exception e){
-				
-				e.printStackTrace();
-				request_url_error=true;
-			}finally{
-				return null;
-			}
-		}
-		
-		//verify the response after the request received a response
-		@Override
-		protected void onPostExecute(Void result) 
-		{
-			super.onPostExecute(result);
-			Log.i("XEMObile",xmlData);
-			dismissProgress();
-		}
-	}
-	
-	
-	private class SiteAdapter extends CursorAdapter {
 
-		public SiteAdapter(Context context, Cursor c) {
-			super(context, c);			
-		}		
-		@Override
-		public void bindView(View view, Context context, Cursor cursor) {
-			TextView textView  = (TextView) view.findViewById(R.id.SITE_SPINNER_ITEM);
-			textView.setText(cursor.getString(1));
+	class XEMobilePageAdapter extends FragmentStatePagerAdapter{
+		
+		ArrayList<Fragment> screenStack;
+		
+		public XEMobilePageAdapter(FragmentManager fm) {
+			super(fm);	
+			screenStack = new ArrayList<Fragment>();
 		}
 
 		@Override
-		public View newView(Context context, Cursor cursor, ViewGroup parent) {
-			LayoutInflater layoutInflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View view  = layoutInflater.inflate(R.layout.xemobilesitespinneritemlayout, null);						
-			return view;
-		}		
+		public Fragment getItem(int position) {			
+			return screenStack.get(position);
+		}
+		public void addFragment(Fragment screen){
+			screenStack.add(screen);
+			this.notifyDataSetChanged();
+		}
+		public void removeLastFragment(){
+			screenStack.remove(getCount()-1);
+			this.notifyDataSetChanged();			
+		}
+		@Override
+		public int getCount() {
+			return screenStack.size();
+		}	
+		
 	}
-	
+
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPageSelected(int pageIndex){
+		if(prevPageIndex>pageIndex){
+			this.pageAdapter.removeLastFragment();
+		}
+		prevPageIndex = pageIndex;
+	}
 }

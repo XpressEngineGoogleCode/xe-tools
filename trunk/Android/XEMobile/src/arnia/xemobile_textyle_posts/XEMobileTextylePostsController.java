@@ -32,11 +32,11 @@ import arnia.xemobile.classes.XETextylePost;
 public class XEMobileTextylePostsController extends XEActivity implements
 		OnCheckedChangeListener, OnClickListener, OnItemClickListener {
 	// UI references
-	private RadioButton savedPostsOption;
+//	private RadioButton savedPostsOption;
 	private RadioButton publishedPostsOption;
 	private ListView listView;
 	private XEMobileTextylePostAdapter adapter;
-	private Button addPostButton;
+//	private Button addPostButton;
 
 	// array lists with saved posts and published posts
 	private XEArrayList savedPosts;
@@ -48,6 +48,18 @@ public class XEMobileTextylePostsController extends XEActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.xemobiletextylepostslayout);
+		
+		//take references to UI elements
+//		savedPostsOption = (RadioButton) findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_SAVEDOPTION);
+		publishedPostsOption= (RadioButton) findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_PUBLISHEDOPTION);
+//		addPostButton = (Button) findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_ADDPOST);
+//		addPostButton.setOnClickListener(this);
+		
+		
+//		savedPostsOption.setChecked(true);
+//		savedPostsOption.setOnCheckedChangeListener(this);
+		publishedPostsOption.setOnCheckedChangeListener(this);
+		
 
 		// take references to UI elements
 //		savedPostsOption = (RadioButton) findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_SAVEDOPTION);
@@ -65,6 +77,9 @@ public class XEMobileTextylePostsController extends XEActivity implements
 		adapter = new XEMobileTextylePostAdapter(this);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(this);
+		
+		
+//		savedPostsOption.setOnCheckedChangeListener(this);
 
 //		savedPostsOption.setOnCheckedChangeListener(this);
 	}
@@ -81,17 +96,17 @@ public class XEMobileTextylePostsController extends XEActivity implements
 	}
 
 	// the method is called when the "Saved" or "Published" button is pressed
-	@Override
+	@Override	
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		if (buttonView == savedPostsOption && savedPosts != null) {
-			if (isChecked) {
-				setTheSavedPostsInAdapter();
-			}
-		} else if (buttonView == publishedPostsOption && publishedPosts != null) {
-			if (isChecked) {
-				setThePublishedPostsInAdapter();
-			}
-		}
+//		if (buttonView == savedPostsOption && savedPosts != null) {
+//			if (isChecked) {
+//				setTheSavedPostsInAdapter();
+//			}
+//		} else if (buttonView == publishedPostsOption && publishedPosts != null) {
+//			if (isChecked) {
+//				setThePublishedPostsInAdapter();
+//			}
+//		}
 	}
 
 	// async task for saved posts
@@ -124,6 +139,16 @@ public class XEMobileTextylePostsController extends XEActivity implements
 		@Override
 		protected void onPostExecute(Object result) {
 			super.onPostExecute(result);
+			
+			if(isLoggedIn(response, XEMobileTextylePostsController.this))
+			{
+				if( savedPosts.posts == null )
+				{
+					savedPosts.posts = new ArrayList<XETextylePost>();
+				
+				}
+//				if( savedPostsOption.isChecked() ) setTheSavedPostsInAdapter();
+			
 
 			if (isLoggedIn(response, XEMobileTextylePostsController.this))
 				dismissProgress();
@@ -204,34 +229,60 @@ public class XEMobileTextylePostsController extends XEActivity implements
 	}
 
 	// called when the "Add post" button is pressed
-	@Override
-	public void onClick(View v) {
-		Intent intent = new Intent(XEMobileTextylePostsController.this,
-				XEMobileTextyleAddPostController.class);
-		intent.putExtra("textyle", textyle);
-		startActivity(intent);
-	}
+//	@Override
+//	public void onClick(View v) {
+//		Intent intent = new Intent(XEMobileTextylePostsController.this,
+//				XEMobileTextyleAddPostController.class);
+//		intent.putExtra("textyle", textyle);
+//		startActivity(intent);
+//	}
+//
+//	// called when an item form ListView is pressed
+//	@Override
+//	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+//		XETextylePost post = null;
+//		Intent intent = new Intent(XEMobileTextylePostsController.this, XEMobileTextyleEditPostContentController.class);
+//		
+////		if( savedPostsOption.isChecked() )
+////		{
+////			post = savedPosts.posts.get(arg2);
+////			intent.putExtra("type", "saved");
+////			
+////		}
+////		else if( publishedPostsOption.isChecked() )
+////		{
+////			post = publishedPosts.posts.get(arg2);
+////			intent.putExtra("type", "published");
+////		}
+//		Intent intent = new Intent(XEMobileTextylePostsController.this,
+//				XEMobileTextyleEditPostContentController.class);
+//
+//		if (savedPostsOption.isChecked()) {
+//			post = savedPosts.posts.get(arg2);
+//			intent.putExtra("type", "saved");
+//
+//		} else if (publishedPostsOption.isChecked()) {
+//			post = publishedPosts.posts.get(arg2);
+//			intent.putExtra("type", "published");
+//		}
+//
+//		intent.putExtra("textyle", textyle);
+//		intent.putExtra("document_srl", post.document_srl);
+//		intent.putExtra("title", post.title);
+//		intent.putExtra("category_srl", post.category_srl);
+//		startActivity(intent);
+//	}
+}
 
-	// called when an item form ListView is pressed
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		XETextylePost post = null;
-		Intent intent = new Intent(XEMobileTextylePostsController.this,
-				XEMobileTextyleEditPostContentController.class);
+		// TODO Auto-generated method stub
+		
+	}
 
-		if (savedPostsOption.isChecked()) {
-			post = savedPosts.posts.get(arg2);
-			intent.putExtra("type", "saved");
-
-		} else if (publishedPostsOption.isChecked()) {
-			post = publishedPosts.posts.get(arg2);
-			intent.putExtra("type", "published");
-		}
-
-		intent.putExtra("textyle", textyle);
-		intent.putExtra("document_srl", post.document_srl);
-		intent.putExtra("title", post.title);
-		intent.putExtra("category_srl", post.category_srl);
-		startActivity(intent);
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
 	}
 }
