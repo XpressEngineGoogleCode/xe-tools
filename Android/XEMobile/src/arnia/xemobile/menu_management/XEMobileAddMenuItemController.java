@@ -64,34 +64,7 @@ public class XEMobileAddMenuItemController extends Activity implements OnClickLi
 		//load interface
 		setContentView(R.layout.xemobilemenuitemeditlayout);
 		
-		//take reference to interface objects
-		spinner = (Spinner) findViewById(R.id.XEMOBILE_MENUITEMEDIT_SPINNER);
-		saveButon = (Button) findViewById(R.id.XEMOBILE_MENUITEMEDIT_SAVEBUTTON);
-		browserTitleEditText = (EditText) findViewById(R.id.XEMOBILE_MENUITEMEDIT_BROWSERTITLE);
-		
-		newWindow = (CheckBox)findViewById(R.id.XEMOBILE_MENUITEMEDIT_CHECKBOX);
-		
-		createRadioOption = (RadioButton) findViewById(R.id.XEMOBILE_MENUITEMEDIT_RADIO_CREATE);
-		createRadioOption.setOnCheckedChangeListener(this);
-		
-		articleRadioOption = (RadioButton) findViewById(R.id.XEMOBILE_MENUITEMEDIT_RADIO_ARTICLE);
-		widgetRadioOption = (RadioButton) findViewById(R.id.XEMOBILE_MENUITEMEDIT_RADIO_WIDGET);
-		externalRadioOption = (RadioButton) findViewById(R.id.XEMOBILE_MENUITEMEDIT_RADIO_EXTERNAL);
-		
-		moduleIDEditText = (EditText) findViewById(R.id.XEMOBILE_MENUITEMEDIT_MODULEID_EDITTEXT);
-		moduleIDTextView = (TextView) findViewById(R.id.XEMOBILE_MENUITEMEDIT_MODULEID_TEXTVIEW);
-		
-		menuURLEditText = (EditText) findViewById(R.id.XEMOBILE_MENUITEMEDIT_MENUURL_EDITTEXT);
-		menuURLTextView = (TextView) findViewById(R.id.XEMOBILE_MENUITEMEDIT_MENUURL_TEXTVIEW);
-		
-		selectRadioOption = (RadioButton) findViewById(R.id.XEMOBILE_MENUITEMEDIT_RADIO_SELECT);
-		selectRadioOption.setOnCheckedChangeListener(this);
-		selectRadioOption.setChecked(true);
-		
 
-		
-		menuURLRadioOption = (RadioButton) findViewById(R.id.XEMOBILE_MENUITEMEDIT_RADIO_MENUURL);
-		menuURLRadioOption.setOnCheckedChangeListener(this);
 		
 		//get out of intent the parent srl
 		parentSRL = getIntent().getStringExtra("menu_parent_srl");
