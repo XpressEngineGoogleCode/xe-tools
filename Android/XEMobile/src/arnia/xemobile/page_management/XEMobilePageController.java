@@ -92,6 +92,38 @@ public class XEMobilePageController extends XEActivity implements OnClickListene
 		{
 
 			
+//			//edit button pressed
+//			if( v.getId() == R.id.XEMOBILE_PAGEITEMCELL_EDITBUTTON )
+//			{
+//				int index = (Integer) v.getTag();
+//				//page where the user clicked
+//				XEPage page = list.pages.get(index);
+//				
+//				Intent intent = new Intent(XEMobilePageController.this,XEMobilePageEditController.class);
+//				intent.putExtra("browser_title", page.browser_title);
+//				intent.putExtra("mid", page.mid);
+//				intent.putExtra("page type", page.page_type);
+//				intent.putExtra("layout", page.layout_srl);
+//				intent.putExtra("module_srl", page.module_srl);
+//				
+//				startActivity(intent);
+//			}
+//			//delete button pressed
+//			else if( v.getId() == R.id.XEMOBILE_PAGEITEMCELL_DELETEBUTTON )
+//			{
+//				int index = (Integer) v.getTag();
+//				//page where the user clicked
+//				XEPage page = list.pages.get(index);
+//				
+//				startProgress("Loading...");
+//				DeletePageAsyncTask task = new DeletePageAsyncTask();
+//				task.execute(new String[]{page.module_srl});
+//			}
+//			else if( v.getId() == R.id.XEMOBILE_PAGE_ADDBUTTON)
+//			{
+//				Intent intent = new Intent(XEMobilePageController.this,XEMobilePageAddController.class);
+//				startActivity(intent);
+//			}
 			//edit button pressed
 //			if( v.getId() == R.id.XEMOBILE_PAGEITEMCELL_EDITBUTTON )
 //			{
