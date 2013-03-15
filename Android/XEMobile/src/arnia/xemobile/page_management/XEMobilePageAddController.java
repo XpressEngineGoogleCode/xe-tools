@@ -7,12 +7,14 @@ import java.util.HashMap;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +23,7 @@ import android.widget.Spinner;
 import arnia.xemobile.R;
 import arnia.xemobile.XEActivity;
 import arnia.xemobile.XEFragment;
+import arnia.xemobile.XEMobileMainActivityController;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XELayout;
@@ -29,9 +32,7 @@ import arnia.xemobile.classes.XEResponse;
 public class XEMobilePageAddController extends XEFragment implements OnClickListener
 {
 	//UI references
-//	private RadioButton widgetButton;
-//	private RadioButton articleButton;
-//	private RadioButton externalButton;
+	private Spinner pageType;
 	private EditText pageName;
 	private EditText browserTitle;
 	private EditText cachingTime;
@@ -60,43 +61,21 @@ public class XEMobilePageAddController extends XEFragment implements OnClickList
 		saveButton = (Button) view.findViewById(R.id.XEMOBILE_ADDPAGE_SAVEBUTTON);
 		
 		saveButton.setOnClickListener(this);
+		
+		pageType  = (Spinner) view.findViewById(R.id.XEMOBILE_ADDPAGE_PAGETYPESPINNER);
 			
-//		GetLayoutsAsyncTask task = new GetLayoutsAsyncTask();
-//		task.execute();
+		GetLayoutsAsyncTask task = new GetLayoutsAsyncTask();
+		task.execute();
 		
 		return view;
 	}
-	
-//	protected void onCreate(Bundle savedInstanceState) 
-//	{
-//		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.xemobilepageaddlayout);
-//		
-////		widgetButton = (RadioButton) findViewById(R.id.XEMOBILE_ADDPAGE_RADIO_WIDGET);
-////		articleButton = (RadioButton) findViewById(R.id.XEMOBILE_ADDPAGE_RADIO_ARTICLE);
-////		externalButton = (RadioButton) findViewById(R.id.XEMOBILE_ADDPAGE_RADIO_EXTERNAL);
-////		articleButton.setChecked(true);
-//		
-//		pageName = (EditText) findViewById(R.id.XEMOBILE_ADDPAGE_PAGENAME);
-//		browserTitle = (EditText) findViewById(R.id.XEMOBILE_ADDPAGE_BROWSERTITLE);
-//		cachingTime = (EditText) findViewById(R.id.XEMOBILE_ADDPAGE_CACHING);
-//		
-//		layoutSpinner = (Spinner) findViewById(R.id.XEMOBILE_ADDPAGE_LAYOUTSPINNER);
-//		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-//		
-//		saveButton = (Button) findViewById(R.id.XEMOBILE_ADDPAGE_SAVEBUTTON);
-//		
-//		saveButton.setOnClickListener(this);
-//			
-//		GetLayoutsAsyncTask task = new GetLayoutsAsyncTask();
-//		task.execute();
-//	}
 	
 	//method called when the save button is pressed
 	@Override
 	public void onClick(View v) 
 	{
 		//start request to add the page
+		startProgress("Saving page...");
 		AddPageAsyncTask task = new AddPageAsyncTask();
 		task.execute();
 	}
@@ -104,11 +83,14 @@ public class XEMobilePageAddController extends XEFragment implements OnClickList
 	//method that returns the type of the page
 	public String getPageType()
 	{
-//		if( widgetButton.isChecked() ) return "WIDGET";
-//		if( articleButton.isChecked()) return "ARTICLE";
-//		if( externalButton.isChecked() ) return "EXTERNAL";
-		
-		return "";
+		String selectedPageType = (String) pageType.getItemAtPosition(pageType.getSelectedItemPosition());
+		if(selectedPageType.compareTo("Widget page")==0){
+			return "WIDGET";			
+		}else if(selectedPageType.compareTo("Article page")==0){
+			return "ARTICLE";
+		}else{
+			return "EXTERNAL";
+		}
 	}
 	
 	//Async Task that adds a page
@@ -146,6 +128,7 @@ public class XEMobilePageAddController extends XEFragment implements OnClickList
 		{
 			super.onPostExecute(result);
 			XEResponse responseConfirmation = null;
+			dismissProgress();
 			try
 			{
 				Serializer serializer = new Persister();
@@ -158,7 +141,23 @@ public class XEMobilePageAddController extends XEFragment implements OnClickList
 				e.printStackTrace();
 			}
 			
-//			if( responseConfirmation.value.equals("true") ) finish();
+			if( responseConfirmation.value.equals("true") ){
+				// Redirect to page manager
+				XEMobileMainActivityController mainActivity =  (XEMobileMainActivityController) activity;
+				mainActivity.pageAdapter.addFragment(new XEMobilePageController());
+				mainActivity.pager.setCurrentItem(mainActivity.pageAdapter.getCount()-1, true);
+			}else {
+				new AlertDialog.Builder(activity)
+					.setTitle("Attention")
+					.setMessage("This page is already existing. Please use different name and title.")
+					.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+								dialog.dismiss();
+						}
+					})
+					.create().show();
+			}
 		}
 	}
 	
