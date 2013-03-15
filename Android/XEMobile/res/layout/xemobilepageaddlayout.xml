@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <Spinner
-        android:id="@+id/XEMOBILE_ADDPAGE_PAGETYPEPINNER"
+        android:id="@+id/XEMOBILE_ADDPAGE_PAGETYPESPINNER"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/page_types" />
@@ -14,19 +14,19 @@
         android:id="@+id/XEMOBILE_ADDPAGE_PAGENAME"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Page name" />
+        android:hint="@string/newpage_page_name" />
 
     <EditText
         android:id="@+id/XEMOBILE_ADDPAGE_BROWSERTITLE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Browser title" />
+        android:hint="@string/newpage_browser_title" />
 
     <EditText
         android:id="@+id/XEMOBILE_ADDPAGE_CACHING"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Caching time" />
+        android:hint="@string/newpage_caching_time" />
 
     <Spinner
         android:id="@+id/XEMOBILE_ADDPAGE_LAYOUTSPINNER"
@@ -38,6 +38,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Save" />
+        android:text="@string/newpage_button_save" />
 
 </LinearLayout>
