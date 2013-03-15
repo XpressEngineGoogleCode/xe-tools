@@ -1,229 +1,257 @@
 package arnia.xemobile.page_management;
 
-
-import android.app.Activity;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.TranslateAnimation;
-import android.webkit.WebView;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ToggleButton;
 import arnia.xemobile.R;
-import arnia.xemobile.XEActivity;
+import arnia.xemobile.XEFragment;
 
-public abstract class XEMobileTextEditor extends XEActivity implements TextWatcher
+public class XEMobileTextEditor extends XEFragment implements OnClickListener,
+		TextWatcher {
 
-{
+	// Editor control
+	private EditText txtContent;
+	private ToggleButton btnBold;
+	private ToggleButton btnItalic;
+	private ToggleButton btnUnderline;
+	private Button btnLink;
+	private Button btnAddImage;
 
-   protected EditText titleEditText;
-   protected EditText contentEditText;
-   
-   protected WebView  htmlPreview;
-	
+	private int styleStart = -1;
+	private int cursorLoc = 0;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.xemobiletexteditor);
-		
-		titleEditText = (EditText) findViewById(R.id.XEMOBILE_TEXTEDITOR_TITLE);
-		contentEditText = (EditText) findViewById(R.id.XEMOBILE_TEXTEDITOR_CONTENT);	
-		htmlPreview = (WebView) findViewById(R.id.XEMOBILE_PREVIEW_CONTENT);
-		
-		//Register text content change listener 
-		contentEditText.addTextChangedListener(this);
-	}
-	
-	public void boldButton(View view)
-	{
-		int selectionStart = contentEditText.getSelectionStart();
-		int selectionEnd = contentEditText.getSelectionEnd();
-		
-		if(contentEditText.isFocused())
-		{
-			if( selectionStart == selectionEnd )
-				{
-					contentEditText.setText(insertTagAtIndex("<b></b>", selectionStart));
-					Selection.setSelection(contentEditText.getText(), selectionStart + 3);
-				}
-			else
-			{
-				contentEditText.setText(insertTagAtSelection("<b>", "</b>", selectionStart, selectionEnd));
-			}
-		}
-		
-	}
-	
-	public void italicButton(View view)
-	{
-		int selectionStart = contentEditText.getSelectionStart();
-		int selectionEnd = contentEditText.getSelectionEnd();
-		
-		if(contentEditText.isFocused())
-		{
-			
-			if( selectionStart == selectionEnd )
-			{
-				contentEditText.setText(insertTagAtIndex("<i></i>", selectionStart));
-				Selection.setSelection(contentEditText.getText(), selectionStart + 3);
-			}
-			else
-			{
-				contentEditText.setText(insertTagAtSelection("<i>", "</i>", selectionStart, selectionEnd));
-			}
-		}
-		
-	}
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
-	public void underlineButton(View view)
-	{
-		int selectionStart = contentEditText.getSelectionStart();
-		int selectionEnd = contentEditText.getSelectionEnd();
-		
-		if(contentEditText.isFocused())
-		{
-			
-			if( selectionStart == selectionEnd )
-			{
-				contentEditText.setText(insertTagAtIndex("<u></u>", selectionStart));
-				Selection.setSelection(contentEditText.getText(), selectionStart + 3);
-			}
-			else
-			{
-				contentEditText.setText(insertTagAtSelection("<u>", "</u>", selectionStart, selectionEnd));
-			}
-		}
-		
-	}
-	
-	public void ulButton(View view)
-	{
-		int selectionStart = contentEditText.getSelectionStart();
-		int selectionEnd = contentEditText.getSelectionEnd();
-		
-		if(contentEditText.isFocused())
-		{
-			
-			
-			if( selectionStart == selectionEnd )
-			{
-				contentEditText.setText(insertTagAtIndex("<ul></ul>", selectionStart));
-				Selection.setSelection(contentEditText.getText(), selectionStart + 4);
-			}
-			else
-			{
-				contentEditText.setText(insertTagAtSelection("<ul>", "</ul>", selectionStart, selectionEnd));
-			}
-		}
-	}
-	
-	public void liButton(View view)
-	{
-		int selectionStart = contentEditText.getSelectionStart();
-		int selectionEnd = contentEditText.getSelectionEnd();
-	
-		if(contentEditText.isFocused())
-		{
-			
-			if( selectionStart == selectionEnd )
-			{
-				contentEditText.setText(insertTagAtIndex("<li></li>", selectionStart));
-				Selection.setSelection(contentEditText.getText(), selectionStart + 4);
-			}
-			else
-			{
-				contentEditText.setText(insertTagAtSelection("<u>", "</u>", selectionStart, selectionEnd));
-			}
-		}		
+		View view = inflater.inflate(R.layout.xemobiletexteditor, container,
+				false);
 
-	}
-	
-	public void strikeButton(View view)
-	{
-		int selectionStart = contentEditText.getSelectionStart();
-		int selectionEnd = contentEditText.getSelectionEnd();
-		
-	
-		if(contentEditText.isFocused())
-		{
-			
-			if( selectionStart == selectionEnd )
-			{
-				contentEditText.setText(insertTagAtIndex("<strike></strike>", selectionStart));
-				Selection.setSelection(contentEditText.getText(), selectionStart + 8);
-			}
-			else
-			{
-				contentEditText.setText(insertTagAtSelection("<strike>", "</strike>", selectionStart, selectionEnd));
-			}
-		}
+		// Editor control
+		txtContent = (EditText) view.findViewById(R.id.XEMOBILE_EDITOR_CONTENT);
+		txtContent.addTextChangedListener(this);
 
-	}
-		
-	public void cancelButton(View view)
-	{
-		finish();
-	}
-	
-	public abstract void doneButton(View view);
-	
-	private String insertTagAtIndex(String tag,int index)
-	{
-		String string = contentEditText.getText().toString();
-		
-		String substring1 = string.substring(0, index);
-		String substring2 = string.substring(index);
-		
-		return substring1 + tag + substring2;
-	}
-	
-	private String insertTagAtSelection(String tag, String closeTag,int start,int end)
-	{
-		String string = contentEditText.getText().toString();
-		
-		String substring1 = string.substring(0, start);
-		String substring2 = string.substring(start, end);
-		String substring3 = string.substring(end,string.length());
-		
-		return substring1 + tag + substring2 + closeTag + substring3;
-	}
-	
-	public String getContent()
-	{
-		String string = contentEditText.getText().toString();
-		return string.replace("\n", "<br/>");
-	}
-	
-	public void setContent(String string)
-	{
-		contentEditText.setText( string.replace("<br/>", "\n") );
+		btnBold = (ToggleButton) view.findViewById(R.id.XEMOBILE_EDITOR_BOLD);
+		btnBold.setOnClickListener(this);
+		btnItalic = (ToggleButton) view
+				.findViewById(R.id.XEMOBILE_EDITOR_ITALIC);
+		btnItalic.setOnClickListener(this);
+		btnUnderline = (ToggleButton) view
+				.findViewById(R.id.XEMOBILE_EDITOR_UNDERLINE);
+		btnUnderline.setOnClickListener(this);
+		btnLink = (Button) view.findViewById(R.id.XEMOBILE_EDITOR_LINK);
+		btnLink.setOnClickListener(this);
+		btnAddImage = (Button) view
+				.findViewById(R.id.XEMOBILE_EDITOR_ADD_IMAGE);
+		btnAddImage.setOnClickListener(this);
+
+		return view;
 	}
 
 	@Override
 	public void afterTextChanged(Editable s) {
-		// Add text to preview control
-		htmlPreview.loadData(contentEditText.getText().toString(), "text/html", "utf-8");
-		
+		int position = Selection.getSelectionStart(txtContent.getText());
+
+		if (position < 0) {
+			position = 0;
+		}
+
+		if (position > 0) {
+
+			if (styleStart > position || position > (cursorLoc + 1)) {
+				// user changed cursor location, reset
+				if (position - cursorLoc > 1) {
+					// user pasted text
+					styleStart = cursorLoc;
+				} else {
+					styleStart = position - 1;
+				}
+			}
+
+			if (btnBold.isChecked()) {
+				StyleSpan[] ss = s.getSpans(styleStart, position,
+						StyleSpan.class);
+
+				for (int i = 0; i < ss.length; i++) {
+					if (ss[i].getStyle() == android.graphics.Typeface.BOLD) {
+						s.removeSpan(ss[i]);
+					}
+				}
+				s.setSpan(new StyleSpan(android.graphics.Typeface.BOLD),
+						styleStart, position,
+						Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+			if (btnItalic.isChecked()) {
+				StyleSpan[] ss = s.getSpans(styleStart, position,
+						StyleSpan.class);
+
+				for (int i = 0; i < ss.length; i++) {
+					if (ss[i].getStyle() == android.graphics.Typeface.ITALIC) {
+						s.removeSpan(ss[i]);
+					}
+				}
+				s.setSpan(new StyleSpan(android.graphics.Typeface.ITALIC),
+						styleStart, position,
+						Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+			if (btnUnderline.isChecked()) {
+				UnderlineSpan[] ss = s.getSpans(styleStart, position,
+						UnderlineSpan.class);
+
+				for (int i = 0; i < ss.length; i++) {
+					s.removeSpan(ss[i]);
+				}
+				s.setSpan(new UnderlineSpan(), styleStart, position,
+						Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+		}
+
+		cursorLoc = Selection.getSelectionStart(txtContent.getText());
 	}
 
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
-		
-		
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		
-		
+		// TODO Auto-generated method stub
+
 	}
-		
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.XEMOBILE_EDITOR_BOLD:
+			boldClick();
+			break;
+
+		case R.id.XEMOBILE_EDITOR_ITALIC:
+			italicClick();
+			break;
+		case R.id.XEMOBILE_EDITOR_UNDERLINE:
+			underlineClick();
+			break;
+		}
+	}
+
+	private void boldClick() {
+		int selectionStart = txtContent.getSelectionStart();
+
+		styleStart = selectionStart;
+
+		int selectionEnd = txtContent.getSelectionEnd();
+
+		if (selectionStart > selectionEnd) {
+			int temp = selectionEnd;
+			selectionEnd = selectionStart;
+			selectionStart = temp;
+		}
+
+		if (selectionEnd > selectionStart) {
+			Spannable str = txtContent.getText();
+			StyleSpan[] ss = str.getSpans(selectionStart, selectionEnd,
+					StyleSpan.class);
+
+			boolean exists = false;
+			for (int i = 0; i < ss.length; i++) {
+				if (ss[i].getStyle() == android.graphics.Typeface.BOLD) {
+					str.removeSpan(ss[i]);
+					exists = true;
+				}
+			}
+
+			if (!exists) {
+				str.setSpan(new StyleSpan(android.graphics.Typeface.BOLD),
+						selectionStart, selectionEnd,
+						Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+
+			btnBold.setChecked(false);
+		}
+	}
+
+	private void italicClick() {
+		int selectionStart = txtContent.getSelectionStart();
+
+		styleStart = selectionStart;
+
+		int selectionEnd = txtContent.getSelectionEnd();
+
+		if (selectionStart > selectionEnd) {
+			int temp = selectionEnd;
+			selectionEnd = selectionStart;
+			selectionStart = temp;
+		}
+
+		if (selectionEnd > selectionStart) {
+			Spannable str = txtContent.getText();
+			StyleSpan[] ss = str.getSpans(selectionStart, selectionEnd,
+					StyleSpan.class);
+
+			boolean exists = false;
+			for (int i = 0; i < ss.length; i++) {
+				if (ss[i].getStyle() == android.graphics.Typeface.ITALIC) {
+					str.removeSpan(ss[i]);
+					exists = true;
+				}
+			}
+
+			if (!exists) {
+				str.setSpan(new StyleSpan(android.graphics.Typeface.ITALIC),
+						selectionStart, selectionEnd,
+						Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+
+			btnItalic.setChecked(false);
+		}
+	}
+
+	private void underlineClick() {
+		int selectionStart = txtContent.getSelectionStart();
+
+		styleStart = selectionStart;
+
+		int selectionEnd = txtContent.getSelectionEnd();
+
+		if (selectionStart > selectionEnd) {
+			int temp = selectionEnd;
+			selectionEnd = selectionStart;
+			selectionStart = temp;
+		}
+
+		if (selectionEnd > selectionStart) {
+			Spannable str = txtContent.getText();
+			UnderlineSpan[] ss = str.getSpans(selectionStart, selectionEnd,
+					UnderlineSpan.class);
+
+			boolean exists = false;
+			for (int i = 0; i < ss.length; i++) {
+				str.removeSpan(ss[i]);
+				exists = true;
+			}
+
+			if (!exists) {
+				str.setSpan(new UnderlineSpan(), selectionStart, selectionEnd,
+						Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			}
+
+			btnUnderline.setChecked(false);
+		}
+	}
+
 }
