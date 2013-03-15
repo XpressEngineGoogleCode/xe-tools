@@ -77,7 +77,7 @@ public class XEMobileMainActivityController extends FragmentActivity implements 
 {	
 	public ViewPager pager;
 	
-	public XEMobilePageAdapter pageAdapter; 
+	private XEMobilePageAdapter pageAdapter; 
 	
 	private int prevPageIndex=0;
 	
@@ -101,12 +101,16 @@ public class XEMobileMainActivityController extends FragmentActivity implements 
 		return true;
 	}
 	
+	public void addMoreScreen(Fragment screen){
+		pageAdapter.addFragment(screen);
+		pager.setCurrentItem(pageAdapter.getCount()-1, true);
+	}
 //	private void removeFragment (Fragment fragment){
 //		FragmentManager fm = getSupportFragmentManager();
 //		fm.beginTransaction().remove(fragment).commit();
 //	}
 
-	public class XEMobilePageAdapter extends FragmentStatePagerAdapter{
+	private class XEMobilePageAdapter extends FragmentStatePagerAdapter{
 		
 		ArrayList<Fragment> screenStack;
 		
@@ -128,7 +132,7 @@ public class XEMobileMainActivityController extends FragmentActivity implements 
 		}
 		public void removeLastFragment(){
 //			removeFragment(screenStack.get(getCount()-1));
-			screenStack.remove(getCount()-1);
+			screenStack.remove(prevPageIndex);
 			this.notifyDataSetChanged();			
 		}
 		@Override

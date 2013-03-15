@@ -21,6 +21,7 @@ import android.widget.ListView;
 import arnia.xemobile.R;
 import arnia.xemobile.XEActivity;
 import arnia.xemobile.XEFragment;
+import arnia.xemobile.XEMobileMainActivityController;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEPage;
@@ -163,14 +164,14 @@ public class XEMobilePageController extends XEFragment implements OnClickListene
 				//page where the user clicked
 				XEPage page = list.pages.get(index);
 				
-//				startProgress("Loading...");
+				startProgress("Loading...");
 				DeletePageAsyncTask task = new DeletePageAsyncTask();
 				task.execute(new String[]{page.module_srl});
 			}
 			else if( v.getId() == R.id.XEMOBILE_PAGE_ADDBUTTON)
 			{
-				Intent intent = new Intent(this.activity,XEMobilePageAddController.class);
-				startActivity(intent);
+				XEMobileMainActivityController mainActivity = (XEMobileMainActivityController) activity;
+				mainActivity.addMoreScreen(new XEMobilePageAddController());
 			}
 		}
 		

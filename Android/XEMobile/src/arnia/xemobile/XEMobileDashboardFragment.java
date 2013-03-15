@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -42,6 +43,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -144,15 +146,12 @@ public class XEMobileDashboardFragment extends XEFragment implements OnClickList
 		XEMobileMainActivityController mainActivity = (XEMobileMainActivityController) this.activity;
 		
 		if(v.getId()==R.id.XEMOBILE_DASHBOARD_NEW_PAGE){
-			mainActivity.pageAdapter.addFragment(new XEMobilePageAddController());
-			mainActivity.pager.setCurrentItem(mainActivity.pageAdapter.getCount()-1, true);
+			mainActivity.addMoreScreen(new XEMobilePageAddController());
 		}else if(v.getId()==R.id.XEMOBILE_DASHBOARD_MANAGE_PAGES){
-			mainActivity.pageAdapter.addFragment(new XEMobilePageController());
-			mainActivity.pager.setCurrentItem(mainActivity.pageAdapter.getCount()-1, true);
+			mainActivity.addMoreScreen(new XEMobilePageController());
 		}
 		else if(v.getId()==R.id.XEMOBILE_DASHBOARD_MENU_MANAGER){
-			mainActivity.pageAdapter.addFragment(new XEMobileMenuController());
-			mainActivity.pager.setCurrentItem(mainActivity.pageAdapter.getCount()-1, true);
+			mainActivity.addMoreScreen(new XEMobileMenuController());
 		}
 		
 	}
@@ -160,14 +159,13 @@ public class XEMobileDashboardFragment extends XEFragment implements OnClickList
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		FragmentManager fragmentManager = this.activity.getSupportFragmentManager(); 
+		FragmentManager fragmentManager = activity.getSupportFragmentManager(); 
 		Fragment fragment = fragmentManager.findFragmentById(R.id.XEMOBILE_WEBSITE_STATISTIC);
 		fragmentManager.beginTransaction().remove(fragment).commit();
 	};
 	
 	@Override
-	public void onResume() {	
-		
+	public void onResume() {			
 		XEDatabaseHelper dbHelper = XEDatabaseHelper.getDBHelper(this.activity);
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		this.siteCursor = db.rawQuery("SELECT * FROM " + dbHelper.XE_SITES, null);
