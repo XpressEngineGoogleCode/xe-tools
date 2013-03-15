@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -29,11 +30,12 @@ import arnia.xemobile.R;
 import arnia.xemobile.R.id;
 import arnia.xemobile.R.layout;
 import arnia.xemobile.XEActivity;
+import arnia.xemobile.XEFragment;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEMenu;
 
-public class XEMobileMenuController extends XEActivity implements OnItemClickListener, OnClickListener
+public class XEMobileMenuController extends XEFragment implements OnItemClickListener, OnClickListener
 {
 		
 		private XEArrayList arrayWithMenus;
@@ -46,25 +48,47 @@ public class XEMobileMenuController extends XEActivity implements OnItemClickLis
 		}
 		
 		@Override
-		protected void onCreate(Bundle savedInstanceState) 
-		{
-			super.onCreate(savedInstanceState);
-			setContentView(R.layout.xemobilemenulayout);
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+			View view = inflater.inflate(R.layout.xemobilemenulayout, container,false);
 			
-			ListView list = (ListView)findViewById(R.id.XEMOBILE_MENU_LISTVIEW);
-			addMenuButton = (Button) findViewById(R.id.XEMOBILE_MENU_ADDBUTTON);
-			addMenuButton.setOnClickListener(this);
-						
-			//make async request for menus
-			startProgress("Loading...");
-			GetMenusAsyncTask getAsyncRequest = new GetMenusAsyncTask();
-			getAsyncRequest.execute();
+			ListView list = (ListView)view.findViewById(R.id.XEMOBILE_MENU_LISTVIEW);
+			addMenuButton = (Button) view.findViewById(R.id.XEMOBILE_MENU_ADDBUTTON);
 			
-			adapter = new XEMobileMenuAdapter(this);
+			adapter = new XEMobileMenuAdapter(this.activity);
 			
 			list.setAdapter(adapter);
 			list.setOnItemClickListener(this);
+			
+			
+		return view;
 		}
+		@Override
+		public void onResume() {
+			GetMenusAsyncTask getAsyncRequest = new GetMenusAsyncTask();
+			getAsyncRequest.execute();
+		super.onResume();
+		}
+//		@Override
+//		protected void onCreate(Bundle savedInstanceState) 
+//		{
+//			super.onCreate(savedInstanceState);
+//			setContentView(R.layout.xemobilemenulayout);
+//			
+//			ListView list = (ListView)findViewById(R.id.XEMOBILE_MENU_LISTVIEW);
+//			addMenuButton = (Button) findViewById(R.id.XEMOBILE_MENU_ADDBUTTON);
+//			addMenuButton.setOnClickListener(this);
+//						
+//			//make async request for menus
+//			startProgress("Loading...");
+//			GetMenusAsyncTask getAsyncRequest = new GetMenusAsyncTask();
+//			getAsyncRequest.execute();
+//			
+//			adapter = new XEMobileMenuAdapter(this);
+//			
+//			list.setAdapter(adapter);
+//			list.setOnItemClickListener(this);
+//		}
 		
 		//called when an item from list is pressed
 		@Override
@@ -72,7 +96,7 @@ public class XEMobileMenuController extends XEActivity implements OnItemClickLis
 				long arg3) 
 		{
 			XEMenu menu = adapter.getArrayWithMenus().get(position);
-			Intent intent = new Intent(XEMobileMenuController.this, XEMobileMenuItemsController.class);
+			Intent intent = new Intent(this.activity, XEMobileMenuItemsController.class);
 			intent.putExtra("menu_item_parent_srl", menu.menuSrl);
 
 			startActivity(intent);
@@ -86,7 +110,7 @@ public class XEMobileMenuController extends XEActivity implements OnItemClickLis
 			//Add button
 			if( v.getId() == R.id.XEMOBILE_MENU_ADDBUTTON )
 			{
-				final Dialog dialog = new Dialog(XEMobileMenuController.this);
+				final Dialog dialog = new Dialog(this.activity);
 
 				dialog.setContentView(R.layout.xemobileaddmenutoastlayout);
 				dialog.setTitle("Add menu");
@@ -210,9 +234,9 @@ public class XEMobileMenuController extends XEActivity implements OnItemClickLis
 			protected void onPostExecute(Object result) 
 			{
 				super.onPostExecute(result);
-				dismissProgress();
+//				dismissProgress();
 				
-				isLoggedIn(xmlData, XEMobileMenuController.this);
+//				isLoggedIn(xmlData, XEMobileMenuController.this);
 				
 				if( arrayWithMenus != null && arrayWithMenus.menus != null )
 				{
