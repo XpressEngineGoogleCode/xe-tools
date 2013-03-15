@@ -69,6 +69,8 @@ public class XEMobileDashboardFragment extends XEFragment implements OnClickList
 	private View view;	
 	
 	private TextView newPage;
+	private TextView managePages;
+	private TextView manageMenus;
 	
 	protected ProgressDialog progress;
 	
@@ -91,6 +93,13 @@ public class XEMobileDashboardFragment extends XEFragment implements OnClickList
 		
 		newPage = (TextView) this.view.findViewById(R.id.XEMOBILE_DASHBOARD_NEW_PAGE);
 		newPage.setOnClickListener(this);
+		
+		managePages = (TextView) this.view.findViewById(R.id.XEMOBILE_DASHBOARD_MANAGE_PAGES);
+		managePages.setOnClickListener(this);
+		
+		manageMenus =(TextView) this.view.findViewById(R.id.XEMOBILE_DASHBOARD_MENU_MANAGER);
+		manageMenus.setOnClickListener(this);
+		
 		
 		ActionBar actionBar = this.activity.getActionBar();
 		actionBar.setCustomView(R.layout.xemobileactionbarlayout);
@@ -136,6 +145,13 @@ public class XEMobileDashboardFragment extends XEFragment implements OnClickList
 		
 		if(v.getId()==R.id.XEMOBILE_DASHBOARD_NEW_PAGE){
 			mainActivity.pageAdapter.addFragment(new XEMobilePageAddController());
+			mainActivity.pager.setCurrentItem(mainActivity.pageAdapter.getCount()-1, true);
+		}else if(v.getId()==R.id.XEMOBILE_DASHBOARD_MANAGE_PAGES){
+			mainActivity.pageAdapter.addFragment(new XEMobilePageController());
+			mainActivity.pager.setCurrentItem(mainActivity.pageAdapter.getCount()-1, true);
+		}
+		else if(v.getId()==R.id.XEMOBILE_DASHBOARD_MENU_MANAGER){
+			mainActivity.pageAdapter.addFragment(new XEMobileMenuController());
 			mainActivity.pager.setCurrentItem(mainActivity.pageAdapter.getCount()-1, true);
 		}
 		
@@ -204,8 +220,8 @@ public class XEMobileDashboardFragment extends XEFragment implements OnClickList
 	}
 	
 	private void refreshContent(){
-		//refresh data in statistic fragement
-		FragmentManager fm = getFragmentManager();
+		//refresh data in statistic fragment
+		FragmentManager fm = this.activity.getSupportFragmentManager();
 		XEMobileStatisticsController sc = (XEMobileStatisticsController) fm.findFragmentById(R.id.XEMOBILE_WEBSITE_STATISTIC);
 		sc.refreshStatistic();
 		//refresh data in comment

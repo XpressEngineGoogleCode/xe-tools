@@ -80,7 +80,7 @@ public class XEMobileMenuAdapter extends BaseAdapter
 		
 		Button deleteButton = (Button) convertView.findViewById(R.id.XEMOBILE_MENUCELL_DELETEBUTTON);
 		
-		deleteButton.setOnClickListener((OnClickListener) context);
+//		deleteButton.setOnClickListener((OnClickListener) context);
 		deleteButton.setTag(position);
 		
 		return convertView;

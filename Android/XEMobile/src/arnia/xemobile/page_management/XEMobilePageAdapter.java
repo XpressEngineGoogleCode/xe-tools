@@ -78,7 +78,7 @@ public class XEMobilePageAdapter extends BaseAdapter
 		
 		Button deleteButton = (Button) convertView.findViewById(R.id.XEMOBILE_PAGEITEMCELL_DELETEBUTTON);
 		deleteButton.setTag(pos);
-		deleteButton.setOnClickListener((OnClickListener)context);
+//		deleteButton.setOnClickListener((OnClickListener)context);
 		
 		//return the view
 		return convertView;

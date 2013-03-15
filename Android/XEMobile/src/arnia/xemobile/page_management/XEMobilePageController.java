@@ -10,7 +10,9 @@ import org.simpleframework.xml.core.Persister;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -18,40 +20,54 @@ import android.widget.Button;
 import android.widget.ListView;
 import arnia.xemobile.R;
 import arnia.xemobile.XEActivity;
+import arnia.xemobile.XEFragment;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEPage;
 
-public class XEMobilePageController extends XEActivity implements OnClickListener, OnItemClickListener
+public class XEMobilePageController extends XEFragment implements OnClickListener, OnItemClickListener
 {
 	private ListView listView;
 	private XEMobilePageAdapter adapter;
 	private XEArrayList list;
 	private Button addPageButton;
 	
+//		@Override
+//		protected void onCreate(Bundle savedInstanceState)
+//		{
+//			super.onCreate(savedInstanceState);
+//			setContentView(R.layout.xemobilepagelayout);
+//			
+//			listView = (ListView) findViewById(R.id.XEMOBILE_PAGE_LISTVIEW);
+//			addPageButton = (Button) findViewById(R.id.XEMOBILE_PAGE_ADDBUTTON);
+//			addPageButton.setOnClickListener(this);
+//			
+//			adapter = new XEMobilePageAdapter(this);
+//			listView.setAdapter(adapter);
+//			listView.setOnItemClickListener(this);
+//		}
+		
 		@Override
-		protected void onCreate(Bundle savedInstanceState)
-		{
-			super.onCreate(savedInstanceState);
-			setContentView(R.layout.xemobilepagelayout);
-			
-			listView = (ListView) findViewById(R.id.XEMOBILE_PAGE_LISTVIEW);
-			addPageButton = (Button) findViewById(R.id.XEMOBILE_PAGE_ADDBUTTON);
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View view = inflater.inflate(R.layout.xemobilepagelayout, container,false);
+					
+			listView = (ListView) view.findViewById(R.id.XEMOBILE_PAGE_LISTVIEW);
+			addPageButton = (Button) view.findViewById(R.id.XEMOBILE_PAGE_ADDBUTTON);
 			addPageButton.setOnClickListener(this);
 			
-			adapter = new XEMobilePageAdapter(this);
+			adapter = new XEMobilePageAdapter(this.activity);
 			listView.setAdapter(adapter);
 			listView.setOnItemClickListener(this);
+			return view;
 		}
-		
-		
 		@Override
-		protected void onResume() 
+		public void onResume() 
 		{
 			super.onResume();
 
 			//send request to get pages
-			startProgress("Loading...");
+//			startProgress("Loading...");
 			GetPagesAsyncTask asyncRequest = new GetPagesAsyncTask();
 			asyncRequest.execute();
 
@@ -67,7 +83,7 @@ public class XEMobilePageController extends XEActivity implements OnClickListene
 			
 			if(page.page_type.equals("ARTICLE"))
 			{
-			Intent intent = new Intent(XEMobilePageController.this,XEMobilePageTextEditor.class);
+			Intent intent = new Intent(this.activity,XEMobilePageTextEditor.class);
 			
 			intent.putExtra("mid", page.mid);
 			intent.putExtra("document_srl", page.document_srl); 
@@ -76,7 +92,7 @@ public class XEMobilePageController extends XEActivity implements OnClickListene
 			}
 			else if( page.page_type.equals("WIDGET") )
 				{
-					Intent intent = new Intent(XEMobilePageController.this, XEMobileWidgetController.class);
+					Intent intent = new Intent(this.activity, XEMobileWidgetController.class);
 					intent.putExtra("mid", page.mid);
 					if(page.virtual_site!=null){
 						intent.putExtra("vid", page.virtual_site);
@@ -147,13 +163,13 @@ public class XEMobilePageController extends XEActivity implements OnClickListene
 				//page where the user clicked
 				XEPage page = list.pages.get(index);
 				
-				startProgress("Loading...");
+//				startProgress("Loading...");
 				DeletePageAsyncTask task = new DeletePageAsyncTask();
 				task.execute(new String[]{page.module_srl});
 			}
 			else if( v.getId() == R.id.XEMOBILE_PAGE_ADDBUTTON)
 			{
-				Intent intent = new Intent(XEMobilePageController.this,XEMobilePageAddController.class);
+				Intent intent = new Intent(this.activity,XEMobilePageAddController.class);
 				startActivity(intent);
 			}
 		}
@@ -183,8 +199,8 @@ public class XEMobilePageController extends XEActivity implements OnClickListene
 			protected void onPostExecute(Object result)
 			{
 				super.onPostExecute(result);
-				dismissProgress();
-				startProgress("Loading...");
+//				dismissProgress();
+//				startProgress("Loading...");
 				GetPagesAsyncTask task = new GetPagesAsyncTask();
 				task.execute();
 			}
@@ -218,9 +234,9 @@ public class XEMobilePageController extends XEActivity implements OnClickListene
 			{
 				super.onPostExecute(result);
 				
-				isLoggedIn(xmlData, XEMobilePageController.this);
+//				isLoggedIn(xmlData, XEMobilePageController.this);
 				
-				dismissProgress();
+//				dismissProgress();
 				if( list != null && list.pages != null )
 				{
 				adapter.setArrayWithPages(list.pages);
