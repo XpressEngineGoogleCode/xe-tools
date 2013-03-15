@@ -1,21 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="base">
-		<item name="android:padding">10dp</item>
-	</style>
-	<style name="title" parent="@style/base">
-		<item name="android:textColor">#FFFFFF</item>
-		<item name="android:textSize">16sp</item>
-		<item name="android:textStyle">bold</item>
-	</style>
-	<style name="body" parent="@style/base">
-		<item name="android:textColor">#000000</item>
-		<item name="android:textStyle">normal</item>
-	</style>
-	
-	<dimen name="dashboard_item_margin">15dp</dimen>
-	<color name="dashboard_item_color">#000000</color>
-	<dimen name="add_site_text_margin">10dp</dimen>
-	<dimen name="site_selection_item_margin">5dp</dimen>
-	
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="title" parent="@style/base">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="body" parent="@style/base">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <dimen name="dashboard_item_margin">15dp</dimen>
+
+    <color name="dashboard_item_color">#000000</color>
+
+    <dimen name="add_site_text_margin">10dp</dimen>
+    <dimen name="site_selection_item_margin">5dp</dimen>
+
+    <!-- Text editor -->
+    <style name="btn_editor_toggle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:background">@drawable/bg_editor_toggle_button</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="btn_editor">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:background">@drawable/bg_editor_button</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
 </resources>

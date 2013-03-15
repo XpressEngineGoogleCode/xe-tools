@@ -61,4 +61,12 @@
 	<string name="newpage_browser_title">Browser title</string>
 	<string name="newpage_caching_time">Caching time</string>
 	<string name="newpage_button_save">Save</string>
+	
+	    <!-- Editor control -->
+    <string name="bold"><b>B</b></string>
+    <string name="italic"><i>I</i></string>
+    <string name="underline"><u>U</u></string>
+    <string name="link">Link</string>
+    <string name="add_image">Add Image</string>
+	
 </resources>
