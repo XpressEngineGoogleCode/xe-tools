@@ -157,55 +157,13 @@ public class XEMobileDashboardFragment extends XEFragment implements OnClickList
 		
 	}
 	
-//	@Override
-//	protected void onCreate(Bundle savedInstanceState) {		
-//		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.xemobilemainactivitylayout);
-//		ActionBar actionBar = getActionBar();
-//		actionBar.setCustomView(R.layout.xemobileactionbarlayout);
-//		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-//		
-//		this.selectSiteSpinner = (Spinner)  actionBar.getCustomView().findViewById(R.id.XEMOBILE_MENU_SELECT_SITE);
-//		
-//		ImageView menuLogo = (ImageView) actionBar.getCustomView().findViewById(R.id.XEMOBILE_MENU_LOGO);
-//		menuLogo.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-////				selectSiteSpinner.setVisibility(Spinner.VISIBLE);
-//				
-//			}
-//		});
-//		
-//		//Handle login when user change site 
-//		this.selectSiteSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-//			@Override
-//			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//				
-//				Log.i("XEMobile","Handler item selected");
-//				Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-//				String userSelectingSite = cursor.getString(1);
-//				SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplication());
-//				String loggedInSite = pref.getString("ACTIVE_SITE", "");
-//				//if user select different site, login to another site
-//				//if(loggedInSite.compareTo(userSelectingSite)!=0){
-//					selectingSite = cursor;					
-//					startProgress("Logging...");
-//					new LogInInBackground().execute();
-//				//}
-//				
-//				
-//			}
-//
-//			@Override
-//			public void onNothingSelected(AdapterView<?> arg0) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//		});
-//	}	
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		FragmentManager fragmentManager = this.activity.getSupportFragmentManager(); 
+		Fragment fragment = fragmentManager.findFragmentById(R.id.XEMOBILE_WEBSITE_STATISTIC);
+		fragmentManager.beginTransaction().remove(fragment).commit();
+	};
 	
 	@Override
 	public void onResume() {	
@@ -224,7 +182,7 @@ public class XEMobileDashboardFragment extends XEFragment implements OnClickList
 		FragmentManager fm = this.activity.getSupportFragmentManager();
 		XEMobileStatisticsController sc = (XEMobileStatisticsController) fm.findFragmentById(R.id.XEMOBILE_WEBSITE_STATISTIC);
 		sc.refreshStatistic();
-		//refresh data in comment
+//		refresh data in comment
 		
 	}
 	

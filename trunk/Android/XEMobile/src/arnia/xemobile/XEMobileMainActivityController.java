@@ -100,10 +100,16 @@ public class XEMobileMainActivityController extends FragmentActivity implements 
 		getMenuInflater().inflate(R.menu.activity_main_menu, menu);
 		return true;
 	}
+	
+//	private void removeFragment (Fragment fragment){
+//		FragmentManager fm = getSupportFragmentManager();
+//		fm.beginTransaction().remove(fragment).commit();
+//	}
 
-	class XEMobilePageAdapter extends FragmentStatePagerAdapter{
+	public class XEMobilePageAdapter extends FragmentStatePagerAdapter{
 		
 		ArrayList<Fragment> screenStack;
+		
 		
 		public XEMobilePageAdapter(FragmentManager fm) {
 			super(fm);	
@@ -111,20 +117,23 @@ public class XEMobileMainActivityController extends FragmentActivity implements 
 		}
 
 		@Override
-		public Fragment getItem(int position) {			
+		public Fragment getItem(int position) {		
 			return screenStack.get(position);
+		
 		}
 		public void addFragment(Fragment screen){
 			screenStack.add(screen);
 			this.notifyDataSetChanged();
+			
 		}
 		public void removeLastFragment(){
+//			removeFragment(screenStack.get(getCount()-1));
 			screenStack.remove(getCount()-1);
 			this.notifyDataSetChanged();			
 		}
 		@Override
 		public int getCount() {
-			return screenStack.size();
+			return screenStack.size();			
 		}	
 		
 	}

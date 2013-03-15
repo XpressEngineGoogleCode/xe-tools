@@ -2,10 +2,13 @@ package arnia.xemobile;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.style.SuperscriptSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +27,7 @@ public class XEFragment extends Fragment {
 	public void dismissProgress()
 	{
 		progress.dismiss();
-	}
-	
+	}	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
