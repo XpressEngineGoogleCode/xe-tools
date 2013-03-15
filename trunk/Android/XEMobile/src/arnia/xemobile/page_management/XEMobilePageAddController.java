@@ -144,8 +144,7 @@ public class XEMobilePageAddController extends XEFragment implements OnClickList
 			if( responseConfirmation.value.equals("true") ){
 				// Redirect to page manager
 				XEMobileMainActivityController mainActivity =  (XEMobileMainActivityController) activity;
-				mainActivity.pageAdapter.addFragment(new XEMobilePageController());
-				mainActivity.pager.setCurrentItem(mainActivity.pageAdapter.getCount()-1, true);
+				mainActivity.addMoreScreen(new XEMobilePageController());				
 			}else {
 				new AlertDialog.Builder(activity)
 					.setTitle("Attention")
