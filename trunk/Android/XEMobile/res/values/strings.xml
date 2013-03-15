@@ -56,5 +56,9 @@
         <item>External link</item>
     </string-array>
 
-	
+	<!-- New Page -->
+	<string name="newpage_page_name">Page name</string>
+	<string name="newpage_browser_title">Browser title</string>
+	<string name="newpage_caching_time">Caching time</string>
+	<string name="newpage_button_save">Save</string>
 </resources>
