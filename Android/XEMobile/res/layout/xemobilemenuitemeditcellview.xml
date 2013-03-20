@@ -50,7 +50,7 @@
         android:text="DOWN" />
 
     <Button
-        android:id="@+id/XEMOBILE_MENUITEMEDIT_LEFTRIGHTBUTTON"
+        android:id="@+id/XEMOBILE_MENUITEMEDIT_SUBMENUBUTTON"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
