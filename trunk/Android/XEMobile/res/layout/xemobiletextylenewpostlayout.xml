@@ -6,19 +6,21 @@
     android:orientation="vertical" >
 
     <EditText
+        android:id="@+id/XEMOBILE_ADD_POST_POST_TITLE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/post_title"
         android:singleLine="true" />
 
     <EditText
+        android:id="@+id/XEMOBILE_ADD_POST_POST_URL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/url"
         android:singleLine="true" />
 
     <fragment
-        android:id="@+id/XEMOBILE_EDITOR"
+        android:id="@+id/XEMOBILE_ADD_POST_POST_EDITOR"
         android:name="arnia.xemobile.page_management.XEMobileTextEditor"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -30,11 +32,13 @@
         android:layout_height="wrap_content" >
 
         <Button
+            android:id="@+id/XEMOBILE_ADD_POST_SAVE_AND_PUBLISH_BUTTON"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/save_and_publish" />
 
         <Button
+            android:id="@+id/XEMOBILE_ADD_POST_SAVE_BUTTON"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
