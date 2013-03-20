@@ -27,6 +27,7 @@ import arnia.xemobile.menu_management.XEMobileMenuController;
 import arnia.xemobile.page_management.XEMobilePageAddController;
 import arnia.xemobile.page_management.XEMobilePageController;
 import arnia.xemobile_textyle_posts.XEMobileTextyleAddPostController;
+import arnia.xemobile_textyle_posts.XEMobileTextylePostsController;
 
 //Activity for the Main Menu of XEMobile application
 public class XEMobileDashboardFragment extends XEFragment implements
@@ -39,6 +40,7 @@ public class XEMobileDashboardFragment extends XEFragment implements
 	private View view;
 
 	private TextView newPost;
+	private TextView managePosts;
 	private TextView newPage;
 	private TextView managePages;
 	private TextView manageMenus;
@@ -67,6 +69,9 @@ public class XEMobileDashboardFragment extends XEFragment implements
 				.findViewById(R.id.XEMOBILE_DASHBOARD_NEW_POST);
 		newPost.setOnClickListener(this);
 
+		managePosts=(TextView)view.findViewById(R.id.XEMOBILE_DASHBOARD_MANAGE_POSTS);
+		managePosts.setOnClickListener(this);
+		
 		newPage = (TextView) this.view
 				.findViewById(R.id.XEMOBILE_DASHBOARD_NEW_PAGE);
 		newPage.setOnClickListener(this);
@@ -127,6 +132,8 @@ public class XEMobileDashboardFragment extends XEFragment implements
 
 		if (v.getId() == R.id.XEMOBILE_DASHBOARD_NEW_POST) {
 			mainActivity.addMoreScreen(new XEMobileTextyleAddPostController());
+		} else if (v.getId() == R.id.XEMOBILE_DASHBOARD_MANAGE_POSTS) {
+			mainActivity.addMoreScreen(new XEMobileTextylePostsController());
 		} else if (v.getId() == R.id.XEMOBILE_DASHBOARD_NEW_PAGE) {
 			mainActivity.addMoreScreen(new XEMobilePageAddController());
 		} else if (v.getId() == R.id.XEMOBILE_DASHBOARD_MANAGE_PAGES) {
