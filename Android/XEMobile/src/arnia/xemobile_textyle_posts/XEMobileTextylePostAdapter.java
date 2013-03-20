@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.sax.StartElementListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,7 +17,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import arnia.xemobile.R;
-import arnia.xemobile.classes.XEPage;
 import arnia.xemobile.classes.XETextylePost;
 
 public class XEMobileTextylePostAdapter extends BaseAdapter {
@@ -48,7 +52,7 @@ public class XEMobileTextylePostAdapter extends BaseAdapter {
 	@Override
 	public View getView(int pos, View convertView, ViewGroup parent) {
 		// get the page from the array
-		XETextylePost post = arrayWithPosts.get(pos);
+		final XETextylePost post = arrayWithPosts.get(pos);
 
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) context
@@ -58,20 +62,29 @@ public class XEMobileTextylePostAdapter extends BaseAdapter {
 		}
 
 		// construct the view's elements
-		TextView menuItemTitleTextView = (TextView) convertView
+		TextView txtPostTitle = (TextView) convertView
 				.findViewById(R.id.XEMOBILE_POST_POST_TITLE);
-		menuItemTitleTextView.setText(post.title);
-
-		TextView menuItemCommentTextView = (TextView) convertView
+		txtPostTitle.setText(post.title);
+		// if(post.status.compareTo("PUBLISHED")==0)
+		// txtPostTitle.setTextColor(Color.GREEN);
+		// else if(post.status.compareTo("DRAFT")==0)
+		// txtPostTitle.setTextColor(Color.YELLOW);
+		// else
+		// txtPostTitle.setTextColor(Color.RED);
+		
+		TextView txtCommentCount = (TextView) convertView
 				.findViewById(R.id.XEMOBILE_POST_POST_COMMENT);
-		//menuItemCommentTextView.setText(post.title);
-
-//		Button deleteButton = (Button) convertView
-//				.findViewById(R.id.XEMOBILE_PAGEITEMCELL_DELETEBUTTON);
-//		deleteButton.setTag(pos);
-//		deleteButton.setOnClickListener((OnClickListener) context);
-
-		// return the view
+		txtCommentCount.setText(post.comment_count + " comments");
+		
+		Button btnViewPost=(Button)convertView.findViewById(R.id.XEMOBILE_POST_VIEW_POST);
+		btnViewPost.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent browser = new Intent(Intent.ACTION_VIEW, Uri.parse(post.url));
+				context.startActivity(browser);
+			}
+		});
+		
 		return convertView;
 	}
 
