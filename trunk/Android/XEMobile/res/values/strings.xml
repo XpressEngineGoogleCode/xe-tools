@@ -72,7 +72,7 @@
     <string name="delete_menu_item_dialog_no">No</string>
 
     <!-- Global -->
-    <string name="link_text">Link text</string>
-    <string name="link_url">Link URL</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
