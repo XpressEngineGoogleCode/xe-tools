@@ -4,12 +4,10 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/page_types" />
+    
 
     <EditText
+        android:id="@+id/XEMOBILE_LINK_TEXT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Link text" />
@@ -20,20 +18,25 @@
         android:orientation="horizontal" >
 
         <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:id="@+id/XEMOBILE_PAGE_TYPES"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/page_types" />
 
         <CheckBox
+            android:id="@+id/XEMOBILE_NEW_WINDOW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Open page in a new window" />
     </LinearLayout>
 
     <Spinner
+        android:id="@+id/XEMOBILE_AVAILABLE_PAGES"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
+        android:id="@+id/XEMOBILE_EDIT_MENU_SAVE_BUTTON"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
