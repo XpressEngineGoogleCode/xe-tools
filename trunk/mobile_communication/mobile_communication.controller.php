@@ -102,30 +102,51 @@
 			header('Content-Type: text/xml');
         	echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' . "\n";
 			echo "<response>";
-			
+			//should create multiple levels of menu
 			foreach($menuList as $value)
 				{
 					echo "<menu>\n";
 					echo "<menuName>" . $value->title . "</menuName>";
 					echo "<menuSrl>" . $value->menuSrl . "</menuSrl>";
 					
-					if( !empty($value->menuItems->list) )
-						foreach( $value->menuItems->list as $item )
-						{
-							//var_dump($item);
-						    echo "<menuItem>";
-							echo "<menuItemName>" . $item["text"] . "</menuItemName>";
-							echo "<srl>" . $item["node_srl"] . "</srl>";
-							echo "<open_window>" . $item["open_window"] . "</open_window>";
-							echo "<url>" . $item["url"] . "</url>";
-							echo "</menuItem>";
-						}
+					if( !empty($value->menuItems->list) ){
+                                            $xml = $this->generateMenuItemMultipleLevels ($value->menuItems->list);
+                                            echo $xml;
+                                        }
+//						foreach( $value->menuItems->list as $item )
+//						{
+//							//var_dump($item);
+//						    echo "<menuItem>";
+//							echo "<menuItemName>" . $item["text"] . "</menuItemName>";
+//							echo "<srl>" . $item["node_srl"] . "</srl>";
+//							echo "<open_window>" . $item["open_window"] . "</open_window>";
+//							echo "<url>" . $item["url"] . "</url>";
+//							echo "</menuItem>";
+//						}
 	
 					
 					echo "</menu>\n";
 				}
 			echo "</response>";
+                      
 			exit;
+        }
+        
+        private function generateMenuItemMultipleLevels($list){
+            $xml = "";
+            if(!empty($list)){
+                foreach( $list as $item ){                
+                    $xml .= "<menuItem>";
+                    $xml .= "<menuItemName>" . $item["text"] . "</menuItemName>";
+                    $xml .= "<srl>" . $item["node_srl"] . "</srl>";
+                    $xml .= "<open_window>" . $item["open_window"] . "</open_window>";
+                    $xml .= "<url>" . $item["url"] . "</url>";
+                    $xml .= $this->generateMenuItemMultipleLevels($item["list"]);
+                    $xml .= "</menuItem>";
+                }
+                
+                }
+            return $xml;
         }
         
         function procmobile_communicationDisplayPages()
