@@ -2,133 +2,164 @@ package arnia.xemobile_textyle_posts;
 
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.ArrayList;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 import arnia.xemobile.R;
-import arnia.xemobile.XEActivity;
+import arnia.xemobile.XEFragment;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XETextyle;
-import arnia.xemobile.classes.XETextylePost;
 
-public class XEMobileTextylePostsController extends XEActivity implements
+public class XEMobileTextylePostsController extends XEFragment implements
 		OnCheckedChangeListener, OnClickListener, OnItemClickListener {
 	// UI references
-//	private RadioButton savedPostsOption;
-	private RadioButton publishedPostsOption;
 	private ListView listView;
 	private XEMobileTextylePostAdapter adapter;
-//	private Button addPostButton;
+	private RadioButton rioAllPost;
+	private RadioButton rioPublishPost;
+	private RadioButton rioDratPost;
+	private RadioButton rioTrashPost;
 
-	// array lists with saved posts and published posts
-	private XEArrayList savedPosts;
+	// private Button addPostButton;
+
+	private XEArrayList allPosts;
 	private XEArrayList publishedPosts;
+	private XEArrayList draftPosts;
+	private XEArrayList trashPosts;
 
 	private XETextyle textyle;
 
+	// array with Textyles
+	private XEArrayList array;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.xemobiletextylepostslayout);
-		
-		//take references to UI elements
-//		savedPostsOption = (RadioButton) findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_SAVEDOPTION);
-		publishedPostsOption= (RadioButton) findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_PUBLISHEDOPTION);
-//		addPostButton = (Button) findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_ADDPOST);
-//		addPostButton.setOnClickListener(this);
-		
-		
-//		savedPostsOption.setChecked(true);
-//		savedPostsOption.setOnCheckedChangeListener(this);
-		publishedPostsOption.setOnCheckedChangeListener(this);
-		
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
-		// take references to UI elements
-//		savedPostsOption = (RadioButton) findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_SAVEDOPTION);
-//		publishedPostsOption = (RadioButton) findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_PUBLISHEDOPTION);
-//		addPostButton = (Button) findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_ADDPOST);
-//		addPostButton.setOnClickListener(this);
+		View view = inflater.inflate(R.layout.xemobiletextylepostslayout,
+				container, false);
 
-//		savedPostsOption.setChecked(true);
-//		savedPostsOption.setOnCheckedChangeListener(this);
-//		publishedPostsOption.setOnCheckedChangeListener(this);
-
-		listView = (ListView) findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_LISTVIEW);
-
-		textyle = (XETextyle) getIntent().getSerializableExtra("textyle");
-		adapter = new XEMobileTextylePostAdapter(this);
+		//UI reference
+		listView = (ListView) view
+				.findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_LISTVIEW);
+		adapter = new XEMobileTextylePostAdapter(getActivity());
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(this);
-		
-		
-//		savedPostsOption.setOnCheckedChangeListener(this);
 
-//		savedPostsOption.setOnCheckedChangeListener(this);
+		rioAllPost = (RadioButton) view
+				.findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_ALLOPTION);
+		rioAllPost.setOnCheckedChangeListener(this);
+		rioPublishPost = (RadioButton) view
+				.findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_PUBLISHEDOPTION);
+		rioPublishPost.setOnCheckedChangeListener(this);
+		rioDratPost = (RadioButton) view
+				.findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_DRAFTSOPTION);
+		rioDratPost.setOnCheckedChangeListener(this);
+		rioTrashPost = (RadioButton) view
+				.findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_TRASHOPTION);
+		rioTrashPost.setOnCheckedChangeListener(this);
+		
+		//Post data
+		allPosts=new XEArrayList();
+		publishedPosts=new XEArrayList();
+		draftPosts=new XEArrayList();
+		trashPosts=new XEArrayList();
+
+		return view;
 	}
 
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
-
-		startProgress("Loading...");
-
-		// async task for saved posts
-		GetSavedPostsAsyncTask savedTask = new GetSavedPostsAsyncTask();
-		savedTask.execute();
+		GetTextylesAsyncTask task = new GetTextylesAsyncTask();
+		task.execute();
 	}
 
 	// the method is called when the "Saved" or "Published" button is pressed
-	@Override	
+	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//		if (buttonView == savedPostsOption && savedPosts != null) {
-//			if (isChecked) {
-//				setTheSavedPostsInAdapter();
-//			}
-//		} else if (buttonView == publishedPostsOption && publishedPosts != null) {
-//			if (isChecked) {
-//				setThePublishedPostsInAdapter();
-//			}
-//		}
+		switch (buttonView.getId()) {
+		case R.id.XEMOBILE_TEXTYLE_POSTS_ALLOPTION:
+			if (isChecked) {
+				if (allPosts.posts.size() == 0) {
+					Toast toast = Toast.makeText(getActivity(), "No posts!",
+							Toast.LENGTH_SHORT);
+					toast.show();
+				}
+				adapter.setArrayWithPosts(allPosts.posts);
+			}
+			break;
+
+		case R.id.XEMOBILE_TEXTYLE_POSTS_PUBLISHEDOPTION:
+			if (isChecked) {
+				if (publishedPosts.posts.size() == 0) {
+					Toast toast = Toast.makeText(getActivity(),
+							"No published posts!", Toast.LENGTH_SHORT);
+					toast.show();
+				}
+				adapter.setArrayWithPosts(publishedPosts.posts);
+			}
+			break;
+
+		case R.id.XEMOBILE_TEXTYLE_POSTS_DRAFTSOPTION:
+			if (isChecked) {
+				if (draftPosts.posts.size() == 0) {
+					Toast toast = Toast.makeText(getActivity(),
+							"No draft posts!", Toast.LENGTH_SHORT);
+					toast.show();
+				}
+				adapter.setArrayWithPosts(draftPosts.posts);
+			}
+			break;
+		case R.id.XEMOBILE_TEXTYLE_POSTS_TRASHOPTION:
+			if (isChecked) {
+				if (trashPosts.posts.size() == 0) {
+					Toast toast = Toast.makeText(getActivity(),
+							"No trash posts!", Toast.LENGTH_SHORT);
+					toast.show();
+				}
+				adapter.setArrayWithPosts(trashPosts.posts);
+			}
+			break;
+		}
+		adapter.notifyDataSetChanged();
 	}
 
 	// async task for saved posts
-	private class GetSavedPostsAsyncTask extends
+	private class GetAllPostsAsyncTask extends
 			AsyncTask<String, Object, Object> {
-		String response;
 
 		@Override
 		protected Object doInBackground(String... params) {
 
-			response = XEHost
+			String response = XEHost
 					.getINSTANCE()
 					.getRequest(
 							"/index.php?module=mobile_communication"
 									+ "&act=procmobile_communicationTextylePostList&module_srl="
-									+ textyle.module_srl + "&published=-1");
+									+ textyle.module_srl);
 
 			Serializer serializer = new Persister();
 
 			Reader reader = new StringReader(response);
 			try {
-				savedPosts = serializer.read(XEArrayList.class, reader, false);
+				allPosts = serializer.read(XEArrayList.class, reader, false);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -139,28 +170,27 @@ public class XEMobileTextylePostsController extends XEActivity implements
 		@Override
 		protected void onPostExecute(Object result) {
 			super.onPostExecute(result);
-			
-			if(isLoggedIn(response, XEMobileTextylePostsController.this))
-			{
-				if( savedPosts.posts == null )
-				{
-					savedPosts.posts = new ArrayList<XETextylePost>();
-				
-				}
-//				if( savedPostsOption.isChecked() ) setTheSavedPostsInAdapter();
-			
 
-			if (isLoggedIn(response, XEMobileTextylePostsController.this))
-				dismissProgress();
-			if (savedPosts != null && savedPosts.posts != null) {
-				adapter.setArrayWithPosts(savedPosts.posts);
+			dismissProgress();
+			if (allPosts != null && allPosts.posts != null) {
+				adapter.setArrayWithPosts(allPosts.posts);
 				adapter.notifyDataSetChanged();
-			}
 
+				// Load publish post
+				GetPublishedPostsAsyncTask task = new GetPublishedPostsAsyncTask();
+				task.execute();
+
+				// Load draft post
+				GetDraftPostsAsyncTask task2 = new GetDraftPostsAsyncTask();
+				task2.execute();
+
+				// Load trash post
+				GetTrashPostsAsyncTask task3=new GetTrashPostsAsyncTask();
+				task3.execute();
+			}
 		}
 	}
 
-	// async task for published posts
 	private class GetPublishedPostsAsyncTask extends
 			AsyncTask<Object, Object, Object> {
 
@@ -187,102 +217,116 @@ public class XEMobileTextylePostsController extends XEActivity implements
 
 			return null;
 		}
+	}
+
+	private class GetDraftPostsAsyncTask extends
+			AsyncTask<Object, Object, Object> {
 
 		@Override
-		protected void onPostExecute(Object result) {
-			super.onPostExecute(result);
-			if (publishedPosts.posts == null)
-				publishedPosts.posts = new ArrayList<XETextylePost>();
-			if (publishedPostsOption.isChecked())
-				setThePublishedPostsInAdapter();
+		protected Object doInBackground(Object... params) {
+			String response = XEHost
+					.getINSTANCE()
+					.getRequest(
+							"/index.php?module=mobile_communication"
+									+ "&act=procmobile_communicationTextylePostList&module_srl="
+									+ textyle.module_srl + "&published=-1");
+
+			Log.d("response", response);
+
+			Serializer serializer = new Persister();
+
+			Reader reader = new StringReader(response);
+			try {
+				draftPosts = serializer.read(XEArrayList.class, reader, false);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return null;
 		}
+
 	}
 
-	public void setTheSavedPostsInAdapter() {
-		// adapter.clear();
+	private class GetTrashPostsAsyncTask extends
+			AsyncTask<Object, Object, Object> {
 
-		if (savedPosts.posts.size() == 0) {
-			Toast toast = Toast.makeText(getApplicationContext(),
-					"No saved posts!", Toast.LENGTH_SHORT);
-			toast.show();
-		}
+		@Override
+		protected Object doInBackground(Object... params) {
+			String response = XEHost
+					.getINSTANCE()
+					.getRequest(
+							"/index.php?module=mobile_communication"
+									+ "&act=procmobile_communicationTextylePostList&module_srl="
+									+ textyle.module_srl + "&published=-11");
 
-		for (int i = 0; i < savedPosts.posts.size(); i++) {
-			// adapter.add(savedPosts.posts.get(i));
+			Log.d("response", response);
+
+			Serializer serializer = new Persister();
+
+			Reader reader = new StringReader(response);
+			try {
+				trashPosts = serializer.read(XEArrayList.class, reader, false);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return null;
 		}
-		adapter.notifyDataSetChanged();
 	}
-
-	public void setThePublishedPostsInAdapter() {
-		// adapter.clear();
-
-		if (publishedPosts.posts.size() == 0) {
-			Toast toast = Toast.makeText(getApplicationContext(),
-					"No published posts!", Toast.LENGTH_SHORT);
-			toast.show();
-		}
-
-		for (int i = 0; i < publishedPosts.posts.size(); i++) {
-			// adapter.add(publishedPosts.posts.get(i));
-		}
-		adapter.notifyDataSetChanged();
-	}
-
-	// called when the "Add post" button is pressed
-//	@Override
-//	public void onClick(View v) {
-//		Intent intent = new Intent(XEMobileTextylePostsController.this,
-//				XEMobileTextyleAddPostController.class);
-//		intent.putExtra("textyle", textyle);
-//		startActivity(intent);
-//	}
-//
-//	// called when an item form ListView is pressed
-//	@Override
-//	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//		XETextylePost post = null;
-//		Intent intent = new Intent(XEMobileTextylePostsController.this, XEMobileTextyleEditPostContentController.class);
-//		
-////		if( savedPostsOption.isChecked() )
-////		{
-////			post = savedPosts.posts.get(arg2);
-////			intent.putExtra("type", "saved");
-////			
-////		}
-////		else if( publishedPostsOption.isChecked() )
-////		{
-////			post = publishedPosts.posts.get(arg2);
-////			intent.putExtra("type", "published");
-////		}
-//		Intent intent = new Intent(XEMobileTextylePostsController.this,
-//				XEMobileTextyleEditPostContentController.class);
-//
-//		if (savedPostsOption.isChecked()) {
-//			post = savedPosts.posts.get(arg2);
-//			intent.putExtra("type", "saved");
-//
-//		} else if (publishedPostsOption.isChecked()) {
-//			post = publishedPosts.posts.get(arg2);
-//			intent.putExtra("type", "published");
-//		}
-//
-//		intent.putExtra("textyle", textyle);
-//		intent.putExtra("document_srl", post.document_srl);
-//		intent.putExtra("title", post.title);
-//		intent.putExtra("category_srl", post.category_srl);
-//		startActivity(intent);
-//	}
-}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
+	// Async Task for sending the request
+	private class GetTextylesAsyncTask extends
+			AsyncTask<Object, Object, Object> {
+		String response;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			startProgress("Loading...");
+		}
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			// sending the request
+			response = XEHost
+					.getINSTANCE()
+					.getRequest(
+							"/index.php?module=mobile_communication&act=procmobile_communicationTextyleList");
+
+			// parsing the response
+			Serializer serializer = new Persister();
+			Reader reader = new StringReader(response);
+			try {
+				array = serializer.read(XEArrayList.class, reader, false);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		// called when the response came
+		@Override
+		protected void onPostExecute(Object result) {
+			super.onPostExecute(result);
+			// dismissProgress();
+			// async task for saved posts
+			textyle = array.textyles.get(0);
+			GetAllPostsAsyncTask savedTask = new GetAllPostsAsyncTask();
+			savedTask.execute();
+		}
+	}
+
 }
