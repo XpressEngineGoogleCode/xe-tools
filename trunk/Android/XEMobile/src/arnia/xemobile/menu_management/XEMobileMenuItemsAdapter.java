@@ -39,6 +39,7 @@ public class XEMobileMenuItemsAdapter extends BaseAdapter implements OnClickList
 	private Context context;
 	private ArrayList<XEMenuItem> arrayWithMenuItems;
 	private String menuItemSRL;
+	private String menuSRL;
 	
 	//setter
 	public void setArrayWithMenuItems(ArrayList<XEMenuItem> arrayWithMenuItems) {
@@ -46,11 +47,12 @@ public class XEMobileMenuItemsAdapter extends BaseAdapter implements OnClickList
 	}
 	
 	//constructor
-	public XEMobileMenuItemsAdapter(Context context, String menu)
+	public XEMobileMenuItemsAdapter(Context context, String menuitemParentSRL,String menuSRL)
 	{
 		this.context = context;
 		this.arrayWithMenuItems = new ArrayList<XEMenuItem>();
-		this.menuItemSRL = menu;
+		this.menuItemSRL = menuitemParentSRL;
+		this.menuSRL=menuSRL;
 	}
 	
 	@Override
@@ -170,6 +172,7 @@ public class XEMobileMenuItemsAdapter extends BaseAdapter implements OnClickList
 			XEMobileMainActivityController mainActivity = (XEMobileMainActivityController) context;
 			XEMobileMenuItemsController submenuController = new XEMobileMenuItemsController();
 			Bundle args = new Bundle();
+			args.putString("menu_srl",menuSRL);
 			args.putString("menu_item_parent_srl",menuItem.srl);
 			submenuController.setArguments(args);
 			mainActivity.addMoreScreen(submenuController);
