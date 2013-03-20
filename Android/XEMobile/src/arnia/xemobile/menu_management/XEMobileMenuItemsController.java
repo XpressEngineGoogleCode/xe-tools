@@ -32,6 +32,7 @@ import arnia.xemobile.classes.XEMenuItem;
 public class XEMobileMenuItemsController extends XEFragment
 {
 	private String menuItemParentSRL;
+	private String menuSRL;
 	private ArrayList<XEMenuItem> arrayWithMenuItems;
 	private XEMobileMenuItemsAdapter adapter;
 	
@@ -89,6 +90,7 @@ public class XEMobileMenuItemsController extends XEFragment
 				XEMobileMainActivityController mainActivity = (XEMobileMainActivityController)activity;
 				Fragment screen = new XEMobileAddMenuItemController();
 				Bundle args = new Bundle();
+				args.putString("menu_srl", menuSRL);
 				args.putString("menu_parent_srl", menuItemParentSRL);
 				screen.setArguments(args);
 				mainActivity.addMoreScreen(screen);
@@ -96,8 +98,9 @@ public class XEMobileMenuItemsController extends XEFragment
 		});
 		
 		Bundle argument = getArguments();
+		menuSRL = argument.getString("menu_srl");
 		menuItemParentSRL = argument.getString("menu_item_parent_srl");
-		adapter = new XEMobileMenuItemsAdapter(activity, menuItemParentSRL);
+		adapter = new XEMobileMenuItemsAdapter(activity, menuItemParentSRL,menuSRL);
 		listView.setAdapter(adapter);
 		
 		return view;
@@ -130,7 +133,7 @@ public class XEMobileMenuItemsController extends XEFragment
 		protected Object doInBackground(Object... params) 
 		{
 			//send request
-			xmlData = XEHost.getINSTANCE().getRequest("/index.php?module=mobile_communication&act=procmobile_communicationDisplayMenu");
+			xmlData = XEHost.getINSTANCE().getRequest("/index.php?XDEBUG_SESSION_START=netbeans-xdebug&module=mobile_communication&act=procmobile_communicationDisplayMenu");
 			
 			//parse response
 			Serializer serializer = new Persister();        
@@ -156,19 +159,46 @@ public class XEMobileMenuItemsController extends XEFragment
 			
 			 if( arrayWithMenus != null && arrayWithMenus.menus != null)
 			   {
+				 //Get menu array of menu by parentSRL
 				   for(int i = 0 ; i<arrayWithMenus.menus.size() ; i++)
 				   {
 					   XEMenu menu = arrayWithMenus.menus.get(i);
-					   if( menu.menuSrl.equals(menuItemParentSRL) )
+					   if( menu.menuSrl.compareTo(menuSRL)==0 && menuItemParentSRL.compareTo("0")==0 )
 					   {
 						   arrayWithMenuItems =  menu.menuItems;
-						   adapter.setArrayWithMenuItems(arrayWithMenuItems);
-						   adapter.notifyDataSetChanged();
 						   break;
 					   }
+					   if(menu.menuItems!=null){
+						   arrayWithMenuItems = getSubMenuOfMenuParent(menu.menuItems,menuItemParentSRL);
+						   if(arrayWithMenuItems!=null){
+							   break;
+						   }
+					   }
 				   }
+				   adapter.setArrayWithMenuItems(arrayWithMenuItems);
+				   adapter.notifyDataSetChanged();
 			   }
 		}
-	}
-
+		private ArrayList<XEMenuItem> getSubMenuOfMenuParent(ArrayList<XEMenuItem> menuItemlist,String menuItemParentSRL){
+			//Get menu array of menu by parentSRL
+			ArrayList<XEMenuItem> result=null;
+			if(menuItemlist!=null){ 
+				for(XEMenuItem menuItem : menuItemlist){
+				  if(menuItem.srl.compareTo(menuItemParentSRL)==0){
+					  return menuItem.menuItems;					  
+				  }else{
+					  result = getSubMenuOfMenuParent(menuItem.menuItems, menuItemParentSRL);
+					  if(result!=null){
+						  return result;
+					  }
+				  }
+				}
+			}
+			return result;
+		}
+			
+	}	
 }
+
+
+

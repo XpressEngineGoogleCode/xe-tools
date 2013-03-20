@@ -56,6 +56,7 @@ public class XEMobileAddMenuItemController extends XEFragment implements OnClick
 	
 	//menu parent srl
 	private String parentSRL;
+	private String menuSRL;
 	
 	private XEMenuItemsDetails details;
 	private ArrayAdapter<String> adapter;
@@ -103,7 +104,7 @@ public class XEMobileAddMenuItemController extends XEFragment implements OnClick
 		
 		Bundle args = getArguments();		
 		parentSRL = args.getString("menu_parent_srl");
-		
+		menuSRL = args.getString("menu_srl");
 		
 		
 		
@@ -279,7 +280,8 @@ public class XEMobileAddMenuItemController extends XEFragment implements OnClick
 			params.put("ruleset", "insertMenuItem");
 			params.put("module","mobile_communication");
 			params.put("act","procmobile_communicationMenuItem");
-			params.put("menu_srl", parentSRL);
+			params.put("menu_srl", menuSRL);
+			params.put("parent_srl", parentSRL);
 			params.put("menu_name_key",browserTitleEditText.getText().toString());
 			params.put("menu_name",browserTitleEditText.getText().toString());
 			params.put("cType","SELECT");

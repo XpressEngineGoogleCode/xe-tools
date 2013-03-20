@@ -102,7 +102,8 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 			XEMobileMainActivityController mainActivity = (XEMobileMainActivityController) activity;
 			XEMobileMenuItemsController menuItemController = new XEMobileMenuItemsController();
 			Bundle argument = new Bundle();
-			argument.putString("menu_item_parent_srl", menu.menuSrl);
+			argument.putString("menu_srl", menu.menuSrl);
+			argument.putString("menu_item_parent_srl", "0");
 			menuItemController.setArguments(argument);
 			mainActivity.addMoreScreen(menuItemController);
 			
@@ -223,7 +224,7 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 			@Override
 			protected Object doInBackground(Object... params) 
 			{
-				xmlData = XEHost.getINSTANCE().getRequest("/index.php?module=mobile_communication&act=procmobile_communicationDisplayMenu");
+				xmlData = XEHost.getINSTANCE().getRequest("/index.php?XDEBUG_SESSION_START=netbeans-xdebug&module=mobile_communication&act=procmobile_communicationDisplayMenu");
 				
 				 Serializer serializer = new Persister();        
 		         

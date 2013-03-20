@@ -1,6 +1,9 @@
 package arnia.xemobile.classes;
 
+import java.util.ArrayList;
+
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 @Root(name="menuItem")
@@ -17,4 +20,7 @@ public class XEMenuItem
 	
 	@Element(required=false)
 	public String url;
+	
+	@ElementList(inline=true,required=false)
+	public ArrayList<XEMenuItem> menuItems;
 }
