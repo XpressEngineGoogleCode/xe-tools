@@ -10,6 +10,7 @@ import org.simpleframework.xml.core.Persister;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +82,7 @@ public class XEMobilePageController extends XEFragment implements OnClickListene
 				long arg3) 
 		{
 			XEPage page = list.pages.get(position);
-			
+			Log.i("xemobile","List item click");
 			if(page.page_type.equals("ARTICLE"))
 			{
 			Intent intent = new Intent(this.activity,XEMobilePageTextEditor.class);

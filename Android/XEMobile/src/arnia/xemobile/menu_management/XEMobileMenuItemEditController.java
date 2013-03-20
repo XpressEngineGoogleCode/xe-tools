@@ -12,7 +12,9 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,16 +28,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import arnia.xemobile.R;
 import arnia.xemobile.XEActivity;
+import arnia.xemobile.XEFragment;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEMenu;
 import arnia.xemobile.classes.XEMenuItemsDetails;
 import arnia.xemobile.classes.XEModule;
 
-public class XEMobileMenuItemEditController extends XEActivity  implements OnClickListener,android.widget.CompoundButton.OnCheckedChangeListener
+public class XEMobileMenuItemEditController extends XEFragment  implements OnClickListener,android.widget.CompoundButton.OnCheckedChangeListener
 {
 	//interface elements
-	private EditText browserTitleEditText;
+	private EditText linkTitle;
 	private RadioButton createRadioOption;
 	private RadioButton selectRadioOption;
 	private RadioButton menuURLRadioOption;
@@ -46,13 +49,14 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 	
 	private TextView moduleIDTextView;
 	private EditText moduleIDEditText;
-	private CheckBox newWindow;
+	private CheckBox isNewWindow;
 	
 	private TextView menuURLTextView;
 	private EditText menuURLEditText;
 	
-	private Spinner spinner;
-	private Button saveButon;
+	private Spinner availablePages;
+	private Spinner pageTypes;
+	private Button saveButton;
 	
 	//menu parent srl
 	private String parentSRL;
@@ -66,67 +70,105 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 	//spinner adapter
 	private ArrayAdapter<String> adapter;
 	
+//	@Override
+//	protected void onCreate(Bundle savedInstanceState) 
+//	{
+//		super.onCreate(savedInstanceState);
+//		
+//		//load interface
+//		setContentView(R.layout.xemobilemenuitemeditlayout);
+//		
+//		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+//		
+//		//take reference to interface objects
+//
+//		
+//		//get out of intent the parent srl
+//		parentSRL = getIntent().getStringExtra("menu_parent_srl");
+//		menuItemSRL = getIntent().getStringExtra("menu_item_srl");
+//		
+//		
+//		//make request to get a list of modules for spinner
+////		GetModulesAsyncTask task = new GetModulesAsyncTask();
+////		task.execute();
+//		
+//		//action for save button
+////		saveButon.setOnClickListener(this);
+//		
+//		
+//	}
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
-		super.onCreate(savedInstanceState);
-		
-		//load interface
-		setContentView(R.layout.xemobilemenuitemeditlayout);
-		
-		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-		
-		//take reference to interface objects
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
+		View view = inflater.inflate(R.layout.xemobilemenuitemeditlayout, container,false);
+		adapter = new ArrayAdapter<String>(this.activity, android.R.layout.simple_spinner_item);
 		
-		//get out of intent the parent srl
-		parentSRL = getIntent().getStringExtra("menu_parent_srl");
-		menuItemSRL = getIntent().getStringExtra("menu_item_srl");
+		availablePages = (Spinner) view.findViewById(R.id.XEMOBILE_AVAILABLE_PAGES);
+		pageTypes= (Spinner) view.findViewById(R.id.XEMOBILE_PAGE_TYPES);
 		
+		linkTitle = (EditText) view.findViewById(R.id.XEMOBILE_LINK_TEXT);
+		isNewWindow = (CheckBox) view.findViewById(R.id.XEMOBILE_NEW_WINDOW);
+		
+		Bundle args = getArguments();
+		parentSRL = args.getString("menu_parent_srl");
+		menuItemSRL = args.getString("menu_item_srl");
 		
 		//make request to get a list of modules for spinner
 		GetModulesAsyncTask task = new GetModulesAsyncTask();
 		task.execute();
+	
+	//action for save button
+		saveButton = (Button) view.findViewById(R.id.XEMOBILE_EDIT_MENU_SAVE_BUTTON);
+		saveButton.setOnClickListener(this);
 		
-		//action for save button
-		saveButon.setOnClickListener(this);
-		
-		
+		return view;
 	}
 	
 	//called when the save button is pressed
 	@Override
 	public void onClick(View v) 
 	{
-		if( createRadioOption.isChecked() )
-			{
-				CreateMenuAsyncTask task = new CreateMenuAsyncTask();
-				task.execute();
-			}
-		else if( selectRadioOption.isChecked() )
-			{
+//		if( createRadioOption.isChecked() )
+//			{
+//				CreateMenuAsyncTask task = new CreateMenuAsyncTask();
+//				task.execute();
+//			}
+//		else if( selectRadioOption.isChecked() )
+//			{
 				SelectModuleAsyncTask task = new SelectModuleAsyncTask();
 				task.execute();
-			}
-		else if( menuURLRadioOption.isChecked() )
-			{
-				MenuURLAsyncTask task = new MenuURLAsyncTask();
-				task.execute();
-			}
+//			}
+//		else if( menuURLRadioOption.isChecked() )
+//			{
+//				MenuURLAsyncTask task = new MenuURLAsyncTask();
+//				task.execute();
+//			}
 	}
 	
 	//the method returns the type selected
 	private String returnType()
 	{
-		if( articleRadioOption.isChecked() ) return "ARTICLE";
-		else if( widgetRadioOption.isChecked() ) return "WIDGET";
-		else if( externalRadioOption.isChecked() ) return "EXTERNAL";
-		return "";
+//		if( articleRadioOption.isChecked() ) return "ARTICLE";
+//		else if( widgetRadioOption.isChecked() ) return "WIDGET";
+//		else if( externalRadioOption.isChecked() ) return "EXTERNAL";
+//		return "";
+		if(((String)pageTypes.getSelectedItem()).compareTo("Widget page")==0){
+			return "WIDGET";
+		}else if(((String)pageTypes.getSelectedItem()).compareTo("Article page")==0){
+			return "ARTICLE";
+		}else {
+			return "EXTERNAL";
+		}
+		
+		
+		
+		
 	}
 	
 	private String openInNewWindow()
 	{
-		if( newWindow.isChecked() ) return "Y";
+		if( isNewWindow.isChecked() ) return "Y";
 		else return "N";
 	}
 	
@@ -138,7 +180,7 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 		{
 			if( isChecked )
 			{
-					spinner.setVisibility(View.INVISIBLE);
+					availablePages.setVisibility(View.INVISIBLE);
 					articleRadioOption.setVisibility(View.INVISIBLE);
 					widgetRadioOption.setVisibility(View.INVISIBLE);
 					externalRadioOption.setVisibility(View.INVISIBLE);
@@ -170,7 +212,7 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 			menuURLTextView.setVisibility(View.INVISIBLE);
 			menuURLEditText.setVisibility(View.INVISIBLE);
 		
-			spinner.setVisibility(View.VISIBLE);
+			availablePages.setVisibility(View.VISIBLE);
 			}
 			else
 			{
@@ -196,11 +238,11 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 					menuURLTextView.setVisibility(View.INVISIBLE);
 					menuURLEditText.setVisibility(View.INVISIBLE);
 				
-					spinner.setVisibility(View.VISIBLE);
+					availablePages.setVisibility(View.VISIBLE);
 			}
 			else
 				{
-				spinner.setVisibility(View.INVISIBLE);
+				availablePages.setVisibility(View.INVISIBLE);
 				}
 		}
 	}
@@ -218,8 +260,8 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 			params.put("act","procmobile_communicationMenuItem");
 			params.put("menu_item_srl",menuItemSRL);
 			params.put("menu_srl", parentSRL);
-			params.put("menu_name_key",browserTitleEditText.getText().toString());
-			params.put("menu_name",browserTitleEditText.getText().toString());
+			params.put("menu_name_key",linkTitle.getText().toString());
+			params.put("menu_name",linkTitle.getText().toString());
 			params.put("cType","CREATE");
 			
 			params.put("module_type", "ARTICLE");
@@ -235,7 +277,7 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 		protected void onPostExecute(Object result) 
 		{
 			super.onPostExecute(result);
-			finish();
+//			finish();
 		}
 	}
 	
@@ -252,12 +294,12 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 			params.put("act","procmobile_communicationMenuItem");
 			params.put("menu_srl", parentSRL);
 			params.put("menu_item_srl", menuItemSRL);
-			params.put("menu_name_key",browserTitleEditText.getText().toString());
-			params.put("menu_name",browserTitleEditText.getText().toString());
+			params.put("menu_name_key",linkTitle.getText().toString());
+			params.put("menu_name",linkTitle.getText().toString());
 			params.put("cType","SELECT");
 			params.put("module_type", returnType());
 			params.put("menu_open_window", openInNewWindow());
-			params.put("select_menu_url",(String) spinner.getSelectedItem());
+			params.put("select_menu_url",(String) availablePages.getSelectedItem());
 			
 			XEHost.getINSTANCE().postMultipart(params, "/");
 			
@@ -268,7 +310,7 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 		protected void onPostExecute(Object result) 
 		{
 			super.onPostExecute(result);
-			finish();
+//			finish();
 		}
 	}
 
@@ -285,8 +327,8 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 			params.put("act","procmobile_communicationMenuItem");
 			params.put("menu_srl", parentSRL);
 			params.put("menu_item_srl", menuItemSRL);
-			params.put("menu_name_key",browserTitleEditText.getText().toString());
-			params.put("menu_name",browserTitleEditText.getText().toString());
+			params.put("menu_name_key",linkTitle.getText().toString());
+			params.put("menu_name",linkTitle.getText().toString());
 			params.put("cType","URL");
 			params.put("module_type", "ARTICLE");
 			params.put("menu_open_window", openInNewWindow());
@@ -301,7 +343,7 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 		protected void onPostExecute(Object result) 
 		{
 			super.onPostExecute(result);
-			finish();
+//			finish();
 		}
 	}
 	
@@ -335,9 +377,9 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 		{
 			super.onPostExecute(result);
 			
-			browserTitleEditText.setText(details.name);
-			if( details.open_window.equals("Y") ) newWindow.setChecked(true);
-							else newWindow.setChecked(false);
+			linkTitle.setText(details.name);
+			if( details.open_window.equals("Y") ) isNewWindow.setChecked(true);
+							else isNewWindow.setChecked(false);
 			
 			//moduleType may be null somehow			
 			if(details.moduleType==null){
@@ -352,7 +394,7 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 						if( details.url.equals(modules.modules.get(i).module) ) break;
 					}
 					Log.d("i=", i+ " ");
-					spinner.setSelection(i);
+					availablePages.setSelection(i);
 					
 				}
 				else if( details.moduleType.equals("url") )
@@ -397,7 +439,7 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 		{
 			super.onPostExecute(result);
 		
-			isLoggedIn(xmlData, XEMobileMenuItemEditController.this);
+//			isLoggedIn(xmlData, XEMobileMenuItemEditController.this);
 			
 			if( modules != null && modules.modules != null )
 			{
@@ -406,7 +448,7 @@ public class XEMobileMenuItemEditController extends XEActivity  implements OnCli
 				adapter.add(modules.modules.get(i).module);
 				}
 			
-				spinner.setAdapter(adapter);
+				availablePages.setAdapter(adapter);
 				
 				GetEditedMenuAsyncTask editedMenuTask = new GetEditedMenuAsyncTask();
 				editedMenuTask.execute();
