@@ -11,20 +11,25 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import arnia.xemobile.R;
 import arnia.xemobile.XEActivity;
+import arnia.xemobile.XEFragment;
+import arnia.xemobile.XEMobileMainActivityController;
 
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEMenu;
 import arnia.xemobile.classes.XEMenuItem;
 
-public class XEMobileMenuItemsController extends XEActivity
+public class XEMobileMenuItemsController extends XEFragment
 {
 	private String menuItemParentSRL;
 	private ArrayList<XEMenuItem> arrayWithMenuItems;
@@ -32,13 +37,44 @@ public class XEMobileMenuItemsController extends XEActivity
 	
 	private Button addMenuItemButton;
 	
+//	@Override
+//	protected void onCreate(Bundle savedInstanceState) 
+//	{
+//		super.onCreate(savedInstanceState);
+////		setContentView(R.layout.xemobilemenuitemslayout);
+//		setContentView(R.layout.xemobilemenueditlayout);
+//		ListView listView = (ListView) findViewById(R.id.XEMOBILE_MENUITEMS_LISTVIEW);
+//		addMenuItemButton = (Button) findViewById(R.id.XEMOBILE_MENUITEMS_ADDMENUITEM);
+//		
+//		addMenuItemButton.setOnClickListener(new OnClickListener() 
+//		{
+//			//method called when the Add Button is pressed 
+//			@Override
+//			public void onClick(View v) 
+//			{
+//				Intent intent = new Intent(XEMobileMenuItemsController.this,XEMobileAddMenuItemController.class);
+//				intent.putExtra("menu_parent_srl", menuItemParentSRL);
+//				startActivity(intent);
+//			}
+//		});
+//		
+//		Intent intent = getIntent();
+//		menuItemParentSRL = intent.getStringExtra("menu_item_parent_srl");
+//		
+//		adapter = new XEMobileMenuItemsAdapter(this, menuItemParentSRL);
+//		listView.setAdapter(adapter);
+//	}
+	
+	boolean isOnPause;
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.xemobilemenuitemslayout);
-		ListView listView = (ListView) findViewById(R.id.XEMOBILE_MENUITEMS_LISTVIEW);
-		addMenuItemButton = (Button) findViewById(R.id.XEMOBILE_MENUITEMS_ADDMENUITEM);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
+		View view = inflater.inflate(R.layout.xemobilemenueditlayout, container,false);
+		
+		ListView listView = (ListView) view.findViewById(R.id.XEMOBILE_EDITMENU_LISTVIEW);
+		addMenuItemButton = (Button) view.findViewById(R.id.XEMOBILE_EDITMENU_ADDBUTTON);
 		
 		addMenuItemButton.setOnClickListener(new OnClickListener() 
 		{
@@ -46,23 +82,29 @@ public class XEMobileMenuItemsController extends XEActivity
 			@Override
 			public void onClick(View v) 
 			{
-				Intent intent = new Intent(XEMobileMenuItemsController.this,XEMobileAddMenuItemController.class);
-				intent.putExtra("menu_parent_srl", menuItemParentSRL);
-				startActivity(intent);
+//				Intent intent = new Intent(activity,XEMobileAddMenuItemController.class);
+//				intent.putExtra("menu_parent_srl", menuItemParentSRL);
+//				startActivity(intent);
+				
+				XEMobileMainActivityController mainActivity = (XEMobileMainActivityController)activity;
+				Fragment screen = new XEMobileAddMenuItemController();
+				Bundle args = new Bundle();
+				args.putString("menu_parent_srl", menuItemParentSRL);
+				screen.setArguments(args);
+				mainActivity.addMoreScreen(screen);
 			}
 		});
 		
-		Intent intent = getIntent();
-		menuItemParentSRL = intent.getStringExtra("menu_item_parent_srl");
-		
-		adapter = new XEMobileMenuItemsAdapter(this, menuItemParentSRL);
+		Bundle argument = getArguments();
+		menuItemParentSRL = argument.getString("menu_item_parent_srl");
+		adapter = new XEMobileMenuItemsAdapter(activity, menuItemParentSRL);
 		listView.setAdapter(adapter);
+		
+		return view;
 	}
 	
-	boolean isOnPause;
-	
 	@Override
-	protected void onResume() 
+	public void onResume() 
 	{
 		super.onResume();
 		
@@ -72,7 +114,7 @@ public class XEMobileMenuItemsController extends XEActivity
 	}
 	
 	@Override
-	protected void onPause() 
+	public void onPause() 
 	{
 		super.onPause();
 		isOnPause = true;
@@ -108,7 +150,7 @@ public class XEMobileMenuItemsController extends XEActivity
 		{
 			super.onPostExecute(result);
 			
-			isLoggedIn(xmlData, XEMobileMenuItemsController.this);
+//			isLoggedIn(xmlData, XEMobileMenuItemsController.this);
 			
 			dismissProgress();
 			

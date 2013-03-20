@@ -11,7 +11,9 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,11 +26,12 @@ import android.widget.TextView;
 import arnia.xemobile.R;
 import arnia.xemobile.R.id;
 import arnia.xemobile.R.layout;
+import arnia.xemobile.XEFragment;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEMenuItemsDetails;
 
-public class XEMobileAddMenuItemController extends Activity implements OnClickListener,android.widget.CompoundButton.OnCheckedChangeListener
+public class XEMobileAddMenuItemController extends XEFragment implements OnClickListener,android.widget.CompoundButton.OnCheckedChangeListener
 {
 	//interface elements
 	private EditText browserTitleEditText;
@@ -47,8 +50,9 @@ public class XEMobileAddMenuItemController extends Activity implements OnClickLi
 	private TextView menuURLTextView;
 	private EditText menuURLEditText;
 	
-	private Spinner spinner;
-	private Button saveButon;
+	private Spinner pageType;
+	private Spinner availablePages;
+	private Button saveButton;
 	
 	//menu parent srl
 	private String parentSRL;
@@ -56,63 +60,101 @@ public class XEMobileAddMenuItemController extends Activity implements OnClickLi
 	private XEMenuItemsDetails details;
 	private ArrayAdapter<String> adapter;
 	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
-		super.onCreate(savedInstanceState);
-		
-		//load interface
-		setContentView(R.layout.xemobilemenuitemeditlayout);
-		
-
-		
-		//get out of intent the parent srl
-		parentSRL = getIntent().getStringExtra("menu_parent_srl");
-		
-		//action for save button
-		saveButon.setOnClickListener(this);
-		
-	    adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-		
-		//make request to get a list of modules for spinner
-		GetModuleAsyncTask task = new GetModuleAsyncTask();
-		task.execute();
-		
-	}
+//	@Override
+//	protected void onCreate(Bundle savedInstanceState) 
+//	{
+//		super.onCreate(savedInstanceState);
+//		
+//		//load interface
+//		setContentView(R.layout.xemobilemenuitemeditlayout);
+//		
+//
+//		
+//		//get out of intent the parent srl
+//		parentSRL = getIntent().getStringExtra("menu_parent_srl");
+//		
+//		//action for save button
+//		saveButon.setOnClickListener(this);
+//		
+//	    adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+//		
+//		//make request to get a list of modules for spinner
+//		GetModuleAsyncTask task = new GetModuleAsyncTask();
+//		task.execute();
+//		
+//	}
+	
+	
 	
 	//Array with modules for spinner
 	private XEArrayList modules;
 
-
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.xemobilemenuitemeditlayout, container, false);
+		
+		availablePages = (Spinner) view.findViewById(R.id.XEMOBILE_AVAILABLE_PAGES);
+		pageType = (Spinner) view.findViewById(R.id.XEMOBILE_PAGE_TYPES);
+		saveButton = (Button) view.findViewById(R.id.XEMOBILE_EDIT_MENU_SAVE_BUTTON);
+		browserTitleEditText =(EditText) view.findViewById(R.id.XEMOBILE_LINK_TEXT);
+		newWindow = (CheckBox) view.findViewById(R.id.XEMOBILE_NEW_WINDOW);
+		
+		
+		Bundle args = getArguments();		
+		parentSRL = args.getString("menu_parent_srl");
+		
+		
+		
+		
+		//action for save button
+		saveButton.setOnClickListener(this);
+		
+	    adapter = new ArrayAdapter<String>(this.activity, android.R.layout.simple_spinner_item);
+		
+		GetModuleAsyncTask task = new GetModuleAsyncTask();
+		task.execute();
+		return view;
+	}
 	
 	//called when the save button is pressed
 	@Override
 	public void onClick(View v) 
 	{
-		if( createRadioOption.isChecked() )
-			{
-				CreateModuleAsyncTask task = new CreateModuleAsyncTask();
-				task.execute();
-			}
-		else if( selectRadioOption.isChecked() )
-			{
+//		if( createRadioOption.isChecked() )
+//			{
+//				CreateModuleAsyncTask task = new CreateModuleAsyncTask();
+//				task.execute();
+//			}
+//		else if( selectRadioOption.isChecked() )
+//			{
 				SelectModuleAsyncTask task = new SelectModuleAsyncTask();
 				task.execute();
-			}
-		else if( menuURLRadioOption.isChecked() )
-			{
-				CreateMenuAsyncTask task = new CreateMenuAsyncTask();
-				task.execute();
-			}
+//			}
+//		else if( menuURLRadioOption.isChecked() )
+//			{
+//				CreateMenuAsyncTask task = new CreateMenuAsyncTask();
+//				task.execute();
+//			}
 	}
 
 
 	private String returnType()
 	{
-		if( articleRadioOption.isChecked() ) return "ARTICLE";
-		else if( widgetRadioOption.isChecked() ) return "WIDGET";
-		else if( externalRadioOption.isChecked() ) return "EXTERNAL";
-		return "";
+//		if( articleRadioOption.isChecked() ) return "ARTICLE";
+//		else if( widgetRadioOption.isChecked() ) return "WIDGET";
+//		else if( externalRadioOption.isChecked() ) return "EXTERNAL";
+//		return "";
+		
+		if(((String)pageType.getSelectedItem()).compareTo("Article page")==0){
+			return "ARTICLE";
+		}else if(((String)pageType.getSelectedItem()).compareTo("Widget page")==0){
+			return "WIDGET";
+		}else{
+			return "EXTERNAL";
+		}
+		
+		
 	}
 	
 	private String openInNewWindow()
@@ -129,7 +171,7 @@ public class XEMobileAddMenuItemController extends Activity implements OnClickLi
 		{
 			if( isChecked )
 			{
-					spinner.setVisibility(View.INVISIBLE);
+					availablePages.setVisibility(View.INVISIBLE);
 					articleRadioOption.setVisibility(View.INVISIBLE);
 					widgetRadioOption.setVisibility(View.INVISIBLE);
 					externalRadioOption.setVisibility(View.INVISIBLE);
@@ -160,7 +202,7 @@ public class XEMobileAddMenuItemController extends Activity implements OnClickLi
 			menuURLTextView.setVisibility(View.INVISIBLE);
 			menuURLEditText.setVisibility(View.INVISIBLE);
 		
-			spinner.setVisibility(View.VISIBLE);
+			availablePages.setVisibility(View.VISIBLE);
 			}
 			else
 			{
@@ -186,11 +228,11 @@ public class XEMobileAddMenuItemController extends Activity implements OnClickLi
 					menuURLTextView.setVisibility(View.INVISIBLE);
 					menuURLEditText.setVisibility(View.INVISIBLE);
 				
-					spinner.setVisibility(View.VISIBLE);
+					availablePages.setVisibility(View.VISIBLE);
 			}
 			else
 				{
-				spinner.setVisibility(View.INVISIBLE);
+				availablePages.setVisibility(View.INVISIBLE);
 				}
 		}
 	}
@@ -223,7 +265,7 @@ public class XEMobileAddMenuItemController extends Activity implements OnClickLi
 		protected void onPostExecute(Object result) 
 		{
 			super.onPostExecute(result);
-			finish();
+//			finish();
 		}
 	}
 	
@@ -243,7 +285,7 @@ public class XEMobileAddMenuItemController extends Activity implements OnClickLi
 			params.put("cType","SELECT");
 			params.put("module_type", returnType());
 			params.put("menu_open_window", openInNewWindow());
-			params.put("select_menu_url",(String) spinner.getSelectedItem());
+			params.put("select_menu_url",(String) availablePages.getSelectedItem());
 
 			XEHost.getINSTANCE().postMultipart(params, "/");
 			return null;
@@ -253,7 +295,7 @@ public class XEMobileAddMenuItemController extends Activity implements OnClickLi
 		protected void onPostExecute(Object result) 
 		{
 			super.onPostExecute(result);
-			finish();
+//			finish();
 		}
 	}
 	
@@ -283,7 +325,7 @@ public class XEMobileAddMenuItemController extends Activity implements OnClickLi
 		protected void onPostExecute(Object result) 
 		{
 			super.onPostExecute(result);
-			finish();
+//			finish();
 		}
 	}
 	
@@ -322,8 +364,8 @@ public class XEMobileAddMenuItemController extends Activity implements OnClickLi
 				adapter.add(modules.modules.get(i).module);
 			}
 			
-			spinner.setAdapter(adapter);
-			spinner.setSelected(false);
+			availablePages.setAdapter(adapter);
+			availablePages.setSelected(false);
 		}
 	}
 }

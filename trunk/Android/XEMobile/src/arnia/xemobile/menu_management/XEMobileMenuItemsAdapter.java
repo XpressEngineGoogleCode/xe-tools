@@ -8,9 +8,12 @@ import java.util.HashMap;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.sax.StartElementListener;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +26,7 @@ import android.widget.TextView;
 import arnia.xemobile.R;
 import arnia.xemobile.R.id;
 import arnia.xemobile.R.layout;
+import arnia.xemobile.XEMobileMainActivityController;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEMenu;
@@ -76,19 +80,31 @@ public class XEMobileMenuItemsAdapter extends BaseAdapter implements OnClickList
 		if( convertView == null )
 		{
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.xemobilemenuitemscellview, null);
+			convertView = inflater.inflate(R.layout.xemobilemenuitemeditcellview, null);
 		}
 		
-		TextView menuItemNameTextView = (TextView) convertView.findViewById(R.id.XEMOBILE_MENUITEMCELL_TEXTVIEW);
+		TextView menuItemNameTextView = (TextView) convertView.findViewById(R.id.XEMOBILE_MENUITEMEDIT_TITLE_TEXT);
 		menuItemNameTextView.setText(menuItem.menuItemName);
 		
-		Button editButton = (Button) convertView.findViewById(R.id.XEMOBILE_MENUITEMCELL_EDITBUTTON);
+		Button editButton = (Button) convertView.findViewById(R.id.XEMOBILE_MENUITEMEDIT_EDITBUTTON);
 		editButton.setTag(position);
 		editButton.setOnClickListener(this);
 		
-		Button deleteButton = (Button) convertView.findViewById(R.id.XEMOBILE_MENUITEMCELL_DELETEBUTTON);
+		Button deleteButton = (Button) convertView.findViewById(R.id.XEMOBILE_MENUITEMEDIT_DELETEBUTTON);
 		deleteButton.setTag(position);
 		deleteButton.setOnClickListener(this);
+		
+		Button upButton = (Button) convertView.findViewById(R.id.XEMOBILE_MENUITEMEDIT_UPBUTTON);
+		upButton.setOnClickListener(this);
+		upButton.setTag(position);
+		
+		Button downButton = (Button) convertView.findViewById(R.id.XEMOBILE_MENUITEMEDIT_DOWNBUTTON);
+		downButton.setOnClickListener(this);
+		downButton.setTag(position);
+		
+		Button submenuButton = (Button) convertView.findViewById(R.id.XEMOBILE_MENUITEMEDIT_SUBMENUBUTTON);
+		submenuButton.setOnClickListener(this);
+		submenuButton.setTag(position);
 		
 		return convertView;
 	}
@@ -97,22 +113,66 @@ public class XEMobileMenuItemsAdapter extends BaseAdapter implements OnClickList
 	@Override
 	public void onClick(View v) 
 	{
-		int index = (Integer) v.getTag();
-		XEMenuItem menuItem = arrayWithMenuItems.get(index);
+		final int index = (Integer) v.getTag();
+		final XEMenuItem menuItem = arrayWithMenuItems.get(index);
 		
-		if( v.getId() == R.id.XEMOBILE_MENUITEMCELL_EDITBUTTON )
+		if( v.getId() == R.id.XEMOBILE_MENUITEMEDIT_EDITBUTTON )
 		{
-			Intent intent = new Intent(context, XEMobileMenuItemEditController.class);
-
-			intent.putExtra("menu_parent_srl",menuItemSRL);
-			intent.putExtra("menu_item_srl",menuItem.srl);
-			context.startActivity(intent);
-		}
-		else if( v.getId() == R.id.XEMOBILE_MENUITEMCELL_DELETEBUTTON )
-		{
-			DeleteMenuItemAsyncTask task = new DeleteMenuItemAsyncTask();
-			task.execute(new String[]{menuItem.srl,Integer.toString(index)});
+			//change invoke activity to fragment
 			
+			Bundle args = new Bundle();
+			args.putString("menu_parent_srl",menuItemSRL);
+			args.putString("menu_item_srl",menuItem.srl);
+			
+			XEMobileMenuItemEditController menuEditItem = new XEMobileMenuItemEditController();
+			menuEditItem.setArguments(args);
+			XEMobileMainActivityController mainActivity = (XEMobileMainActivityController) context;
+			mainActivity.addMoreScreen(menuEditItem);
+			
+//			Intent intent = new Intent(context, XEMobileMenuItemEditController.class);
+//
+//			intent.putExtra("menu_parent_srl",menuItemSRL);
+//			intent.putExtra("menu_item_srl",menuItem.srl);
+//			context.startActivity(intent);
+		}
+		else if( v.getId() == R.id.XEMOBILE_MENUITEMEDIT_DELETEBUTTON )
+		{
+			AlertDialog confirmDelete = new AlertDialog.Builder(context)
+										.setTitle(R.string.delete_menu_item_dialog_title)
+										.setMessage(R.string.delete_menu_item_dialog_description)
+										.setNegativeButton(R.string.delete_menu_item_dialog_no, new android.content.DialogInterface.OnClickListener(){
+
+											@Override
+											public void onClick(DialogInterface dialog,int which) {
+												
+											}
+											
+										} )
+										.setPositiveButton(R.string.delete_menu_item_dialog_yes, new android.content.DialogInterface.OnClickListener(){
+
+											@Override
+											public void onClick(DialogInterface dialog,int which) {												
+												DeleteMenuItemAsyncTask task = new DeleteMenuItemAsyncTask();
+												task.execute(new String[]{menuItem.srl,Integer.toString(index)});
+											}
+											
+										} )
+										
+										
+										.create();
+			confirmDelete.show();
+			
+		}else if( v.getId() == R.id.XEMOBILE_MENUITEMEDIT_UPBUTTON ){
+			
+		}else if( v.getId() == R.id.XEMOBILE_MENUITEMEDIT_DOWNBUTTON ){
+			
+		}else if( v.getId() == R.id.XEMOBILE_MENUITEMEDIT_SUBMENUBUTTON ){
+			XEMobileMainActivityController mainActivity = (XEMobileMainActivityController) context;
+			XEMobileMenuItemsController submenuController = new XEMobileMenuItemsController();
+			Bundle args = new Bundle();
+			args.putString("menu_item_parent_srl",menuItem.srl);
+			submenuController.setArguments(args);
+			mainActivity.addMoreScreen(submenuController);
 		}
 	}
 

@@ -31,6 +31,7 @@ import arnia.xemobile.R.id;
 import arnia.xemobile.R.layout;
 import arnia.xemobile.XEActivity;
 import arnia.xemobile.XEFragment;
+import arnia.xemobile.XEMobileMainActivityController;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEMenu;
@@ -60,6 +61,7 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 			list.setAdapter(adapter);
 			list.setOnItemClickListener(this);
 			
+			addMenuButton.setOnClickListener(this);
 			
 		return view;
 		}
@@ -96,10 +98,17 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 				long arg3) 
 		{
 			XEMenu menu = adapter.getArrayWithMenus().get(position);
-			Intent intent = new Intent(this.activity, XEMobileMenuItemsController.class);
-			intent.putExtra("menu_item_parent_srl", menu.menuSrl);
+//			Intent intent = new Intent(this.activity, XEMobileMenuItemsController.class);
+			XEMobileMainActivityController mainActivity = (XEMobileMainActivityController) activity;
+			XEMobileMenuItemsController menuItemController = new XEMobileMenuItemsController();
+			Bundle argument = new Bundle();
+			argument.putString("menu_item_parent_srl", menu.menuSrl);
+			menuItemController.setArguments(argument);
+			mainActivity.addMoreScreen(menuItemController);
+			
+//			intent.putExtra("menu_item_parent_srl", menu.menuSrl);
 
-			startActivity(intent);
+//			startActivity(intent);
 			
 		}
 
