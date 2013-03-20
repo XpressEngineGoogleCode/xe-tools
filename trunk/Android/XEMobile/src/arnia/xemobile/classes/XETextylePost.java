@@ -18,6 +18,15 @@ public class XETextylePost
 	@Element
 	public String title;
 	
+	@Element
+	public int comment_count;
+	
+	@Element
+	public String url;
+	
+	@Element
+	public String status;
+	
 	@Override
 	public String toString() 
 	{
