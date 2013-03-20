@@ -18,11 +18,7 @@
 
         <ToggleButton
             android:id="@+id/XEMOBILE_EDITOR_BOLD"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:background="@drawable/bg_editor_toggle_button"
-            android:padding="10dp"
+            style="@style/btn_editor_toggle"
             android:textOff="@string/bold"
             android:textOn="@string/bold" />
 

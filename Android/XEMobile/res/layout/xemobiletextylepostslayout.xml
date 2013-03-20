@@ -19,13 +19,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal" >
 
             <RadioButton
                 android:id="@+id/XEMOBILE_TEXTYLE_POSTS_ALLOPTION"
                 android:layout_weight=".5"
                 android:button="@null"
+                android:checked="true"
                 android:gravity="center"
                 android:minHeight="33dip"
                 android:minWidth="40dip"
