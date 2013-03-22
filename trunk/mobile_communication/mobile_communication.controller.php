@@ -7,6 +7,7 @@
 	class mobile_communicationController extends mobile_communication {
 		/**
 		 * @brief Initialization
+		 *
 		 **/
 		function init() {
 		}
