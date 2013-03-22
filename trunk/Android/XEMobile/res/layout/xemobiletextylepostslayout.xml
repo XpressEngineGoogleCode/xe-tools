@@ -15,7 +15,7 @@
         android:layout_height="wrap_content" >
 
         <arnia.xemobile.SegmentedRadioGroup
-            android:id="@+id/segment_text"
+            android:id="@+id/XEMOBILE_POST_FILTER"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -25,7 +25,6 @@
                 android:id="@+id/XEMOBILE_TEXTYLE_POSTS_ALLOPTION"
                 android:layout_weight=".5"
                 android:button="@null"
-                android:checked="true"
                 android:gravity="center"
                 android:minHeight="33dip"
                 android:minWidth="40dip"
