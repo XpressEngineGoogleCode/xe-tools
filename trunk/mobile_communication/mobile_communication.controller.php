@@ -71,7 +71,7 @@
         function procmobile_communicationArrangeMenu(){
         $adminMenuController = getAdminController("menu");
         $adminMenuController->menuSrl = Context::get('menu_srl');
-
+        
         $parentKeyList = Context::get('parent_key');
         $adminMenuController->itemKeyList = Context::get('item_key');
         $adminMenuController->map = array();
@@ -161,7 +161,7 @@
 					if( !empty($value->menuItems->list) ){
                                             echo $this->generateMenuItemMultipleLevels ($value->menuItems->list);
                                         }
-
+	
 					echo "</menu>\n";
 				}
 			echo "</response>";
@@ -951,10 +951,11 @@
         {
         if(!Context::get('is_logged')) $this->logout_message();
             $args->module_srl = Context::get('module_srl');
+            $args->page=  Context::get('page');
             
             $published = Context::get('published');
             $logged_info = Context::get('logged_info');
-
+            
 	    
 
             if(!$published){
@@ -969,17 +970,42 @@
             $oDocumentModel = &getModel('document');
             
             $output = $oDocumentModel->getDocumentList($args);
-            
+
             header('Content-Type: text/xml');
 			echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' . "\n";
 			echo "<response>" . "\n";
+                        
+                        echo "<pagination>\n";
+                        echo "<total_count>".$output->page_navigation->total_count."</total_count>\n";
+                        echo "<total_page>".$output->page_navigation->total_page."</total_page>\n";
+                        echo "<cur_page>".$output->page_navigation->cur_page."</cur_page>\n";
+                        echo "<page_count>".$output->page_navigation->page_count."</page_count>\n";
+                        echo "<first_page>".$output->page_navigation->first_page."</first_page>\n";
+                        echo "<last_page>".$output->page_navigation->last_page."</last_page>\n";
+                        echo "</pagination>\n";
 
             foreach($output->data as $post)
             {
+                $variables = $post->variables;
+                if($variables['module_srl']==$logged_info->member_srl){
+                    $url=  getUrl('act','dispTextyleToolPostManageWrite','document_srl',$post->document_srl);
+                    $status="DRAFT";
+                }
+                elseif($variables['module_srl']<=0){
+                    $url=getUrl('act','dispTextyleToolPostManageWrite','document_srl',$post->document_srl);
+                    $status="TRASH";
+                }
+                else{
+                    $url=getUrl('','document_srl',$post->document_srl);
+                    $status="PUBLISHED";
+                }
+                        
             	echo "<post>";
             	echo "<document_srl>" . $post->document_srl . "</document_srl>";
-            	$variables = $post->variables;
             	echo "<module_srl>" . $variables['module_srl'] . "</module_srl>";
+                echo "<comment_count>" . $variables['comment_count'] . "</comment_count>";
+                echo "<status>" . $status . "</status>";
+                echo "<url>" . $url . "</url>";
             	echo "<category_srl>" . $variables['category_srl'] . "</category_srl>";
             	echo "<title>" . $variables['title'] . "</title>";
             	echo "</post>";
