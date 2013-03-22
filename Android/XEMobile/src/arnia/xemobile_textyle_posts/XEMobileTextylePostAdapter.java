@@ -29,6 +29,11 @@ public class XEMobileTextylePostAdapter extends BaseAdapter {
 		this.arrayWithPosts = arrayWithPosts;
 	}
 
+	public void clearData() {
+		arrayWithPosts=new ArrayList<XETextylePost>();
+		notifyDataSetChanged();
+	}
+
 	public XEMobileTextylePostAdapter(Activity context) {
 		arrayWithPosts = new ArrayList<XETextylePost>();
 		this.context = context;
@@ -62,29 +67,41 @@ public class XEMobileTextylePostAdapter extends BaseAdapter {
 		}
 
 		// construct the view's elements
+		Button btnPublish = (Button) convertView
+				.findViewById(R.id.XEMOBILE_POST_UNPUBLISH_POST);
+		Button btnViewPost = (Button) convertView
+				.findViewById(R.id.XEMOBILE_POST_VIEW_POST);
+		
 		TextView txtPostTitle = (TextView) convertView
 				.findViewById(R.id.XEMOBILE_POST_POST_TITLE);
 		txtPostTitle.setText(post.title);
-		// if(post.status.compareTo("PUBLISHED")==0)
-		// txtPostTitle.setTextColor(Color.GREEN);
-		// else if(post.status.compareTo("DRAFT")==0)
-		// txtPostTitle.setTextColor(Color.YELLOW);
-		// else
-		// txtPostTitle.setTextColor(Color.RED);
-		
+		if (post.status.compareTo("PUBLISHED") == 0) {
+			// txtPostTitle.setTextColor(Color.GREEN);
+//			btnViewPost.setVisibility(View.VISIBLE);
+		} else if (post.status.compareTo("DRAFT") == 0) {
+			//txtPostTitle.setTextColor(Color.YELLOW);
+//			btnViewPost.setVisibility(View.INVISIBLE);
+//			btnPublish.setText("Publish");
+		} else {
+			//txtPostTitle.setTextColor(Color.RED);
+			// btnViewPost.setVisibility(View.INVISIBLE);
+			// btnPublish.setText("Publish");
+		}
+
 		TextView txtCommentCount = (TextView) convertView
 				.findViewById(R.id.XEMOBILE_POST_POST_COMMENT);
 		txtCommentCount.setText(post.comment_count + " comments");
+
 		
-		Button btnViewPost=(Button)convertView.findViewById(R.id.XEMOBILE_POST_VIEW_POST);
 		btnViewPost.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent browser = new Intent(Intent.ACTION_VIEW, Uri.parse(post.url));
+				Intent browser = new Intent(Intent.ACTION_VIEW, Uri
+						.parse(post.url));
 				context.startActivity(browser);
 			}
 		});
-		
+
 		return convertView;
 	}
 
