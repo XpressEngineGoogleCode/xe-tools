@@ -61,6 +61,7 @@ public class XEMobileMenuItemEditController extends XEFragment  implements OnCli
 	//menu parent srl
 	private String parentSRL;
 	private String menuItemSRL;
+	private String menu_srl;
 	
 	private XEMenuItemsDetails details;
 	
@@ -111,6 +112,7 @@ public class XEMobileMenuItemEditController extends XEFragment  implements OnCli
 		isNewWindow = (CheckBox) view.findViewById(R.id.XEMOBILE_NEW_WINDOW);
 		
 		Bundle args = getArguments();
+		menu_srl = args.getString("menu_srl");
 		parentSRL = args.getString("menu_parent_srl");
 		menuItemSRL = args.getString("menu_item_srl");
 		
@@ -292,7 +294,8 @@ public class XEMobileMenuItemEditController extends XEFragment  implements OnCli
 			params.put("ruleset", "insertMenuItem");
 			params.put("module","mobile_communication");
 			params.put("act","procmobile_communicationMenuItem");
-			params.put("menu_srl", parentSRL);
+//			params.put("menu_srl", parentSRL);
+			params.put("menu_srl", menu_srl);
 			params.put("menu_item_srl", menuItemSRL);
 			params.put("menu_name_key",linkTitle.getText().toString());
 			params.put("menu_name",linkTitle.getText().toString());
