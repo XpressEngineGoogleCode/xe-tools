@@ -69,7 +69,7 @@ public class XEMobilePageController extends XEFragment implements OnClickListene
 			super.onResume();
 
 			//send request to get pages
-//			startProgress("Loading...");
+			startProgress("Loading...");
 			GetPagesAsyncTask asyncRequest = new GetPagesAsyncTask();
 			asyncRequest.execute();
 
@@ -85,12 +85,20 @@ public class XEMobilePageController extends XEFragment implements OnClickListene
 			Log.i("xemobile","List item click");
 			if(page.page_type.equals("ARTICLE"))
 			{
-			Intent intent = new Intent(this.activity,XEMobilePageTextEditor.class);
-			
-			intent.putExtra("mid", page.mid);
-			intent.putExtra("document_srl", page.document_srl); 
-			
-			startActivity(intent);
+//			Intent intent = new Intent(this.activity,XEMobilePageTextEditor.class);
+//			
+//			intent.putExtra("mid", page.mid);
+//			intent.putExtra("document_srl", page.document_srl); 
+//			
+//			startActivity(intent);
+				XEMobilePageTextEditor pageEditor = new XEMobilePageTextEditor();
+				Bundle args = new Bundle();
+				args.putString("mid", page.mid);
+				args.putString("document_srl",page.document_srl);
+				pageEditor.setArguments(args);
+				XEMobileMainActivityController mainActivity = (XEMobileMainActivityController) this.activity;
+				mainActivity.addMoreScreen(pageEditor);
+				
 			}
 			else if( page.page_type.equals("WIDGET") )
 				{
@@ -238,7 +246,7 @@ public class XEMobilePageController extends XEFragment implements OnClickListene
 				
 //				isLoggedIn(xmlData, XEMobilePageController.this);
 				
-//				dismissProgress();
+				dismissProgress();
 				if( list != null && list.pages != null )
 				{
 				adapter.setArrayWithPages(list.pages);

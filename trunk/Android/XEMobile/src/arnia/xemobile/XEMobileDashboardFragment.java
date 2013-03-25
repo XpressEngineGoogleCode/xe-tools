@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.StaticLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CursorAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import arnia.xemobile.classes.XEHost;
@@ -38,6 +40,7 @@ public class XEMobileDashboardFragment extends XEFragment implements
 	private SiteAdapter siteAdapter;
 	private Cursor selectingSite = null;
 	private View view;
+	private XEMobileStatisticsController statisticController;
 
 	private TextView newPost;
 	private TextView managePosts;
@@ -62,6 +65,16 @@ public class XEMobileDashboardFragment extends XEFragment implements
 
 		this.view = inflater.inflate(R.layout.xemobiledashboardlayout,
 				container, false);
+		
+		
+//		LinearLayout layoutHolder = (LinearLayout) view.findViewById(R.id.XEMOBILE_DASHBOARD_FRAGMENT_HOLDER);
+		
+		statisticController = new XEMobileStatisticsController();
+		
+		addNestedFragment(R.id.XEMOBILE_DASHBOARD_FRAGMENT_HOLDER, statisticController , "StatisticController");
+		
+		
+		
 		// Change action bar according to current fragment
 		this.loadActionMenuBar(R.layout.xemobileactionbarlayout);
 
@@ -144,14 +157,14 @@ public class XEMobileDashboardFragment extends XEFragment implements
 
 	}
 
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		FragmentManager fragmentManager = activity.getSupportFragmentManager();
-		Fragment fragment = fragmentManager
-				.findFragmentById(R.id.XEMOBILE_WEBSITE_STATISTIC);
-		fragmentManager.beginTransaction().remove(fragment).commit();
-	};
+//	@Override
+//	public void onDestroyView() {
+//		super.onDestroyView();
+//		FragmentManager fragmentManager = activity.getSupportFragmentManager();
+//		Fragment fragment = fragmentManager
+//				.findFragmentById(R.id.XEMOBILE_WEBSITE_STATISTIC);
+//		fragmentManager.beginTransaction().remove(fragment).commit();
+//	};
 
 	@Override
 	public void onResume() {
@@ -167,10 +180,12 @@ public class XEMobileDashboardFragment extends XEFragment implements
 
 	private void refreshContent() {
 		// refresh data in statistic fragment
-		FragmentManager fm = this.activity.getSupportFragmentManager();
-		XEMobileStatisticsController sc = (XEMobileStatisticsController) fm
-				.findFragmentById(R.id.XEMOBILE_WEBSITE_STATISTIC);
-		sc.refreshStatistic();
+//		FragmentManager fm = this.activity.getSupportFragmentManager();
+//		XEMobileStatisticsController sc = (XEMobileStatisticsController) fm
+//				.findFragmentById(R.id.XEMOBILE_WEBSITE_STATISTIC);
+//		sc.refreshStatistic();
+		
+		statisticController.refreshStatistic();
 		// refresh data in comment
 
 	}
