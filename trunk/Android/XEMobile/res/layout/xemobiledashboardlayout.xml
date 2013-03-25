@@ -4,16 +4,23 @@
     android:layout_height="fill_parent"
     android:columnCount="2"
     android:scrollbars="vertical"
-    android:background="#ffffff"
-    >
-    <fragment
+    android:background="#ffffff" >
+    <!-- <fragment
         android:name="arnia.xemobile.XEMobileStatisticsController"
         android:id="@+id/XEMOBILE_WEBSITE_STATISTIC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
    		android:layout_columnSpan="2"
         />
-   
+    -->
+    
+    <LinearLayout 
+        android:id="@+id/XEMOBILE_DASHBOARD_FRAGMENT_HOLDER"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+   		android:layout_columnSpan="2"
+        />
+    
 	<TextView 
 		android:id="@+id/XEMOBILE_DASHBOARD_NEW_POST"
 		android:layout_width="wrap_content"
