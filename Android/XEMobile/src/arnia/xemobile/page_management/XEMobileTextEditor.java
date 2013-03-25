@@ -3,6 +3,7 @@ package arnia.xemobile.page_management;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Selection;
@@ -341,5 +342,5 @@ public class XEMobileTextEditor extends XEFragment implements OnClickListener,
 	public void requestFocus(){
 		txtContent.requestFocus();
 	}
-	
+		
 }

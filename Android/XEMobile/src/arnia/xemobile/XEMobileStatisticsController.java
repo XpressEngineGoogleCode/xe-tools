@@ -43,7 +43,7 @@ public class XEMobileStatisticsController extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.xemobilestatisticslayout, container,false);
+		View view = inflater.inflate(R.layout.xemobilestatisticslayout,container,false);
 		listView = (ListView) view.findViewById(R.id.XEMOBILE_STATISTICS_LISTVIEW);
 		return view;
 	}
@@ -94,6 +94,7 @@ public class XEMobileStatisticsController extends Fragment
 			//when the response came and was parsed we set the adapter
 			adapter = new XEMobileStatisticsAdapter(array.stats, (Context) context);
 			listView.setAdapter(adapter);
+			adapter.notifyDataSetChanged();
 			}
 
 			super.onPostExecute(context);

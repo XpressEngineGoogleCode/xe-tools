@@ -146,7 +146,7 @@ public class XEMobileTextylePostsController extends XEFragment implements
 			this.postType = postType;
 			footerView.setVisibility(View.VISIBLE);
 		}
-		
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -219,6 +219,8 @@ public class XEMobileTextylePostsController extends XEFragment implements
 				postsArray[postType].pagination = result.pagination;
 				adapter.setArrayWithPosts(postsArray[postType].posts);
 				adapter.notifyDataSetChanged();
+				if (postsArray[postType].pagination.cur_page == postsArray[postType].pagination.total_page)
+					footerView.setVisibility(View.GONE);
 			}
 		}
 	}
@@ -272,8 +274,6 @@ public class XEMobileTextylePostsController extends XEFragment implements
 					if (postsArray[postType].pagination.cur_page < postsArray[postType].pagination.total_page) {
 						GetPostsAsycTask task = new GetPostsAsycTask(postType);
 						task.execute(postsArray[postType].pagination.cur_page + 1);
-					} else {
-						footerView.setVisibility(View.GONE);
 					}
 				}
 			}
@@ -322,8 +322,8 @@ public class XEMobileTextylePostsController extends XEFragment implements
 				task.execute();
 			}
 		} else {
-			Log.i("leapkh","Use existing data...");
-			Log.i("leapkh","Data count: " + postsArray[postType].posts.size());
+			Log.i("leapkh", "Use existing data...");
+			Log.i("leapkh", "Data count: " + postsArray[postType].posts.size());
 			adapter.setArrayWithPosts(postsArray[postType].posts);
 			adapter.notifyDataSetChanged();
 		}

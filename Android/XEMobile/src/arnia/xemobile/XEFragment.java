@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.text.style.SuperscriptSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,11 +35,25 @@ public class XEFragment extends Fragment {
 		this.activity = getActivity();		
 		super.onCreate(savedInstanceState);
 	}
+	
 	public void loadActionMenuBar(int resource){
 		if(this.activity!=null){
 			ActionBar actionBar = this.activity.getActionBar();
 			actionBar.setCustomView(resource);	
 			actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		}
+	}
+	
+//	@Override
+//	public void onDestroyView() {
+//		FragmentManager fragmentManager = this.activity.getSupportFragmentManager();
+//		fragmentManager.beginTransaction().add().commit();
+//		fragmentManager.executePendingTransactions();
+//		super.onDestroyView();
+//	}
+	
+	public void addNestedFragment(int layoutID,Fragment fragment, String fragmentName){
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().add(layoutID, fragment, fragmentName).commit();
 	}
 }
