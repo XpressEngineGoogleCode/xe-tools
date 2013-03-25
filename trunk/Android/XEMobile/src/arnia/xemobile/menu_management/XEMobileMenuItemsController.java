@@ -156,25 +156,29 @@ public class XEMobileMenuItemsController extends XEFragment
 //			isLoggedIn(xmlData, XEMobileMenuItemsController.this);
 			
 			dismissProgress();
-			
+			int i;
 			 if( arrayWithMenus != null && arrayWithMenus.menus != null)
 			   {
 				 //Get menu array of menu by parentSRL
-				   for(int i = 0 ; i<arrayWithMenus.menus.size() ; i++)
+				   for(i = 0 ; i<arrayWithMenus.menus.size() ; i++)
 				   {
 					   XEMenu menu = arrayWithMenus.menus.get(i);
 					   if( menu.menuSrl.compareTo(menuSRL)==0 && menuItemParentSRL.compareTo("0")==0 )
 					   {
 						   arrayWithMenuItems =  menu.menuItems;
+						   adapter.setWholeMenuItemsOfAMenu(arrayWithMenuItems);
 						   break;
 					   }
 					   if(menu.menuItems!=null){
 						   arrayWithMenuItems = getSubMenuOfMenuParent(menu.menuItems,menuItemParentSRL);
 						   if(arrayWithMenuItems!=null){
+							   adapter.setWholeMenuItemsOfAMenu(menu.menuItems);
 							   break;
+							   
 						   }
 					   }
 				   }
+				   
 				   adapter.setArrayWithMenuItems(arrayWithMenuItems);
 				   adapter.notifyDataSetChanged();
 			   }

@@ -67,30 +67,11 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 		}
 		@Override
 		public void onResume() {
+			super.onResume();
+			startProgress("Loading...");
 			GetMenusAsyncTask getAsyncRequest = new GetMenusAsyncTask();
 			getAsyncRequest.execute();
-		super.onResume();
 		}
-//		@Override
-//		protected void onCreate(Bundle savedInstanceState) 
-//		{
-//			super.onCreate(savedInstanceState);
-//			setContentView(R.layout.xemobilemenulayout);
-//			
-//			ListView list = (ListView)findViewById(R.id.XEMOBILE_MENU_LISTVIEW);
-//			addMenuButton = (Button) findViewById(R.id.XEMOBILE_MENU_ADDBUTTON);
-//			addMenuButton.setOnClickListener(this);
-//						
-//			//make async request for menus
-//			startProgress("Loading...");
-//			GetMenusAsyncTask getAsyncRequest = new GetMenusAsyncTask();
-//			getAsyncRequest.execute();
-//			
-//			adapter = new XEMobileMenuAdapter(this);
-//			
-//			list.setAdapter(adapter);
-//			list.setOnItemClickListener(this);
-//		}
 		
 		//called when an item from list is pressed
 		@Override
@@ -98,7 +79,6 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 				long arg3) 
 		{
 			XEMenu menu = adapter.getArrayWithMenus().get(position);
-//			Intent intent = new Intent(this.activity, XEMobileMenuItemsController.class);
 			XEMobileMainActivityController mainActivity = (XEMobileMainActivityController) activity;
 			XEMobileMenuItemsController menuItemController = new XEMobileMenuItemsController();
 			Bundle argument = new Bundle();
@@ -106,11 +86,6 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 			argument.putString("menu_item_parent_srl", "0");
 			menuItemController.setArguments(argument);
 			mainActivity.addMoreScreen(menuItemController);
-			
-//			intent.putExtra("menu_item_parent_srl", menu.menuSrl);
-
-//			startActivity(intent);
-			
 		}
 
 		//called when Add menu button or Delete button are pressed
@@ -132,11 +107,12 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 				
 				@Override
 				public void onClick(View v) 
-				{
+				{	
+					dialog.cancel();
+					startProgress("Saving menu...");
 					AddMenuAsyncTask addMenuAT = new AddMenuAsyncTask();
 					addMenuAT.execute(textView.getText().toString());
 					
-					dialog.cancel();
 				}
 				});
 				dialog.show();
@@ -163,14 +139,10 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 			{
 				String menuSRL = param[0];
 				String menuName = param[1];
-				
 				HashMap<String,String> params = new HashMap<String, String>();
 				params.put("menu_srl",menuSRL);
 				params.put("title",menuName);
-				
 				XEHost.getINSTANCE().postMultipart(params, "/index.php?module=mobile_communication&act=procmobile_communicationMenuDelete");
-
-				
 				return null;
 			}
 			
@@ -180,7 +152,6 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 				super.onPostExecute(result);
 				GetMenusAsyncTask task = new GetMenusAsyncTask();
 				task.execute();
-				
 				adapter.setArrayWithMenus(arrayWithMenus.menus);
 				adapter.notifyDataSetChanged();
 			}
@@ -194,14 +165,11 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 			protected String doInBackground(String... param) 
 			{
 				String name = param[0];
-				
 				HashMap<String, String> params = new HashMap<String, String>();
 				params.put("title", name);
 				params.put("module", "mobile_communication");
 				params.put("act", "procmobile_communicationMenuInsert");
-				
 				XEHost.getINSTANCE().postMultipart(params, "/");
-				
 				return null;
 			}
 			
@@ -244,7 +212,7 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 			protected void onPostExecute(Object result) 
 			{
 				super.onPostExecute(result);
-//				dismissProgress();
+				dismissProgress();
 				
 //				isLoggedIn(xmlData, XEMobileMenuController.this);
 				
