@@ -43,6 +43,10 @@
     <string name="save_and_publish">SAVE &amp; PUBLISH</string>
     <string name="save">SAVE</string>
 
+    <!-- Edit post layout -->
+    <string name="delete_post">DELETE</string>
+    
+    
     <!-- Array -->
     <string-array name="page_types">
         <item>Widget page</item>
@@ -74,5 +78,8 @@
     <!-- Global -->
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    
+    <!-- Actionbar -->
+    <string name="actionbar_back">&lt;</string>
 
 </resources>

@@ -4,6 +4,11 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal"
     >
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/actionbar_back"
+        />
     <ImageView
         android:id="@+id/XEMOBILE_MENU_LOGO"
         android:layout_width="wrap_content"

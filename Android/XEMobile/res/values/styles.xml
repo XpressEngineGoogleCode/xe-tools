@@ -21,7 +21,7 @@
     <color name="dashboard_item_color">#000000</color>
 
     <dimen name="add_site_text_margin">10dp</dimen>
-    <dimen name="site_selection_item_margin">5dp</dimen>
+    <dimen name="site_selection_item_margin">8dp</dimen>
 
     <!-- Text editor -->
     <style name="btn_editor_toggle">
