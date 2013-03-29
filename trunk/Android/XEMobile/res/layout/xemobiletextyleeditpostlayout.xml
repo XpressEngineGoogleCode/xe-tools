@@ -29,12 +29,20 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
+		
+        <Button
+            android:id="@+id/XEMOBILE_ADD_POST_DELETE_BUTTON"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_post" />
+        
         <Button
             android:id="@+id/XEMOBILE_ADD_POST_SAVE_AND_PUBLISH_BUTTON"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/save_and_publish" />
+            android:text="@string/save_and_publish"
+            android:layout_centerHorizontal="true"
+            />
 
         <Button
             android:id="@+id/XEMOBILE_ADD_POST_SAVE_BUTTON"
