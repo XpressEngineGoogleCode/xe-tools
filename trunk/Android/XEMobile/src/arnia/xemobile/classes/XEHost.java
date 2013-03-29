@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.Header;
 import org.apache.http.HttpClientConnection;
@@ -51,6 +53,17 @@ public class XEHost
 	
 	protected XEHost()
 	{
+	}
+	
+	public String getDomainName(){
+		if(URL==null) return null;
+		Pattern pattern = Pattern.compile("\\w+://[\\w+.]+(:[0-9]+)*");
+		Matcher matcher = pattern.matcher(URL);
+		if(matcher.find()){
+			return matcher.group();
+		}
+		return "";
+		
 	}
 	
 	public DefaultHttpClient getThreadSafeClient() 

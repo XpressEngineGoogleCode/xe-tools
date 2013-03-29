@@ -1,6 +1,9 @@
 package arnia.xemobile.data;
 
+import java.util.ArrayList;
+
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -45,6 +48,18 @@ public class XEDatabaseHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public ArrayList<XEMobileSite> getAllSites(){
+		ArrayList<XEMobileSite> sites = new ArrayList<XEMobileSite>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT * FROM " + XE_SITES + " ORDER BY _id DESC", null);
+		while (cursor.moveToNext()){
+			sites.add(new XEMobileSite(cursor.getLong(0), cursor.getString(1),cursor.getString(2), cursor.getString(3)));
+		}
+		cursor.close();
+		db.close();
+		return sites;
 	}
 
 }

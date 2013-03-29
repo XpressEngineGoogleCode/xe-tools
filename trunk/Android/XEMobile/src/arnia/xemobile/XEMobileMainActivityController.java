@@ -75,7 +75,7 @@ import arnia.xemobile_textyle.XEMobileTextyleSelectTextyleController;
 //Activity for the Main Menu of XEMobile application
 public class XEMobileMainActivityController extends FragmentActivity implements OnPageChangeListener
 {	
-	public ViewPager pager;
+	private ViewPager pager;
 	
 	private XEMobilePageAdapter pageAdapter; 
 	
@@ -101,15 +101,15 @@ public class XEMobileMainActivityController extends FragmentActivity implements 
 		return true;
 	}
 	
+	public Fragment getCurrentDisplayedFragment(){
+		return this.pageAdapter.getItem(this.pager.getCurrentItem());
+	}
+	
 	public void addMoreScreen(Fragment screen){
 		pageAdapter.addFragment(screen);
 		pager.setCurrentItem(pageAdapter.getCount()-1, true);
 	}
-//	private void removeFragment (Fragment fragment){
-//		FragmentManager fm = getSupportFragmentManager();
-//		fm.beginTransaction().remove(fragment).commit();
-//	}
-
+	
 	private class XEMobilePageAdapter extends FragmentStatePagerAdapter{
 		
 		ArrayList<Fragment> screenStack;

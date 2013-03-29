@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 public class XEFragment extends Fragment {
 	
 	protected FragmentActivity activity=null;
+	protected ActionBar actionBar=null;
 	
 	protected ProgressDialog progress;
 	
@@ -32,25 +33,17 @@ public class XEFragment extends Fragment {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		this.activity = getActivity();		
+		this.activity = getActivity();
+		this.actionBar = this.activity.getActionBar();
 		super.onCreate(savedInstanceState);
 	}
 	
 	public void loadActionMenuBar(int resource){
-		if(this.activity!=null){
-			ActionBar actionBar = this.activity.getActionBar();
+		if(this.actionBar!=null){
 			actionBar.setCustomView(resource);	
-			actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+			actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);			
 		}
 	}
-	
-//	@Override
-//	public void onDestroyView() {
-//		FragmentManager fragmentManager = this.activity.getSupportFragmentManager();
-//		fragmentManager.beginTransaction().add().commit();
-//		fragmentManager.executePendingTransactions();
-//		super.onDestroyView();
-//	}
 	
 	public void addNestedFragment(int layoutID,Fragment fragment, String fragmentName){
 		FragmentManager fragmentManager = getFragmentManager();

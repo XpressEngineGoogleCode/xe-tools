@@ -292,7 +292,14 @@ public class XEMobileLoginController extends XEActivity implements OnClickListen
 						values.put(dbHelper.XE_SITES_PASSWORD, passwordEditText.getText().toString());
 						values.put(dbHelper.XE_SITES_USERNAME, usernameEditText.getText().toString());						
 						long affectedRows = db.insert(dbHelper.XE_SITES, null, values);
+						
+						values = new ContentValues();
+						values.put(dbHelper.XE_SITES_SITEURL, "http://192.168.10.175/xe-core2/trunk");
+						values.put(dbHelper.XE_SITES_PASSWORD, "12345");
+						values.put(dbHelper.XE_SITES_USERNAME, "leapkh");
+						
 						affectedRows = db.insert(dbHelper.XE_SITES, null, values);
+						
 						db.close();
 						Log.i("xemobile","add logged site to database "+affectedRows);
 	            	}	
