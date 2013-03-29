@@ -17,6 +17,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import arnia.xemobile.R;
+import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XETextylePost;
 
 public class XEMobileTextylePostAdapter extends BaseAdapter {
@@ -45,8 +46,8 @@ public class XEMobileTextylePostAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int arg0) {
-		return null;
+	public Object getItem(int index) {
+		return arrayWithPosts.get(index);
 	}
 
 	@Override
@@ -96,8 +97,7 @@ public class XEMobileTextylePostAdapter extends BaseAdapter {
 		btnViewPost.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent browser = new Intent(Intent.ACTION_VIEW, Uri
-						.parse(post.url));
+				Intent browser = new Intent(Intent.ACTION_VIEW, Uri.parse(XEHost.getINSTANCE().getDomainName()+post.url));
 				context.startActivity(browser);
 			}
 		});
