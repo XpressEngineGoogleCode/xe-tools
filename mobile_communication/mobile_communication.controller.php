@@ -900,6 +900,12 @@
 			exit;
 		}
 		
+                function getCommentCountOfATextyle($module_srl){
+                    $args->module_srl = $module_srl;
+                    $output = executeQuery("mobile_communication.getCommentCountOfTextyle",$args);
+                    return $output->data->count;
+                }
+                
 		function procmobile_communicationTextyleList() 
 		{
 		if(!Context::get('is_logged')) $this->logout_message();
@@ -918,6 +924,9 @@
             $args->list_order = 'regdate';
             $output = $oTextyleModel->getTextyleList($args);
 
+            
+            $oDocument = getModel("document");
+            
             if(!$output->toBool()) return $output;
 
 		header('Content-Type: text/xml');
@@ -941,6 +950,7 @@
 			echo "<skin>" . $variables['skin'] . "</skin>";
 			echo "<browser_title>" . $variables['browser_title'] . "</browser_title>";
 			echo "<textyle_title>" . $variables['textyle_title'] . "</textyle_title>";
+                        echo "<comment_count>".$this->getCommentCountOfATextyle($textyle->module_srl)."</comment_count>";
  			echo "</textyle>";
  			}
 			echo "</textyle-list>";
@@ -1013,7 +1023,11 @@
             echo "</response>";
             exit;
          }
-
+//        function procmobile_communicationCommentCount(){
+//            
+//            
+//            getCommentCount($document_srl)
+//        }
 	function procmobile_communicationContentForPost()
 	{
 	if(!Context::get('is_logged')) $this->logout_message();
@@ -1040,11 +1054,19 @@
 		{
 			if ( $value->document_srl == $document_srl )
 			{
-				$variables = $value->variables;
-				echo $variables['content'];
+                                $alias = $oDocumentModel->getAlias($document_srl);
+                                $variables = $value->variables;
+                                header('Content-Type: text/xml');
+                                echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' . "\n";
+                                echo "<document>";
+                                echo "<alias>".$alias."</alias>";
+				echo "<content>".  base64_encode($variables['content'])."</content>";
+                                echo "</document>";
+                                exit;
+            
 			}
 		}
-	    exit;
+	    
 	}
 		function procmobile_communicationShowComments()
 		{
