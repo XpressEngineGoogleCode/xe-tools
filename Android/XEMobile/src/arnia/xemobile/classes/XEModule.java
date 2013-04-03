@@ -11,4 +11,12 @@ public class XEModule
 	
 	@Element
 	public String module_srl;
+	
+	@Element
+	public String page_type;
+	
+	@Override
+	public String toString() {
+		return module;
+	}
 }

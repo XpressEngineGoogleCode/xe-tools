@@ -54,6 +54,8 @@ public class XEMobileDashboardFragment extends XEFragment implements
 	private TextView newPage;
 	private TextView managePages;
 	private TextView manageMenus;
+	
+	private TextView commentCount;
 
 	private Lock lock;
 	
@@ -106,6 +108,8 @@ public class XEMobileDashboardFragment extends XEFragment implements
 
 		this.siteAdapter = new SiteAdapter(sitesAndVirtualSites);		
 		this.selectSiteSpinner.setAdapter(siteAdapter);
+		
+		this.commentCount = (TextView) view.findViewById(R.id.XEMOBILE_DASHBOARD_COMMENT_COUNT);
 		
 		// Handle login when user change site
 		this.selectSiteSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -203,17 +207,18 @@ public class XEMobileDashboardFragment extends XEFragment implements
 						if( array != null && array.textyles != null)
 						{	
 							sitesAndVirtualSites.addAll(array.textyles);
+							
 //							for(int i = 0; i<array.textyles.size();i++)
 //							{
-//								//adapter.add(array.textyles.get(i));
-//								sitesAndVirtualSites.add(site.siteUrl + "/" + array.textyles.get(i).browser_title);
+//								commentCounts += Integer.parseInt(array.textyles.get(i).comment_count);
+//								sitesAndVirtualSites.add(array.textyles.get(i));
+////								sitesAndVirtualSites.add(site.siteUrl + "/" + array.textyles.get(i).browser_title);
 //							}
 //							adapter.notifyDataSetChanged();
 							siteAdapter.notifyDataSetChanged();
 						}else{
 							Toast.makeText(activity, R.string.no_textyle, 1000).show();
-						}
-							
+						}	
 					}
 				};
 				loginTask.execute(sites.get(i));
@@ -223,12 +228,35 @@ public class XEMobileDashboardFragment extends XEFragment implements
 	}
 
 	private void refreshContent() {	
-		
 		statisticController.refreshStatistic();
-		// refresh data in comment
-
 	}
+	/*
+	private class GetCommentsCountAsynTask extends AsyncTask<Void, Void, String>{
 
+		@Override
+		protected String doInBackground(Void... params) {			
+			String count ="";
+			try{
+				count = XEHost
+						.getINSTANCE()
+						.getRequest("/index.php?module=mobile_communication&act=procmobile_communicationCommentCount");
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			return count;
+		}
+		
+		@Override
+		protected void onPostExecute(String count) {
+			
+			commentCount.setText(count);
+			
+			super.onPostExecute(count);
+		}
+		
+	}
+	*/
+	
 	// AsyncTask for LogIn
 	private class LogInInBackground extends AsyncTask<XEMobileSite, Void, XEMobileSite> {
 
@@ -255,7 +283,7 @@ public class XEMobileDashboardFragment extends XEFragment implements
 				xmlData = XEHost
 						.getINSTANCE()
 						.getRequest(
-								"/index.php?module=mobile_communication&act=procmobile_communicationLogin&user_id="
+								"/index.php?XDEBUG_SESSION_START=netbeans-xdebug&module=mobile_communication&act=procmobile_communicationLogin&user_id="
 										+ userid + "&password=" + password);
 				
 				String response = XEHost.getINSTANCE().getRequest("/index.php?module=mobile_communication&act=procmobile_communicationTextyleList");
@@ -286,6 +314,12 @@ public class XEMobileDashboardFragment extends XEFragment implements
 		protected void onPostExecute(XEMobileSite result) {
 			super.onPostExecute(result);
 			Log.i("XEMObile", xmlData);
+			int count =0;
+			for(int i=0;i<array.textyles.size();i++){
+				count +=  Integer.parseInt(array.textyles.get(i).comment_count);
+			}		
+			commentCount.setText("(" + String.valueOf(count)+ ")");
+			
 			refreshContent();
 			dismissProgress();
 		}		
@@ -340,84 +374,5 @@ public class XEMobileDashboardFragment extends XEFragment implements
 		
 		
 	}
-	
-	
-//	private class SiteAdapter extends CursorAdapter {
-//
-//		public SiteAdapter(Context context, Cursor c) {
-//			super(context, c);
-//		}
-//
-//		@Override
-//		public void bindView(View view, Context context, Cursor cursor) {
-//			TextView textView = (TextView) view
-//					.findViewById(R.id.SITE_SPINNER_ITEM);
-//			textView.setText(cursor.getString(1));
-//		}
-//
-//		@Override
-//		public View newView(Context context, Cursor cursor, ViewGroup parent) {
-//			LayoutInflater layoutInflater = (LayoutInflater) context
-//					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//			View view = layoutInflater.inflate(
-//					R.layout.xemobilesitespinneritemlayout, null);
-//			return view;
-//		}
-//	}
-
-	// Async Task for sending the request 
-//		private class GetTextylesAsyncTask extends AsyncTask<XEMobileSite, Object, XEMobileSite>
-//		{
-//			String response;
-//			XEArrayList array;
-//			@Override
-//			protected XEMobileSite doInBackground(XEMobileSite... params) 
-//			{
-//				XEMobileSite site = params[0];
-//				//sending the request
-//				response = XEHost.getINSTANCE().getRequest("/index.php?module=mobile_communication&act=procmobile_communicationTextyleList");
-//				
-//				//parsing the response
-//				Serializer serializer = new Persister();
-//				Reader reader = new StringReader(response);
-//				try
-//				{
-//					array = serializer.read(XEArrayList.class, reader,false);
-//				}catch (Exception e) 
-//				{
-//					e.printStackTrace();
-//				}
-//				
-//				return site;
-//			}
-//			
-//			//called when the response came
-//			@Override
-//			protected void onPostExecute(XEMobileSite site) 
-//			{
-//				super.onPostExecute(site);
-//				
-//				//check if the user is logged in
-////				isLoggedIn(response, XEMobileTextyleSelectTextyleController.this);
-//				
-//				dismissProgress();
-//				sitesAndVirtualSites.add(site);
-//				if( array != null && array.textyles != null)
-//				{
-//					
-//					sitesAndVirtualSites.addAll(array.textyles);
-////					for(int i = 0; i<array.textyles.size();i++)
-////					{
-////						//adapter.add(array.textyles.get(i));
-////						sitesAndVirtualSites.add(site.siteUrl + "/" + array.textyles.get(i).browser_title);
-////					}
-////					adapter.notifyDataSetChanged();
-//					siteAdapter.notifyDataSetChanged();
-//				}else{
-//					Toast.makeText(activity, R.string.no_textyle, 1000).show();
-//				}
-//				lock.unlock();
-//			}
-//		}
 	
 }

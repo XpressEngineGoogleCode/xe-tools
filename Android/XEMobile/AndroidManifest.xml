@@ -59,7 +59,7 @@
         <activity 
             android:name=".XEMobileMainActivityController"            
             android:screenOrientation="fullSensor"
-            android:theme="@android:style/Theme.DeviceDefault.Light"/>"        
+            android:theme="@android:style/Theme.Holo.Light"/>"        
         <activity 
             android:name=".XEMobileMainPageController"
             android:label="Dashboard"
