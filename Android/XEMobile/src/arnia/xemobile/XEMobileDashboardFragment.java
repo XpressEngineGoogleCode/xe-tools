@@ -3,26 +3,17 @@ package arnia.xemobile;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
-import android.app.ActionBar;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.ConditionVariable;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.text.StaticLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +21,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.CursorAdapter;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import arnia.xemobile.classes.XEArrayList;
@@ -46,7 +33,6 @@ import arnia.xemobile.data.XEMobileSite;
 import arnia.xemobile.menu_management.XEMobileMenuController;
 import arnia.xemobile.page_management.XEMobilePageAddController;
 import arnia.xemobile.page_management.XEMobilePageController;
-import arnia.xemobile_textyle.XEMobileTextyleSelectTextyleController;
 import arnia.xemobile_textyle_posts.XEMobileTextyleAddPostController;
 import arnia.xemobile_textyle_posts.XEMobileTextylePostsController;
 
@@ -69,18 +55,8 @@ public class XEMobileDashboardFragment extends XEFragment implements
 	private TextView managePages;
 	private TextView manageMenus;
 
-	protected ProgressDialog progress;
-	
 	private Lock lock;
 	
-	public void startProgress(String message) {
-		progress = ProgressDialog.show(this.activity, null, message, true,false);
-	}
-
-	public void dismissProgress() {
-		progress.dismiss();
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		sitesAndVirtualSites = new ArrayList<Object>();
