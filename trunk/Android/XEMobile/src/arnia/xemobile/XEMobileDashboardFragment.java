@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,12 +58,12 @@ public class XEMobileDashboardFragment extends XEFragment implements
 	
 	private TextView commentCount;
 
-	private Lock lock;
+	private Button backButton;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		sitesAndVirtualSites = new ArrayList<Object>();
-		lock = new ReentrantLock();
 		super.onCreate(savedInstanceState);
 	}
 	@Override
@@ -106,6 +107,17 @@ public class XEMobileDashboardFragment extends XEFragment implements
 		this.selectSiteSpinner = (Spinner) actionBar.getCustomView()
 				.findViewById(R.id.XEMOBILE_MENU_SELECT_SITE);
 
+		
+		this.backButton = (Button) actionBar.getCustomView().findViewById(R.id.XEMOBILE_BACK_BUTTON);
+		this.backButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				((XEMobileMainActivityController)activity).backwardScreen();
+				
+			}
+		});
+		
 		this.siteAdapter = new SiteAdapter(sitesAndVirtualSites);		
 		this.selectSiteSpinner.setAdapter(siteAdapter);
 		
