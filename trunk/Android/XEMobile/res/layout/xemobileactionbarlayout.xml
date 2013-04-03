@@ -2,26 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="horizontal"
-    >
+    android:orientation="horizontal" >
+
     <Button
-        android:layout_width="wrap_content"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="25dp"
         android:layout_height="fill_parent"
-        android:text="@string/actionbar_back"
-        />
+        android:background="@drawable/btn_action_bar_back"
+        android:text="@string/actionbar_back" />
+
     <ImageView
         android:id="@+id/XEMOBILE_MENU_LOGO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher"
         android:clickable="true"
         android:contentDescription="Dashboard application logo"
-    	/>
-	<Spinner 
-	    android:id="@+id/XEMOBILE_MENU_SELECT_SITE"
-	    android:layout_width="wrap_content"
-	    android:layout_height="match_parent"	    
-	    />    
-    
-   
+        android:src="@drawable/ic_launcher" />
+
+    <Spinner
+        android:id="@+id/XEMOBILE_MENU_SELECT_SITE"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
 </LinearLayout>

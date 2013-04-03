@@ -1,117 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:columnCount="2"
-    android:scrollbars="vertical"
-    android:background="#ffffff" >
-    
-    <LinearLayout 
-        android:id="@+id/XEMOBILE_DASHBOARD_FRAGMENT_HOLDER"
-        android:layout_width="wrap_content"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <GridLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-   		android:layout_columnSpan="2"
-        />
-    
-	<TextView 
-		android:id="@+id/XEMOBILE_DASHBOARD_NEW_POST"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/dashboard_new_post"
-		android:clickable="true"
-		android:layout_margin="@dimen/dashboard_item_margin"   
-		android:gravity="left"
-		android:textColor="@color/dashboard_item_color"		
-		android:layout_column="0"
-	/>
-	
-	<TextView 
-		android:id="@+id/XEMOBILE_DASHBOARD_MANAGE_POSTS"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"		
-		android:text="@string/dashboard_manage_posts"
-		android:layout_margin="@dimen/dashboard_item_margin"
-		android:layout_column="1"   		
-		android:textColor="@color/dashboard_item_color"		
-	/>
-	
-	<TextView 
-		android:id="@+id/XEMOBILE_DASHBOARD_NEW_PAGE"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"		
-		android:text="@string/dashboard_new_page"   
-		android:layout_margin="@dimen/dashboard_item_margin"
-		android:textColor="@color/dashboard_item_color"
-		android:layout_column="0"
-	/>
-	
-	<TextView 
-		android:id="@+id/XEMOBILE_DASHBOARD_MANAGE_PAGES"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"		
-		android:text="@string/dashboard_manage_pages"  		
-		android:layout_margin="@dimen/dashboard_item_margin"
-		android:textColor="@color/dashboard_item_color"
-		android:layout_column="1"
-	/>
-	
-	<TextView 
-		android:id="@+id/XEMOBILE_DASHBOARD_COMMENTS"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/dashboard_comments"    
-		android:layout_margin="@dimen/dashboard_item_margin"
-		android:textColor="@color/dashboard_item_color"
-		android:layout_column="0"
-	/>
-	
-	<TextView 
-		android:id="@+id/XEMOBILE_DASHBOARD_COMMENT_COUNT"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"		
-		android:layout_margin="@dimen/dashboard_item_margin"
-		android:text="(5 new)"    
-		android:layout_column="1"
-		android:textColor="@color/dashboard_item_color"
-	/>
-	
-	<TextView 
-		android:id="@+id/XEMOBILE_DASHBOARD_USERS"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"		
-		android:text="@string/dashboard_users"  
-		android:layout_margin="@dimen/dashboard_item_margin"  
-		android:textColor="@color/dashboard_item_color"
-		android:layout_column="0"
-	/>
-	
-	<TextView 
-		android:id="@+id/XEMOBILE_DASHBOARD_MENU_MANAGER"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"		
-		android:text="@string/dashboard_menu_manager"   
-		android:layout_margin="@dimen/dashboard_item_margin" 
-		android:textColor="@color/dashboard_item_color"
-		android:layout_column="0"
-	/>
-	<TextView 
-		android:id="@+id/XEMOBILE_DASHBOARD_QUICK_SETTINGS"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"		
-		android:text="@string/dashboard_quick_settings" 
-		android:layout_margin="@dimen/dashboard_item_margin"   
-		android:textColor="@color/dashboard_item_color"
-		android:layout_column="0"
-	/>
-	<TextView 
-		android:id="@+id/XEMOBILE_DASHBOARD_MANAGE_WEBSITE"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"		
-		android:text="@string/dashboard_manage_website" 
-		android:layout_margin="@dimen/dashboard_item_margin"  
-		android:textColor="@color/dashboard_item_color" 
-		android:layout_column="0"
-	/>
-	
-	
-</GridLayout>
+        android:background="@android:color/white"
+        android:columnCount="2"
+        android:scrollbars="vertical" >
+
+        <LinearLayout
+            android:id="@+id/XEMOBILE_DASHBOARD_FRAGMENT_HOLDER"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2" />
+
+        <TextView
+            android:id="@+id/XEMOBILE_DASHBOARD_NEW_POST"
+            style="@style/dashboard_item"
+            android:layout_column="0"
+            android:text="@string/dashboard_new_post" />
+
+        <TextView
+            android:id="@+id/XEMOBILE_DASHBOARD_MANAGE_POSTS"
+            style="@style/dashboard_item"
+            android:layout_column="1"
+            android:text="@string/dashboard_manage_posts" />
+
+        <TextView
+            android:id="@+id/XEMOBILE_DASHBOARD_NEW_PAGE"
+            style="@style/dashboard_item"
+            android:layout_column="0"
+            android:text="@string/dashboard_new_page" />
+
+        <TextView
+            android:id="@+id/XEMOBILE_DASHBOARD_MANAGE_PAGES"
+            style="@style/dashboard_item"
+            android:layout_column="1"
+            android:text="@string/dashboard_manage_pages" />
+
+        <TextView
+            android:id="@+id/XEMOBILE_DASHBOARD_COMMENTS"
+            style="@style/dashboard_item"
+            android:layout_column="0"
+            android:text="@string/dashboard_comments" />
+
+        <TextView
+            android:id="@+id/XEMOBILE_DASHBOARD_COMMENT_COUNT"
+            style="@style/dashboard_item"
+            android:layout_column="1"
+            android:text="(5 new)" />
+
+        <TextView
+            android:id="@+id/XEMOBILE_DASHBOARD_USERS"
+            style="@style/dashboard_item"
+            android:layout_column="0"
+            android:text="@string/dashboard_users" />
+
+        <TextView
+            android:id="@+id/XEMOBILE_DASHBOARD_MENU_MANAGER"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_margin="@dimen/dashboard_item_margin"
+            android:text="@string/dashboard_menu_manager"
+            android:textColor="@color/dashboard_item_color" />
+
+        <TextView
+            android:id="@+id/XEMOBILE_DASHBOARD_QUICK_SETTINGS"
+            style="@style/dashboard_item"
+            android:layout_column="0"
+            android:text="@string/dashboard_quick_settings" />
+
+        <TextView
+            android:id="@+id/XEMOBILE_DASHBOARD_MANAGE_WEBSITE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_margin="@dimen/dashboard_item_margin"
+            android:text="@string/dashboard_manage_website"
+            android:textColor="@color/dashboard_item_color" />
+    </GridLayout>
+
+</ScrollView>
