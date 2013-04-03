@@ -57,8 +57,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar"/>"  
         <activity 
-            android:name=".XEMobileMainActivityController"            
-            android:screenOrientation="fullSensor"
+            android:name=".XEMobileMainActivityController"
             android:theme="@android:style/Theme.Holo.Light"/>"        
         <activity 
             android:name=".XEMobileMainPageController"
