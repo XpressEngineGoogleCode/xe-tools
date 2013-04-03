@@ -110,6 +110,9 @@ public class XEMobileMainActivityController extends FragmentActivity implements 
 		pager.setCurrentItem(pageAdapter.getCount()-1, true);
 	}
 	
+	public void backwardScreen(){
+		pager.setCurrentItem(pageAdapter.getCount()-2, true);
+	}
 	private class XEMobilePageAdapter extends FragmentStatePagerAdapter{
 		
 		ArrayList<Fragment> screenStack;
@@ -160,5 +163,13 @@ public class XEMobileMainActivityController extends FragmentActivity implements 
 			this.pageAdapter.removeLastFragment();
 		}
 		prevPageIndex = pageIndex;
+	}
+	@Override
+	public void onBackPressed() {
+		if(pager.getChildCount()>1){
+			backwardScreen();
+		}else{
+			super.onBackPressed();
+		}
 	}
 }
