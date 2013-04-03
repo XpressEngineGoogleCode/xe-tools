@@ -75,7 +75,7 @@ public class XEMobilePageAddController extends XEFragment implements OnClickList
 	public void onClick(View v) 
 	{
 		//start request to add the page
-		startProgress("Saving page...");
+		XEFragment.startProgress(getActivity(), "Saving page...");
 		AddPageAsyncTask task = new AddPageAsyncTask();
 		task.execute();
 	}

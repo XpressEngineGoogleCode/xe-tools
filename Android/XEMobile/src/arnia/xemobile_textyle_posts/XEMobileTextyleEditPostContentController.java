@@ -78,7 +78,7 @@ public class XEMobileTextyleEditPostContentController extends XEFragment impleme
 		
 		titleEditText.setText(title);
 		
-		startProgress("Loading...");
+		XEFragment.startProgress(getActivity(), "Logging...");
 		LoadContentAsyncTask task = new LoadContentAsyncTask();
 		task.execute();
 		
@@ -107,11 +107,11 @@ public class XEMobileTextyleEditPostContentController extends XEFragment impleme
 	public void onClick(View v) {
 		
 		if(v.getId()==R.id.XEMOBILE_ADD_POST_SAVE_BUTTON){
-			 startProgress("Saving...");
+			XEFragment.startProgress(getActivity(), "Saving...");
 			 SavePostAsyncTask task = new SavePostAsyncTask();
 			 task.execute();
 		}else if(v.getId()==R.id.XEMOBILE_ADD_POST_SAVE_AND_PUBLISH_BUTTON){
-			startProgress("Save and publish...");
+			XEFragment.startProgress(getActivity(), "Save and publish...");
 			PublishPostAsyncTask task = new PublishPostAsyncTask();
 			task.execute();
 		}else if(v.getId()==R.id.XEMOBILE_ADD_POST_DELETE_BUTTON){
@@ -122,7 +122,7 @@ public class XEMobileTextyleEditPostContentController extends XEFragment impleme
 			 	.setPositiveButton("Yes",	new DialogInterface.OnClickListener() {
 					 @Override
 					 public void onClick(DialogInterface dialog, int which) {
-						 startProgress("Deleting...");
+						 XEFragment.startProgress(getActivity(), "Deleting...");
 						 DeleteAsyncTask deleteTask = new DeleteAsyncTask();
 						 deleteTask.execute();
 					 }

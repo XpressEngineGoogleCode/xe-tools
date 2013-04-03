@@ -2,25 +2,33 @@ package arnia.xemobile;
 
 import android.app.ActionBar;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import arnia.xemobile.utility.XEMobileProgressDialog;
 
 public class XEFragment extends Fragment {
 
 	protected FragmentActivity activity = null;
 	protected ActionBar actionBar = null;
 
-	protected ProgressDialog progress;
+	private static int progressDialogCount;
+	private static ProgressDialog progress;
 
-	public void startProgress(String message) {
-		XEMobileProgressDialog.startProgress(this.activity, message);
+	public static void startProgress(Context context, String message) {
+		progressDialogCount++;
+		if (progressDialogCount == 1)
+			progress = ProgressDialog.show(context, null, message, true,
+					false);
 	}
 
-	public void dismissProgress() {
-		XEMobileProgressDialog.dismissProgress();
+	public static void dismissProgress() {
+		progressDialogCount--;
+		if (progressDialogCount <= 0) {
+			progress.dismiss();
+			progressDialogCount = 0;
+		}
 	}
 
 	@Override

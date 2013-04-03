@@ -111,7 +111,7 @@ public class XEMobileMenuItemsController extends XEFragment
 	{
 		super.onResume();
 		
-		startProgress("Loading...");
+		XEFragment.startProgress(getActivity(), "Logging...");
 		GetMenusAsyncTask getAsyncTask = new GetMenusAsyncTask();
 		getAsyncTask.execute();
 	}

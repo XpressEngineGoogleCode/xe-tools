@@ -45,7 +45,7 @@ public class XEMobilePageTextEditor extends XEFragment implements OnClickListene
 //		mid = getActivity().getIntent().getStringExtra("mid");
 //		document_srl = getActivity().getIntent().getStringExtra("document_srl");
 
-		startProgress("Page content is loading");
+		XEFragment.startProgress(getActivity(), "Page content is loading");
 		GetPageContentAndTitleAsyncTask task = new GetPageContentAndTitleAsyncTask();
 		task.execute();
 
