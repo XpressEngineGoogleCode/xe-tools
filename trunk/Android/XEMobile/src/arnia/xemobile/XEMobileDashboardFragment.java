@@ -114,7 +114,7 @@ public class XEMobileDashboardFragment extends XEFragment implements
 				Log.i("XEMobile", "Handler item selected");
 				Object selectedItem = parent.getItemAtPosition(position);
 				if(selectedItem.getClass()==XEMobileSite.class){
-					startProgress("Logging...");
+					XEFragment.startProgress(getActivity(), "Logging...");
 					selectingSite =(XEMobileSite)selectedItem;
 					new LogInInBackground().execute((XEMobileSite)selectedItem);
 				}else{
@@ -182,7 +182,7 @@ public class XEMobileDashboardFragment extends XEFragment implements
 	}
 	@Override
 	public void onResume() {
-		startProgress("Loading...");
+		XEFragment.startProgress(getActivity(), "Loading...");
 		XEDatabaseHelper dbHelper = XEDatabaseHelper.getDBHelper(this.activity);
 //		SQLiteDatabase db = dbHelper.getReadableDatabase();
 //		this.siteCursor = db.rawQuery("SELECT * FROM " + dbHelper.XE_SITES + " ORDER BY _id DESC",null);

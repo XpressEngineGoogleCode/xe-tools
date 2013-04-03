@@ -69,7 +69,7 @@ public class XEMobilePageController extends XEFragment implements OnClickListene
 			super.onResume();
 
 			//send request to get pages
-			startProgress("Loading...");
+			XEFragment.startProgress(getActivity(), "Logging...");
 			GetPagesAsyncTask asyncRequest = new GetPagesAsyncTask();
 			asyncRequest.execute();
 
@@ -173,7 +173,7 @@ public class XEMobilePageController extends XEFragment implements OnClickListene
 				//page where the user clicked
 				XEPage page = list.pages.get(index);
 				
-				startProgress("Loading...");
+				XEFragment.startProgress(getActivity(), "Logging...");
 				DeletePageAsyncTask task = new DeletePageAsyncTask();
 				task.execute(new String[]{page.module_srl});
 			}

@@ -83,7 +83,7 @@ public class XEMobileTextyleAddPostController extends XEFragment implements
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			startProgress("Saving...");
+			XEFragment.startProgress(getActivity(), "Saving...");
 		}
 
 		@Override
@@ -137,7 +137,7 @@ public class XEMobileTextyleAddPostController extends XEFragment implements
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			startProgress("Publishing...");
+			XEFragment.startProgress(getActivity(), "Publishing...");
 		}
 
 		@Override
@@ -281,7 +281,7 @@ public class XEMobileTextyleAddPostController extends XEFragment implements
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			startProgress("Loading...");
+			XEFragment.startProgress(getActivity(), "Logging...");
 		}
 
 		@Override

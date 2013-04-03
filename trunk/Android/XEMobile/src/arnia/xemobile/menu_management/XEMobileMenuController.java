@@ -68,7 +68,7 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 		@Override
 		public void onResume() {
 			super.onResume();
-			startProgress("Loading...");
+			XEFragment.startProgress(getActivity(), "Logging...");
 			GetMenusAsyncTask getAsyncRequest = new GetMenusAsyncTask();
 			getAsyncRequest.execute();
 		}
@@ -109,7 +109,7 @@ public class XEMobileMenuController extends XEFragment implements OnItemClickLis
 				public void onClick(View v) 
 				{	
 					dialog.cancel();
-					startProgress("Saving menu...");
+					XEFragment.startProgress(getActivity(), "Saving menu...");
 					AddMenuAsyncTask addMenuAT = new AddMenuAsyncTask();
 					addMenuAT.execute(textView.getText().toString());
 					
