@@ -659,7 +659,8 @@
 			$args->sort_index1 = 'sites.domain';
 
             // Get a list of modules at the site
-            $output = executeQueryArray('module.getSiteModules', $args);
+            //$output = executeQueryArray('module.getSiteModules', $args);
+              $output = executeQueryArray('mobile_communication.getSitePages', $args);
             
            // var_dump($output);
             
@@ -672,6 +673,7 @@
 				echo "<newmodule>";
 				echo "<module>" . $value->mid . "</module>";
 				echo "<module_srl>" . $value->module_srl . "</module_srl>";
+                                echo "<page_type>" . $value->page_type . "</page_type>";
 				echo "</newmodule>";
 			}
 			echo "</response>";
