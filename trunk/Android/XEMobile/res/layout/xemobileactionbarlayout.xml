@@ -5,6 +5,7 @@
     android:orientation="horizontal" >
 
     <Button
+        android:id="@+id/XEMOBILE_BACK_BUTTON"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="25dp"
         android:layout_height="fill_parent"
