@@ -53,6 +53,10 @@ public class XETextyle implements Serializable
 	@Element
 	public String textyle_title;
 	
+	@Element (required=false)
+	public String comment_count;
+	
+	
 	@Override
 	public String toString() 
 	{

@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -69,7 +71,11 @@ public class XEMobileMenuItemEditController extends XEFragment  implements OnCli
 	private XEArrayList modules;
 	
 	//spinner adapter
-	private ArrayAdapter<String> adapter;
+	private ArrayAdapter<XEModule> adapter;
+	
+	private final String PAGE_TYPE_WIDGET="WIDGET";
+	private final String PAGE_TYPE_EXTERNAL="EXTERNAL";
+	private final String PAGE_TYPE_ARTICAL="ARTICLE";
 	
 //	@Override
 //	protected void onCreate(Bundle savedInstanceState) 
@@ -103,7 +109,7 @@ public class XEMobileMenuItemEditController extends XEFragment  implements OnCli
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.xemobilemenuitemeditlayout, container,false);
-		adapter = new ArrayAdapter<String>(this.activity, android.R.layout.simple_spinner_item);
+		adapter = new ArrayAdapter<XEModule>(this.activity, android.R.layout.simple_spinner_item);
 		
 		availablePages = (Spinner) view.findViewById(R.id.XEMOBILE_AVAILABLE_PAGES);
 		pageTypes= (Spinner) view.findViewById(R.id.XEMOBILE_PAGE_TYPES);
@@ -120,11 +126,46 @@ public class XEMobileMenuItemEditController extends XEFragment  implements OnCli
 		GetModulesAsyncTask task = new GetModulesAsyncTask();
 		task.execute();
 	
-	//action for save button
+		//action for save button
 		saveButton = (Button) view.findViewById(R.id.XEMOBILE_EDIT_MENU_SAVE_BUTTON);
 		saveButton.setOnClickListener(this);
 		
+		availablePages.setAdapter(adapter);
+		
+		
+		//handle when selected page type		
+		pageTypes.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,int position, long id) {
+				refreshAvailablePageAdapter(returnType());
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
 		return view;
+	}
+	
+	public void refreshAvailablePageAdapter(String pageType){
+		if(modules!=null){
+			if(modules.modules!=null){
+				XEModule modulePage;
+				adapter.clear();
+				for(int i=0;i<modules.modules.size();i++){
+					modulePage = modules.modules.get(i);
+					if(modulePage.page_type.compareTo(pageType)==0){
+						adapter.add(modulePage);
+					}
+				}
+				adapter.notifyDataSetChanged();
+			}
+		}
 	}
 	
 	//called when the save button is pressed
@@ -156,16 +197,25 @@ public class XEMobileMenuItemEditController extends XEFragment  implements OnCli
 //		else if( externalRadioOption.isChecked() ) return "EXTERNAL";
 //		return "";
 		if(((String)pageTypes.getSelectedItem()).compareTo("Widget page")==0){
-			return "WIDGET";
+			return this.PAGE_TYPE_WIDGET;
 		}else if(((String)pageTypes.getSelectedItem()).compareTo("Article page")==0){
-			return "ARTICLE";
+			return this.PAGE_TYPE_ARTICAL;
 		}else {
-			return "EXTERNAL";
+			return this.PAGE_TYPE_EXTERNAL;
 		}
 		
 		
 		
 		
+	}
+	private String getPageTypeValue(String text){
+		if(text.compareTo("Widget page")==0){
+			return this.PAGE_TYPE_WIDGET;
+		}else if(text.compareTo("Article page")==0){
+			return this.PAGE_TYPE_ARTICAL;
+		}else {
+			return this.PAGE_TYPE_EXTERNAL;
+		}
 	}
 	
 	private String openInNewWindow()
@@ -302,7 +352,7 @@ public class XEMobileMenuItemEditController extends XEFragment  implements OnCli
 			params.put("cType","SELECT");
 			params.put("module_type", returnType());
 			params.put("menu_open_window", openInNewWindow());
-			params.put("select_menu_url",(String) availablePages.getSelectedItem());
+			params.put("select_menu_url",(String) availablePages.getSelectedItem().toString());
 			
 			XEHost.getINSTANCE().postMultipart(params, "/");
 			
@@ -390,11 +440,24 @@ public class XEMobileMenuItemEditController extends XEFragment  implements OnCli
 			}else{
 				if( details.moduleType.equals("page") )
 				{
-					//select the correct page in spinner
+
 					int i;
-					for(i=0;i<modules.modules.size();i++)
+					for(i=0;i<pageTypes.getAdapter().getCount()-1;i++){
+						if((getPageTypeValue((String)pageTypes.getAdapter().getItem(i))).compareTo(details.pageType)==0){
+							pageTypes.setSelection(i);
+							break;
+						}
+					}
+					
+					refreshAvailablePageAdapter(details.pageType);
+					
+					//select the correct page in spinner
+					
+					for(i=0;i<adapter.getCount()-1;i++)
 					{	
-						if( details.url.equals(modules.modules.get(i).module) ) break;
+						
+//						if( details.url.equals(modules.modules.get(i).module) ) break;
+						if( details.url.equals(adapter.getItem(i).module) ) break;
 					}
 					Log.d("i=", i+ " ");
 					availablePages.setSelection(i);
@@ -446,15 +509,18 @@ public class XEMobileMenuItemEditController extends XEFragment  implements OnCli
 			
 			if( modules != null && modules.modules != null )
 			{
-				for(int i=0;i<modules.modules.size();i++)
-				{
-				adapter.add(modules.modules.get(i).module);
-				}
-			
-				availablePages.setAdapter(adapter);
+//				for(int i=0;i<modules.modules.size();i++)
+//				{
+//				adapter.add(modules.modules.get(i).module);
+//				}
+//			
+//				availablePages.setAdapter(adapter);
+				refreshAvailablePageAdapter(returnType());
 				
 				GetEditedMenuAsyncTask editedMenuTask = new GetEditedMenuAsyncTask();
 				editedMenuTask.execute();
+				
+				Log.i("Finish loading","Modules");
 			}
 			
 			

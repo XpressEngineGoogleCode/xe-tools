@@ -27,4 +27,8 @@ public class XEMenuItemsDetails
 	@Element (required=false)
 	@Path("menu_item[1]")
 	public String moduleType;
+	
+	@Element (required=false)
+	@Path("menu_item[1]")
+	public String pageType;
 }

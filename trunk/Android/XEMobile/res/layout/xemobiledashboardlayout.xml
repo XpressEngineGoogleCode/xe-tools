@@ -5,14 +5,6 @@
     android:columnCount="2"
     android:scrollbars="vertical"
     android:background="#ffffff" >
-    <!-- <fragment
-        android:name="arnia.xemobile.XEMobileStatisticsController"
-        android:id="@+id/XEMOBILE_WEBSITE_STATISTIC"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-   		android:layout_columnSpan="2"
-        />
-    -->
     
     <LinearLayout 
         android:id="@+id/XEMOBILE_DASHBOARD_FRAGMENT_HOLDER"
@@ -74,7 +66,7 @@
 	/>
 	
 	<TextView 
-		android:id="@+id/XEMOBILE_DASHBOARD_NEW_NUMBER"
+		android:id="@+id/XEMOBILE_DASHBOARD_COMMENT_COUNT"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"		
 		android:layout_margin="@dimen/dashboard_item_margin"
