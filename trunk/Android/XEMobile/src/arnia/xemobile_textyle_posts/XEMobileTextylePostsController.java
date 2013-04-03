@@ -44,7 +44,7 @@ public class XEMobileTextylePostsController extends XEFragment implements
 
 	// UI references
 	private ListView listView;
-	private View footerView;
+	private View listViewFotter;
 	private XEMobileTextylePostAdapter adapter;
 	private SegmentedRadioGroup radioGroup;
 
@@ -59,18 +59,18 @@ public class XEMobileTextylePostsController extends XEFragment implements
 	private final int POST_TYPE_TRASH = 3;
 
 	private View fragmentView;
-	
+
 	private Spinner siteSpinner;
 
-	public void setSelectedTextyle(XETextyle textyle){
+	public void setSelectedTextyle(XETextyle textyle) {
 		this.textyle = textyle;
-		
+
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		fragmentView = inflater.inflate(R.layout.xemobiletextylepostslayout,
 				container, false);
 
@@ -81,102 +81,104 @@ public class XEMobileTextylePostsController extends XEFragment implements
 		radioGroup = (SegmentedRadioGroup) fragmentView
 				.findViewById(R.id.XEMOBILE_POST_FILTER);
 		radioGroup.setOnCheckedChangeListener(this);
-		listView = (ListView) fragmentView.findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_LISTVIEW);
+		listView = (ListView) fragmentView
+				.findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_LISTVIEW);
 		// Add loading bar to listview footer
-		footerView = ((LayoutInflater) activity.getSystemService(
-				Activity.LAYOUT_INFLATER_SERVICE)).inflate(
+		listViewFotter = ((LayoutInflater) activity
+				.getSystemService(Activity.LAYOUT_INFLATER_SERVICE)).inflate(
 				R.layout.xemobilegloballistviewloadingfooter, null, false);
-		listView.addFooterView(footerView);
-		
-		// Get virtual site and add it to action bar		
+		listView.addFooterView(listViewFotter);
+
+		// Get virtual site and add it to action bar
 		View view = actionBar.getCustomView();
-		siteSpinner = (Spinner) view.findViewById(R.id.XEMOBILE_MENU_SELECT_SITE);
-		
+		siteSpinner = (Spinner) view
+				.findViewById(R.id.XEMOBILE_MENU_SELECT_SITE);
+
 		adapter = new XEMobileTextylePostAdapter(activity);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(this);
 		listView.setOnScrollListener(this);
-		
 
 		return fragmentView;
 	}
-	
-	public void refreshContent(){
+
+	public void refreshContent() {
 		postsArray = new XEArrayList[4];
 		isTaskLoading = new boolean[4];
 		adapter.clearData();
 		onCheckedChanged(radioGroup, radioGroup.getCheckedRadioButtonId());
 	}
-	
-	
+
 	@Override
 	public void onResume() {
-//		GetTextylesAsyncTask task = new GetTextylesAsyncTask();
-//		task.execute();
-//		radioGroup.check(R.id.XEMOBILE_TEXTYLE_POSTS_ALLOPTION);
+		// GetTextylesAsyncTask task = new GetTextylesAsyncTask();
+		// task.execute();
+		// radioGroup.check(R.id.XEMOBILE_TEXTYLE_POSTS_ALLOPTION);
 		GetPostsAsycTask getPostTask = new GetPostsAsycTask(POST_TYPE_PUBLISHED);
 		getPostTask.execute(POST_TYPE_PUBLISHED);
-		
-		siteSpinner.setSelection(((SiteAdapter)siteSpinner.getAdapter()).getPositionOfItem(textyle));
+
+		siteSpinner.setSelection(((SiteAdapter) siteSpinner.getAdapter())
+				.getPositionOfItem(textyle));
 		super.onResume();
 	}
-//	private void initialListView() {
-//		
-//		// Add loading bar to listview footer
-//		footerView = ((LayoutInflater) activity.getSystemService(
-//				Activity.LAYOUT_INFLATER_SERVICE)).inflate(
-//				R.layout.xemobilegloballistviewloadingfooter, null, false);
-//		listView.addFooterView(footerView);
-//		adapter = new XEMobileTextylePostAdapter(activity);
-//		listView.setAdapter(adapter);
-//		listView.setOnItemClickListener(this);
-//		listView.setOnScrollListener(this);
-//	}
+
+	// private void initialListView() {
+	//
+	// // Add loading bar to listview footer
+	// listViewFotter = ((LayoutInflater) activity.getSystemService(
+	// Activity.LAYOUT_INFLATER_SERVICE)).inflate(
+	// R.layout.xemobilegloballistviewloadingfooter, null, false);
+	// listView.addFooterView(listViewFotter);
+	// adapter = new XEMobileTextylePostAdapter(activity);
+	// listView.setAdapter(adapter);
+	// listView.setOnItemClickListener(this);
+	// listView.setOnScrollListener(this);
+	// }
 
 	// Async Task for sending the request
-//	private class GetTextylesAsyncTask extends
-//			AsyncTask<Void, Void, XEArrayList> {
-//		String response;
-//
-//		@Override
-//		protected void onPreExecute() {
-//			super.onPreExecute();
-//			startProgress("Loading...");
-//		}
-//
-//		@Override
-//		protected XEArrayList doInBackground(Void... params) {
-//			// sending the request
-//			response = XEHost
-//					.getINSTANCE()
-//					.getRequest(
-//							"/index.php?module=mobile_communication&act=procmobile_communicationTextyleList");
-//
-//			// parsing the response
-//			Serializer serializer = new Persister();
-//			Reader reader = new StringReader(response);
-//			try {
-//				XEArrayList tmpTextTyle = serializer.read(XEArrayList.class,
-//						reader, false);
-//				return tmpTextTyle;
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//
-//			return null;
-//		}
-//
-//		// called when the response came
-//		@Override
-//		protected void onPostExecute(XEArrayList result) {
-//			super.onPostExecute(result);
-//			dismissProgress();
-////			if (result != null && result.textyles.size() > 0)
-//			textyle = result.textyles.get(0);			
-//
-//			radioGroup.check(R.id.XEMOBILE_TEXTYLE_POSTS_ALLOPTION);
-//		}
-//	}
+	// private class GetTextylesAsyncTask extends
+	// AsyncTask<Void, Void, XEArrayList> {
+	// String response;
+	//
+	// @Override
+	// protected void onPreExecute() {
+	// super.onPreExecute();
+	// startProgress("Loading...");
+	// }
+	//
+	// @Override
+	// protected XEArrayList doInBackground(Void... params) {
+	// // sending the request
+	// response = XEHost
+	// .getINSTANCE()
+	// .getRequest(
+	// "/index.php?module=mobile_communication&act=procmobile_communicationTextyleList");
+	//
+	// // parsing the response
+	// Serializer serializer = new Persister();
+	// Reader reader = new StringReader(response);
+	// try {
+	// XEArrayList tmpTextTyle = serializer.read(XEArrayList.class,
+	// reader, false);
+	// return tmpTextTyle;
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	//
+	// return null;
+	// }
+	//
+	// // called when the response came
+	// @Override
+	// protected void onPostExecute(XEArrayList result) {
+	// super.onPostExecute(result);
+	// dismissProgress();
+	// // if (result != null && result.textyles.size() > 0)
+	// textyle = result.textyles.get(0);
+	//
+	// radioGroup.check(R.id.XEMOBILE_TEXTYLE_POSTS_ALLOPTION);
+	// }
+	// }
 
 	/**
 	 * 
@@ -190,7 +192,9 @@ public class XEMobileTextylePostsController extends XEFragment implements
 
 		public GetPostsAsycTask(int postType) {
 			this.postType = postType;
-			footerView.setVisibility(View.VISIBLE);
+			// listViewFotter.setVisibility(View.VISIBLE);
+			if (listView.getFooterViewsCount() == 0)
+				listView.addFooterView(listViewFotter);
 		}
 
 		@Override
@@ -266,52 +270,52 @@ public class XEMobileTextylePostsController extends XEFragment implements
 				adapter.setArrayWithPosts(postsArray[postType].posts);
 				adapter.notifyDataSetChanged();
 				if (postsArray[postType].pagination.cur_page == postsArray[postType].pagination.total_page)
-					footerView.setVisibility(View.GONE);
+					// listViewFotter.setVisibility(View.GONE);
+					listView.removeFooterView(listViewFotter);
 			}
 		}
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
 		Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT)
 				.show();
-		
-		
+
 		XEMobileTextyleEditPostContentController editPostContentController = new XEMobileTextyleEditPostContentController();
-		
-		
-		
-		XETextylePost post = (XETextylePost) parent.getAdapter().getItem(position);
-		
-		
+
+		XETextylePost post = (XETextylePost) parent.getAdapter().getItem(
+				position);
+
 		Bundle args = new Bundle();
 		args.putSerializable("textyle", textyle);
 		args.putString("document_srl", post.document_srl);
 		args.putString("title", post.title);
 		args.putString("category_srl", post.category_srl);
-		
+
 		editPostContentController.setArguments(args);
-		
-		((XEMobileMainActivityController)activity).addMoreScreen(editPostContentController);
-		
-//		if(savedPostsOption.isChecked())
-//		{
-//			post = savedPosts.posts.get(arg2);
-//			intent.putExtra("type", "saved");
-//			
-//		}
-//		else if( publishedPostsOption.isChecked() )
-//		{
-//			post = publishedPosts.posts.get(arg2);
-//			intent.putExtra("type", "published");
-//		}
-		
-//		intent.putExtra("textyle", textyle);
-//		intent.putExtra("document_srl", post.document_srl);
-//		intent.putExtra("title", post.title);
-//		intent.putExtra("category_srl", post.category_srl);
-//		startActivity(intent);
-		
+
+		((XEMobileMainActivityController) activity)
+				.addMoreScreen(editPostContentController);
+
+		// if(savedPostsOption.isChecked())
+		// {
+		// post = savedPosts.posts.get(arg2);
+		// intent.putExtra("type", "saved");
+		//
+		// }
+		// else if( publishedPostsOption.isChecked() )
+		// {
+		// post = publishedPosts.posts.get(arg2);
+		// intent.putExtra("type", "published");
+		// }
+
+		// intent.putExtra("textyle", textyle);
+		// intent.putExtra("document_srl", post.document_srl);
+		// intent.putExtra("title", post.title);
+		// intent.putExtra("category_srl", post.category_srl);
+		// startActivity(intent);
+
 	}
 
 	@Override
@@ -354,8 +358,9 @@ public class XEMobileTextylePostsController extends XEFragment implements
 				if (postsArray[postType] != null
 						&& postsArray[postType].pagination != null) {
 					if (postsArray[postType].pagination.cur_page < postsArray[postType].pagination.total_page) {
-						if(textyle!=null){
-							GetPostsAsycTask task = new GetPostsAsycTask(postType);
+						if (textyle != null) {
+							GetPostsAsycTask task = new GetPostsAsycTask(
+									postType);
 							task.execute(postsArray[postType].pagination.cur_page + 1);
 						}
 					}
@@ -401,7 +406,7 @@ public class XEMobileTextylePostsController extends XEFragment implements
 		Log.i("leapkh", "Post checked: " + postType + checkedId);
 		if (postsArray[postType] == null) {
 			if (!isTaskLoading[postType]) {
-				if(adapter!=null)
+				if (adapter != null)
 					adapter.clearData();
 				GetPostsAsycTask task = new GetPostsAsycTask(postType);
 				task.execute();
