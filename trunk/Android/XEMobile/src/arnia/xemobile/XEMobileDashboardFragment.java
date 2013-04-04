@@ -62,6 +62,7 @@ public class XEMobileDashboardFragment extends XEFragment implements
 	private TextView quickSetting;
 	private TextView userSetting;
 	private TextView comment;
+	private TextView manageSite;
 
 	private Button backButton;
 	
@@ -113,6 +114,9 @@ public class XEMobileDashboardFragment extends XEFragment implements
 		
 		userSetting = (TextView)this.view.findViewById(R.id.XEMOBILE_DASHBOARD_USERS);
 		userSetting.setOnClickListener(this);
+		
+		manageSite = (TextView)this.view.findViewById(R.id.XEMOBILE_DASHBOARD_MANAGE_WEBSITE);
+		manageSite.setOnClickListener(this);
 
 		manageMenus = (TextView) this.view
 				.findViewById(R.id.XEMOBILE_DASHBOARD_MENU_MANAGER);
@@ -146,6 +150,7 @@ public class XEMobileDashboardFragment extends XEFragment implements
 				if(selectedItem.getClass()==XEMobileSite.class){
 					XEFragment.startProgress(getActivity(), "Logging...");
 					selectingSite =(XEMobileSite)selectedItem;
+					((XEMobileMainActivityController)activity).setSelectingSite(selectingSite);
 					new LogInInBackground().execute((XEMobileSite)selectedItem);
 				}else{
 					Log.i("XEMobileVirtualSite","you selected virtual site");
@@ -223,6 +228,8 @@ public class XEMobileDashboardFragment extends XEFragment implements
 //			args.putSerializable("textyle", textyle);
 //			textyleCommentController.setArguments(args);
 			mainActivity.addMoreScreen(textyleCommentController);
+		}else if(v.getId()==R.id.XEMOBILE_DASHBOARD_MANAGE_WEBSITE){
+			mainActivity.requestToBrowser();
 		}
 
 	}

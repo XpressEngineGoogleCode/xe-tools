@@ -81,5 +81,9 @@
     
     <!-- Actionbar -->
     <string name="actionbar_back">&lt;</string>
-
+    
+    <!-- About -->
+    <string name="about_application"><p>This is \"about\" descriptoin</p></string>
+    <!-- help -->
+    <string name="help_description"><p>This is \"help\" description</p></string>
 </resources>
