@@ -14,12 +14,13 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import arnia.xemobile.R;
+import arnia.xemobile.XEFragment;
 import arnia.xemobile.classes.XEComment;
 
 //Adapter for the listView with XEComments
 public class XEMobileTextyleCommentsAdapter extends BaseAdapter
 {
-	private Context context;
+	private XEFragment context;
 	private ArrayList<XEComment> comments;
 
 	private ArrayList<XEComment> arrayWithReplies;
@@ -32,7 +33,7 @@ public class XEMobileTextyleCommentsAdapter extends BaseAdapter
 	}
 	
 	//constructor
-	public XEMobileTextyleCommentsAdapter(Context context)
+	public XEMobileTextyleCommentsAdapter(XEFragment context)
 	{
 		this.context = context;
 		this.comments = new ArrayList<XEComment>();
@@ -112,7 +113,7 @@ public class XEMobileTextyleCommentsAdapter extends BaseAdapter
 		
 		if( convertView == null )
 		{
-			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater inflater = (LayoutInflater) context.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.xemobilecommentitemcellview, null);
 		}
 		

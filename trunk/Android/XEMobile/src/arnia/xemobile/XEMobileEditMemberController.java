@@ -13,7 +13,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,7 +26,7 @@ import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEMember;
 import arnia.xemobile.classes.XEResponse;
 
-public class XEMobileEditMemberController extends XEActivity implements OnClickListener
+public class XEMobileEditMemberController extends XEFragment implements OnClickListener
 {
 	//ui references
 	private TextView emailTextView;
@@ -40,29 +42,58 @@ public class XEMobileEditMemberController extends XEActivity implements OnClickL
 	private XEMember member;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.xemobileeditmemberlayout);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.xemobileeditmemberlayout,container,false);
 		
 		//take references to UI elements
-		emailTextView = (TextView) findViewById(R.id.XEMOBILE_EDITMEMBER_EMAIL);
-		nicknameEditText = (EditText) findViewById(R.id.XEMOBILE_EDITMEMBER_NICKNAME);
-		descriptionEditText = (EditText) findViewById(R.id.XEMOBILE_EDITMEMBER_DESCRIPTION);
-		allowMailingCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_EDITMEMBER_ALLOWMAILING);
-		allowMessageCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_EDITMEMBER_ALLOWMESSAGE);
-		approveMemberCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_EDITMEMBER_APPROVEMEMBER);
-		isAdminCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_EDITMEMBER_ISADMIN);
-		saveButton = (Button) findViewById(R.id.XEMOBILE_EDITMEMBER_SAVE);
+		emailTextView = (TextView) view.findViewById(R.id.XEMOBILE_EDITMEMBER_EMAIL);
+		nicknameEditText = (EditText) view.findViewById(R.id.XEMOBILE_EDITMEMBER_NICKNAME);
+		descriptionEditText = (EditText) view.findViewById(R.id.XEMOBILE_EDITMEMBER_DESCRIPTION);
+		allowMailingCheckBox = (CheckBox) view.findViewById(R.id.XEMOBILE_EDITMEMBER_ALLOWMAILING);
+		allowMessageCheckBox = (CheckBox) view.findViewById(R.id.XEMOBILE_EDITMEMBER_ALLOWMESSAGE);
+		approveMemberCheckBox = (CheckBox) view.findViewById(R.id.XEMOBILE_EDITMEMBER_APPROVEMEMBER);
+		isAdminCheckBox = (CheckBox) view.findViewById(R.id.XEMOBILE_EDITMEMBER_ISADMIN);
+		saveButton = (Button) view.findViewById(R.id.XEMOBILE_EDITMEMBER_SAVE);
 		saveButton.setOnClickListener(this);
 				
 		//get the member object passed between activities
-		Intent intent = getIntent();
-		member = (XEMember) intent.getSerializableExtra("member");
+		//Intent intent = getIntent();
+		Bundle args = getArguments();
+		
+		member = (XEMember) args.getSerializable("member");
 		
 		//load the current settings
 		completeSettingsFormWithMemberSettings();
+//	}
+		
+		return view;
 	}
+	
+//	@Override
+//	protected void onCreate(Bundle savedInstanceState) 
+//	{
+//		super.onCreate(savedInstanceState);
+//		setContentView(R.layout.xemobileeditmemberlayout);
+//		
+//		//take references to UI elements
+//		emailTextView = (TextView) findViewById(R.id.XEMOBILE_EDITMEMBER_EMAIL);
+//		nicknameEditText = (EditText) findViewById(R.id.XEMOBILE_EDITMEMBER_NICKNAME);
+//		descriptionEditText = (EditText) findViewById(R.id.XEMOBILE_EDITMEMBER_DESCRIPTION);
+//		allowMailingCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_EDITMEMBER_ALLOWMAILING);
+//		allowMessageCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_EDITMEMBER_ALLOWMESSAGE);
+//		approveMemberCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_EDITMEMBER_APPROVEMEMBER);
+//		isAdminCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_EDITMEMBER_ISADMIN);
+//		saveButton = (Button) findViewById(R.id.XEMOBILE_EDITMEMBER_SAVE);
+//		saveButton.setOnClickListener(this);
+//				
+//		//get the member object passed between activities
+//		Intent intent = getIntent();
+//		member = (XEMember) intent.getSerializableExtra("member");
+//		
+//		//load the current settings
+//		completeSettingsFormWithMemberSettings();
+//	}
 	
 	// load the current settings
 	private void completeSettingsFormWithMemberSettings()
@@ -85,7 +116,7 @@ public class XEMobileEditMemberController extends XEActivity implements OnClickL
 	@Override
 	public void onClick(View v) 
 	{
-			startProgress("Loading...");
+			startProgress(activity,"Loading...");
 			SaveMemberAsyncTask asyncTask = new SaveMemberAsyncTask();
 			asyncTask.execute();
 	}
@@ -148,13 +179,14 @@ public class XEMobileEditMemberController extends XEActivity implements OnClickL
 		protected void onPostExecute(Object result)
 		{
 			//check to see if the user is logged in
-			isLoggedIn(response, XEMobileEditMemberController.this);
+//			isLoggedIn(response, XEMobileEditMemberController.this);
 			
 			XEResponse resp = (XEResponse) result;
 			dismissProgress();
 			
 			super.onPostExecute(result);
-			finish();
+//			finish();
+			((XEMobileMainActivityController)activity).backwardScreen();
 		}
 		
 	}

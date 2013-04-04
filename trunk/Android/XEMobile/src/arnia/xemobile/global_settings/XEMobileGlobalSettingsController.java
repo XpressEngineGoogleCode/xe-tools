@@ -20,7 +20,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,13 +32,15 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import arnia.xemobile.R;
 import arnia.xemobile.XEActivity;
+import arnia.xemobile.XEFragment;
 import arnia.xemobile.XEMobileLoginController;
+import arnia.xemobile.XEMobileMainActivityController;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEGlobalSettings;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XESettings;
 
-public class XEMobileGlobalSettingsController extends XEActivity implements OnClickListener
+public class XEMobileGlobalSettingsController extends XEFragment implements OnClickListener
 {
 	//UI references
 	private Button selectedLanguagesButton;
@@ -62,37 +66,71 @@ public class XEMobileGlobalSettingsController extends XEActivity implements OnCl
 	protected ArrayList<String> selectedLanguages = new ArrayList<String>();
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.xemobileglobalsettingslayout);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.xemobileglobalsettingslayout, container,false);
 		
 		//take reference to UI elements
-		selectedLanguagesButton = (Button) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_SELECTEDLANGS);
+		selectedLanguagesButton = (Button) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_SELECTEDLANGS);
 		selectedLanguagesButton.setOnClickListener(this);
-		selectedLanguagesButton = (Button) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_SELECTEDLANGS);
-		defaultLanguagesSpinner = (Spinner) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_DEFAULTLANG);
-		localTimeSpinner = (Spinner) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_LOCAL);
-		adminAccesIPEditText = (EditText) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_EDITTEXT_LIMITIP);
-		defaultURLEditText = (EditText) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_EDITTEXT_DEFAULTURL);
-		sslNeverOptionRadioButton = (RadioButton) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_RADIO_SSL_NEVER);
-		sslOptionalOptionRadioButton = (RadioButton) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_RADIO_SSL_OPTIONAL);
-		sslAlwaysOptionRadioButton = (RadioButton) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_RADIO_SSL_ALWAYS);
-		mobileTemplateCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_MOBILETEMPL);
-		rewriteModeCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_REWRITEMODE);
-		enableSSOCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_ENABLESSO);
-		sessionDBCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_SESSIONDB);
-		qmailCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_QMAIL);
-		htmlDTDCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_HTMLDTD);
-		saveButton = (Button) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SAVEBUTTON);
+		selectedLanguagesButton = (Button) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_SELECTEDLANGS);
+		defaultLanguagesSpinner = (Spinner) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_DEFAULTLANG);
+		localTimeSpinner = (Spinner) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_LOCAL);
+		adminAccesIPEditText = (EditText) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_EDITTEXT_LIMITIP);
+		defaultURLEditText = (EditText) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_EDITTEXT_DEFAULTURL);
+		sslNeverOptionRadioButton = (RadioButton) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_RADIO_SSL_NEVER);
+		sslOptionalOptionRadioButton = (RadioButton) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_RADIO_SSL_OPTIONAL);
+		sslAlwaysOptionRadioButton = (RadioButton) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_RADIO_SSL_ALWAYS);
+		mobileTemplateCheckBox = (CheckBox) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_MOBILETEMPL);
+		rewriteModeCheckBox = (CheckBox) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_REWRITEMODE);
+		enableSSOCheckBox = (CheckBox) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_ENABLESSO);
+		sessionDBCheckBox = (CheckBox) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_SESSIONDB);
+		qmailCheckBox = (CheckBox) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_QMAIL);
+		htmlDTDCheckBox = (CheckBox) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_HTMLDTD);
+		saveButton = (Button) view.findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SAVEBUTTON);
 		saveButton.setOnClickListener(this);
 		
-		startProgress("Loading settings");
+		startProgress(activity,"Loading settings");
 				
 		//start the request to get the current setting configuration
 		GetSettingsAsyncTask task = new GetSettingsAsyncTask();
 		task.execute();
+		
+		return view;
 	}
+	
+//	@Override
+//	protected void onCreate(Bundle savedInstanceState) 
+//	{
+//		super.onCreate(savedInstanceState);
+//		setContentView(R.layout.xemobileglobalsettingslayout);
+//		
+//		//take reference to UI elements
+//		selectedLanguagesButton = (Button) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_SELECTEDLANGS);
+//		selectedLanguagesButton.setOnClickListener(this);
+//		selectedLanguagesButton = (Button) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_SELECTEDLANGS);
+//		defaultLanguagesSpinner = (Spinner) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_DEFAULTLANG);
+//		localTimeSpinner = (Spinner) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_LOCAL);
+//		adminAccesIPEditText = (EditText) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_EDITTEXT_LIMITIP);
+//		defaultURLEditText = (EditText) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_EDITTEXT_DEFAULTURL);
+//		sslNeverOptionRadioButton = (RadioButton) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_RADIO_SSL_NEVER);
+//		sslOptionalOptionRadioButton = (RadioButton) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_RADIO_SSL_OPTIONAL);
+//		sslAlwaysOptionRadioButton = (RadioButton) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_RADIO_SSL_ALWAYS);
+//		mobileTemplateCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_MOBILETEMPL);
+//		rewriteModeCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_REWRITEMODE);
+//		enableSSOCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_ENABLESSO);
+//		sessionDBCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_SESSIONDB);
+//		qmailCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_QMAIL);
+//		htmlDTDCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_HTMLDTD);
+//		saveButton = (Button) findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SAVEBUTTON);
+//		saveButton.setOnClickListener(this);
+//		
+//		startProgress("Loading settings");
+//				
+//		//start the request to get the current setting configuration
+//		GetSettingsAsyncTask task = new GetSettingsAsyncTask();
+//		task.execute();
+//	}
 
 	//method called when one of the buttons is pressed: save button or selected languages button
 	@Override
@@ -102,7 +140,7 @@ public class XEMobileGlobalSettingsController extends XEActivity implements OnCl
 		{
 			// save the new setting configuration request
 			case R.id.XEMOBILE_GLOBALSETTINGS_SAVEBUTTON:
-				startProgress("Saving...");
+				startProgress(activity, "Saving...");
 				SaveSettingsAsyncTask task = new SaveSettingsAsyncTask();
 				task.execute();
 			break;
@@ -132,7 +170,7 @@ public class XEMobileGlobalSettingsController extends XEActivity implements OnCl
 			}
 		};
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setTitle("Select Colours");
 		builder.setMultiChoiceItems(languages, checkedLanguage, coloursDialogListener);
 
@@ -171,7 +209,7 @@ public class XEMobileGlobalSettingsController extends XEActivity implements OnCl
 			super.onPostExecute(result);
 			
 			//check if user is logged
-			isLoggedIn(xmlResponse, XEMobileGlobalSettingsController.this);
+//			isLoggedIn(xmlResponse, XEMobileGlobalSettingsController.this);
 			
 			dismissProgress();
 			if( settings != null )
@@ -192,8 +230,8 @@ public class XEMobileGlobalSettingsController extends XEActivity implements OnCl
 			}
 			else 
 			{
-				Intent intent = new Intent(XEMobileGlobalSettingsController.this,XEMobileLoginController.class);
-				startActivity(intent);
+//				Intent intent = new Intent(XEMobileGlobalSettingsController.this,XEMobileLoginController.class);
+//				startActivity(intent);
 			}
 		}
 	}
@@ -315,7 +353,7 @@ public class XEMobileGlobalSettingsController extends XEActivity implements OnCl
 	
 	public void setDefaultLanguageOption()
 	{
-		ArrayAdapter<String> languageAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+		ArrayAdapter<String> languageAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item);
 		
 		ArrayList<String> languages = new ArrayList<String>();
 		for(Map.Entry<String, String> entry : settings.getLanguages().entrySet())
@@ -344,7 +382,7 @@ public class XEMobileGlobalSettingsController extends XEActivity implements OnCl
 	
 	public void setTimezoneOption()
 	{
-		ArrayAdapter<String> localAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item);
+		ArrayAdapter<String> localAdapter = new ArrayAdapter<String>(activity,android.R.layout.simple_spinner_item);
 		
 		ArrayList<String> localTimezones = new ArrayList<String>();
 		for(Map.Entry<String, String> entry : settings.getZones().entrySet())
@@ -430,7 +468,7 @@ public class XEMobileGlobalSettingsController extends XEActivity implements OnCl
 		{
 			super.onPostExecute(result);
 			dismissProgress();
-			finish();
+			((XEMobileMainActivityController) activity).backwardScreen();
 		}
 		
 	}

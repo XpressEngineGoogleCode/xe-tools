@@ -31,9 +31,11 @@ import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XETextyle;
 import arnia.xemobile.data.XEDatabaseHelper;
 import arnia.xemobile.data.XEMobileSite;
+import arnia.xemobile.global_settings.XEMobileGlobalSettingsController;
 import arnia.xemobile.menu_management.XEMobileMenuController;
 import arnia.xemobile.page_management.XEMobilePageAddController;
 import arnia.xemobile.page_management.XEMobilePageController;
+import arnia.xemobile_textyle_comments.XEMobileTextyleCommentsController;
 import arnia.xemobile_textyle_posts.XEMobileTextyleAddPostController;
 import arnia.xemobile_textyle_posts.XEMobileTextylePostsController;
 
@@ -57,6 +59,9 @@ public class XEMobileDashboardFragment extends XEFragment implements
 	private TextView manageMenus;
 	
 	private TextView commentCount;
+	private TextView quickSetting;
+	private TextView userSetting;
+	private TextView comment;
 
 	private Button backButton;
 	
@@ -99,6 +104,15 @@ public class XEMobileDashboardFragment extends XEFragment implements
 		managePages = (TextView) this.view
 				.findViewById(R.id.XEMOBILE_DASHBOARD_MANAGE_PAGES);
 		managePages.setOnClickListener(this);
+		
+		quickSetting = (TextView)this.view.findViewById(R.id.XEMOBILE_DASHBOARD_QUICK_SETTINGS);
+		quickSetting.setOnClickListener(this);
+		
+		comment = (TextView)this.view.findViewById(R.id.XEMOBILE_DASHBOARD_COMMENTS);
+		comment.setOnClickListener(this);
+		
+		userSetting = (TextView)this.view.findViewById(R.id.XEMOBILE_DASHBOARD_USERS);
+		userSetting.setOnClickListener(this);
 
 		manageMenus = (TextView) this.view
 				.findViewById(R.id.XEMOBILE_DASHBOARD_MENU_MANAGER);
@@ -142,7 +156,11 @@ public class XEMobileDashboardFragment extends XEFragment implements
 						XEMobileTextylePostsController currentPostController = (XEMobileTextylePostsController)currentDisplayFragment;
 						currentPostController.setSelectedTextyle((XETextyle)selectedItem);
 						currentPostController.refreshContent();
+					}else if(currentDisplayFragment.getClass()==XEMobileTextyleCommentsController.class){
+						XEMobileTextyleCommentsController currentPostController = (XEMobileTextyleCommentsController)currentDisplayFragment;
+						currentPostController.setTextyle((XETextyle)selectedItem);
 					}
+					
 				}
 
 				
@@ -193,6 +211,18 @@ public class XEMobileDashboardFragment extends XEFragment implements
 			mainActivity.addMoreScreen(new XEMobilePageController());
 		} else if (v.getId() == R.id.XEMOBILE_DASHBOARD_MENU_MANAGER) {
 			mainActivity.addMoreScreen(new XEMobileMenuController());
+		} else if(v.getId() == R.id.XEMOBILE_DASHBOARD_QUICK_SETTINGS) {
+			mainActivity.addMoreScreen(new XEMobileGlobalSettingsController());
+		} else if(v.getId()==R.id.XEMOBILE_DASHBOARD_USERS){
+			mainActivity.addMoreScreen(new XEMobileMembersController());
+		} else if (v.getId()==R.id.XEMOBILE_DASHBOARD_COMMENTS){
+			XETextyle textyle = (XETextyle) sitesAndVirtualSites.get(sites.indexOf(selectingSite)+1);
+			XEMobileTextyleCommentsController textyleCommentController = new XEMobileTextyleCommentsController();
+			textyleCommentController.setTextyle(textyle);
+//			Bundle args = new Bundle();
+//			args.putSerializable("textyle", textyle);
+//			textyleCommentController.setArguments(args);
+			mainActivity.addMoreScreen(textyleCommentController);
 		}
 
 	}
