@@ -93,7 +93,8 @@
                     android:id="@+id/XEMOBILE_DASHBOARD_COMMENT_COUNT"
                     style="@style/dashboard_item"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/middle_view3" />
+                    android:layout_toRightOf="@+id/middle_view3"
+                    android:clickable="false" />
             </RelativeLayout>
 
             <TextView

@@ -44,12 +44,35 @@
     <style name="dashboard_item">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-<!--         <item name="android:layout_margin">10dp</item> -->
+        <!-- <item name="android:layout_margin">10dp</item> -->
         <item name="android:background">@drawable/bg_dashboard_item</item>
         <item name="android:clickable">true</item>
         <item name="android:gravity">left</item>
         <item name="android:padding">15dp</item>
         <item name="android:textColor">@color/dashboard_item_color</item>
+    </style>
+
+    <!-- Global key/value -->
+    <style name="item_key">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="item_value">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="item_checkbox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">5dp</item>
     </style>
 
 </resources>

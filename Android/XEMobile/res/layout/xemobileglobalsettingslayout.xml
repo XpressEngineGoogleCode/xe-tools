@@ -1,187 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
 
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
-    
-    <LinearLayout 
-          android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        
-                   
-		<Button
-                   android:id="@+id/XEMOBILE_GLOBALSETTINGS_SAVEBUTTON"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Save"/>
-        
-    </LinearLayout>
-    
- 	
-    
-    <ScrollView 
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        
-        <LinearLayout 
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical">
-        
-           <LinearLayout 
-               android:layout_width="fill_parent"
-               android:layout_height="wrap_content">
-               
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Default language:"/>
-               <Spinner 
-                   android:id="@+id/XEMOBILE_GLOBALSETTINGS_SPINNER_DEFAULTLANG"
-                   android:layout_width="fill_parent"
-                   android:layout_height="wrap_content"/>
-               
-           </LinearLayout> 
-           
-           <LinearLayout 
-               android:layout_width="fill_parent"
-               android:layout_height="wrap_content">
-               
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Local standard time:"/>
-               <Spinner 
-                   android:id="@+id/XEMOBILE_GLOBALSETTINGS_SPINNER_LOCAL"
-                   android:layout_width="fill_parent"
-                   android:layout_height="wrap_content"/>
-               
-           </LinearLayout> 
-           
-           <LinearLayout 
-               android:layout_width="fill_parent"
-               android:layout_height="wrap_content">
-               
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Selected languages:"/>
-               <Button 
-                   android:id="@+id/XEMOBILE_GLOBALSETTINGS_SPINNER_SELECTEDLANGS"
-                   android:layout_width="fill_parent"
-                   android:layout_height="wrap_content"
-                   android:text="Change"/>
-               
-           </LinearLayout>
-           
-           <LinearLayout 
-               android:layout_width="fill_parent"
-               android:layout_height="wrap_content">
-               
-               <TextView
-                   android:layout_gravity="center_vertical"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Limit admin acces by IP:"/>
-               <EditText 
-                   android:id="@+id/XEMOBILE_GLOBALSETTINGS_EDITTEXT_LIMITIP"
-                   android:layout_width="fill_parent"
-                   android:layout_height="100dp"/>
-               
-           </LinearLayout> 
-           
-           <LinearLayout 
-               android:layout_width="fill_parent"
-               android:layout_height="wrap_content">
-               
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Default URL:"/>
-               <EditText 
-                   android:id="@+id/XEMOBILE_GLOBALSETTINGS_EDITTEXT_DEFAULTURL"
-                   android:layout_width="fill_parent"
-                   android:layout_height="wrap_content"/>
-               
-           </LinearLayout> 
-           
-           <LinearLayout 
-               android:layout_width="fill_parent"
-               android:layout_height="wrap_content">
-               
-               <TextView
-                   android:layout_gravity="center_vertical"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Use SSL:"/>
-               <RadioGroup 
-                   android:layout_width="fill_parent"
-                   android:layout_height="wrap_content"
-                   android:orientation="vertical">
-                   
-                   <RadioButton 
-                       android:id="@+id/XEMOBILE_GLOBALSETTINGS_RADIO_SSL_NEVER"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="Never"/>
-                   
-                   <RadioButton 
-                       android:id="@+id/XEMOBILE_GLOBALSETTINGS_RADIO_SSL_OPTIONAL"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="Optional"/>
-                   
-                   <RadioButton 
-                       android:id="@+id/XEMOBILE_GLOBALSETTINGS_RADIO_SSL_ALWAYS"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="Always"/>
-                   
-               </RadioGroup>
-               
-           </LinearLayout> 
-           
-            <CheckBox 
-               android:id="@+id/XEMOBILE_GLOBALSETTINGS_CHECKBOX_MOBILETEMPL"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Enable mobile template"/>
-            
-             <CheckBox 
-               android:id="@+id/XEMOBILE_GLOBALSETTINGS_CHECKBOX_REWRITEMODE"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Rewrite mod"/>
-             
-              <CheckBox 
-               android:id="@+id/XEMOBILE_GLOBALSETTINGS_CHECKBOX_ENABLESSO"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Enable SSO"/>
-           
-               <CheckBox 
-               android:id="@+id/XEMOBILE_GLOBALSETTINGS_CHECKBOX_SESSIONDB"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Use session db"/>
-               
-               <CheckBox 
-               android:id="@+id/XEMOBILE_GLOBALSETTINGS_CHECKBOX_QMAIL"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Enable Qmail"/>
-                
-               <CheckBox 
-               android:id="@+id/XEMOBILE_GLOBALSETTINGS_CHECKBOX_HTMLDTD"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Enable HTML DTD"/>
-              
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                style="@style/item_key"
+                android:text="Default language:" />
+
+            <Spinner
+                android:id="@+id/XEMOBILE_GLOBALSETTINGS_SPINNER_DEFAULTLANG"
+                style="@style/item_value" />
+
+            <TextView
+                style="@style/item_key"
+                android:text="Local standard time:" />
+
+            <Spinner
+                android:id="@+id/XEMOBILE_GLOBALSETTINGS_SPINNER_LOCAL"
+                style="@style/item_value" />
+
+            <TextView
+                style="@style/item_key"
+                android:text="Selected languages:" />
+
+            <TextView
+                android:id="@+id/XEMOBILE_GLOBALSETTINGS_TEXTVIEW_SELECTED_LANGUAGES"
+                style="@style/item_value"
+                android:background="@drawable/bg_dashboard_item"
+                android:padding="5dp"
+                android:text="Languages" />
+
+            <TextView
+                style="@style/item_key"
+                android:layout_gravity="center_vertical"
+                android:text="Limit admin acces by IP:" />
+
+            <EditText
+                android:id="@+id/XEMOBILE_GLOBALSETTINGS_EDITTEXT_LIMITIP"
+                style="@style/item_value" />
+
+            <TextView
+                style="@style/item_key"
+                android:text="Default URL:" />
+
+            <EditText
+                android:id="@+id/XEMOBILE_GLOBALSETTINGS_EDITTEXT_DEFAULTURL"
+                style="@style/item_value" />
+
+            <TextView
+                style="@style/item_key"
+                android:layout_gravity="center_vertical"
+                android:text="Use SSL:" />
+
+            <RadioGroup
+                style="@style/item_value"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/XEMOBILE_GLOBALSETTINGS_RADIO_SSL_NEVER"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Never" />
+
+                <RadioButton
+                    android:id="@+id/XEMOBILE_GLOBALSETTINGS_RADIO_SSL_OPTIONAL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Optional" />
+
+                <RadioButton
+                    android:id="@+id/XEMOBILE_GLOBALSETTINGS_RADIO_SSL_ALWAYS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Always" />
+            </RadioGroup>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2" >
+
+                <CheckBox
+                    android:id="@+id/XEMOBILE_GLOBALSETTINGS_CHECKBOX_MOBILETEMPL"
+                    style="@style/item_checkbox"
+                    android:layout_column="0"
+                    android:text="Enable mobile template" />
+
+                <CheckBox
+                    android:id="@+id/XEMOBILE_GLOBALSETTINGS_CHECKBOX_REWRITEMODE"
+                    style="@style/item_checkbox"
+                    android:layout_column="1"
+                    android:text="Rewrite mod" />
+
+                <CheckBox
+                    android:id="@+id/XEMOBILE_GLOBALSETTINGS_CHECKBOX_ENABLESSO"
+                    style="@style/item_checkbox"
+                    android:layout_column="0"
+                    android:text="Enable SSO" />
+
+                <CheckBox
+                    android:id="@+id/XEMOBILE_GLOBALSETTINGS_CHECKBOX_SESSIONDB"
+                    style="@style/item_checkbox"
+                    android:layout_column="1"
+                    android:text="Use session db" />
+
+                <CheckBox
+                    android:id="@+id/XEMOBILE_GLOBALSETTINGS_CHECKBOX_QMAIL"
+                    style="@style/item_checkbox"
+                    android:layout_column="0"
+                    android:text="Enable Qmail" />
+
+                <CheckBox
+                    android:id="@+id/XEMOBILE_GLOBALSETTINGS_CHECKBOX_HTMLDTD"
+                    style="@style/item_checkbox"
+                    android:layout_column="1"
+                    android:text="Enable HTML DTD" />
+            </GridLayout>
         </LinearLayout>
     </ScrollView>
-    
+
+    <Button
+        android:id="@+id/XEMOBILE_GLOBALSETTINGS_SAVEBUTTON"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save" />
+
 </LinearLayout>
