@@ -18,6 +18,7 @@ public class XEDatabaseHelper extends SQLiteOpenHelper {
 	private static XEDatabaseHelper dbHelper = null;
 	
 	public final String XE_SITES = "xe_sites";
+	public final String XE_SITES_ID = "_id";
 	public final String XE_SITES_SITEURL = "siteurl";
 	public final String XE_SITES_USERNAME = "username";
 	public final String XE_SITES_PASSWORD = "password";
@@ -56,6 +57,7 @@ public class XEDatabaseHelper extends SQLiteOpenHelper {
 		Cursor cursor = db.rawQuery("SELECT * FROM " + XE_SITES + " ORDER BY _id DESC", null);
 		while (cursor.moveToNext()){
 			sites.add(new XEMobileSite(cursor.getLong(0), cursor.getString(1),cursor.getString(2), cursor.getString(3)));
+			Log.i("leapkh","Site id: " + cursor.getLong(0));
 		}
 		cursor.close();
 		db.close();
