@@ -6,22 +6,6 @@
     android:orientation="vertical"
     android:padding="10dp" >
 
-    <TextView
-        android:id="@+id/XEMOBILE_PAGEITEMCELL_TEXTVIEW"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="PAGE TITLE" />
-
-    <TextView
-        android:id="@+id/XEMOBILE_PAGE_PAGE_URL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="PAGE URL" />
-
     <Button
         android:id="@+id/XEMOBILE_PAGEITEMCELL_DELETEBUTTON"
         style="?android:attr/buttonStyleSmall"
@@ -30,5 +14,25 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:text="DELETE" />
+
+    <TextView
+        android:id="@+id/XEMOBILE_PAGEITEMCELL_TEXTVIEW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="PAGE TITLE"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/XEMOBILE_PAGE_PAGE_URL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@+id/XEMOBILE_PAGEITEMCELL_DELETEBUTTON"
+        android:singleLine="true"
+        android:text="PAGE URL" />
 
 </RelativeLayout>
