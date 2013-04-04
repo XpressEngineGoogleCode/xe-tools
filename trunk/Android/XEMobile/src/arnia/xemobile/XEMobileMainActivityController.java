@@ -1,79 +1,20 @@
 package arnia.xemobile;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Stack;
 
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
-
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.app.ActionBar.OnNavigationListener;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.CornerPathEffect;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CursorAdapter;
-import android.widget.ImageView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.TextView;
-import arnia.xemobile.classes.XEArrayList;
-import arnia.xemobile.classes.XEHost;
-import arnia.xemobile.classes.XEMember;
-import arnia.xemobile.classes.XETextyle;
-import arnia.xemobile.data.XEDatabaseHelper;
 import arnia.xemobile.data.XEMobileSite;
-import arnia.xemobile.global_settings.XEMobileGlobalSettingsController;
-import arnia.xemobile.menu_management.XEMobileMenuController;
-import arnia.xemobile.page_management.XEMobilePageController;
-import arnia.xemobile.theme_management.XEMobileThemeController;
-import arnia.xemobile_textyle.XEMobileTextyleSelectTextyleController;
+import arnia.xemobile.site_management.XEMobileSiteController;
 
 //Activity for the Main Menu of XEMobile application
 public class XEMobileMainActivityController extends FragmentActivity implements OnPageChangeListener
@@ -121,7 +62,7 @@ public class XEMobileMainActivityController extends FragmentActivity implements 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		if(item.getItemId()==R.id.menu_settings_website_manager){
-			requestToBrowser();
+			addMoreScreen(new XEMobileSiteController());
 		}else if(item.getItemId()==R.id.menu_settings_help){
 			addMoreScreen(new XEMobileHelpController());
 		}else if(item.getItemId()==R.id.menu_settings_about){
