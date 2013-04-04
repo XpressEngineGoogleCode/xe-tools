@@ -332,7 +332,7 @@ public class XEMobileDashboardFragment extends XEFragment implements
 				xmlData = XEHost
 						.getINSTANCE()
 						.getRequest(
-								"/index.php?XDEBUG_SESSION_START=netbeans-xdebug&module=mobile_communication&act=procmobile_communicationLogin&user_id="
+								"/index.php?module=mobile_communication&act=procmobile_communicationLogin&user_id="
 										+ userid + "&password=" + password);
 				
 				String response = XEHost.getINSTANCE().getRequest("/index.php?module=mobile_communication&act=procmobile_communicationTextyleList");
