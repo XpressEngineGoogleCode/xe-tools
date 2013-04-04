@@ -29,6 +29,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.CornerPathEffect;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -44,6 +45,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -66,6 +68,7 @@ import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEMember;
 import arnia.xemobile.classes.XETextyle;
 import arnia.xemobile.data.XEDatabaseHelper;
+import arnia.xemobile.data.XEMobileSite;
 import arnia.xemobile.global_settings.XEMobileGlobalSettingsController;
 import arnia.xemobile.menu_management.XEMobileMenuController;
 import arnia.xemobile.page_management.XEMobilePageController;
@@ -80,6 +83,8 @@ public class XEMobileMainActivityController extends FragmentActivity implements 
 	private XEMobilePageAdapter pageAdapter; 
 	
 	private int prevPageIndex=0;
+	
+	private XEMobileSite selectingSite;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {		
@@ -100,6 +105,32 @@ public class XEMobileMainActivityController extends FragmentActivity implements 
 		getMenuInflater().inflate(R.menu.activity_main_menu, menu);
 		return true;
 	}
+	
+	public void setSelectingSite(XEMobileSite site){
+		this.selectingSite = site;
+	}
+	
+	public void requestToBrowser (){
+		if(selectingSite!=null){
+			Intent browser = new Intent(Intent.ACTION_VIEW, Uri.parse(selectingSite.siteUrl));
+			this.startActivity(browser);
+		}
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		if(item.getItemId()==R.id.menu_settings_website_manager){
+			requestToBrowser();
+		}else if(item.getItemId()==R.id.menu_settings_help){
+			addMoreScreen(new XEMobileHelpController());
+		}else if(item.getItemId()==R.id.menu_settings_about){
+			addMoreScreen(new XEMobileAboutController());
+		}
+		
+		return true;
+	}
+	
 	
 	public Fragment getCurrentDisplayedFragment(){
 		return this.pageAdapter.getItem(this.pager.getCurrentItem());

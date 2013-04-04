@@ -74,7 +74,7 @@ public class XEMobileLoginController extends XEActivity implements OnClickListen
         addressEditText = (EditText) findViewById(R.id.XEMOBILE_LOGIN_ADDRESS);
         usernameEditText = (EditText) findViewById(R.id.XEMOBILE_LOGIN_USERNAME);
         passwordEditText = (EditText) findViewById(R.id.XEMOBILE_LOGIN_PASSWORD);
-        rememberMeCheckBox = (CheckBox) findViewById(R.id.XEMOBILE_LOGIN_REMEMBERME);
+       
         
 //        //ONLY for testing!
 //        addressEditText.setText("192.168.10.250:8080/xe.mobile.ARNIA/xe");

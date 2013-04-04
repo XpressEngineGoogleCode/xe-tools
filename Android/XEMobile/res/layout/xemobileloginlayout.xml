@@ -61,11 +61,7 @@
         android:paddingRight="10dp"        
         android:text="@string/login_add_website_caption"/>
          
-        <CheckBox 
-             android:id="@+id/XEMOBILE_LOGIN_REMEMBERME"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="Remember me"/>
+        
         
     </LinearLayout>
     

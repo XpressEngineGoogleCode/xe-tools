@@ -14,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import arnia.xemobile.R;
+import arnia.xemobile.XEFragment;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEPage;
 
@@ -22,13 +23,13 @@ public class XEMobilePageAdapter extends BaseAdapter
 	//array with pages that appear in listview
 	private ArrayList<XEPage> arrayWithPages;
 
-	private Activity context;
+	private XEFragment context;
 	
 	public void setArrayWithPages(ArrayList<XEPage> arrayWithPages) {
 		this.arrayWithPages = arrayWithPages;
 	}
 	
-	public XEMobilePageAdapter(Activity context)
+	public XEMobilePageAdapter(XEFragment context)
 	{
 		arrayWithPages = new ArrayList<XEPage>();
 		this.context = context;
@@ -60,13 +61,20 @@ public class XEMobilePageAdapter extends BaseAdapter
 		
 		if( convertView == null )
 		{
-			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater inflater = (LayoutInflater) context.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.xemobilepageitemcellview, null);
 		}
 		
 		//construct the view's elements
 		TextView menuItemNameTextView = (TextView) convertView.findViewById(R.id.XEMOBILE_PAGEITEMCELL_TEXTVIEW);
 		menuItemNameTextView.setText(page.mid);
+		
+		TextView pageURL = (TextView) convertView.findViewById(R.id.XEMOBILE_PAGE_PAGE_URL);
+		if(page.virtual_site==null){
+			pageURL.setText(XEHost.getINSTANCE().getURL() + "/index.php?mid=" + page.mid);
+		}else{
+			pageURL.setText(XEHost.getINSTANCE().getURL() + "/index.php?mid=" + page.mid + "&vid=" + page.virtual_site);
+		}
 		
 //		Button editButton = (Button) convertView.findViewById(R.id.XEMOBILE_PAGEITEMCELL_EDITBUTTON);
 //		editButton.setTag(pos);
@@ -78,7 +86,7 @@ public class XEMobilePageAdapter extends BaseAdapter
 		
 		Button deleteButton = (Button) convertView.findViewById(R.id.XEMOBILE_PAGEITEMCELL_DELETEBUTTON);
 		deleteButton.setTag(pos);
-//		deleteButton.setOnClickListener((OnClickListener)context);
+		deleteButton.setOnClickListener((OnClickListener)context);
 		
 		//return the view
 		return convertView;

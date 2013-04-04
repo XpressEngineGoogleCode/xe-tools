@@ -58,7 +58,7 @@ public class XEMobilePageController extends XEFragment implements OnClickListene
 			addPageButton = (Button) view.findViewById(R.id.XEMOBILE_PAGE_ADDBUTTON);
 			addPageButton.setOnClickListener(this);
 			
-			adapter = new XEMobilePageAdapter(this.activity);
+			adapter = new XEMobilePageAdapter(this);
 			listView.setAdapter(adapter);
 			listView.setOnItemClickListener(this);
 			return view;
@@ -69,7 +69,7 @@ public class XEMobilePageController extends XEFragment implements OnClickListene
 			super.onResume();
 
 			//send request to get pages
-			XEFragment.startProgress(getActivity(), "Logging...");
+			XEFragment.startProgress(getActivity(), "Loading...");
 			GetPagesAsyncTask asyncRequest = new GetPagesAsyncTask();
 			asyncRequest.execute();
 
@@ -173,7 +173,7 @@ public class XEMobilePageController extends XEFragment implements OnClickListene
 				//page where the user clicked
 				XEPage page = list.pages.get(index);
 				
-				XEFragment.startProgress(getActivity(), "Logging...");
+				XEFragment.startProgress(activity, "Deleting...");
 				DeletePageAsyncTask task = new DeletePageAsyncTask();
 				task.execute(new String[]{page.module_srl});
 			}
@@ -209,8 +209,8 @@ public class XEMobilePageController extends XEFragment implements OnClickListene
 			protected void onPostExecute(Object result)
 			{
 				super.onPostExecute(result);
-//				dismissProgress();
-//				startProgress("Loading...");
+				dismissProgress();
+				startProgress(activity,"Loading...");
 				GetPagesAsyncTask task = new GetPagesAsyncTask();
 				task.execute();
 			}
