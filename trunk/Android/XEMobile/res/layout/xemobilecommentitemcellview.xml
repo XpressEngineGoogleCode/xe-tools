@@ -1,52 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp" >
 
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
-    
-    <LinearLayout 
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
-        
-        <TextView 
-            android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_NICKNAMETEXTVIEW"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="center_vertical"/>
-        
-        <WebView
-            android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_CONTENTWEBVIEW"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"/>
-              
-    </LinearLayout>
-    
-	<LinearLayout 
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal">
-	    
-	    <Button 
-	        android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_REPLY"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="Reply"/>
-	    <Button 
-	        android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_DELETE"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="Delete"/>
-	    <Button 
-	        android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_PUBLIC"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="Public"/>
-	    
-	</LinearLayout>
-    
-</LinearLayout>
+    <Button
+        android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_REPLY"
+        style="@android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Reply" />
+
+    <Button
+        android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_DELETE"
+        style="@android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/XEMOBILE_TEXTYLE_COMMENTS_REPLY"
+        android:text="Delete" />
+
+    <Button
+        android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_PUBLIC"
+        style="@android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/XEMOBILE_TEXTYLE_COMMENTS_DELETE"
+        android:text="Public" />
+
+    <TextView
+        android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_NICKNAMETEXTVIEW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_vertical"
+        android:text="Nickname"
+        android:textStyle="bold" />
+
+    <WebView
+        android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_CONTENTWEBVIEW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/XEMOBILE_TEXTYLE_COMMENTS_NICKNAMETEXTVIEW"
+        android:layout_toLeftOf="@+id/XEMOBILE_TEXTYLE_COMMENTS_DELETE" />
+
+</RelativeLayout>
