@@ -7,6 +7,8 @@ import java.util.HashMap;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -169,13 +171,34 @@ public class XEMobilePageController extends XEFragment implements OnClickListene
 			//delete button pressed
 			if( v.getId() == R.id.XEMOBILE_PAGEITEMCELL_DELETEBUTTON )
 			{
-				int index = (Integer) v.getTag();
-				//page where the user clicked
-				XEPage page = list.pages.get(index);
+				final int index = (Integer) v.getTag();
+				new AlertDialog.Builder(activity)
+										.setTitle("Attention")
+										.setCancelable(false)
+										.setMessage("Do you want to delete this page?")
+										.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+											
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+												
+												//page where the user clicked
+												XEPage page = list.pages.get(index);
+												
+												XEFragment.startProgress(activity, "Deleting...");
+												DeletePageAsyncTask task = new DeletePageAsyncTask();
+												task.execute(new String[]{page.module_srl});
+											}
+										})
+										.setNegativeButton("No", new DialogInterface.OnClickListener(){
+
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+																							
+											}
+											
+										})
+										.create().show();
 				
-				XEFragment.startProgress(activity, "Deleting...");
-				DeletePageAsyncTask task = new DeletePageAsyncTask();
-				task.execute(new String[]{page.module_srl});
 			}
 			else if( v.getId() == R.id.XEMOBILE_PAGE_ADDBUTTON)
 			{
