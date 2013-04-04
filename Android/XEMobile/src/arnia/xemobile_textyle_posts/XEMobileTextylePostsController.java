@@ -213,26 +213,26 @@ public class XEMobileTextylePostsController extends XEFragment implements
 			case POST_TYPE_ALL:
 				requestUrl = "/index.php?module=mobile_communication"
 						+ "&act=procmobile_communicationTextylePostList&module_srl="
-						+ textyle.module_srl + "&page=" + pageNumber;
+						+ textyle.module_srl + "&published=1&page=" + pageNumber;
 				break;
 
 			case POST_TYPE_PUBLISHED:
 				requestUrl = "/index.php?module=mobile_communication"
 						+ "&act=procmobile_communicationTextylePostList&module_srl="
-						+ textyle.module_srl + "&published=1&page="
+						+ textyle.module_srl + "&published=2&page="
 						+ pageNumber;
 				break;
 
 			case POST_TYPE_DRAFT:
 				requestUrl = "/index.php?module=mobile_communication"
 						+ "&act=procmobile_communicationTextylePostList&module_srl="
-						+ textyle.module_srl + "&published=-1&page="
+						+ textyle.module_srl + "&published=3&page="
 						+ pageNumber;
 				break;
 			default:
 				requestUrl = "/index.php?module=mobile_communication"
 						+ "&act=procmobile_communicationTextylePostList&module_srl="
-						+ textyle.module_srl + "&published=-11&page="
+						+ textyle.module_srl + "&published=0&page="
 						+ pageNumber;
 			}
 

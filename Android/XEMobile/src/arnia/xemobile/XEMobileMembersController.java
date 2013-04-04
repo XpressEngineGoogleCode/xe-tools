@@ -12,7 +12,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -24,7 +26,7 @@ import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEMember;
 
 //Activity that has a list of members
-public class XEMobileMembersController extends XEActivity implements OnItemClickListener
+public class XEMobileMembersController extends XEFragment implements OnItemClickListener
 {
 	//Array with the parsed response
 	private XEArrayList arrayWithMembers = new XEArrayList();
@@ -36,29 +38,47 @@ public class XEMobileMembersController extends XEActivity implements OnItemClick
 	private ArrayAdapter<XEMember> adapter;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.xemobilememberslayout);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.xemobilememberslayout,container,false);
 		
-		listView = (ListView) findViewById(R.id.XEMOBILE_MEMBERS_LISTVIEW);
-		
-		//adapter for the listView 
-		adapter = new ArrayAdapter<XEMember>(this, android.R.layout.simple_list_item_1);
+		listView = (ListView) view.findViewById(R.id.XEMOBILE_MEMBERS_LISTVIEW);
+//		
+//		//adapter for the listView 
+		adapter = new ArrayAdapter<XEMember>(this.activity, android.R.layout.simple_list_item_1);
 		
 		listView.setAdapter(adapter);
 		listView.setTextFilterEnabled(true);
  
 		listView.setOnItemClickListener(this);
+		
+		return view;
 	}
+	
+//	@Override
+//	protected void onCreate(Bundle savedInstanceState)
+//	{
+//		super.onCreate(savedInstanceState);
+//		setContentView(R.layout.xemobilememberslayout);
+//		
+//		listView = (ListView) findViewById(R.id.XEMOBILE_MEMBERS_LISTVIEW);
+//		
+//		//adapter for the listView 
+//		adapter = new ArrayAdapter<XEMember>(this, android.R.layout.simple_list_item_1);
+//		
+//		listView.setAdapter(adapter);
+//		listView.setTextFilterEnabled(true);
+// 
+//		listView.setOnItemClickListener(this);
+//	}
 	
 
 	@Override
-	protected void onResume() 
+	public void onResume() 
 	{
 		super.onResume();
 			
-		startProgress("Loading...");
+		startProgress(activity,"Loading...");
 		
 		//send the request to get the members
 		GetMembersAsync asyncRequest = new GetMembersAsync();
@@ -70,9 +90,16 @@ public class XEMobileMembersController extends XEActivity implements OnItemClick
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 	{
 	    XEMember member = arrayWithMembers.members.get(position);
-	    Intent intent = new Intent(XEMobileMembersController.this,XEMobileEditMemberController.class);
-	    intent.putExtra("member", member);
-	    startActivity(intent);
+	    
+//	    Intent intent = new Intent(XEMobileMembersController.this,XEMobileEditMemberController.class);
+//	    intent.putExtra("member", member);
+//	    startActivity(intent);
+	    
+	    XEMobileEditMemberController editMemberController = new XEMobileEditMemberController();
+	    Bundle args = new Bundle();
+	    args.putSerializable("member", member);
+	    editMemberController.setArguments(args);
+	    ((XEMobileMainActivityController)activity).addMoreScreen(editMemberController);
 	}
 	
 	//AsyncTask to get all members
@@ -113,7 +140,7 @@ public class XEMobileMembersController extends XEActivity implements OnItemClick
 			//dismiss the loading message
 			dismissProgress();
 			
-			isLoggedIn(xmlData, XEMobileMembersController.this);
+//			isLoggedIn(xmlData, XEMobileMembersController.this);
 			
 			//add members in adapter
 			if( arrayWithMembers.members != null )

@@ -11,13 +11,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import arnia.xemobile.R;
 import arnia.xemobile.XEActivity;
+import arnia.xemobile.XEFragment;
+import arnia.xemobile.XEMobileMainActivityController;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEComment;
 import arnia.xemobile.classes.XEHost;
@@ -25,7 +29,7 @@ import arnia.xemobile.classes.XEResponse;
 import arnia.xemobile.classes.XETextyle;
 
 //Activity that has a listView that contains XEComments
-public class XEMobileTextyleCommentsController extends XEActivity implements OnClickListener
+public class XEMobileTextyleCommentsController extends XEFragment implements OnClickListener
 {
 	private ListView listView;
 	
@@ -35,25 +39,49 @@ public class XEMobileTextyleCommentsController extends XEActivity implements OnC
 	private XEMobileTextyleCommentsAdapter adapter;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.xemobiletextylecommentslayout);
-		
-		listView = (ListView) findViewById(R.id.XEMOBILE_TEXTYLE_COMMENTS_LISTVIEW);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.xemobiletextylecommentslayout,container,false);
+		listView = (ListView) view.findViewById(R.id.XEMOBILE_TEXTYLE_COMMENTS_LISTVIEW);
 		adapter = new XEMobileTextyleCommentsAdapter(this);
 		listView.setAdapter(adapter);
-		textyle = (XETextyle) getIntent().getSerializableExtra("textyle");
+		Bundle args = getArguments();
 		
+//		textyle = (XETextyle) args.getSerializable("textyle");
+		return view;
 	}
 	
-	@Override
-	protected void onResume() 
-	{
+//	@Override
+//	protected void onCreate(Bundle savedInstanceState) 
+//	{
+//		super.onCreate(savedInstanceState);
+//		setContentView(R.layout.xemobiletextylecommentslayout);
+//		
+//		listView = (ListView) findViewById(R.id.XEMOBILE_TEXTYLE_COMMENTS_LISTVIEW);
+//		adapter = new XEMobileTextyleCommentsAdapter(this);
+//		listView.setAdapter(adapter);
+//		textyle = (XETextyle) getIntent().getSerializableExtra("textyle");
+//		
+//	}
+	
+	public void setTextyle(XETextyle textyle){
+		this.textyle  = textyle;
+		refreshComment();
+	}
+	
+	private void refreshComment(){
 		//send request to get the comments
 		GetCommentsAsyncTask task = new GetCommentsAsyncTask();
 		task.execute();
-		
+	}
+	
+	@Override
+	public void onResume() 
+	{
+		//send request to get the comments
+//		GetCommentsAsyncTask task = new GetCommentsAsyncTask();
+//		task.execute();
+		refreshComment();
 		super.onResume();
 	}
 	
@@ -90,18 +118,18 @@ public class XEMobileTextyleCommentsController extends XEActivity implements OnC
 			super.onPostExecute(result);
 			
 			//check if the user is logged in
-			if(isLoggedIn(response, XEMobileTextyleCommentsController.this))
-			{
+//			if(isLoggedIn(response, XEMobileTextyleCommentsController.this))
+//			{
 				// if the response is null, a toast appears
 				if( array.comments == null ) 
 				{
-				Toast toast = Toast.makeText(getApplicationContext(), "No comments!", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(activity, "No comments!", Toast.LENGTH_SHORT);
 				toast.show();
 				}
 			
 				adapter.setComments(array.comments);
 				adapter.notifyDataSetChanged();
-			}
+//			}
 			
 		}
 	}
@@ -125,11 +153,20 @@ public class XEMobileTextyleCommentsController extends XEActivity implements OnC
 		}
 		else if( v.getId() == R.id.XEMOBILE_TEXTYLE_COMMENTS_REPLY )
 		{
-			Intent intent = new Intent(XEMobileTextyleCommentsController.this, XEMobileTextyleCommentsReplyController.class);
-			intent.putExtra("textyle", textyle);
-			intent.putExtra("document_srl", comment.document_srl);
-			intent.putExtra("comment_srl", comment.comment_srl);
-			startActivity(intent);
+			XEMobileTextyleCommentsReplyController commentReplyController = new XEMobileTextyleCommentsReplyController();
+			Bundle args = new Bundle();
+			args.putSerializable("textyle", textyle);
+			args.putString("document_srl", comment.document_srl);
+			args.putString("comment_srl", comment.comment_srl);
+			commentReplyController.setArguments(args);
+			((XEMobileMainActivityController)activity).addMoreScreen(commentReplyController);
+			
+			
+//			Intent intent = new Intent(XEMobileTextyleCommentsController.this, XEMobileTextyleCommentsReplyController.class);
+//			intent.putExtra("textyle", textyle);
+//			intent.putExtra("document_srl", comment.document_srl);
+//			intent.putExtra("comment_srl", comment.comment_srl);
+//			startActivity(intent);
 		}
 		else if( v.getId() == R.id.XEMOBILE_TEXTYLE_COMMENTS_PUBLIC )
 		{
