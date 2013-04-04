@@ -141,7 +141,12 @@ public class XEMobileMainActivityController extends FragmentActivity implements 
 		pager.setCurrentItem(pageAdapter.getCount()-1, true);
 	}
 	
+//	private void removeFragment(Fragment f){
+//		FragmentManager fm = this.getSupportFragmentManager();
+//		fm.beginTransaction().remove(f).commit();
+//	}
 	public void backwardScreen(){
+//		Fragment oldScreen = pageAdapter.getItem(pageAdapter.getCount()-1);
 		pager.setCurrentItem(pageAdapter.getCount()-2, true);
 	}
 	private class XEMobilePageAdapter extends FragmentStatePagerAdapter{

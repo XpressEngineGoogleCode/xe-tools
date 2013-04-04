@@ -22,7 +22,6 @@
             android:orientation="horizontal" >
 
             <RadioButton
-                
                 android:id="@+id/XEMOBILE_TEXTYLE_POSTS_ALLOPTION"
                 android:layout_weight=".5"
                 android:button="@null"
@@ -32,7 +31,7 @@
                 android:text="All posts"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/radio_colors" 
-                android:checked="true"
+                
                 />
 
             <RadioButton

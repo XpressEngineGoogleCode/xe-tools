@@ -70,38 +70,42 @@ public class XEMobileTextylePostsController extends XEFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
-		fragmentView = inflater.inflate(R.layout.xemobiletextylepostslayout,
-				container, false);
-
-		postsArray = new XEArrayList[4];
-		isTaskLoading = new boolean[4];
-
-		// UI reference
-		radioGroup = (SegmentedRadioGroup) fragmentView
-				.findViewById(R.id.XEMOBILE_POST_FILTER);
-		radioGroup.setOnCheckedChangeListener(this);
-		listView = (ListView) fragmentView
-				.findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_LISTVIEW);
-		// Add loading bar to listview footer
-		listViewFotter = ((LayoutInflater) activity
-				.getSystemService(Activity.LAYOUT_INFLATER_SERVICE)).inflate(
-				R.layout.xemobilegloballistviewloadingfooter, null, false);
-		listView.addFooterView(listViewFotter);
-
-		// Get virtual site and add it to action bar
-		View view = actionBar.getCustomView();
-		siteSpinner = (Spinner) view
-				.findViewById(R.id.XEMOBILE_MENU_SELECT_SITE);
-
-		adapter = new XEMobileTextylePostAdapter(activity);
-		listView.setAdapter(adapter);
-		listView.setOnItemClickListener(this);
-		listView.setOnScrollListener(this);
-
+		
+			fragmentView = inflater.inflate(R.layout.xemobiletextylepostslayout,
+					container, false);
+	
+			postsArray = new XEArrayList[4];
+			isTaskLoading = new boolean[4];
+	
+			// UI reference
+			radioGroup = (SegmentedRadioGroup) fragmentView
+					.findViewById(R.id.XEMOBILE_POST_FILTER);
+			radioGroup.setOnCheckedChangeListener(this);
+			
+			
+			listView = (ListView) fragmentView
+					.findViewById(R.id.XEMOBILE_TEXTYLE_POSTS_LISTVIEW);
+			// Add loading bar to listview footer
+			listViewFotter = ((LayoutInflater) activity
+					.getSystemService(Activity.LAYOUT_INFLATER_SERVICE)).inflate(
+					R.layout.xemobilegloballistviewloadingfooter, null, false);
+			listView.addFooterView(listViewFotter);
+			listViewFotter.setVisibility(View.INVISIBLE);
+	
+			// Get virtual site and add it to action bar
+			View view = actionBar.getCustomView();
+			siteSpinner = (Spinner) view
+					.findViewById(R.id.XEMOBILE_MENU_SELECT_SITE);
+	
+			adapter = new XEMobileTextylePostAdapter(activity);
+			listView.setAdapter(adapter);
+			listView.setOnItemClickListener(this);
+			listView.setOnScrollListener(this);
+			
 		return fragmentView;
 	}
 
+	
 	public void refreshContent() {
 		postsArray = new XEArrayList[4];
 		isTaskLoading = new boolean[4];
@@ -114,11 +118,9 @@ public class XEMobileTextylePostsController extends XEFragment implements
 		// GetTextylesAsyncTask task = new GetTextylesAsyncTask();
 		// task.execute();
 		// radioGroup.check(R.id.XEMOBILE_TEXTYLE_POSTS_ALLOPTION);
-		GetPostsAsycTask getPostTask = new GetPostsAsycTask(POST_TYPE_PUBLISHED);
-		getPostTask.execute(POST_TYPE_PUBLISHED);
-
-		siteSpinner.setSelection(((SiteAdapter) siteSpinner.getAdapter())
-				.getPositionOfItem(textyle));
+//		GetPostsAsycTask getPostTask = new GetPostsAsycTask(POST_TYPE_PUBLISHED);
+//		getPostTask.execute(POST_TYPE_PUBLISHED);
+		siteSpinner.setSelection(((SiteAdapter) siteSpinner.getAdapter()).getPositionOfItem(textyle));
 		super.onResume();
 	}
 
@@ -200,6 +202,7 @@ public class XEMobileTextylePostsController extends XEFragment implements
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+			listViewFotter.setVisibility(View.VISIBLE);
 			isTaskLoading[postType] = true;
 		}
 
@@ -273,6 +276,7 @@ public class XEMobileTextylePostsController extends XEFragment implements
 					// listViewFotter.setVisibility(View.GONE);
 					listView.removeFooterView(listViewFotter);
 			}
+			listViewFotter.setVisibility(View.INVISIBLE);
 		}
 	}
 
