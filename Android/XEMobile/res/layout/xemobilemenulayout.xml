@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_content"
     android:orientation="vertical" >
 
     <ListView
@@ -12,8 +13,7 @@
 
     <Button
         android:id="@+id/XEMOBILE_MENU_ADDBUTTON"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/button"
         android:layout_gravity="center_horizontal"
         android:text="Add new menu" />
 

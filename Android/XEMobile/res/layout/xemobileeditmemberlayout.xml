@@ -24,7 +24,7 @@
 
         <EditText
             android:id="@+id/XEMOBILE_EDITMEMBER_NICKNAME"
-            style="@style/item_value" />
+            style="@style/edittext" />
 
         <TextView
             style="@style/item_key"
@@ -32,7 +32,7 @@
 
         <EditText
             android:id="@+id/XEMOBILE_EDITMEMBER_DESCRIPTION"
-            style="@style/item_value" />
+            style="@style/edittext" />
 
         <GridLayout
             android:layout_width="match_parent"
@@ -66,8 +66,7 @@
 
             <Button
                 android:id="@+id/XEMOBILE_EDITMEMBER_SAVE"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/button"
                 android:layout_column="0"
                 android:layout_columnSpan="2"
                 android:layout_gravity="center_horizontal"

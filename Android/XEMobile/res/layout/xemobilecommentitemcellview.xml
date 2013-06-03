@@ -7,27 +7,21 @@
 
     <Button
         android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_REPLY"
-        style="@android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/round_button"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="Reply" />
 
     <Button
         android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_DELETE"
-        style="@android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/round_button"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/XEMOBILE_TEXTYLE_COMMENTS_REPLY"
         android:text="Delete" />
 
     <Button
         android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_PUBLIC"
-        style="@android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/round_button"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/XEMOBILE_TEXTYLE_COMMENTS_DELETE"
         android:text="Public" />

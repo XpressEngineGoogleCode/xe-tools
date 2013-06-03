@@ -6,14 +6,13 @@
 
     <EditText
         android:id="@+id/XEMOBILE_ADDMENUTOAST_EDITTEXT"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/edittext"
         android:hint="Menu name" />
 
     <Button
         android:id="@+id/XEMOBILE_ADDMENUTOAST_BUTTON"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/button"
+        android:layout_gravity="center_horizontal"
         android:text="Done" />
 
 </LinearLayout>
