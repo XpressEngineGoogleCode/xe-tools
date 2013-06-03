@@ -3,7 +3,6 @@ package arnia.xemobile.page_management;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Selection;
@@ -17,7 +16,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView.BufferType;
@@ -30,10 +31,10 @@ public class XEMobileTextEditor extends XEFragment implements OnClickListener,
 
 	// Editor control
 	private EditText txtContent;
-	private ToggleButton btnBold;
-	private ToggleButton btnItalic;
-	private ToggleButton btnUnderline;
-	private Button btnLink;
+	private CheckBox btnBold;
+	private CheckBox btnItalic;
+	private CheckBox btnUnderline;
+	private ImageButton btnLink;
 	private Button btnAddImage;
 
 	private int styleStart = -1;
@@ -53,15 +54,14 @@ public class XEMobileTextEditor extends XEFragment implements OnClickListener,
 		txtContent = (EditText) view.findViewById(R.id.XEMOBILE_EDITOR_CONTENT);
 		txtContent.addTextChangedListener(this);
 
-		btnBold = (ToggleButton) view.findViewById(R.id.XEMOBILE_EDITOR_BOLD);
+		btnBold = (CheckBox) view.findViewById(R.id.XEMOBILE_EDITOR_BOLD);
 		btnBold.setOnClickListener(this);
-		btnItalic = (ToggleButton) view
-				.findViewById(R.id.XEMOBILE_EDITOR_ITALIC);
+		btnItalic = (CheckBox) view.findViewById(R.id.XEMOBILE_EDITOR_ITALIC);
 		btnItalic.setOnClickListener(this);
-		btnUnderline = (ToggleButton) view
+		btnUnderline = (CheckBox) view
 				.findViewById(R.id.XEMOBILE_EDITOR_UNDERLINE);
 		btnUnderline.setOnClickListener(this);
-		btnLink = (Button) view.findViewById(R.id.XEMOBILE_EDITOR_LINK);
+		btnLink = (ImageButton) view.findViewById(R.id.XEMOBILE_EDITOR_LINK);
 		btnLink.setOnClickListener(this);
 		btnAddImage = (Button) view
 				.findViewById(R.id.XEMOBILE_EDITOR_ADD_IMAGE);
@@ -305,7 +305,7 @@ public class XEMobileTextEditor extends XEFragment implements OnClickListener,
 					tmpSelectionStart, tmpSelectionEnd));
 			txtLinkUrl.requestFocus();
 		}
-		
+
 		layout.addView(txtLinkText);
 		layout.addView(txtLinkUrl);
 
@@ -339,8 +339,8 @@ public class XEMobileTextEditor extends XEFragment implements OnClickListener,
 		txtContent.setText(Html.fromHtml(htmlContent), BufferType.SPANNABLE);
 	}
 
-	public void requestFocus(){
+	public void requestFocus() {
 		txtContent.requestFocus();
 	}
-		
+
 }
