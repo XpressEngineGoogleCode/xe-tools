@@ -3,19 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_content"
     android:orientation="vertical" >
 
     <EditText
         android:id="@+id/XEMOBILE_ADD_POST_POST_TITLE"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/edittext"
         android:hint="@string/post_title"
         android:singleLine="true" />
 
     <EditText
         android:id="@+id/XEMOBILE_ADD_POST_POST_URL"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/edittext"
         android:hint="@string/url"
         android:singleLine="true" />
 
@@ -23,31 +22,26 @@
         android:id="@+id/XEMOBILE_HTML_EDITOR"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        />
-    
+        android:layout_weight="1" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-		
+
         <Button
             android:id="@+id/XEMOBILE_ADD_POST_DELETE_BUTTON"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/button"
             android:text="@string/delete_post" />
-        
+
         <Button
             android:id="@+id/XEMOBILE_ADD_POST_SAVE_AND_PUBLISH_BUTTON"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/save_and_publish"
+            style="@style/button"
             android:layout_centerHorizontal="true"
-            />
+            android:text="@string/save_and_publish" />
 
         <Button
             android:id="@+id/XEMOBILE_ADD_POST_SAVE_BUTTON"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/button"
             android:layout_alignParentRight="true"
             android:text="@string/save" />
     </RelativeLayout>

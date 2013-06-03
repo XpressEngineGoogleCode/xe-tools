@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <color name="splash_description">#96F1E7</color>
+    <color name="terms_of_use">#8E8E91</color>
+    <color name="dashboard_divider">#000000</color>
+    <color name="editor_divider">#282d36</color>
+    
+    <!-- controls -->
+    <color name="button_text">#FFFFFF</color>
+    <color name="round_button_text">#FFFFFF</color>
+    <color name="edittext_text">#FFFFFF</color>
+    
+</resources>

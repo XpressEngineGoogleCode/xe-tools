@@ -2,35 +2,39 @@
 <resources>
 
     <string name="hello">Hello World, XEMobileLoginController!</string>
-    <string name="app_name">XEMobile</string>
-    <string name="invalid_url">Invalid URL...</string>
+    <string name="app_name">Karybu</string>
+    <string name="invalid_url">Invalid URL&#8230;</string>
     <string name="no_textyle">No textyle installed on your site</string>
     <string name="theme_save_button">Save</string>
     <string name="main_page_theme_button">Themes</string>
     <string name="session_expired_msg">Please login again because your session has been expired.</string>
-    <string name="welcome_screen_description">Easily manage your QUB site \n from any mobile device</string>
-    <string name="welcome_screen_add_new_website">ADD NEW WEBSITE</string>
+    <string name="welcome_screen_description">Easily manage your karybu site \nfrom any mobile device</string>
+    <string name="welcome_screen_add_new_website">Add new website</string>
     <string name="welcome_screen_term_of_use"><u>terms of use</u></string>
     <string name="welcome_screen_logo_description">Logo</string>
-    <string name="login_hint_website_url">website url</string>
+    <string name="welcome_screen_checking_connection">Checking connection&#8230;</string>
+    <string name="login_hint_website_url">Website URL</string>
     <string name="login_hint_username">username</string>
     <string name="login_hint_password">password</string>
-    <string name="login_add_website_caption">add website</string>
+    <string name="login_add_website_caption">Add website</string>
+    <string name="login_invalid_input_title">Invalid Input</string>
+    <string name="login_invalid_input_msg">Please input all fields.</string>
+    <string name="login_error_msg">There is some problem while trying to add website.</string>
     <string name="wrong_password_dialog_title">Wrong password</string>
     <string name="wrong_password_dialog_description">Please check your password</string>
     <string name="wrong_password_dialog_close_button">close</string>
     <string name="checking_connection_dialog_title">Checking connection</string>
     <string name="checking_connection_dialog_description">This should only take a couple of seconds</string>
     <string name="checking_connection_dialog_close_button">close</string>
-    <string name="dashboard_new_post">1. NEW POST</string>
+    <string name="dashboard_new_post">NEW POST</string>
     <string name="dashboard_manage_posts">MANAGE POSTS</string>
-    <string name="dashboard_new_page">2. NEW PAGE</string>
+    <string name="dashboard_new_page">NEW PAGE</string>
     <string name="dashboard_manage_pages">MANAGE PAGES</string>
-    <string name="dashboard_comments">3. COMMENTS</string>
-    <string name="dashboard_users">4. USERS</string>
-    <string name="dashboard_menu_manager">5. MENU MANAGER</string>
-    <string name="dashboard_quick_settings">6. QUICK SETTINGS</string>
-    <string name="dashboard_manage_website">7. MANAGER WEBSITE</string>
+    <string name="dashboard_comments">COMMENTS</string>
+    <string name="dashboard_users">USERS</string>
+    <string name="dashboard_menu_manager">MENU MANAGER</string>
+    <string name="dashboard_quick_settings">QUICK SETTINGS</string>
+    <string name="dashboard_manage_website">MANAGER WEBSITE</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_settings_website_manager">Website manager</string>
     <string name="menu_settings_help">Help</string>
@@ -40,13 +44,12 @@
     <string name="post_title">Post title</string>
     <string name="url">URL</string>
     <string name="body">Body</string>
-    <string name="save_and_publish">SAVE &amp; PUBLISH</string>
-    <string name="save">SAVE</string>
+    <string name="save_and_publish">Save and publish</string>
+    <string name="save">Save</string>
 
     <!-- Edit post layout -->
-    <string name="delete_post">DELETE</string>
-    
-    
+    <string name="delete_post">Delete</string>
+
     <!-- Array -->
     <string-array name="page_types">
         <item>Widget page</item>
@@ -78,12 +81,17 @@
     <!-- Global -->
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="close">Close</string>
+    <string name="error">Error</string>
+
     <!-- Actionbar -->
     <string name="actionbar_back">&lt;</string>
-    
+
     <!-- About -->
     <string name="about_application"><p>This is \"about\" descriptoin</p></string>
     <!-- help -->
     <string name="help_description"><p>This is \"help\" description</p></string>
+
 </resources>

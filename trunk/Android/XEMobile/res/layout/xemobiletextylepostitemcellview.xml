@@ -8,18 +8,14 @@
 
     <Button
         android:id="@+id/XEMOBILE_POST_VIEW_POST"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/round_button"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="VIEW POST" />
 
     <Button
         android:id="@+id/XEMOBILE_POST_UNPUBLISH_POST"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/round_button"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/XEMOBILE_POST_VIEW_POST"
         android:text="UNPUBLISH" />
