@@ -1,23 +1,15 @@
 package arnia.xemobile.menu_management;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import arnia.xemobile.R;
-import arnia.xemobile.R.id;
-import arnia.xemobile.R.layout;
-import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEMenu;
 
 //Adapter for Menu list

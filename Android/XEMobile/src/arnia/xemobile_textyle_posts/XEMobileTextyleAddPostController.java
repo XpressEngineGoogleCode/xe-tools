@@ -58,7 +58,8 @@ public class XEMobileTextyleAddPostController extends XEFragment implements
 				.findViewById(R.id.XEMOBILE_ADD_POST_POST_TITLE);
 		etxtUrl = (EditText) view.findViewById(R.id.XEMOBILE_ADD_POST_POST_URL);
 
-		addNestedFragment(R.id.XEMOBILE_HTML_EDITOR, new XEMobileTextEditor(), "add_post_html_editor");
+		editor=new XEMobileTextEditor();
+		addNestedFragment(R.id.XEMOBILE_HTML_EDITOR, editor, "add_post_html_editor");
 		
 		btnSave = (Button) view
 				.findViewById(R.id.XEMOBILE_ADD_POST_SAVE_BUTTON);
