@@ -5,14 +5,6 @@
     android:background="@drawable/bg_content"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/XEMOBILE_DASHBOARD_FRAGMENT_HOLDER"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/bg_statistic"
-        android:padding="10dp" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -20,9 +12,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_content"
             android:orientation="vertical"
-            android:padding="10dp" >
+            android:padding="5dp" >
+
+            <LinearLayout
+                android:id="@+id/XEMOBILE_DASHBOARD_FRAGMENT_HOLDER"
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_statistic"
+                android:padding="10dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -128,7 +127,7 @@
                 android:id="@+id/XEMOBILE_DASHBOARD_MANAGE_WEBSITE"
                 style="@style/dashboard_item_full_width"
                 android:drawableLeft="@drawable/ic_go_to_dashboard"
-                android:text="@string/dashboard_manage_website" />
+                android:text="@string/dashboard_go_to_dashboard" />
         </LinearLayout>
     </ScrollView>
 
