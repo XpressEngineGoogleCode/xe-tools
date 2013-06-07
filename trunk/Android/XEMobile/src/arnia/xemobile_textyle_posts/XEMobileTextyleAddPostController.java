@@ -10,23 +10,19 @@ import org.simpleframework.xml.core.Persister;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 import arnia.xemobile.R;
 import arnia.xemobile.XEFragment;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEResponse;
-import arnia.xemobile.classes.XETextyle;
-import arnia.xemobile.page_management.XEMobileTextEditor;
+import arnia.xemobile.controls.XEMobileTextEditor;
 
 public class XEMobileTextyleAddPostController extends XEFragment implements
 		OnClickListener {
@@ -37,15 +33,10 @@ public class XEMobileTextyleAddPostController extends XEFragment implements
 	private Button btnSave;
 	private Button btnSaveAndPublish;
 
-	private XETextyle textyle;
 	private View view;
 
 	// array with Textyles
 	private XEArrayList array;
-	// adapter for array with Textyles
-	private ArrayAdapter<XETextyle> adapter;
-
-	private Spinner selectVirtualSiteSpinner;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,9 +49,10 @@ public class XEMobileTextyleAddPostController extends XEFragment implements
 				.findViewById(R.id.XEMOBILE_ADD_POST_POST_TITLE);
 		etxtUrl = (EditText) view.findViewById(R.id.XEMOBILE_ADD_POST_POST_URL);
 
-		editor=new XEMobileTextEditor();
-		addNestedFragment(R.id.XEMOBILE_HTML_EDITOR, editor, "add_post_html_editor");
-		
+		editor = new XEMobileTextEditor();
+		addNestedFragment(R.id.XEMOBILE_HTML_EDITOR, editor,
+				"add_post_html_editor");
+
 		btnSave = (Button) view
 				.findViewById(R.id.XEMOBILE_ADD_POST_SAVE_BUTTON);
 		btnSave.setOnClickListener(this);
@@ -110,9 +102,6 @@ public class XEMobileTextyleAddPostController extends XEFragment implements
 					+ " The auto-saved draft will be discarded when you write and save it.]]></_saved_doc_message>\n"
 					+ "<module><![CDATA[textyle]]></module>\n</params>\n</methodCall>";
 
-			// XEHost.getINSTANCE().postRequest(
-			// "/index.php?XDEBUG_SESSION_START=netbeans-xdebug",
-			// xmlForSaving);
 			XEHost.getINSTANCE().postRequest("/index.php", xmlForSaving);
 
 			return null;
@@ -310,18 +299,11 @@ public class XEMobileTextyleAddPostController extends XEFragment implements
 		protected void onPostExecute(Object result) {
 			super.onPostExecute(result);
 
-			// check if the user is logged in
-			// isLoggedIn(response,
-			// XEMobileTextyleSelectTextyleController.this);
-
 			dismissProgress();
-			if (array != null && array.textyles != null) {
-				// for (int i = 0; i < array.textyles.size(); i++) {
-				// adapter.add(array.textyles.get(i));
-				// }
-				// adapter.notifyDataSetChanged();
+			if (array == null || array.textyles == null) {
 			} else {
-				Toast.makeText(getActivity(), R.string.no_textyle, 1000).show();
+				Toast.makeText(getActivity(), R.string.no_textyle,
+						Toast.LENGTH_LONG).show();
 			}
 		}
 	}

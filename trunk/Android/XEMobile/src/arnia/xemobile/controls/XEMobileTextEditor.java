@@ -1,4 +1,4 @@
-package arnia.xemobile.page_management;
+package arnia.xemobile.controls;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -22,7 +22,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView.BufferType;
-import android.widget.ToggleButton;
 import arnia.xemobile.R;
 import arnia.xemobile.XEFragment;
 

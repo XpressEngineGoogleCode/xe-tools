@@ -2,12 +2,8 @@ package arnia.xemobile.classes;
 
 import java.io.Serializable;
 
-import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
-
-import android.os.Parcel;
-import android.os.Parcelable;
 
 @Root(name="user")
 public class XEMember implements Serializable

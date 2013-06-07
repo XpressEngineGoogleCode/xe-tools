@@ -10,17 +10,15 @@ import android.support.v4.app.FragmentManager;
 
 public class XEFragment extends Fragment {
 
-	protected FragmentActivity activity = null;
-	protected ActionBar actionBar = null;
-
+	protected FragmentActivity activity;
+	protected ActionBar actionBar;
 	private static int progressDialogCount;
 	private static ProgressDialog progress;
 
 	public static void startProgress(Context context, String message) {
 		progressDialogCount++;
 		if (progressDialogCount == 1)
-			progress = ProgressDialog.show(context, null, message, true,
-					false);
+			progress = ProgressDialog.show(context, null, message, true, false);
 	}
 
 	public static void dismissProgress() {
@@ -33,16 +31,9 @@ public class XEFragment extends Fragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		this.activity = getActivity();
-		this.actionBar = this.activity.getActionBar();
+		activity = getActivity();
+		actionBar = activity.getActionBar();
 		super.onCreate(savedInstanceState);
-	}
-
-	public void loadActionMenuBar(int resource) {
-		if (this.actionBar != null) {
-			actionBar.setCustomView(resource);
-			actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		}
 	}
 
 	public void addNestedFragment(int layoutID, Fragment fragment,

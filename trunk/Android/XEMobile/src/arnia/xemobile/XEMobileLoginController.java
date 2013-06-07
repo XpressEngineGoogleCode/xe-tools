@@ -196,7 +196,7 @@ public class XEMobileLoginController extends XEActivity implements
 					Editor prefEditor = pref.edit();
 					prefEditor.putString("ACTIVE_SITE", websiteUrl);
 					prefEditor.commit();
-					
+
 					// call dash board activity
 					Intent callDashboard = new Intent(
 							XEMobileLoginController.this,

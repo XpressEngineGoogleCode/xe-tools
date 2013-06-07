@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package arnia.xemobile;
+package arnia.xemobile.controls;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RadioGroup;
+import arnia.xemobile.R;
 
 public class SegmentedRadioGroup extends RadioGroup {
 

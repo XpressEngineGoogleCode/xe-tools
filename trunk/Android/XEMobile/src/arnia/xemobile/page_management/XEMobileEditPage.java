@@ -1,49 +1,45 @@
 package arnia.xemobile.page_management;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import arnia.xemobile.R;
 import arnia.xemobile.XEFragment;
 import arnia.xemobile.classes.XEHost;
+import arnia.xemobile.controls.XEMobileTextEditor;
 
-public class XEMobilePageTextEditor extends XEFragment implements OnClickListener {
+public class XEMobileEditPage extends XEFragment implements OnClickListener {
 	private String mid;
 	private String document_srl;
 	private XEMobileTextEditor htmlEditor;
 	private EditText titleEditText;
 	private Button saveButton;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View view = inflater.inflate(R.layout.xemobilepagetexteditorlayout, container,false);
-		htmlEditor=new XEMobileTextEditor();
-		
-		addNestedFragment(R.id.XEMOBILE_TEXT_EDITOR_HOLDER, htmlEditor, "htmlTextEditor");
-		
+		View view = inflater.inflate(R.layout.xemobilepagetexteditorlayout,
+				container, false);
+		htmlEditor = new XEMobileTextEditor();
+
+		addNestedFragment(R.id.XEMOBILE_TEXT_EDITOR_HOLDER, htmlEditor,
+				"htmlTextEditor");
+
 		Bundle args = getArguments();
 		mid = args.getString("mid");
 		document_srl = args.getString("document_srl");
-		
+
 		saveButton = (Button) view.findViewById(R.id.XEMOBILE_PAGE_EDITOR_SAVE);
 		saveButton.setOnClickListener(this);
-		
-		
-		
-		titleEditText = (EditText) view.findViewById(R.id.XEMOBILE_PAGE_EDITOR_BROWSER_TITLE);
-		
-//		mid = getActivity().getIntent().getStringExtra("mid");
-//		document_srl = getActivity().getIntent().getStringExtra("document_srl");
+
+		titleEditText = (EditText) view
+				.findViewById(R.id.XEMOBILE_PAGE_EDITOR_BROWSER_TITLE);
 
 		XEFragment.startProgress(getActivity(), "Page content is loading");
 		GetPageContentAndTitleAsyncTask task = new GetPageContentAndTitleAsyncTask();
@@ -54,52 +50,12 @@ public class XEMobilePageTextEditor extends XEFragment implements OnClickListene
 
 	@Override
 	public void onClick(View v) {
-		if(v.getId()==R.id.XEMOBILE_PAGE_EDITOR_SAVE){
+		if (v.getId() == R.id.XEMOBILE_PAGE_EDITOR_SAVE) {
 			SavePageAsyncTask task = new SavePageAsyncTask();
 			task.execute();
 		}
 	}
 
-	
-//	@Override
-//	public void afterTextChanged(Editable s) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void beforeTextChanged(CharSequence s, int start, int count,
-//			int after) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void onTextChanged(CharSequence s, int start, int before, int count) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-
-	// @Override
-	// protected void onCreate(Bundle savedInstanceState)
-	// {
-	// super.onCreate(savedInstanceState);
-	//
-	// mid = getIntent().getStringExtra("mid");
-	// document_srl = getIntent().getStringExtra("document_srl");
-	//
-	// startProgress("Page content is loading");
-	// GetPageContentAndTitleAsyncTask task = new
-	// GetPageContentAndTitleAsyncTask();
-	// task.execute();
-	// }
-
-//	@Override
-//	public void doneButton(View view) {
-//		SavePageAsyncTask task = new SavePageAsyncTask();
-//		task.execute();
-//	}
-//
 	// Async Task that gets the page content and title
 	private class GetPageContentAndTitleAsyncTask extends
 			AsyncTask<Object, Object, Object> {
@@ -125,15 +81,11 @@ public class XEMobilePageTextEditor extends XEFragment implements OnClickListene
 		protected void onPostExecute(Object result) {
 			super.onPostExecute(result);
 
-			// isLoggedIn(responseContent, XEMobilePageTextEditor.this);
-			// isLoggedIn(responseTitle, XEMobilePageTextEditor.this);
-
 			responseTitle = responseTitle.replace("<br/>", "\n");
 			responseContent = responseContent.replace("<br/>", "\n");
 
 			titleEditText.setText(responseTitle);
 			htmlEditor.setContent(responseContent);
-//			contentEditText.setText(responseContent);
 			dismissProgress();
 		}
 	}
@@ -143,7 +95,6 @@ public class XEMobilePageTextEditor extends XEFragment implements OnClickListene
 
 		@Override
 		protected Object doInBackground(Object... params) {
-//			String content = getContent();
 			String content = htmlEditor.getContent();
 			String title = titleEditText.getText().toString();
 
@@ -164,14 +115,6 @@ public class XEMobilePageTextEditor extends XEFragment implements OnClickListene
 			return null;
 		}
 
-		@Override
-		protected void onPostExecute(Object result) {
-			super.onPostExecute(result);
-
-			// finish();
-		}
-
 	}
 
-	
 }

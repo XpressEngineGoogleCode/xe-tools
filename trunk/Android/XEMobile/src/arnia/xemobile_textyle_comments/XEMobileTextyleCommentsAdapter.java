@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import android.content.Context;
-import android.util.Log;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -118,9 +117,9 @@ public class XEMobileTextyleCommentsAdapter extends BaseAdapter {
 		else
 			nickname.setPadding(0, 0, 0, 0);
 
-		WebView webView = (WebView) convertView
-				.findViewById(R.id.XEMOBILE_TEXTYLE_COMMENTS_CONTENTWEBVIEW);
-		webView.loadData(comment.content, "text/html", null);
+		TextView txtComment = (TextView) convertView
+				.findViewById(R.id.XEMOBILE_TEXTYLE_COMMENTS_CONTENT);
+		txtComment.setText(Html.fromHtml(comment.content));
 
 		Button reply = (Button) convertView
 				.findViewById(R.id.XEMOBILE_TEXTYLE_COMMENTS_REPLY);

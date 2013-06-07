@@ -1,6 +1,5 @@
 package arnia.xemobile.classes;
 
-import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;

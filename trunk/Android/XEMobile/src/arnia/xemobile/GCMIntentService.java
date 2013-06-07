@@ -15,7 +15,6 @@
  */
 package arnia.xemobile;
 
-
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -32,9 +31,6 @@ import com.google.android.gcm.GCMBaseIntentService;
  */
 public class GCMIntentService extends GCMBaseIntentService {
 
-	@SuppressWarnings("hiding")
-	private static final String TAG = "GCMIntentService";
-
 	public GCMIntentService() {
 		super("277857425607");
 	}
@@ -42,8 +38,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	/**
 	 * Issues a notification to inform the user that server has sent a message.
 	 */
-	private static void generateNotification(Context context, String message) 
-	{
+	private static void generateNotification(Context context, String message) {
 		long when = System.currentTimeMillis();
 		NotificationManager notificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -73,21 +68,22 @@ public class GCMIntentService extends GCMBaseIntentService {
 
 		Log.d("GCM", "RECEIVED A MESSAGE");
 		// Get the data from intent and send to notificaion bar
-		
+
 		String message = intent.getStringExtra("message");
-		
+
 		generateNotification(arg0, message);
 	}
 
 	@Override
-	protected void onRegistered(Context arg0, String arg1) 
-	{
-		XEHost.getINSTANCE().getRequest("/index.php?module=mobile_communication&act=procmobile_communicationRegistreForPopUpAndroid&id="+arg1);
+	protected void onRegistered(Context arg0, String arg1) {
+		XEHost.getINSTANCE()
+				.getRequest(
+						"/index.php?module=mobile_communication&act=procmobile_communicationRegistreForPopUpAndroid&id="
+								+ arg1);
 	}
 
 	@Override
-	protected void onUnregistered(Context arg0, String arg1) 
-	{
+	protected void onUnregistered(Context arg0, String arg1) {
 		// TODO Auto-generated method stub
 
 	}
