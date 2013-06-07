@@ -36,9 +36,10 @@
         android:text="Nickname"
         android:textStyle="bold" />
 
-    <WebView
-        android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_CONTENTWEBVIEW"
+    <TextView
+        android:id="@+id/XEMOBILE_TEXTYLE_COMMENTS_CONTENT"
         android:layout_width="wrap_content"
+        android:text="Comment"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/XEMOBILE_TEXTYLE_COMMENTS_NICKNAMETEXTVIEW"

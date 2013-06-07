@@ -3,26 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_action_bar"
-    android:orientation="horizontal" >
-
-    <ImageButton
-        android:id="@+id/XEMOBILE_BACK_BUTTON"
-        android:layout_width="25dp"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_action_bar_back"
-        android:src="@drawable/ic_action_bar_back" />
-
-    <ImageView
-        android:id="@+id/XEMOBILE_MENU_LOGO"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:contentDescription="Dashboard application logo"
-        android:src="@drawable/ic_launcher" />
+    android:orientation="vertical" >
 
     <Spinner
         android:id="@+id/XEMOBILE_MENU_SELECT_SITE"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

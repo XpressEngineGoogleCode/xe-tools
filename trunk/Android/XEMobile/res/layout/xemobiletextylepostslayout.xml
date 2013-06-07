@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <arnia.xemobile.SegmentedRadioGroup
+        <arnia.xemobile.controls.SegmentedRadioGroup
             android:id="@+id/XEMOBILE_POST_FILTER"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
                 android:gravity="center"
                 android:minHeight="33dip"
                 android:minWidth="40dip"
-                android:text="All posts"
+                android:text="@string/all_post"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/radio_colors" />
 
@@ -40,7 +40,7 @@
                 android:gravity="center"
                 android:minHeight="33dip"
                 android:minWidth="40dip"
-                android:text="Published"
+                android:text="@string/published"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/radio_colors" />
 
@@ -51,7 +51,7 @@
                 android:gravity="center"
                 android:minHeight="33dip"
                 android:minWidth="40dip"
-                android:text="Drafts"
+                android:text="@string/drafts"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/radio_colors" />
 
@@ -62,10 +62,10 @@
                 android:gravity="center"
                 android:minHeight="33dip"
                 android:minWidth="40dip"
-                android:text="Trash"
+                android:text="@string/trash"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/radio_colors" />
-        </arnia.xemobile.SegmentedRadioGroup>
+        </arnia.xemobile.controls.SegmentedRadioGroup>
     </LinearLayout>
 
 </LinearLayout>
