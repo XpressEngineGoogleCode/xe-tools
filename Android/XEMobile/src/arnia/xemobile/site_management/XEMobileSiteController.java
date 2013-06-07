@@ -108,7 +108,6 @@ public class XEMobileSiteController extends XEFragment implements
 
 	private class LogInInBackground extends AsyncTask<XEMobileSite, Void, Void> {
 		String xmlData;
-		boolean request_url_error = false;
 		XEMobileSite site;
 
 		@Override
@@ -135,10 +134,10 @@ public class XEMobileSiteController extends XEFragment implements
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				request_url_error = true;
-			} finally {
-				return null;
 			}
+			
+			return null;
+			
 		}
 
 		// verify the response after the request received a response
@@ -191,7 +190,7 @@ public class XEMobileSiteController extends XEFragment implements
 					toast.show();
 				}
 			} catch (Exception e) {
-				Log.i("leapkh","Add site error : " + e.getMessage());
+				Log.i("leapkh", "Add site error : " + e.getMessage());
 				e.printStackTrace();
 			}
 		}

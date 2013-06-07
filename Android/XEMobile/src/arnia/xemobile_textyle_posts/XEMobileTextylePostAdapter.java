@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
-import android.sax.StartElementListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -68,8 +65,8 @@ public class XEMobileTextylePostAdapter extends BaseAdapter {
 		}
 
 		// construct the view's elements
-		Button btnPublish = (Button) convertView
-				.findViewById(R.id.XEMOBILE_POST_UNPUBLISH_POST);
+//		Button btnPublish = (Button) convertView
+//				.findViewById(R.id.XEMOBILE_POST_UNPUBLISH_POST);
 		Button btnViewPost = (Button) convertView
 				.findViewById(R.id.XEMOBILE_POST_VIEW_POST);
 		

@@ -8,7 +8,6 @@ import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +40,6 @@ public class XEMobileDashboardFragment extends XEFragment implements
 		OnClickListener {
 
 	private Spinner selectSiteSpinner;
-	private Cursor siteCursor;
 	private ArrayList<XEMobileSite> sites;
 	private ArrayList<Object> sitesAndVirtualSites;
 	private SiteAdapter siteAdapter;
@@ -62,22 +59,17 @@ public class XEMobileDashboardFragment extends XEFragment implements
 	private TextView comment;
 	private TextView manageSite;
 
-	private ImageButton backButton;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		sitesAndVirtualSites = new ArrayList<Object>();
 		super.onCreate(savedInstanceState);
 
-		XEFragment.startProgress(getActivity(), "Loading...");
+		XEFragment.startProgress(getActivity(), getString(R.string.loading));
 		XEDatabaseHelper dbHelper = XEDatabaseHelper.getDBHelper(this.activity);
 		sitesAndVirtualSites.clear();
 		sites = dbHelper.getAllSites();
 
 		for (int i = 0; i < sites.size(); i++) {
-			// sitesAndVirtualSites.add(sites.get(i).siteUrl);
-			// selectingSite = siteCursor;
-			// lock.lock();
 			LogInInBackground loginTask = new LogInInBackground() {
 				@Override
 				protected void onPostExecute(XEMobileSite result) {
@@ -85,16 +77,6 @@ public class XEMobileDashboardFragment extends XEFragment implements
 					sitesAndVirtualSites.add(site);
 					if (array != null && array.textyles != null) {
 						sitesAndVirtualSites.addAll(array.textyles);
-
-						// for(int i = 0; i<array.textyles.size();i++)
-						// {
-						// commentCounts +=
-						// Integer.parseInt(array.textyles.get(i).comment_count);
-						// sitesAndVirtualSites.add(array.textyles.get(i));
-						// // sitesAndVirtualSites.add(site.siteUrl + "/" +
-						// array.textyles.get(i).browser_title);
-						// }
-						// adapter.notifyDataSetChanged();
 						siteAdapter.notifyDataSetChanged();
 					} else {
 						Toast.makeText(activity, R.string.no_textyle,
@@ -115,16 +97,10 @@ public class XEMobileDashboardFragment extends XEFragment implements
 		this.view = inflater.inflate(R.layout.xemobiledashboardlayout,
 				container, false);
 
-		// LinearLayout layoutHolder = (LinearLayout)
-		// view.findViewById(R.id.XEMOBILE_DASHBOARD_FRAGMENT_HOLDER);
-
 		statisticController = new XEMobileStatisticsController();
 
 		addNestedFragment(R.id.XEMOBILE_DASHBOARD_FRAGMENT_HOLDER,
 				statisticController, "StatisticController");
-
-		// Change action bar according to current fragment
-		this.loadActionMenuBar(R.layout.xemobileactionbarlayout);
 
 		newPost = (TextView) this.view
 				.findViewById(R.id.XEMOBILE_DASHBOARD_NEW_POST);
@@ -162,47 +138,32 @@ public class XEMobileDashboardFragment extends XEFragment implements
 				.findViewById(R.id.XEMOBILE_DASHBOARD_MENU_MANAGER);
 		manageMenus.setOnClickListener(this);
 
-		this.selectSiteSpinner = (Spinner) actionBar.getCustomView()
-				.findViewById(R.id.XEMOBILE_MENU_SELECT_SITE);
+		selectSiteSpinner = (Spinner) actionBar.getCustomView().findViewById(
+				R.id.XEMOBILE_MENU_SELECT_SITE);
 
-		this.backButton = (ImageButton) actionBar.getCustomView().findViewById(
-				R.id.XEMOBILE_BACK_BUTTON);
-		this.backButton.setOnClickListener(new OnClickListener() {
+		siteAdapter = new SiteAdapter(sitesAndVirtualSites);
+		selectSiteSpinner.setAdapter(siteAdapter);
 
-			@Override
-			public void onClick(View v) {
-				((XEMobileMainActivityController) activity).backwardScreen();
-
-			}
-		});
-
-		this.siteAdapter = new SiteAdapter(sitesAndVirtualSites);
-		this.selectSiteSpinner.setAdapter(siteAdapter);
-
-		this.commentCount = (TextView) view
+		commentCount = (TextView) view
 				.findViewById(R.id.XEMOBILE_DASHBOARD_COMMENT_COUNT);
 
 		// Handle login when user change site
-		this.selectSiteSpinner
+		selectSiteSpinner
 				.setOnItemSelectedListener(new OnItemSelectedListener() {
 					@Override
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
-						Log.i("XEMobile", "Handler item selected");
 						Object selectedItem = parent
 								.getItemAtPosition(position);
 						if (selectedItem.getClass() == XEMobileSite.class) {
 							XEFragment.startProgress(getActivity(),
-									"Logging...");
+									getString(R.string.logging));
 							selectingSite = (XEMobileSite) selectedItem;
 							((XEMobileMainActivityController) activity)
 									.setSelectingSite(selectingSite);
 							new LogInInBackground()
 									.execute((XEMobileSite) selectedItem);
 						} else {
-							Log.i("XEMobileVirtualSite",
-									"you selected virtual site");
-
 							XEMobileMainActivityController xeActivity = (XEMobileMainActivityController) activity;
 							Fragment currentDisplayFragment = xeActivity
 									.getCurrentDisplayedFragment();
@@ -218,27 +179,6 @@ public class XEMobileDashboardFragment extends XEFragment implements
 							}
 
 						}
-
-						// // String userSelectingSite = cursor.getString(1);
-						// // SharedPreferences pref = PreferenceManager
-						// // .getDefaultSharedPreferences(activity);
-						// // String loggedInSite =
-						// pref.getString("ACTIVE_SITE", "");
-						// // // if user select different site, login to another
-						// site
-						// // //
-						// if(loggedInSite.compareTo(userSelectingSite)!=0){
-						// // selectingSite = cursor;
-						// String userSelectingSite = selectedSite.siteUrl;
-						// SharedPreferences pref =
-						// PreferenceManager.getDefaultSharedPreferences(activity);
-						// String loggedInSite = pref.getString("ACTIVE_SITE",
-						// "");
-						// if user select different site, login to another site
-						// if(loggedInSite.compareTo(userSelectingSite)!=0){
-						// selectingSite = cursor;
-
-						// }
 
 					}
 
@@ -290,9 +230,6 @@ public class XEMobileDashboardFragment extends XEFragment implements
 					.indexOf(selectingSite) + 1);
 			XEMobileTextyleCommentsController textyleCommentController = new XEMobileTextyleCommentsController();
 			textyleCommentController.setTextyle(textyle2);
-			// Bundle args = new Bundle();
-			// args.putSerializable("textyle", textyle);
-			// textyleCommentController.setArguments(args);
 			mainActivity.addMoreScreen(textyleCommentController);
 			break;
 		case R.id.XEMOBILE_DASHBOARD_MANAGE_WEBSITE:
@@ -305,35 +242,17 @@ public class XEMobileDashboardFragment extends XEFragment implements
 		statisticController.refreshStatistic();
 	}
 
-	/*
-	 * private class GetCommentsCountAsynTask extends AsyncTask<Void, Void,
-	 * String>{
-	 * 
-	 * @Override protected String doInBackground(Void... params) { String count
-	 * =""; try{ count = XEHost .getINSTANCE() .getRequest(
-	 * "/index.php?module=mobile_communication&act=procmobile_communicationCommentCount"
-	 * ); }catch(Exception e){ e.printStackTrace(); } return count; }
-	 * 
-	 * @Override protected void onPostExecute(String count) {
-	 * 
-	 * commentCount.setText(count);
-	 * 
-	 * super.onPostExecute(count); }
-	 * 
-	 * }
-	 */
-
 	// AsyncTask for LogIn
 	private class LogInInBackground extends
 			AsyncTask<XEMobileSite, Void, XEMobileSite> {
 
 		private String xmlData;
-		private boolean request_url_error = false;
 		protected XEArrayList array;
 		protected XEMobileSite site;
 
 		// send the request in background
 
+		@SuppressWarnings("finally")
 		@Override
 		protected synchronized XEMobileSite doInBackground(
 				XEMobileSite... params) {
@@ -372,9 +291,7 @@ public class XEMobileDashboardFragment extends XEFragment implements
 			} catch (Exception e) {
 
 				e.printStackTrace();
-				request_url_error = true;
 			} finally {
-
 				return site;
 			}
 		}
@@ -388,7 +305,7 @@ public class XEMobileDashboardFragment extends XEFragment implements
 			for (int i = 0; i < array.textyles.size(); i++) {
 				count += Integer.parseInt(array.textyles.get(i).comment_count);
 			}
-			commentCount.setText("(" + String.valueOf(count) + ")");
+			commentCount.setText(count + " NEW");
 
 			refreshContent();
 			dismissProgress();

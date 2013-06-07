@@ -7,87 +7,49 @@ import java.util.ArrayList;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import arnia.xemobile.R;
-import arnia.xemobile.XEActivity;
 import arnia.xemobile.XEFragment;
 import arnia.xemobile.XEMobileMainActivityController;
-
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
 import arnia.xemobile.classes.XEMenu;
 import arnia.xemobile.classes.XEMenuItem;
 
-public class XEMobileMenuItemsController extends XEFragment
-{
+public class XEMobileMenuItemsController extends XEFragment {
 	private String menuItemParentSRL;
 	private String menuSRL;
 	private ArrayList<XEMenuItem> arrayWithMenuItems;
 	private XEMobileMenuItemsAdapter adapter;
-	
+
 	private Button addMenuItemButton;
-	
-//	@Override
-//	protected void onCreate(Bundle savedInstanceState) 
-//	{
-//		super.onCreate(savedInstanceState);
-////		setContentView(R.layout.xemobilemenuitemslayout);
-//		setContentView(R.layout.xemobilemenueditlayout);
-//		ListView listView = (ListView) findViewById(R.id.XEMOBILE_MENUITEMS_LISTVIEW);
-//		addMenuItemButton = (Button) findViewById(R.id.XEMOBILE_MENUITEMS_ADDMENUITEM);
-//		
-//		addMenuItemButton.setOnClickListener(new OnClickListener() 
-//		{
-//			//method called when the Add Button is pressed 
-//			@Override
-//			public void onClick(View v) 
-//			{
-//				Intent intent = new Intent(XEMobileMenuItemsController.this,XEMobileAddMenuItemController.class);
-//				intent.putExtra("menu_parent_srl", menuItemParentSRL);
-//				startActivity(intent);
-//			}
-//		});
-//		
-//		Intent intent = getIntent();
-//		menuItemParentSRL = intent.getStringExtra("menu_item_parent_srl");
-//		
-//		adapter = new XEMobileMenuItemsAdapter(this, menuItemParentSRL);
-//		listView.setAdapter(adapter);
-//	}
-	
 	boolean isOnPause;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
-		View view = inflater.inflate(R.layout.xemobilemenueditlayout, container,false);
-		
-		ListView listView = (ListView) view.findViewById(R.id.XEMOBILE_EDITMENU_LISTVIEW);
-		addMenuItemButton = (Button) view.findViewById(R.id.XEMOBILE_EDITMENU_ADDBUTTON);
-		
-		addMenuItemButton.setOnClickListener(new OnClickListener() 
-		{
-			//method called when the Add Button is pressed 
+
+		View view = inflater.inflate(R.layout.xemobilemenueditlayout,
+				container, false);
+
+		ListView listView = (ListView) view
+				.findViewById(R.id.XEMOBILE_EDITMENU_LISTVIEW);
+		addMenuItemButton = (Button) view
+				.findViewById(R.id.XEMOBILE_EDITMENU_ADDBUTTON);
+
+		addMenuItemButton.setOnClickListener(new OnClickListener() {
+			// method called when the Add Button is pressed
 			@Override
-			public void onClick(View v) 
-			{
-//				Intent intent = new Intent(activity,XEMobileAddMenuItemController.class);
-//				intent.putExtra("menu_parent_srl", menuItemParentSRL);
-//				startActivity(intent);
-				
-				XEMobileMainActivityController mainActivity = (XEMobileMainActivityController)activity;
+			public void onClick(View v) {
+				XEMobileMainActivityController mainActivity = (XEMobileMainActivityController) activity;
 				Fragment screen = new XEMobileAddMenuItemController();
 				Bundle args = new Bundle();
 				args.putString("menu_srl", menuSRL);
@@ -96,113 +58,110 @@ public class XEMobileMenuItemsController extends XEFragment
 				mainActivity.addMoreScreen(screen);
 			}
 		});
-		
+
 		Bundle argument = getArguments();
 		menuSRL = argument.getString("menu_srl");
 		menuItemParentSRL = argument.getString("menu_item_parent_srl");
-		adapter = new XEMobileMenuItemsAdapter(activity, menuItemParentSRL,menuSRL);
+		adapter = new XEMobileMenuItemsAdapter(activity, menuItemParentSRL,
+				menuSRL);
 		listView.setAdapter(adapter);
-		
+
 		return view;
 	}
-	
+
 	@Override
-	public void onResume() 
-	{
+	public void onResume() {
 		super.onResume();
-		
+
 		XEFragment.startProgress(getActivity(), "Logging...");
 		GetMenusAsyncTask getAsyncTask = new GetMenusAsyncTask();
 		getAsyncTask.execute();
 	}
-	
+
 	@Override
-	public void onPause() 
-	{
+	public void onPause() {
 		super.onPause();
 		isOnPause = true;
 	}
-	
-	//Async Task request to get a list of XEMenuItems
-	private class GetMenusAsyncTask extends AsyncTask<Object, Object, Object>
-	{
+
+	// Async Task request to get a list of XEMenuItems
+	private class GetMenusAsyncTask extends AsyncTask<Object, Object, Object> {
 		XEArrayList arrayWithMenus = null;
 		String xmlData;
-		
+
 		@Override
-		protected Object doInBackground(Object... params) 
-		{
-			//send request
-			xmlData = XEHost.getINSTANCE().getRequest("/index.php?XDEBUG_SESSION_START=netbeans-xdebug&module=mobile_communication&act=procmobile_communicationDisplayMenu");
-			
-			//parse response
-			Serializer serializer = new Persister();        
+		protected Object doInBackground(Object... params) {
+			// send request
+			xmlData = XEHost
+					.getINSTANCE()
+					.getRequest(
+							"/index.php?XDEBUG_SESSION_START=netbeans-xdebug&module=mobile_communication&act=procmobile_communicationDisplayMenu");
+
+			// parse response
+			Serializer serializer = new Persister();
 			Reader reader = new StringReader(xmlData);
 			try {
-				arrayWithMenus = 
-					serializer.read(XEArrayList.class, reader, false); 
-				} catch (Exception e) 
-				{
-					e.printStackTrace();
-				}
+				arrayWithMenus = serializer.read(XEArrayList.class, reader,
+						false);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return null;
 		}
-		
+
 		@Override
-		protected void onPostExecute(Object result) 
-		{
+		protected void onPostExecute(Object result) {
 			super.onPostExecute(result);
-			
-//			isLoggedIn(xmlData, XEMobileMenuItemsController.this);
-			
+
+			// isLoggedIn(xmlData, XEMobileMenuItemsController.this);
+
 			dismissProgress();
 			int i;
-			 if( arrayWithMenus != null && arrayWithMenus.menus != null)
-			   {
-				 //Get menu array of menu by parentSRL
-				   for(i = 0 ; i<arrayWithMenus.menus.size() ; i++)
-				   {
-					   XEMenu menu = arrayWithMenus.menus.get(i);
-					   if( menu.menuSrl.compareTo(menuSRL)==0 && menuItemParentSRL.compareTo("0")==0 )
-					   {
-						   arrayWithMenuItems =  menu.menuItems;
-						   adapter.setWholeMenuItemsOfAMenu(arrayWithMenuItems);
-						   break;
-					   }
-					   if(menu.menuItems!=null){
-						   arrayWithMenuItems = getSubMenuOfMenuParent(menu.menuItems,menuItemParentSRL);
-						   if(arrayWithMenuItems!=null){
-							   adapter.setWholeMenuItemsOfAMenu(menu.menuItems);
-							   break;
-							   
-						   }
-					   }
-				   }
-				   
-				   adapter.setArrayWithMenuItems(arrayWithMenuItems);
-				   adapter.notifyDataSetChanged();
-			   }
+			if (arrayWithMenus != null && arrayWithMenus.menus != null) {
+				// Get menu array of menu by parentSRL
+				for (i = 0; i < arrayWithMenus.menus.size(); i++) {
+					XEMenu menu = arrayWithMenus.menus.get(i);
+					if (menu.menuSrl.compareTo(menuSRL) == 0
+							&& menuItemParentSRL.compareTo("0") == 0) {
+						arrayWithMenuItems = menu.menuItems;
+						adapter.setWholeMenuItemsOfAMenu(arrayWithMenuItems);
+						break;
+					}
+					if (menu.menuItems != null) {
+						arrayWithMenuItems = getSubMenuOfMenuParent(
+								menu.menuItems, menuItemParentSRL);
+						if (arrayWithMenuItems != null) {
+							adapter.setWholeMenuItemsOfAMenu(menu.menuItems);
+							break;
+
+						}
+					}
+				}
+
+				adapter.setArrayWithMenuItems(arrayWithMenuItems);
+				adapter.notifyDataSetChanged();
+			}
 		}
-		private ArrayList<XEMenuItem> getSubMenuOfMenuParent(ArrayList<XEMenuItem> menuItemlist,String menuItemParentSRL){
-			//Get menu array of menu by parentSRL
-			ArrayList<XEMenuItem> result=null;
-			if(menuItemlist!=null){ 
-				for(XEMenuItem menuItem : menuItemlist){
-				  if(menuItem.srl.compareTo(menuItemParentSRL)==0){
-					  return menuItem.menuItems;					  
-				  }else{
-					  result = getSubMenuOfMenuParent(menuItem.menuItems, menuItemParentSRL);
-					  if(result!=null){
-						  return result;
-					  }
-				  }
+
+		private ArrayList<XEMenuItem> getSubMenuOfMenuParent(
+				ArrayList<XEMenuItem> menuItemlist, String menuItemParentSRL) {
+			// Get menu array of menu by parentSRL
+			ArrayList<XEMenuItem> result = null;
+			if (menuItemlist != null) {
+				for (XEMenuItem menuItem : menuItemlist) {
+					if (menuItem.srl.compareTo(menuItemParentSRL) == 0) {
+						return menuItem.menuItems;
+					} else {
+						result = getSubMenuOfMenuParent(menuItem.menuItems,
+								menuItemParentSRL);
+						if (result != null) {
+							return result;
+						}
+					}
 				}
 			}
 			return result;
 		}
-			
-	}	
+
+	}
 }
-
-
-

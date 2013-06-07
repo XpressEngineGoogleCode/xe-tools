@@ -1,29 +1,25 @@
 package arnia.xemobile.global_settings;
 
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import org.apache.james.mime4j.io.LimitedInputStream;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -32,14 +28,10 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import arnia.xemobile.R;
-import arnia.xemobile.XEActivity;
 import arnia.xemobile.XEFragment;
-import arnia.xemobile.XEMobileLoginController;
 import arnia.xemobile.XEMobileMainActivityController;
-import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEGlobalSettings;
 import arnia.xemobile.classes.XEHost;
-import arnia.xemobile.classes.XESettings;
 
 public class XEMobileGlobalSettingsController extends XEFragment implements
 		OnClickListener {
@@ -115,55 +107,6 @@ public class XEMobileGlobalSettingsController extends XEFragment implements
 
 		return view;
 	}
-
-	// @Override
-	// protected void onCreate(Bundle savedInstanceState)
-	// {
-	// super.onCreate(savedInstanceState);
-	// setContentView(R.layout.xemobileglobalsettingslayout);
-	//
-	// //take reference to UI elements
-	// selectedLanguagesButton = (Button)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_SELECTEDLANGS);
-	// selectedLanguagesButton.setOnClickListener(this);
-	// selectedLanguagesButton = (Button)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_SELECTEDLANGS);
-	// defaultLanguagesSpinner = (Spinner)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_DEFAULTLANG);
-	// localTimeSpinner = (Spinner)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SPINNER_LOCAL);
-	// adminAccesIPEditText = (EditText)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_EDITTEXT_LIMITIP);
-	// defaultURLEditText = (EditText)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_EDITTEXT_DEFAULTURL);
-	// sslNeverOptionRadioButton = (RadioButton)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_RADIO_SSL_NEVER);
-	// sslOptionalOptionRadioButton = (RadioButton)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_RADIO_SSL_OPTIONAL);
-	// sslAlwaysOptionRadioButton = (RadioButton)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_RADIO_SSL_ALWAYS);
-	// mobileTemplateCheckBox = (CheckBox)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_MOBILETEMPL);
-	// rewriteModeCheckBox = (CheckBox)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_REWRITEMODE);
-	// enableSSOCheckBox = (CheckBox)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_ENABLESSO);
-	// sessionDBCheckBox = (CheckBox)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_SESSIONDB);
-	// qmailCheckBox = (CheckBox)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_QMAIL);
-	// htmlDTDCheckBox = (CheckBox)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_CHECKBOX_HTMLDTD);
-	// saveButton = (Button)
-	// findViewById(R.id.XEMOBILE_GLOBALSETTINGS_SAVEBUTTON);
-	// saveButton.setOnClickListener(this);
-	//
-	// startProgress("Loading settings");
-	//
-	// //start the request to get the current setting configuration
-	// GetSettingsAsyncTask task = new GetSettingsAsyncTask();
-	// task.execute();
-	// }
 
 	// method called when one of the buttons is pressed: save button or selected
 	// languages button
@@ -243,9 +186,6 @@ public class XEMobileGlobalSettingsController extends XEFragment implements
 		protected void onPostExecute(Object result) {
 			super.onPostExecute(result);
 
-			// check if user is logged
-			// isLoggedIn(xmlResponse, XEMobileGlobalSettingsController.this);
-
 			dismissProgress();
 			if (settings != null) {
 				setSelectedLanguages();
@@ -261,10 +201,6 @@ public class XEMobileGlobalSettingsController extends XEFragment implements
 				setSessionDBOption();
 				setQmailOption();
 				setHtmlDTDOption();
-			} else {
-				// Intent intent = new
-				// Intent(XEMobileGlobalSettingsController.this,XEMobileLoginController.class);
-				// startActivity(intent);
 			}
 		}
 	}
@@ -467,7 +403,7 @@ public class XEMobileGlobalSettingsController extends XEFragment implements
 		protected String doInBackground(String... param) {
 			// build the request
 
-			HashMap params = new HashMap();
+			HashMap<String, Serializable> params = new HashMap<String, Serializable>();
 
 			params.put("module", "install");
 			params.put("act", "procInstallAdminConfig");

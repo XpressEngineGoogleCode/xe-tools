@@ -2,20 +2,17 @@ package arnia.xemobile.menu_management;
 
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -24,142 +21,111 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import arnia.xemobile.R;
-import arnia.xemobile.XEActivity;
 import arnia.xemobile.XEFragment;
 import arnia.xemobile.classes.XEArrayList;
 import arnia.xemobile.classes.XEHost;
-import arnia.xemobile.classes.XEMenu;
 import arnia.xemobile.classes.XEMenuItemsDetails;
 import arnia.xemobile.classes.XEModule;
 
-public class XEMobileMenuItemEditController extends XEFragment  implements OnClickListener,android.widget.CompoundButton.OnCheckedChangeListener
-{
-	//interface elements
+public class XEMobileMenuItemEditController extends XEFragment implements
+		OnClickListener, android.widget.CompoundButton.OnCheckedChangeListener {
+	// interface elements
 	private EditText linkTitle;
 	private RadioButton createRadioOption;
 	private RadioButton selectRadioOption;
 	private RadioButton menuURLRadioOption;
-	
+
 	private RadioButton articleRadioOption;
 	private RadioButton widgetRadioOption;
 	private RadioButton externalRadioOption;
-	
+
 	private TextView moduleIDTextView;
 	private EditText moduleIDEditText;
 	private CheckBox isNewWindow;
-	
+
 	private TextView menuURLTextView;
 	private EditText menuURLEditText;
-	
+
 	private Spinner availablePages;
 	private Spinner pageTypes;
 	private Button saveButton;
-	
-	//menu parent srl
-	private String parentSRL;
-	private String menuItemSRL;
-	private String menu_srl;
-	
-	private XEMenuItemsDetails details;
-	
-	//Array with modules for spinner
-	private XEArrayList modules;
-	
-	//spinner adapter
-	private ArrayAdapter<XEModule> adapter;
-	
-	private final String PAGE_TYPE_WIDGET="WIDGET";
-	private final String PAGE_TYPE_EXTERNAL="EXTERNAL";
-	private final String PAGE_TYPE_ARTICAL="ARTICLE";
-	
-//	@Override
-//	protected void onCreate(Bundle savedInstanceState) 
-//	{
-//		super.onCreate(savedInstanceState);
-//		
-//		//load interface
-//		setContentView(R.layout.xemobilemenuitemeditlayout);
-//		
-//		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-//		
-//		//take reference to interface objects
-//
-//		
-//		//get out of intent the parent srl
-//		parentSRL = getIntent().getStringExtra("menu_parent_srl");
-//		menuItemSRL = getIntent().getStringExtra("menu_item_srl");
-//		
-//		
-//		//make request to get a list of modules for spinner
-////		GetModulesAsyncTask task = new GetModulesAsyncTask();
-////		task.execute();
-//		
-//		//action for save button
-////		saveButon.setOnClickListener(this);
-//		
-//		
-//	}
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-		View view = inflater.inflate(R.layout.xemobilemenuitemeditlayout, container,false);
-		adapter = new ArrayAdapter<XEModule>(this.activity, android.R.layout.simple_spinner_item);
-		
-		availablePages = (Spinner) view.findViewById(R.id.XEMOBILE_AVAILABLE_PAGES);
-		pageTypes= (Spinner) view.findViewById(R.id.XEMOBILE_PAGE_TYPES);
-		
+	// menu parent srl
+	private String menuItemSRL;
+
+	private XEMenuItemsDetails details;
+
+	// Array with modules for spinner
+	private XEArrayList modules;
+
+	// spinner adapter
+	private ArrayAdapter<XEModule> adapter;
+
+	private final String PAGE_TYPE_WIDGET = "WIDGET";
+	private final String PAGE_TYPE_EXTERNAL = "EXTERNAL";
+	private final String PAGE_TYPE_ARTICAL = "ARTICLE";
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		View view = inflater.inflate(R.layout.xemobilemenuitemeditlayout,
+				container, false);
+		adapter = new ArrayAdapter<XEModule>(this.activity,
+				android.R.layout.simple_spinner_item);
+
+		availablePages = (Spinner) view
+				.findViewById(R.id.XEMOBILE_AVAILABLE_PAGES);
+		pageTypes = (Spinner) view.findViewById(R.id.XEMOBILE_PAGE_TYPES);
+
 		linkTitle = (EditText) view.findViewById(R.id.XEMOBILE_LINK_TEXT);
 		isNewWindow = (CheckBox) view.findViewById(R.id.XEMOBILE_NEW_WINDOW);
-		
+
 		Bundle args = getArguments();
-		menu_srl = args.getString("menu_srl");
-		parentSRL = args.getString("menu_parent_srl");
 		menuItemSRL = args.getString("menu_item_srl");
-		
-		//make request to get a list of modules for spinner
+
+		// make request to get a list of modules for spinner
 		GetModulesAsyncTask task = new GetModulesAsyncTask();
 		task.execute();
-	
-		//action for save button
-		saveButton = (Button) view.findViewById(R.id.XEMOBILE_EDIT_MENU_SAVE_BUTTON);
+
+		// action for save button
+		saveButton = (Button) view
+				.findViewById(R.id.XEMOBILE_EDIT_MENU_SAVE_BUTTON);
 		saveButton.setOnClickListener(this);
-		
+
 		availablePages.setAdapter(adapter);
-		
-		
-		//handle when selected page type		
+
+		// handle when selected page type
 		pageTypes.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,int position, long id) {
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
 				refreshAvailablePageAdapter(returnType());
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		});
-		
+
 		return view;
 	}
-	
-	public void refreshAvailablePageAdapter(String pageType){
-		if(modules!=null){
-			if(modules.modules!=null){
+
+	public void refreshAvailablePageAdapter(String pageType) {
+		if (modules != null) {
+			if (modules.modules != null) {
 				XEModule modulePage;
 				adapter.clear();
-				for(int i=0;i<modules.modules.size();i++){
+				for (int i = 0; i < modules.modules.size(); i++) {
 					modulePage = modules.modules.get(i);
-					if(modulePage.page_type.compareTo(pageType)==0){
+					if (modulePage.page_type.compareTo(pageType) == 0) {
 						adapter.add(modulePage);
 					}
 				}
@@ -167,364 +133,214 @@ public class XEMobileMenuItemEditController extends XEFragment  implements OnCli
 			}
 		}
 	}
-	
-	//called when the save button is pressed
+
+	// called when the save button is pressed
 	@Override
-	public void onClick(View v) 
-	{
-//		if( createRadioOption.isChecked() )
-//			{
-//				CreateMenuAsyncTask task = new CreateMenuAsyncTask();
-//				task.execute();
-//			}
-//		else if( selectRadioOption.isChecked() )
-//			{
-				SelectModuleAsyncTask task = new SelectModuleAsyncTask();
-				task.execute();
-//			}
-//		else if( menuURLRadioOption.isChecked() )
-//			{
-//				MenuURLAsyncTask task = new MenuURLAsyncTask();
-//				task.execute();
-//			}
+	public void onClick(View v) {
 	}
-	
-	//the method returns the type selected
-	private String returnType()
-	{
-//		if( articleRadioOption.isChecked() ) return "ARTICLE";
-//		else if( widgetRadioOption.isChecked() ) return "WIDGET";
-//		else if( externalRadioOption.isChecked() ) return "EXTERNAL";
-//		return "";
-		if(((String)pageTypes.getSelectedItem()).compareTo("Widget page")==0){
+
+	// the method returns the type selected
+	private String returnType() {
+		if (((String) pageTypes.getSelectedItem()).compareTo("Widget page") == 0) {
 			return this.PAGE_TYPE_WIDGET;
-		}else if(((String)pageTypes.getSelectedItem()).compareTo("Article page")==0){
+		} else if (((String) pageTypes.getSelectedItem())
+				.compareTo("Article page") == 0) {
 			return this.PAGE_TYPE_ARTICAL;
-		}else {
+		} else {
 			return this.PAGE_TYPE_EXTERNAL;
 		}
-		
-		
-		
-		
+
 	}
-	private String getPageTypeValue(String text){
-		if(text.compareTo("Widget page")==0){
+
+	private String getPageTypeValue(String text) {
+		if (text.compareTo("Widget page") == 0) {
 			return this.PAGE_TYPE_WIDGET;
-		}else if(text.compareTo("Article page")==0){
+		} else if (text.compareTo("Article page") == 0) {
 			return this.PAGE_TYPE_ARTICAL;
-		}else {
+		} else {
 			return this.PAGE_TYPE_EXTERNAL;
 		}
 	}
-	
-	private String openInNewWindow()
-	{
-		if( isNewWindow.isChecked() ) return "Y";
-		else return "N";
-	}
-	
+
 	// update the interface when the user change the option
 	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
-	{
-		if( buttonView == menuURLRadioOption )
-		{
-			if( isChecked )
-			{
-					availablePages.setVisibility(View.INVISIBLE);
-					articleRadioOption.setVisibility(View.INVISIBLE);
-					widgetRadioOption.setVisibility(View.INVISIBLE);
-					externalRadioOption.setVisibility(View.INVISIBLE);
-					
-					moduleIDEditText.setVisibility(View.INVISIBLE);
-					moduleIDTextView.setVisibility(View.INVISIBLE);
-					
-					menuURLTextView.setVisibility(View.VISIBLE);
-					menuURLEditText.setVisibility(View.VISIBLE);
-			}
-			else
-			{
-				menuURLTextView.setVisibility(View.INVISIBLE);
-				menuURLEditText.setVisibility(View.INVISIBLE);
-			}
-		}
-		else if( buttonView == createRadioOption )
-		{
-			if( isChecked )
-			{
-			articleRadioOption.setVisibility(View.VISIBLE);
-			articleRadioOption.setChecked(true);
-			widgetRadioOption.setVisibility(View.VISIBLE);
-			externalRadioOption.setVisibility(View.VISIBLE);
-		
-			moduleIDEditText.setVisibility(View.VISIBLE);
-			moduleIDTextView.setVisibility(View.VISIBLE);
-		
-			menuURLTextView.setVisibility(View.INVISIBLE);
-			menuURLEditText.setVisibility(View.INVISIBLE);
-		
-			availablePages.setVisibility(View.VISIBLE);
-			}
-			else
-			{
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		if (buttonView == menuURLRadioOption) {
+			if (isChecked) {
+				availablePages.setVisibility(View.INVISIBLE);
 				articleRadioOption.setVisibility(View.INVISIBLE);
 				widgetRadioOption.setVisibility(View.INVISIBLE);
 				externalRadioOption.setVisibility(View.INVISIBLE);
-			
+
+				moduleIDEditText.setVisibility(View.INVISIBLE);
+				moduleIDTextView.setVisibility(View.INVISIBLE);
+
+				menuURLTextView.setVisibility(View.VISIBLE);
+				menuURLEditText.setVisibility(View.VISIBLE);
+			} else {
+				menuURLTextView.setVisibility(View.INVISIBLE);
+				menuURLEditText.setVisibility(View.INVISIBLE);
+			}
+		} else if (buttonView == createRadioOption) {
+			if (isChecked) {
+				articleRadioOption.setVisibility(View.VISIBLE);
+				articleRadioOption.setChecked(true);
+				widgetRadioOption.setVisibility(View.VISIBLE);
+				externalRadioOption.setVisibility(View.VISIBLE);
+
+				moduleIDEditText.setVisibility(View.VISIBLE);
+				moduleIDTextView.setVisibility(View.VISIBLE);
+
+				menuURLTextView.setVisibility(View.INVISIBLE);
+				menuURLEditText.setVisibility(View.INVISIBLE);
+
+				availablePages.setVisibility(View.VISIBLE);
+			} else {
+				articleRadioOption.setVisibility(View.INVISIBLE);
+				widgetRadioOption.setVisibility(View.INVISIBLE);
+				externalRadioOption.setVisibility(View.INVISIBLE);
+
 				moduleIDEditText.setVisibility(View.INVISIBLE);
 				moduleIDTextView.setVisibility(View.INVISIBLE);
 			}
-		}
-		else if( buttonView == selectRadioOption )
-		{
-			if( isChecked )
-			{
-					articleRadioOption.setVisibility(View.INVISIBLE);
-					widgetRadioOption.setVisibility(View.INVISIBLE);
-					externalRadioOption.setVisibility(View.INVISIBLE);
-				
-					moduleIDEditText.setVisibility(View.INVISIBLE);
-					moduleIDTextView.setVisibility(View.INVISIBLE);
-				
-					menuURLTextView.setVisibility(View.INVISIBLE);
-					menuURLEditText.setVisibility(View.INVISIBLE);
-				
-					availablePages.setVisibility(View.VISIBLE);
-			}
-			else
-				{
+		} else if (buttonView == selectRadioOption) {
+			if (isChecked) {
+				articleRadioOption.setVisibility(View.INVISIBLE);
+				widgetRadioOption.setVisibility(View.INVISIBLE);
+				externalRadioOption.setVisibility(View.INVISIBLE);
+
+				moduleIDEditText.setVisibility(View.INVISIBLE);
+				moduleIDTextView.setVisibility(View.INVISIBLE);
+
+				menuURLTextView.setVisibility(View.INVISIBLE);
+				menuURLEditText.setVisibility(View.INVISIBLE);
+
+				availablePages.setVisibility(View.VISIBLE);
+			} else {
 				availablePages.setVisibility(View.INVISIBLE);
-				}
-		}
-	}
-	
-	//AsyncTask that is executed if the "Create" button is checked
-	private class CreateMenuAsyncTask extends AsyncTask<Object, Object, Object>
-	{
-		@Override
-		protected Object doInBackground(Object... param) 
-		{
-			HashMap<String, String> params = new HashMap<String, String>();
-			
-			params.put("ruleset", "insertMenuItem");
-			params.put("module","mobile_communication");
-			params.put("act","procmobile_communicationMenuItem");
-			params.put("menu_item_srl",menuItemSRL);
-			params.put("menu_srl", parentSRL);
-			params.put("menu_name_key",linkTitle.getText().toString());
-			params.put("menu_name",linkTitle.getText().toString());
-			params.put("cType","CREATE");
-			
-			params.put("module_type", "ARTICLE");
-			params.put("menu_open_window", openInNewWindow());
-			params.put("create_menu_url",moduleIDEditText.getText().toString());
-			
-			XEHost.getINSTANCE().postMultipart(params, "/");
-			
-			return null;
-		}
-		
-		@Override
-		protected void onPostExecute(Object result) 
-		{
-			super.onPostExecute(result);
-//			finish();
-		}
-	}
-	
-	//AsyncTask that is executed if the "Select" button is checked
-	private class SelectModuleAsyncTask extends AsyncTask<Object, Object, Object>
-	{
-		@Override
-		protected Object doInBackground(Object... param) 
-		{
-			HashMap<String, String> params = new HashMap<String, String>();
-			
-			params.put("ruleset", "insertMenuItem");
-			params.put("module","mobile_communication");
-			params.put("act","procmobile_communicationMenuItem");
-//			params.put("menu_srl", parentSRL);
-			params.put("menu_srl", menu_srl);
-			params.put("menu_item_srl", menuItemSRL);
-			params.put("menu_name_key",linkTitle.getText().toString());
-			params.put("menu_name",linkTitle.getText().toString());
-			params.put("cType","SELECT");
-			params.put("module_type", returnType());
-			params.put("menu_open_window", openInNewWindow());
-			params.put("select_menu_url",(String) availablePages.getSelectedItem().toString());
-			
-			XEHost.getINSTANCE().postMultipart(params, "/");
-			
-			return null;
-		}
-		
-		@Override
-		protected void onPostExecute(Object result) 
-		{
-			super.onPostExecute(result);
-//			finish();
+			}
 		}
 	}
 
-	//Async Task that is executed if the "Menu URL" button is checked
-	private class MenuURLAsyncTask extends AsyncTask<Object, Object, Object>
-	{
-		@Override
-		protected Object doInBackground(Object... param) 
-		{
-			HashMap<String, String> params = new HashMap<String, String>();
-			
-			params.put("ruleset", "insertMenuItem");
-			params.put("module","mobile_communication");
-			params.put("act","procmobile_communicationMenuItem");
-			params.put("menu_srl", parentSRL);
-			params.put("menu_item_srl", menuItemSRL);
-			params.put("menu_name_key",linkTitle.getText().toString());
-			params.put("menu_name",linkTitle.getText().toString());
-			params.put("cType","URL");
-			params.put("module_type", "ARTICLE");
-			params.put("menu_open_window", openInNewWindow());
-			params.put("menu_url",menuURLEditText.getText().toString());
-			
-			XEHost.getINSTANCE().postMultipart(params, "/");
-			
-			return null;
-		}
-		
-		@Override
-		protected void onPostExecute(Object result) 
-		{
-			super.onPostExecute(result);
-//			finish();
-		}
-	}
-	
-	//Async Task that gets details about the current edited menu
-	private class GetEditedMenuAsyncTask extends AsyncTask<Object, Object, Object>
-	{
+	// Async Task that gets details about the current edited menu
+	private class GetEditedMenuAsyncTask extends
+			AsyncTask<Object, Object, Object> {
 
 		@Override
-		protected Object doInBackground(Object... params) 
-		{
-			String xmlData = "<?xml version=\"1.0\" encoding=\"utf-8\" ?><methodCall><params><menu_item_srl><![CDATA[" + menuItemSRL + "]]></menu_item_srl><module><![CDATA[menu]]></module><act><![CDATA[getMenuAdminItemInfo]]></act></params></methodCall>";
-			
-			String response = XEHost.getINSTANCE().postRequest("/index.php", xmlData);
-			
-			 Serializer serializer = new Persister();        
-	       
-	         Reader reader = new StringReader(response);
-	       
-	         try {
-	      	  details = serializer.read(XEMenuItemsDetails.class, reader, false);
-	      	 
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		protected Object doInBackground(Object... params) {
+			String xmlData = "<?xml version=\"1.0\" encoding=\"utf-8\" ?><methodCall><params><menu_item_srl><![CDATA["
+					+ menuItemSRL
+					+ "]]></menu_item_srl><module><![CDATA[menu]]></module><act><![CDATA[getMenuAdminItemInfo]]></act></params></methodCall>";
+
+			String response = XEHost.getINSTANCE().postRequest("/index.php",
+					xmlData);
+
+			Serializer serializer = new Persister();
+
+			Reader reader = new StringReader(response);
+
+			try {
+				details = serializer.read(XEMenuItemsDetails.class, reader,
+						false);
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return null;
 		}
-		
+
 		@Override
-		protected void onPostExecute(Object result) 
-		{
+		protected void onPostExecute(Object result) {
 			super.onPostExecute(result);
-			
+
 			linkTitle.setText(details.name);
-			if( details.open_window.equals("Y") ) isNewWindow.setChecked(true);
-							else isNewWindow.setChecked(false);
-			
-			//moduleType may be null somehow			
-			if(details.moduleType==null){
-				createRadioOption.setChecked(true);
-			}else{
-				if( details.moduleType.equals("page") )
-				{
+			if (details.open_window.equals("Y"))
+				isNewWindow.setChecked(true);
+			else
+				isNewWindow.setChecked(false);
+
+			// moduleType may be null somehow
+			if (details.moduleType == null) {
+				// createRadioOption.setChecked(true);
+			} else {
+				if (details.moduleType.equals("page")) {
 
 					int i;
-					for(i=0;i<pageTypes.getAdapter().getCount()-1;i++){
-						if((getPageTypeValue((String)pageTypes.getAdapter().getItem(i))).compareTo(details.pageType)==0){
+					for (i = 0; i < pageTypes.getAdapter().getCount() - 1; i++) {
+						if ((getPageTypeValue((String) pageTypes.getAdapter()
+								.getItem(i))).compareTo(details.pageType) == 0) {
 							pageTypes.setSelection(i);
 							break;
 						}
 					}
-					
+
 					refreshAvailablePageAdapter(details.pageType);
-					
-					//select the correct page in spinner
-					
-					for(i=0;i<adapter.getCount()-1;i++)
-					{	
-						
-//						if( details.url.equals(modules.modules.get(i).module) ) break;
-						if( details.url.equals(adapter.getItem(i).module) ) break;
+
+					// select the correct page in spinner
+
+					for (i = 0; i < adapter.getCount() - 1; i++) {
+
+						// if( details.url.equals(modules.modules.get(i).module)
+						// ) break;
+						if (details.url.equals(adapter.getItem(i).module))
+							break;
 					}
-					Log.d("i=", i+ " ");
+					Log.d("i=", i + " ");
 					availablePages.setSelection(i);
-					
-				}
-				else if( details.moduleType.equals("url") )
-				{
+
+				} else if (details.moduleType.equals("url")) {
 					Log.d("ajunge aici", "dada");
 					menuURLRadioOption.setChecked(true);
-					
+
 					menuURLEditText.setText(details.url);
 				}
 			}
-			
+
 		}
-		
+
 	}
-	
-	//Async Task to get a list of modules for the spinner adapter
-	private class GetModulesAsyncTask extends AsyncTask<Object, Object, Object>
-	{
+
+	// Async Task to get a list of modules for the spinner adapter
+	private class GetModulesAsyncTask extends AsyncTask<Object, Object, Object> {
 
 		String xmlData;
-		
-		@Override
-		protected Object doInBackground(Object... params) 
-		{
-			 xmlData = XEHost.getINSTANCE().getRequest("/index.php?module=mobile_communication&act=procmobile_communicationListModules");
-			
-			 Serializer serializer = new Persister();        
-	        
-	          Reader reader = new StringReader(xmlData);
-	          try {
-	       	  modules = serializer.read(XEArrayList.class, reader, false); 
 
-				} catch (Exception e) 
-				{
-					e.printStackTrace();
-				}
+		@Override
+		protected Object doInBackground(Object... params) {
+			xmlData = XEHost
+					.getINSTANCE()
+					.getRequest(
+							"/index.php?module=mobile_communication&act=procmobile_communicationListModules");
+
+			Serializer serializer = new Persister();
+
+			Reader reader = new StringReader(xmlData);
+			try {
+				modules = serializer.read(XEArrayList.class, reader, false);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return null;
 		}
-	
+
 		@Override
-		protected void onPostExecute(Object result) 
-		{
+		protected void onPostExecute(Object result) {
 			super.onPostExecute(result);
-		
-//			isLoggedIn(xmlData, XEMobileMenuItemEditController.this);
-			
-			if( modules != null && modules.modules != null )
-			{
-//				for(int i=0;i<modules.modules.size();i++)
-//				{
-//				adapter.add(modules.modules.get(i).module);
-//				}
-//			
-//				availablePages.setAdapter(adapter);
+
+			// isLoggedIn(xmlData, XEMobileMenuItemEditController.this);
+
+			if (modules != null && modules.modules != null) {
 				refreshAvailablePageAdapter(returnType());
-				
+
 				GetEditedMenuAsyncTask editedMenuTask = new GetEditedMenuAsyncTask();
 				editedMenuTask.execute();
-				
-				Log.i("Finish loading","Modules");
+
+				Log.i("Finish loading", "Modules");
 			}
-			
-			
+
 		}
 	}
-	
+
 }

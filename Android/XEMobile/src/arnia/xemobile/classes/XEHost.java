@@ -1,7 +1,6 @@
 package arnia.xemobile.classes;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,12 +8,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.http.Header;
-import org.apache.http.HttpClientConnection;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
@@ -26,13 +22,10 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
-import arnia.xemobile.*;
 
 import android.util.Log;
-import android.widget.Toast;
 
 public class XEHost 
 {
@@ -179,7 +172,8 @@ public class XEHost
 	     {
 	    	 if( entity.getValue() instanceof ArrayList ) 
 	    	 {
-	    		 ArrayList<String> arrayList = (ArrayList<String>) entity.getValue();
+	    		 @SuppressWarnings("unchecked")
+				ArrayList<String> arrayList = (ArrayList<String>) entity.getValue();
 	    		 for(int i =0;i<arrayList.size();i++) 
 	    			 reqEntity.addPart((String) entity.getKey(),new StringBody((String) arrayList.get(i)));
 	    	 }

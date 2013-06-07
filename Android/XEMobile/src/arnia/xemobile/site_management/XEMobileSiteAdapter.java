@@ -134,7 +134,8 @@ public class XEMobileSiteAdapter extends BaseAdapter {
 										.toString().trim();
 								XEMobileSite editedSite = new XEMobileSite(
 										site.id, url, username, password);
-								LogInInBackground task = new LogInInBackground(position);
+								LogInInBackground task = new LogInInBackground(
+										position);
 								task.execute(editedSite);
 							}
 						});
@@ -158,9 +159,9 @@ public class XEMobileSiteAdapter extends BaseAdapter {
 										.getDBHelper(context);
 								SQLiteDatabase db = dbHelper
 										.getReadableDatabase();
-								long affectedRows = db.delete(
-										dbHelper.XE_SITES, dbHelper.XE_SITES_ID
-												+ "=" + site.id, null);
+								db.delete(dbHelper.XE_SITES,
+										dbHelper.XE_SITES_ID + "=" + site.id,
+										null);
 								sites.remove(site);
 								notifyDataSetChanged();
 							}
@@ -179,12 +180,11 @@ public class XEMobileSiteAdapter extends BaseAdapter {
 
 	private class LogInInBackground extends AsyncTask<XEMobileSite, Void, Void> {
 		private String xmlData;
-		private boolean request_url_error = false;
 		private XEMobileSite site;
 		private int index;
-		
-		public LogInInBackground(int index){
-			this.index=index;
+
+		public LogInInBackground(int index) {
+			this.index = index;
 		}
 
 		@Override
@@ -194,6 +194,7 @@ public class XEMobileSiteAdapter extends BaseAdapter {
 		}
 
 		// send the request in background
+		@SuppressWarnings("finally")
 		@Override
 		protected Void doInBackground(XEMobileSite... params) {
 			site = params[0];
@@ -211,7 +212,6 @@ public class XEMobileSiteAdapter extends BaseAdapter {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				request_url_error = true;
 			} finally {
 				return null;
 			}
